@@ -2,53 +2,54 @@ package com.finalProject.togOther.advisor;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.finalProject.togOther.domain.City;
 import com.finalProject.togOther.domain.Place;
 import com.finalProject.togOther.domain.User;
+import com.finalProject.togOther.dto.CityDTO;
+import com.finalProject.togOther.dto.PlaceDTO;
+import com.finalProject.togOther.dto.UserDTO;
 
 
 public interface AdvisorService {
+		
+	public ResponseEntity<UserDTO> updateUser(int userSeq,UserDTO userDTO);
 	
-	public User addUser(User user);
+	public ResponseEntity<String> deleteUserByEmail(String userEmail);
 	
-	public User updateUser(User user);
+	public ResponseEntity<List<UserDTO>> getUser();
 	
-	public void deleteUserById(String id);
-	
-	public List<User> getUser();
-	
-	public User getUserById(String id);
+	public ResponseEntity<UserDTO> getUserById(String id);
 	
 	
 	
 	
-	public City addCity(City city);
+	public ResponseEntity<String> addCity(CityDTO cityDTO);
 	
-	public City updateCity(City city);
+	public ResponseEntity<CityDTO> updateCity(int citySeq, CityDTO cityDTO);
 	
-	public void deleteCityBySeq(int seq);
+	public ResponseEntity<String> deleteCityBySeq(int seq);
 
-	public List<City> getCity();
+	public ResponseEntity<List<CityDTO>> getCity();
 	
-	public City getCityBySeq(int seq);
-	
-	
+	public ResponseEntity<CityDTO> getCityBySeq(int seq);
 	
 	
-	
-	
-	
-	public Place addPlace(Place place);
 
-	public Place updatePlace(Place place);
-	
-	public void deletePlaceBySeq(int seq);
-	
-	public List<Place> getPlace();
+	public ResponseEntity<String> addPlace(PlaceDTO placeDTO);
 
-	public Place getPlaceBySeq(int seq);
+	public ResponseEntity<PlaceDTO> updatePlace(int placeSeq, PlaceDTO placeDTO);
+	
+	public ResponseEntity<String> deletePlaceBySeq(int seq);
+	
+	public ResponseEntity<List<PlaceDTO>> getPlace();
 
-	public List<Place> getPlaceByCitySeq(int citySeq);
+	public ResponseEntity<PlaceDTO> getPlaceBySeq(int seq);
+
+	public ResponseEntity<List<PlaceDTO>> getPlaceByCitySeq(int citySeq);
+
+	
 
 	
 

@@ -9,8 +9,9 @@ import AdvisorHeader from '../components/advisor/AdvisorHeader';
 const Advisor = () => {
 
     const tags = [
-        'CITY',
-        'USER'
+        '사용자 관리',
+        '도시 관리',
+        '장소 관리'
     ]
 
     const [currentTag, setCurrentTag] = useState(tags[0]);

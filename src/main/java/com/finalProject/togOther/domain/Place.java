@@ -1,5 +1,7 @@
 package com.finalProject.togOther.domain;
 
+import com.finalProject.togOther.dto.PlaceDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,13 +9,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "place")
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Place {
 	
 	@Id
@@ -47,5 +54,27 @@ public class Place {
 	//좋아요
 	private int likeCnt;
 	//태그 
-	private String tag; 
+	private String tag;
+	
+	
+	public static Place toEntity(PlaceDTO placeDTO) {
+		return Place.builder()
+					.placeSeq(placeDTO.getPlaceSeq())
+					.citySeq(placeDTO.getCitySeq())
+					.code(placeDTO.getCode())
+					.name(placeDTO.getName())
+					.address(placeDTO.getAddress())
+					.longitude(placeDTO.getLongitude())
+					.latitude(placeDTO.getLatitude())
+					.image(placeDTO.getImage())
+					.subImage1(placeDTO.getSubImage1())
+					.subImage2(placeDTO.getSubImage2())
+					.context1(placeDTO.getContext1())
+					.context2(placeDTO.getContext2())
+					.context3(placeDTO.getContext3())
+					.likeCnt(placeDTO.getLikeCnt())
+					.tag(placeDTO.getTag())
+					.build();
+	}
+	
 }

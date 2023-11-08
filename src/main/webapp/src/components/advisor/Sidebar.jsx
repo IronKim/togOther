@@ -19,7 +19,7 @@ const Sidebar = ({tags, setCurrentTag}) => {
     <div className={styles.sidebar}>
        {
         tags.map(item => (
-          <button value={item} onClick={changeTag}>{item}</button>
+          <button key={item} value={item || ''} onClick={changeTag}>{item}</button>
         ))
        }
     </div>

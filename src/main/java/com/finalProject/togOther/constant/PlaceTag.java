@@ -1,6 +1,6 @@
 package com.finalProject.togOther.constant;
 
-public enum placeTag {
+public enum PlaceTag {
 	자연관광지,
 	문화관광지,
 	휴양지,

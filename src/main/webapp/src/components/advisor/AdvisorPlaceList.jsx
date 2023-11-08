@@ -5,8 +5,8 @@ const AdvisorPlaceList = ({selectedCity, placeList, selectPlace}) => {
         <div>
             <p className='fs-2 m-2'>{selectedCity.cityName}</p>
             {
-                placeList.map(item => (
-                    <button className='btn btn-outline-secondary m-1' key={item.placeSeq} onClick={() => selectPlace(item)}>{item.name}</button>
+                placeList.map((item, index) => (
+                    <button key={index} className='btn btn-outline-secondary m-1'  onClick={() => selectPlace(item)}>{item.name}</button>
                 ))
             }
             {

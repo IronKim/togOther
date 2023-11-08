@@ -244,8 +244,8 @@ const AdvisorDashboardCity = () => {
                             <div key={continent}>
                                 <p className='fs-1 m-2'>{continent}</p>
                                 <ul>
-                                {countriesInContinent.map(country => (
-                                    <button className='btn btn-outline-primary m-1' 
+                                {countriesInContinent.map((country, index) => (
+                                    <button key={index} className='btn btn-outline-primary m-1' 
                                         onClick={() => setSelectedCountry({...selectedCountry, continentName:continent,countryName:country.countryName})} >{country.countryName}</button>
                                 ))}
                                 </ul>

@@ -1,10 +1,19 @@
 package com.finalProject.togOther.dto;
 
+import com.finalProject.togOther.domain.City;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-
+@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class CityDTO {
 	private int citySeq;
 	private String continentName;
@@ -12,21 +21,16 @@ public class CityDTO {
 	private String cityName;
 	private String cityImage;
 	
-	public void citySeq(int citySeq) {
-		this.citySeq = citySeq;
-	}
-	public void continentName(String continentName) {
-		this.continentName = continentName;
-	}
-	public void countryName(String countryName) {
-		this.countryName = countryName;
-	}
-	public void cityName(String cityName) {
-		this.cityName = cityName;
-	}
-	public void cityImage(String cityImage) {
-		this.cityImage = cityImage;
-	}
 	
+	public static CityDTO toDTO(City city) {
+		
+		return CityDTO.builder()
+					  .citySeq(city.getCitySeq())
+					  .continentName(city.getContinentName())
+					  .countryName(city.getCountryName())
+					  .cityName(city.getCityName())
+					  .cityImage(city.getCityImage())
+					  .build();
+	}
 	
 }
