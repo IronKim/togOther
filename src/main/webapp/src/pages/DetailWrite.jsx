@@ -1,25 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 
 
 const DetailWrite = ({onInput,inputUserData,nextPage,prevPage}) => {
     
-    // const navigate = useNavigate()
-    const [imagePreview, setImagePreview] = useState(null);
+    
+    //const [imagePreview, setImagePreview] = useState(null);
+    const [imagePreview, setImagePreview] = useState(inputUserData.profileImage || null);
 
-    const handleFileChange = (e) => {
-    const file = e.target.files[0]; // 업로드된 파일
-
-    if (file) {
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-            const base64String = e.target.result; // 파일을 Base64로 인코딩된 문자열로 얻습니다.
-            setImagePreview(base64String); // 이미지 프리뷰로 설정합니다.
-        };
-
-      reader.readAsDataURL(file); // 파일을 읽고 Base64로 변환합니다.
-    }
-  };
 //     const handleFileChange = (e) => {
 //     const file = e.target.files[0]; // 업로드된 파일
 
@@ -29,23 +16,27 @@ const DetailWrite = ({onInput,inputUserData,nextPage,prevPage}) => {
 //         reader.onload = (e) => {
 //             const base64String = e.target.result; // 파일을 Base64로 인코딩된 문자열로 얻습니다.
 //             setImagePreview(base64String); // 이미지 프리뷰로 설정합니다.
-//             // 업데이트를 위해 onInput을 호출합니다.
-//             onInput({ target: { name: 'profileImage', value: base64String } });
 //         };
 
-//         reader.readAsDataURL(file); // 파일을 읽고 Base64로 변환합니다.
-//     }
-// };
-    
-
-//     const handleNumberChange = (e) => {
-//     const value = e.target.value;
-//     const regex = /^[0-9]*$/; // 숫자만 허용하는 정규식
-
-//     if (regex.test(value) && value.length <= 15) {
-//       setNumberValue(value);
+//       reader.readAsDataURL(file); // 파일을 읽고 Base64로 변환합니다.
 //     }
 //   };
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]; // 업로드된 파일
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const base64String = e.target.result; // 파일을 Base64로 인코딩된 문자열로 얻습니다.
+                setImagePreview(base64String); // 이미지 프리뷰로 설정합니다.
+                onInput({ target: { name: 'profileImage', value: base64String } }); // profileImage 업데이트
+            };
+
+            reader.readAsDataURL(file); // 파일을 읽고 Base64로 변환합니다.
+        }
+    };
+
     const handleNumberChange = (e) => {
     const value = e.target.value;
     const regex = /^[0-9]*$/;
@@ -55,16 +46,13 @@ const DetailWrite = ({onInput,inputUserData,nextPage,prevPage}) => {
     }
 };
 
-//   useEffect(() => {
-//     console.log(inputUserData);
-//     }, [inputUserData]);
     return (
         
         <div>
             <table> 
 
                 <tr>
-                    <input type="file" onChange={handleFileChange} name='profileImage' />
+                    <input type="file" onChange={handleFileChange} name='profileImage'/>
                     {imagePreview && <img src={imagePreview} alt="Preview" />}
                 </tr>
                 <tr>
