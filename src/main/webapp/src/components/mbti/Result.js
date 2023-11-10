@@ -11,7 +11,10 @@ const Result = (props) => {
     useEffect(()=>{
         console.log(result)
         onMbti(result)
-    },[result])
+    },[result]);
+    useEffect(()=>{
+        mbti()
+    },[]);
 
     const percentA = (type) => {
         return parseInt(type[0] * (100 / (type[0]+type[1])))

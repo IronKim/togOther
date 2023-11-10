@@ -71,7 +71,8 @@ const MainWrite = () => {
 
     const updateUserData = () => {
         setUserData((prevUserData) => ({ ...prevUserData, ...inputUserData }));
-        
+        //
+        onMbti();
     };
 
     const onSubmitWrite = () => {
@@ -90,6 +91,7 @@ const MainWrite = () => {
 
     const onMbti = (mbti) => {
         setInputUserData({...inputUserData,mbti : mbti})
+        
     }
 
     useEffect(() => {
