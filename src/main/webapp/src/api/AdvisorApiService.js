@@ -1,5 +1,8 @@
 import { apiClient } from './ApiClient';
 
+
+export const getUser = () => apiClient.get('api/advisor/getUser');
+
 export const addCity = (city) => apiClient.post('api/advisor/addCity', city);
 
 export const getCity = () => apiClient.get('/api/advisor/getCity');
