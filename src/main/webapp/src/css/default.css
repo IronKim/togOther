@@ -50,11 +50,8 @@ table {
     font-style: normal;
 }
 *{
-	scrollbar-width: none;
 	font-family: 'SUITE-Regular';
 }
-::-webkit-scrollbar {
-    display: none;
-}
+
 
 /* Firefox */

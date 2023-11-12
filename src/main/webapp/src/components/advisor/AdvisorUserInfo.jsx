@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import styles from '../../css/advisor.module.css'
 
 const AdvisorUserInfo = ({user, selectUser, selectedUser}) => {
 
-    console.log(selectedUser === user)
+    const userRef = useRef(null);
+
+    const handleClick = () => {
+        selectUser(user);
+    }
+
+    useEffect(() => {
+        if (selectedUser === user) {
+            userRef.current.scrollIntoView({ behavior: 'instant' });
+        }
+    }, [selectedUser]);
 
     return (
-        <tr className={`${selectedUser === user ? styles.active : ''} ${styles.info}`}   onClick={() => selectUser(user)}>
+        <tr className={`${selectedUser === user ? styles.active : ''} ${styles.info}`} ref={userRef} onClick={handleClick}>
             <td className='fs-6'>{user.userSeq}</td>
             <td className='fs-6'> {user.email}</td>
             <td className='fs-6'>{user.name}</td>

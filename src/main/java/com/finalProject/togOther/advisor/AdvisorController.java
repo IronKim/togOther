@@ -46,6 +46,12 @@ public class AdvisorController {
 		return advisorService.getUser();
 	}
 	
+	//컬럼값으로 유저 리스트 불러오기
+	@GetMapping(path= "getUserByColumn/{column}/{value}")
+	public ResponseEntity<List<UserDTO>> getUserByColumn(@PathVariable String column, @PathVariable String value) {
+		return advisorService.getUserByColumn(column, value);
+	}
+	
 	//아이디에 맞는 유저 불러오기
 	@GetMapping(path= "getUser/{id}")
 	public ResponseEntity<UserDTO> getUserById(@PathVariable String id) {

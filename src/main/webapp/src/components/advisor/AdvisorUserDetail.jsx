@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import defaultImg from '../../assets/image/no_image.png';
 
 import styles from '../../css/advisor.module.css'
 
 const AdvisorUserDetail = ({selectedUser}) => {
 
+    const onErrorImg = (e) => {
+        e.target.src = defaultImg;
+    }
+  
+
     const {userSeq, email, name, age, gender, national, cityFix, cityList, likingFood, likingTrip, mbti, profileImage, profileText} = selectedUser;
 
     return (
         <div className={styles.userDetail} style={{display: 'flex', justifyContent: 'center'}}>
-            <div style={{marginRight: '10px'}}>
-                <img src={profileImage} alt="프로필 이미지" style={{width: '50px', height: '50px'}}/>
+            <div style={{marginRight: '50px'}}>
+                <img src={profileImage} alt="프로필 이미지" onError={onErrorImg} style={{width: '100px', height: '100px'}}/>
                 <p>{profileText}</p>
             </div>
             <table className='table table-striped table-bordered' style={{width: '50%'}}>

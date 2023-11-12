@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUser } from '../../api/AdvisorApiService';
+import { getUser, getUserByColumn } from '../../api/AdvisorApiService';
 import AdvisorUserInfo from './AdvisorUserInfo';
 
 import styles from '../../css/advisor.module.css'
@@ -7,8 +7,27 @@ import AdvisorUserDetail from './AdvisorUserDetail';
 
 const AdvisorDashboardUser = () => {
 
-
     const [userList, setUserList] = useState([{
+        userSeq: '',
+        email: '',
+        id: '',
+        pwd:'',
+        name: '',
+        age: '',
+        cityFix: '',
+        cityList: '',
+        coin: '',
+        dupLogin: '',
+        gender: '',
+        likingFood: '',
+        likingTrip: '',
+        mbti: '',
+        national: '',
+        profileImage: '',
+        profileText: ''
+    }]);
+
+    const [userFilterList, setUserFilterList] = useState([{
         userSeq: '',
         email: '',
         id: '',
@@ -68,15 +87,63 @@ const AdvisorDashboardUser = () => {
 
     useEffect(()=> {
         getUserList();
+    },[])
 
+    useEffect(() => {
+        filterUserList();
+    }, [userList]);
+
+
+    const [search, setSearch] = useState({
+        columnName: '',
+        searchValue: ''
+    });
+
+    const onInput = (e) => {
+        const {name, value} = e.target
+        
+        setSearch({...search, [name]:value})
     }
-    ,[])
+
+    const filterUserList = () => {
+
+        console.log('filterUserList');
+
+        if(search.columnName === '' || search.searchValue === '') {
+            setUserFilterList(userList);
+            return;
+        }
+
+
+        setUserFilterList(userList.filter(item => {
+            if(search.columnName === 'email') {
+                return item.email.includes(search.searchValue);
+            } else if(search.columnName === 'name') {
+                return item.name.includes(search.searchValue);
+            } else {
+                return true;
+            }
+        }));
+    }
+
+    useEffect(() => {
+        filterUserList();
+        
+
+    }, [search]);
 
     return (
         <div>
             <div>
-                <h1 className='fs-1 m-5'>사용자 정보</h1>
-    
+                <h1 className='fs-1 mb-5 ms-3 mt-3'>사용자 정보</h1>
+                <div className='d-flex'>
+                    <select className='form-select' name='columnName' value={search.columnName || ''} onChange={onInput} style={{width: '10%'}}>
+                        <option value=''>선택</option>
+                        <option value='email'>이메일</option>
+                        <option value='name'> 이름</option>
+                    </select>
+                    <input className='form-control' style={{width: '20%'}} name='searchValue' value={search.searchValue} onChange={onInput}/>
+                </div>
                 <table className={styles.userTable}>
                     <thead style={{position: 'sticky', top: 0}}>
                         <tr>
@@ -88,12 +155,12 @@ const AdvisorDashboardUser = () => {
                         </tr>
                     </thead>
                 </table>
-    
-                <div style={{overflowY: 'auto', maxHeight: '350px'}}>
+
+                <div className={styles.hideScrollbar}>
                     <table style={{tableLayout: 'fixed'}} className={styles.userTable}>
                         <tbody>
                             {
-                                userList.map((item, index) => (
+                                userFilterList.map((item, index) => (
                                     <React.Fragment key={index}>
                                         <AdvisorUserInfo user={item} selectUser={selectUser}  selectedUser={selectedUser}/>
                                         {selectedUser === item && 

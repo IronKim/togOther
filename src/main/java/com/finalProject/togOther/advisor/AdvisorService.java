@@ -20,6 +20,8 @@ public interface AdvisorService {
 	
 	public ResponseEntity<List<UserDTO>> getUser();
 	
+	public ResponseEntity<List<UserDTO>> getUserByColumn(String column, String value);
+	
 	public ResponseEntity<UserDTO> getUserById(String id);
 	
 	
@@ -48,6 +50,8 @@ public interface AdvisorService {
 	public ResponseEntity<PlaceDTO> getPlaceBySeq(int seq);
 
 	public ResponseEntity<List<PlaceDTO>> getPlaceByCitySeq(int citySeq);
+
+	
 
 	
 
