@@ -12,6 +12,8 @@ public interface PlaceService {
 
 	public ResponseEntity<PlaceDTO> getPlaceByPlaceSeq(int placeSeq);
 
+	public ResponseEntity<List<PlaceDTO>> getPlaceListByCitySeq(int citySeq);
+
 
 
 }

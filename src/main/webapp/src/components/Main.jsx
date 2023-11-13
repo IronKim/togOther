@@ -4,9 +4,9 @@ import HeaderComponent from './HeaderComponent';
 import FooterComponent from './FooterComponent';
 import Home from '../pages/Home';
 import Advisor from '../pages/Advisor';
-import CityPage from '../pages/CityMain';
+import CityMain from '../pages/CityMain';
 import PlacePage from '../pages/PlacePage';
-
+import City from '../pages/City';
 
 const Main = () => {
     return (
@@ -15,10 +15,10 @@ const Main = () => {
                 <HeaderComponent />
                     <Routes>
                         <Route path='/' element= { <Home />} />
-                        <Route path='/advisor' element= { <Advisor />} />
                         <Route path='info'>
                             <Route path='place/:placeSeq' element={ <PlacePage />} />
-                            <Route path='city' element={ <CityPage />} />
+                            <Route path='cityList' element={ <CityMain />} />
+                            <Route path='city/:citySeq' element={ <City />}/>
                         </Route>
                     </Routes>
                 <FooterComponent />

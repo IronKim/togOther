@@ -21,6 +21,30 @@ public class PlaceServiceImpl implements PlaceService {
 	 public PlaceServiceImpl(PlaceRepository placeRepository) {
 	      this.placeRepository = placeRepository;
 	   }
+	 
+	 
+	 @Override
+		public ResponseEntity<List<PlaceDTO>> getPlaceListByCitySeq(int citySeq) {
+		 
+		 try {
+	         List<Place> placeList = placeRepository.findByCitySeq(citySeq);
+	         
+	         List<PlaceDTO> placeDTOList = new ArrayList<PlaceDTO>();
+	      
+	         for (Place place : placeList) {
+	        	 
+	            PlaceDTO placeDTO = PlaceDTO.toDTO(place);
+	            
+	            placeDTOList.add(placeDTO);
+	         }
+	         
+	         return ResponseEntity.ok(placeDTOList);
+	         
+	      } catch (Exception e) {
+	    	  
+	    	 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	      }
+		}
 
 	   @Override
 	   public ResponseEntity<List<PlaceDTO>> getPlaceList(Integer placeSeq) {
@@ -62,4 +86,6 @@ public class PlaceServiceImpl implements PlaceService {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 			}
 		}
+
+		
 }

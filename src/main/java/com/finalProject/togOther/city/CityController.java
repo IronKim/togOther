@@ -2,6 +2,7 @@ package com.finalProject.togOther.city;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,11 @@ public class CityController {
    @GetMapping(path = "getCityList/{cityName}")
    public CityDTO getCityByCityName(@PathVariable String cityName) {
       return cityService.getCityByCityName(cityName);
+   }
+   
+   @GetMapping(path = "getCity/{citySeq}")
+   public ResponseEntity<CityDTO> getCityByCitySeq(@PathVariable int citySeq) {
+	   return cityService.getCityByCitySeq(citySeq);
    }
    
 

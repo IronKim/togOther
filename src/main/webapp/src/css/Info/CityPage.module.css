@@ -1,0 +1,80 @@
+.citypage {
+    border : 1px solid red;
+    width : 100%;
+    height : 340px;
+    position: relative;
+}
+.inputBox{
+    border-radius: 15px;  
+    width: 800px;
+    height: 55px;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+}
+.api {
+    border : 1px solid blue;
+    width : 1000px;
+    height : 70px;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    top : 450px;
+    transform: translate(-50%, -50%);
+}
+.money {
+    border : 1px solid black;
+    width : 500px;
+    height : 70px;
+    margin : 0 0px 0 500px;
+}
+.weather {
+    border : 1px solid black;
+    width : 500px;
+    height : 70px;
+    margin : -70px 500px 0 0; 
+}
+.button {
+    display: flex;
+    justify-content: center;
+    margin: 200px;
+
+}
+.bigContainer {
+    border : 1px solid red;
+    width : 1400px;
+    height : 250px;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+}
+.list1 {
+    display: flex;
+    border : 1px solid blue;
+    width : 500px;
+    height : 250px;
+    margin: 0px 50px 0 50px;
+    position: absolute;
+}
+.list2 {
+    display: flex;
+    border : 1px solid blue;
+    width : 500px;
+    height : 250px;
+    margin: 0px 0px 0 850px;
+    position: absolute;
+}
+.imgDiv {
+    border : 1px solid red;
+    display: flex;
+    width : 250px;
+    height : 250px;
+}
+.textDiv {
+    border : 1px solid black;
+    width : 250px;
+    height : 250px;
+
+}

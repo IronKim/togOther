@@ -18,7 +18,13 @@ public class PlaceController {
 	  public PlaceController(PlaceService placeService) {
 	      this.placeService = placeService;
 	   }
+	  
+	  @GetMapping(path= "getPlaceListByCitySeq/{citySeq}")
+	  public ResponseEntity<List<PlaceDTO>> getPlaceListByCitySeq(@PathVariable int citySeq) {
+		  return placeService.getPlaceListByCitySeq(citySeq);
+	  }
 	   
+	  
 	   @GetMapping(path = "getPlaceList")
 	   public ResponseEntity<List<PlaceDTO>> getPlaceList(Integer placeSeq) {
 	      return placeService.getPlaceList(placeSeq);

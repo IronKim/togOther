@@ -6,7 +6,7 @@ import { Transition, TransitionGroup } from 'react-transition-group';
 import Card from 'react-bootstrap/Card';
 import RecommendCity from './RecommendCity';
 import ArrayStyle from '../../css/Info/Array.module.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ArrayCity = ({selectedContinent, selectedCountry}) => {
 
@@ -98,6 +98,12 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
         setSlidesCo(slides);
     }, [selectedCountry, cityList]);
 
+    const navigate = useNavigate()
+
+    const onToCityPage = (citySeq) => {
+        navigate(`/info/city/${citySeq}`)
+    }
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', userSelect: 'none'}}>
             <TransitionGroup>
@@ -116,7 +122,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                         }}
                     >
                         {slide.map((item) => (
-                        <Link><Card
+                        <Card
                             className={ArrayStyle.card}
                             style={{
                             width: '18rem',
@@ -126,6 +132,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                             display: 'inline-block',
                             }}
                             key={item.cityName}
+                            onClick={()=>onToCityPage(item.citySeq)}
                         >
                             <Card.Body style={{ width: '100%', height: '216px', padding: 0 }}>
                             <img variant="top" src={item.cityImage} style={{ width: '100%', height: '100%' }} />
@@ -145,7 +152,6 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                             </div>
                             </Card.Body>
                         </Card>
-                        </Link>
                         ))}
                     </div>
                     )}
