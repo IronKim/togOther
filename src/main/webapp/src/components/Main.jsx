@@ -4,6 +4,7 @@ import HeaderComponent from './HeaderComponent';
 import FooterComponent from './FooterComponent';
 import Home from '../pages/Home';
 import Advisor from '../pages/Advisor';
+import PlacePage from '../pages/PlacePage';
 
 const Main = () => {
     return (
@@ -13,6 +14,9 @@ const Main = () => {
                     <Routes>
                         <Route path='/' element= { <Home />} />
                         <Route path='/advisor' element= { <Advisor />} />
+                        <Route path='info'>
+                            <Route path='place/:placeSeq' element={ <PlacePage />} />
+                        </Route>
                     </Routes>
                 <FooterComponent />
             </BrowserRouter>
