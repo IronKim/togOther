@@ -12,9 +12,9 @@ const CityPage = () => {
     
     const {citySeq} = useParams()
 
-    const [city, setCity] = useState();
+    const [city, setCity] = useState('');
 
-    const [placeData, setPlaceData] = useState([]);
+    const [placeData, setPlaceData] = useState(['']);
 
     useEffect(()=> {
         getCityBySeq(citySeq)
@@ -22,18 +22,14 @@ const CityPage = () => {
             setCity(res.data);
         })
         .catch(e => console.log(e))
-
         getPlaceListByCitySeq(citySeq)
         .then(res => {
             setPlaceData(res.data);
         })
         .catch(e => console.log(e))
-
     },[])
 
-    console.log(city);
-    console.log(placeData)
-
+    
     const [activeButton, setActiveButton] = useState(null);
 
     const handleButtonClick = (buttonName) => {
@@ -48,7 +44,7 @@ const CityPage = () => {
 
     return (
         <div>
-            <img src={setCity.cityImage} className={ styles.citypage }/>
+          <img src={city.cityImage} className={ styles.citypage }/>
                 <input className={ styles.inputBox } type= 'text'></input>
 
             <div className={ styles.api }>
@@ -73,10 +69,9 @@ const CityPage = () => {
                 </ButtonGroup>
             </div>
 
-          
-            <div className={ styles.bigContainer } onClick={() => (onToPlacePage(getCityBySeq.placeSeq))}>
-            {
-                placeData.map((item) => (
+          {
+          placeData.map((item) => (
+            <div className={ styles.bigContainer } onClick={() => (onToPlacePage(item.placeSeq))}>
                 <div className={ styles.list1 } style={{ display: 'flex' }}>
                     <div className={ styles.imgDiv }><img src={item.image} style={{ width: '250px', height: '250px' }} /></div>    
                         <div className={ styles.textDiv }>
@@ -84,9 +79,8 @@ const CityPage = () => {
                             <input type='text'value={item.context1}></input>                
                         </div>
                 </div> 
-            ))}
-
             </div>
+             ))}
         </div>
     );
 };
