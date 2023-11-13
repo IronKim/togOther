@@ -6,6 +6,7 @@ import { Transition, TransitionGroup } from 'react-transition-group';
 import Card from 'react-bootstrap/Card';
 import RecommendCity from './RecommendCity';
 import ArrayStyle from '../../css/Info/Array.module.css';
+import { Link } from 'react-router-dom';
 
 const ArrayCity = ({selectedContinent, selectedCountry}) => {
 
@@ -115,7 +116,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                         }}
                     >
                         {slide.map((item) => (
-                        <Card
+                        <Link><Card
                             className={ArrayStyle.card}
                             style={{
                             width: '18rem',
@@ -144,6 +145,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                             </div>
                             </Card.Body>
                         </Card>
+                        </Link>
                         ))}
                     </div>
                     )}
