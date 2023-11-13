@@ -4,6 +4,7 @@ import HeaderComponent from './HeaderComponent';
 import FooterComponent from './FooterComponent';
 import Home from '../pages/Home';
 import Advisor from '../pages/Advisor';
+import CityPage from '../pages/CityMain';
 
 const Main = () => {
     return (
@@ -12,9 +13,12 @@ const Main = () => {
                 <HeaderComponent />
                     <Routes>
                         <Route path='/' element= { <Home />} />
-                        <Route path='/advisor' element= { <Advisor />} />
+                        <Route path='/info/city' element={ <CityPage/>}/>
                     </Routes>
                 <FooterComponent />
+                    <Routes>
+                        <Route path='/advisor' element= { <Advisor />} />
+                    </Routes>
             </BrowserRouter>
         </div>
     );
