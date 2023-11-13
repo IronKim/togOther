@@ -1,0 +1,53 @@
+@keyframes result{
+    0% {
+        transform: rotate(120deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+.resultDiv{
+    height: 680px;
+    padding: 3.7% 1%;
+    width: 330px;
+    margin: 10px auto;
+    text-align: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform-origin: 150% -150%;
+    animation: result 3s;
+}
+.resultDiv h3{ 
+    color: #fffdf2;
+    font-size: 43px;
+    font-weight: 500;
+}
+.resultDiv p{ 
+    background-color: #a1dad4;
+    width: 328px;
+    color: #fffdf2;
+}
+.resultDiv div{ 
+    height: 100px;
+    padding:5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #b58f6a;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.resultDiv button{ 
+    color: #5a5246;
+    font-weight: bold;
+    background-color: #a1dad4;
+    margin: 2px;
+    border: 0;
+    font-size: 12px;
+    padding: 5px 17px;
+}
+.resultDiv img{
+    height:150px;
+	width:150px;
+	object-fit:contain;
+    margin: 0 auto;
+}
