@@ -1,5 +1,7 @@
 package com.finalProject.togOther.dto;
 
+import java.util.Date;
+
 import com.finalProject.togOther.domain.User;
 
 import lombok.AllArgsConstructor;
@@ -23,8 +25,8 @@ public class RegisterDTO {
 	private String pwd;
 	//이름
 	private String name;
-	//나이
-	private int age;
+	//생년월일
+		private Date age;
 	//성별
 	private String gender;
 	//국적
@@ -39,6 +41,8 @@ public class RegisterDTO {
 	private String likingTrip;
 	//MBTI
 	private String mBTI;
+	//인증된 회원
+	private byte certification;
 	
 	public static RegisterDTO toDTO(User user) {
 		return RegisterDTO.builder()
@@ -54,6 +58,7 @@ public class RegisterDTO {
 				 .likingFood(user.getLikingFood())
 				 .likingTrip(user.getLikingTrip())
 				 .mBTI(user.getMBTI())
+				 .certification(user.getCertification())
 				 .build();
 	}
 

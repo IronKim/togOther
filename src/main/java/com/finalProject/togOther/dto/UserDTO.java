@@ -1,5 +1,7 @@
 package com.finalProject.togOther.dto;
 
+import java.util.Date;
+
 import com.finalProject.togOther.domain.User;
 
 import lombok.AccessLevel;
@@ -25,8 +27,8 @@ public class UserDTO {
 	private String pwd;
 	//이름
 	private String name;
-	//나이
-	private int age;
+	//생년월일
+	private Date age;
 	//성별
 	private String gender;
 	//국적

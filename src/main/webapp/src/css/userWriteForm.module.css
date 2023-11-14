@@ -1,0 +1,137 @@
+:root {
+    --circle-width: 5em;
+    --font-size: 1.5em;
+}
+
+.activeCircle {
+    position: relative;
+    margin: 0 auto;
+    width: var(--circle-width);
+    height: var(--circle-width);
+    background-color: #040A11;
+    border-radius: 50%;
+}
+
+.activeCircle p {
+    color: white;
+    font-size: var(--font-size);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.circle {
+    position: relative;
+    margin: 0 auto;
+    width: var(--circle-width);
+    height: var(--circle-width);
+    background-color: #EDEFF1;
+    border-radius: 50%;
+}
+
+.circle p {
+    color: black;
+    font-size: var(--font-size);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+* {
+    
+    margin: 0;
+    padding: 0; 
+    text-align: center;
+    
+  }
+  .fbtn{
+    color: #2ADDF5;
+    border: 0;
+    font-size: 2.4rem;
+    background-color: white;
+    margin-top: 10px;
+  }
+  .fbtn:hover {
+    color: #1b8fd6; /* 마우스 호버 시 배경색 변경 */
+  }
+  img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  .input_file_button{
+    padding: 6px 25px;
+    background-color:#2ADDF5;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    border: 0;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  
+  .writeContainer {
+    font-family: 'Arial', sans-serif;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* 배경색을 흰색으로 설정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+  }
+  
+  .inputField {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 13px;
+    
+  }
+  
+  .radioInput {
+    margin-right: 5px;
+    margin-bottom: 20px;
+  }
+  .inputFieldCk {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px; /* 첫 번째 <p> 태그 위에 간격을 줍니다. */
+  }
+  
+  .inputFieldCk p {
+    margin-bottom: 10px; /* 각 <p> 태그 사이에 간격을 줍니다. */
+    flex: 1;
+  }
+  .writeContainerCk{
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* 배경색을 흰색으로 설정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between; /* 요소 간 간격을 최대한 넓혀 나타냅니다. */
+}
+  .buttonsContainer {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.buttons {
+    display: flex;
+}
+
+

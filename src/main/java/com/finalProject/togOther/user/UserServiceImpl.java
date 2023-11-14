@@ -1,5 +1,6 @@
 package com.finalProject.togOther.user;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService{
 	//사용자 추가 서비스
 	@Override
 	public ResponseEntity<String> addUser(RegisterDTO registerDTO) {
+		
+		System.out.println(registerDTO.getEmail());
+		System.out.println(registerDTO.getCertification());
 		
 		User user = User.toEntity(registerDTO);
 		

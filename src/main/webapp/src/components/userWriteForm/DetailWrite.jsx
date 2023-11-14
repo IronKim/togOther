@@ -1,7 +1,9 @@
-import React, {  useState } from 'react';
+import React, {  useRef, useState } from 'react';
+import { HiArrowCircleRight } from 'react-icons/hi';
+import { HiArrowCircleLeft } from 'react-icons/hi';
 
 
-const DetailWrite = ({onInput,inputUserData,nextPage,prevPage}) => {
+const DetailWrite = ({onInput,inputUserData,nextPage,prevPage,styles}) => {
     
     
     //const [imagePreview, setImagePreview] = useState(null);
@@ -45,33 +47,41 @@ const DetailWrite = ({onInput,inputUserData,nextPage,prevPage}) => {
         onInput({ target: { name: 'tel', value: value } }); // inputUserData 업데이트
     }
 };
+    const imageInput = useRef();
+    
+    // 버튼클릭시 input태그에 클릭이벤트를 걸어준다. 
+    const onCickImageUpload = () => {
+    imageInput.current.click();
+    };
 
     return (
         
-        <div>
-            <table> 
+        <div className={styles.writeContainer}>
+            <div> 
 
-                <tr>
-                    <input type="file" onChange={handleFileChange} name='profileImage'/>
+                <div>
+                    <button onClick={onCickImageUpload} className={styles.input_file_button}>프로필 사진 등록</button>
+                    <input type="file" onChange={handleFileChange} name='profileImage'  style={{ display: "none" }} ref={imageInput}/>
+                </div>
                     {imagePreview && <img src={imagePreview} alt="Preview" />}
-                </tr>
-                <tr>
-                    <textarea placeholder='프로필 사진과 소개글을 등록해주세요' name='profileText' rows="4" cols="50" onChange={onInput} value={inputUserData.profileText}></textarea>
-                </tr>
+                <div>
+                    <textarea placeholder='프로필 사진과 소개글을 등록해주세요' name='profileText' rows="5" cols="40" onChange={onInput} value={inputUserData.profileText} className={styles.inputField}></textarea>
+                </div>
                 <br/>
-                <tr>
+                <div>
                 <input
                         type='text'
                         value={inputUserData.tel} // inputUserData.tel 값으로 바인딩
                         onChange={handleNumberChange}
                         name='tel'
                         placeholder="'-'를 제외한 핸드폰 번호"
+                        className={styles.inputField}
                     />
-                </tr>
-            </table>
+                </div>
+            </div>
             <br/>
-            <button onClick={()=> prevPage()}>이전</button>&nbsp;
-            <button onClick={()=> nextPage()}>다음</button>&nbsp;
+            <button className={styles.fbtn} onClick={()=> prevPage()}><HiArrowCircleLeft/></button>&nbsp;
+            <button className={styles.fbtn} onClick={()=> nextPage()}><HiArrowCircleRight/></button>&nbsp;
         </div>
         
     );

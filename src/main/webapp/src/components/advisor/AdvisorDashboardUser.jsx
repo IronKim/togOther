@@ -108,6 +108,7 @@ const AdvisorDashboardUser = () => {
     const filterUserList = () => {
 
         console.log('filterUserList');
+        setSelectedUser({});
 
         if(search.columnName === '' || search.searchValue === '') {
             setUserFilterList(userList);

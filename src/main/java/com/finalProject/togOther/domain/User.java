@@ -1,5 +1,7 @@
 package com.finalProject.togOther.domain;
 
+import java.util.Date;
+
 import org.hibernate.annotations.ColumnDefault;
 
 import com.finalProject.togOther.dto.RegisterDTO;
@@ -35,8 +37,8 @@ public class User {
 	private String pwd;
 	//이름
 	private String name;
-	//나이
-	private int age;
+	//생년월일
+	private Date age;
 	//성별
 	@ColumnDefault("M")
 	private String gender;
@@ -61,6 +63,8 @@ public class User {
 	private String cityList;
 	//고정도시
 	private String cityFix;
+	
+	private byte certification;
 	
 	public static User toEntity(UserDTO userDTO) {
 		return User.builder()
@@ -99,6 +103,7 @@ public class User {
 				   .likingFood(registerDTO.getLikingFood())
 				   .likingTrip(registerDTO.getLikingTrip())
 				   .mBTI(registerDTO.getMBTI())
+				   .certification(registerDTO.getCertification())
 				   .build();
 	}
 	

@@ -25,6 +25,8 @@ public class UserController {
 	//유저 추가
 	@PostMapping(path= "addUser")
 	public ResponseEntity<String> addUser(@RequestBody RegisterDTO registerDTO) {
+		
+		System.out.println(registerDTO.getCertification());
 		return userService.addUser(registerDTO);
 	}
 		
