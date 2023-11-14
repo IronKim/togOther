@@ -11,10 +11,10 @@ class CityWeatherApi extends Component {
 
     fetchCityWeather() {
         const apiKey = 'ccbe72ea1cf97d70c81aa843786a32ba';
-        const city = 'USD'; // 예시로 서울을 기본 도시로 설정
+        const city = 'Seoul'; // 예시로 서울을 기본 도시로 설정
 
         // OpenWeatherMap API 엔드포인트
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=hongkong&appid=ccbe72ea1cf97d70c81aa843786a32ba&units=metric`; //임의로 홍콩의 날씨를 출력
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=paris&appid=ccbe72ea1cf97d70c81aa843786a32ba&units=metric`; //임의로 홍콩의 날씨를 출력
 
         fetch(apiUrl)
             .then(response => response.json())

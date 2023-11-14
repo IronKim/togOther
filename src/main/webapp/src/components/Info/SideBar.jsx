@@ -51,7 +51,7 @@ const SideBar = ({onContinent, onCountry}) => {
         onCountry(clickedCountry);
         setActiveKey(activeKey === clickedCountry ? null : clickedCountry);
     };
-// activeKey={activeKey}
+
     return (
       <div style={{ marginTop: 10, marginLeft: 100, marginRight: -40, userSelect: 'none' }}>
         <div style={{ width: '16em' }}>

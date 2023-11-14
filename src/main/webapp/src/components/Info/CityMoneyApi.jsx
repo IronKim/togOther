@@ -2,23 +2,22 @@ import React, { Component } from 'react';
 
 class CityMoneyApi extends Component {
     state = {
-        cityExchangeRate: null,
-        cityExchangeRate: 'USD'
-  };
+        cityExchangeRate: null
+    };
 
 
     componentDidMount() {
         this.fetchExchangeRate();
-  }
+    }
 
     fetchExchangeRate() {
         const exchangeApiKey = 'f0c37735f371fd75a2a17f9c';
-        const exchangeApiUrl = 'https://open.er-api.com/v6/latest';
-        const cityCurrencyCode = 'HKD'; // 예시로 USD의 통화 코드 사용
+        const exchangeApiUrl = 'https://open.er-api.com/v6/latest/';
+        const cityCurrencyCode = 'JPY'; // 예시로 USD의 통화 코드 사용
 
         const exchangeRequestUrl = `https://open.er-api.com/v6/latest?apikey=f0c37735f371fd75a2a17f9c`;
 
-        fetch(exchangeRequestUrl)
+        fetch(exchangeRequestUrl,)
             .then(response => response.json())
             .then(data => {
 
@@ -39,14 +38,19 @@ class CityMoneyApi extends Component {
         const { cityExchangeRate, cityCurrencyCode } = this.state;
 
         return (
-        <div>
-            <h2>실시간 환율</h2>
+        <div style={{display:'flex', justifyContent: 'center'}}>
+            <div>
+                <img style={{width:70, height: 70}} src='https://cdn-icons-png.flaticon.com/512/1580/1580782.png'/>
+            </div>
+            <div style={{marginLeft: 50, marginTop: 8}}>
+            <h1>실시간 환율</h1><br/>
                 {cityExchangeRate !== null ? (
 
-                <p>{`환율 정보 (${cityCurrencyCode}): ${cityExchangeRate}`}</p>
+                <h2>{`(${cityCurrencyCode}): ${cityExchangeRate}`}</h2>
             ) : (
                 <p>환율 정보를 불러오는 중...</p>
             )}
+            </div>
         </div>
         );
     }
