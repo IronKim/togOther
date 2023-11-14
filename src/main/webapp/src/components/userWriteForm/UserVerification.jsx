@@ -1,5 +1,11 @@
 import React from 'react';
 
+import styles from '../../css/userWriteForm.module.css';
+
+import ssoimage from '../../assets/image/sso.png';
+import smsimage from '../../assets/image/sms.png';
+import { HiArrowCircleRight } from 'react-icons/hi';
+
 const UserVerification = ({nextPage, inputUserData}) => {
 
 
@@ -31,12 +37,25 @@ const UserVerification = ({nextPage, inputUserData}) => {
     }
 
     return (
-        <div>
-            <div className='d-flex'>
-                <p className='btn btn-primary' onClick={onSingleSign}>통합인증</p>
-                <p className='btn btn-primary' onClick={onMobileSign}>휴대폰 인증</p>
+        <div className={styles.writeContainer}> 
+            <p className='fs-1 mb-3' >(선택사항)</p>
+            <p className='fs-5 mb-3'>인증시 인증된 회원으로 가입됩니다.</p> 
+            <p className='fs-5'>추후 인증 가능</p>
+            <div style={{margin: '0 auto', height: '100%', width: '100%', textAlign: 'center'}} className='d-flex justify-content-center'>
+                <div>
+                    <div className={styles.verificationImageDiv} style={{ borderRight: 'solid 1px black'}}>
+                        <img src={ssoimage} alt="통합인증" className={styles.verificationImage}/>
+                    </div>
+                    <p className='btn btn-primary' onClick={onSingleSign}>통합인증</p>
+                </div>
+                <div>
+                    <div className={styles.verificationImageDiv} >
+                        <img src={smsimage} alt="휴대폰 인증" className={styles.verificationImage}/>
+                    </div>
+                    <p className='btn btn-primary' onClick={onMobileSign}>휴대폰 인증</p>
+                </div>
             </div>
-            <button className='btn btn-primary' onClick={() => nextPage()}>건너뛰기</button>
+            <button className={`mt-5 ${styles.fbtn}`} onClick={() => nextPage()}><HiArrowCircleRight /></button>
         </div>
     );
 };

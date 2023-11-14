@@ -123,7 +123,7 @@ const Write = () => {
     return (
         <div>
             <WriteFormHeader page={page}/>
-            <div className='container'>
+            <div style={{minHeight: '100%', marginTop: '6vw', marginBottom: '6vw'}} className='container'>
                 {
                     page === 0 && <UserVerification nextPage={nextPage} inputUserData={inputUserData}/>
                 }
@@ -143,7 +143,7 @@ const Write = () => {
                     page === 5 && <MbtiMain onInput={onInput} onMbti={onMbti} prevPage={prevPage} nextPage={nextPage} onSubmitWrite={onSubmitWrite} styles={styles} />
                 } 
 
-                <button  onClick={()=> createUesr()}>유저만들기</button>
+                {/* <button  onClick={()=> createUesr()}>유저만들기</button> */}
             </div>
         </div>
     );
