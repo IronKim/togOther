@@ -1,9 +1,9 @@
 .footer {
-        width: 100%;
-        margin: 0 auto;
-        font-size: 18px;
-        padding: 30px 20px 100px;
-
+    width: 100%;
+    margin: 0 auto;
+    font-size: 18px;
+    padding: 30px 20px 100px;
+    user-select: none;
 }
 .controller {
     left: 5%;

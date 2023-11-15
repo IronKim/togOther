@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class CityMoneyApi extends Component {
     state = {
-        cityExchangeRate: null
+        cityExchangeRate: 'KRW'
     };
 
 
@@ -32,7 +32,7 @@ class CityMoneyApi extends Component {
         console.error('환율 API 요청 중 오류 발생:', error);
 
       });
-  }
+    }
 
     render() {
         const { cityExchangeRate, cityCurrencyCode } = this.state;

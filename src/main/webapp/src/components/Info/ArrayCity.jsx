@@ -105,7 +105,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
     }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', userSelect: 'none'}}>
+        <div style={{ display: 'inline-block', flexDirection: 'column', userSelect: 'none', width:'100%'}}>
             <TransitionGroup>
                 {slidesC.map((slide, index) => (
                 <Transition key={index} timeout={50}>
@@ -113,7 +113,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                     <div
                         className={`fade fade-${state}`}
                         style={{
-                        display: 'flex',
+                        display: 'inline-block',
                         flexDirection: 'row',
                         marginLeft: 100,
                         opacity: state === 'entered' ? 1 : 0,
@@ -130,18 +130,18 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                             margin: 10,
                             cursor: 'pointer',
                             display: 'inline-block',
+                            borderRadius: 20
                             }}
                             key={item.cityName}
                             onClick={()=>onToCityPage(item.citySeq)}
                         >
-                            <Card.Body style={{ width: '100%', height: '216px', padding: 0 }}>
-                            <img variant="top" src={item.cityImage} style={{ width: '100%', height: '100%' }} />
+                            <Card.Body style={{ width: '100%', height: '100%', padding: 0 }}>
+                            <img variant="top" src={item.cityImage} style={{ width: '100%', height: '100%', borderRadius: 15, boxShadow: '0px 2px 4px rgba(0,0,0,0.3)' }} />
                             <div style={{ position: 'absolute', width: '100%', textAlign: 'left', padding: '10px' }}>
                                 <span
                                 style={{
                                     color: 'white',
                                     fontSize: '25px',
-                                    fontWeight: 'bold',
                                     position: 'relative',
                                     bottom: 215,
                                     zIndex: 1,
@@ -158,7 +158,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                 </Transition>
                 ))}
             </TransitionGroup>
-            {/* 캐러셀 컴포넌트 */}
+            {/* 캐러셀 컴포넌트 */} 
             <RecommendCity/>
         </div>
     );

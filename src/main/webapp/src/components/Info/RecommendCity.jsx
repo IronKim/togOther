@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import defaultImg from '../../assets/image/no_image.png';
 import { getCity } from '../../api/AdvisorApiService';
 
 import Carousel from 'react-bootstrap/Carousel';
@@ -74,6 +73,7 @@ const RecommendCity = () => {
 
     return (
         <div className={CarouselStyle.carouselContainer}>
+            <p style={{position:'relative', top:'25%', right:'30%', fontSize:'40px'}}>추천 도시</p>
             <Carousel 
             data-bs-theme="dark"
             showThumbs={false}
@@ -85,7 +85,7 @@ const RecommendCity = () => {
             showIndicators={false}
             useKeyboardArrows={false}
             stopOnHover={true}
-            style={{ width: '90%', margin: 200}}>
+            style={{ width: '80%', margin: 200}}>
 
             {slides.map((slide, index) => (
                 <Carousel.Item key={index}>
@@ -93,7 +93,7 @@ const RecommendCity = () => {
                         {
                         slide.map((item) => (
                             <div key={item.cityName} className={CarouselStyle.image}>
-                                <img src={item.cityImage} alt={item.cityName} className={CarouselStyle.customcircle} style={{width:270, height:270}}/>
+                                <img src={item.cityImage} alt={item.cityName} className={CarouselStyle.customcircle} style={{width:250, height:250}}/>
                                 <div className={CarouselStyle.customcaption}>
                                     <h1>{item.cityName}</h1>
                                 </div>

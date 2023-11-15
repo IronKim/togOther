@@ -59,11 +59,12 @@ const CityPage = () => {
     return (
         <div>
             <img src={city.cityImage} className={ styles.citypage }/>
+            <div className={ styles.cityName }>{city.cityName}</div>
             {/* ----------------검색---------------- */}
-            <div className={ styles.inputBox }>
+            {/* <div className={ styles.inputBox }>
                 <input className={ styles.input } type= 'text' placeholder='Search...'/>
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" className={ styles.img }></img>
-            </div>
+            </div> */}
 
             <div className={ styles.api }>
                 <div className={ styles.money }><CityMoneyApi /></div>
@@ -86,7 +87,7 @@ const CityPage = () => {
                     </Button>
                 </ButtonGroup>
             </div>
-            <div style={{width:1200, margin: '0 auto', }}>
+            <div style={{width:1200, margin: '0 auto'}}>
                 {
                 filteredPlaceData.map((item, index) => (
                         <div key={index} style={{ display: 'inline-block', marginBottom: '20px', justifyContent: 'center', userSelect: 'none'}}>

@@ -53,7 +53,7 @@ const SideBar = ({onContinent, onCountry}) => {
     };
 
     return (
-      <div style={{ marginTop: 10, marginLeft: 100, marginRight: -40, userSelect: 'none' }}>
+      <div style={{ marginTop: 10, marginLeft: 80, marginRight: -40, userSelect: 'none' }}>
         <div style={{ width: '16em' }}>
             <Accordion  defaultActiveKey={['0']}>
                 {continentList.map((continent, index) => {
