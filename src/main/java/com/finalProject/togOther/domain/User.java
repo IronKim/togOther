@@ -1,5 +1,7 @@
 package com.finalProject.togOther.domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -38,7 +40,9 @@ public class User {
 	//이름
 	private String name;
 	//생년월일
-	private Date age;
+	private LocalDate birthday;
+	//핸드폰 번호
+	private String phone;
 	//성별
 	@ColumnDefault("M")
 	private String gender;
@@ -73,7 +77,8 @@ public class User {
 				   .id(userDTO.getId())
 				   .pwd(userDTO.getPwd())
 				   .name(userDTO.getName())
-				   .age(userDTO.getAge())
+				   .birthday(userDTO.getBirthday())
+				   .phone(userDTO.getPhone())
 				   .gender(userDTO.getGender())
 				   .national(userDTO.getNational())
 				   .profileImage(userDTO.getProfileImage())
@@ -95,7 +100,8 @@ public class User {
 				   .id(registerDTO.getId())
 				   .pwd(registerDTO.getPwd())
 				   .name(registerDTO.getName())
-				   .age(registerDTO.getAge())
+				   .birthday(registerDTO.getBirthday())
+				   .phone(registerDTO.getPhone())
 			       .gender(registerDTO.getGender())
 				   .national(registerDTO.getNational())
 				   .profileImage(registerDTO.getProfileImage())

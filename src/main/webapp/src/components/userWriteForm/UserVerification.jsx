@@ -4,9 +4,10 @@ import styles from '../../css/userWriteForm.module.css';
 
 import ssoimage from '../../assets/image/sso.png';
 import smsimage from '../../assets/image/sms.png';
-import { HiArrowCircleRight } from 'react-icons/hi';
+import { TfiArrowRight } from "react-icons/tfi";
+import { certificationRequest } from '../../api/UserApiService';
 
-const UserVerification = ({nextPage, inputUserData}) => {
+const UserVerification = ({nextPage, inputUserData, userData}) => {
 
 
     const onSingleSign = () => {
@@ -14,15 +15,43 @@ const UserVerification = ({nextPage, inputUserData}) => {
         IMP.init('imp10723600'); 
 
         IMP.certification({ 
-            m_redirect_url : '/user/write', // 모바일환경에서 popup:false(기본값) 인 경우 필수, 예: https://www.myservice.com/payments/complete/mobile
+            //나중에 주소 수정해야함
+            request_id: 'sample' + new Date().getTime(), // param
+            m_redirect_url : 'http://localhost:3000/user/write', // 모바일환경에서 popup:false(기본값) 인 경우 필수, 예: https://www.myservice.com/payments/complete/mobile
             popup : false // PC환경에서는 popup 파라미터가 무시되고 항상 true 로 적용됨
           }, rsp => { // callback
             if (rsp.success) {
 
-                console.log(rsp);
-                inputUserData.certification = 1;
-                nextPage();
+                console.log(rsp.imp_uid);
+
+                certificationRequest({imp_uid: rsp.imp_uid})
+                .then(res => {
+                    console.log(res);
+
+                    userData.birthday = res.data.birthday;
+                    inputUserData.birthday = res.data.birthday;
+
+                    userData.name = res.data.name;
+                    inputUserData.name = res.data.name;
+
+                    userData.phone = res.data.phone;
+                    inputUserData.phone = res.data.phone;
+
+                    userData.certification = 1;
+                    inputUserData.certification = 1;
+                    nextPage();
  
+                })
+                .catch(e => {
+                    if(e.response.status === 409) {
+                        alert('이미 가입된 회원입니다.');
+                    }else if(e.response.status === 412) {
+                        alert('만 14세이상 이용자가 아닙니다.');
+                    }
+                    console.log(e)
+                });
+                
+                
             } else {
                 
               // 인증 실패 시 로직, 모달로 인증 실패 메시지를 띄워주시면 됩니다.
@@ -55,7 +84,7 @@ const UserVerification = ({nextPage, inputUserData}) => {
                     <p className='btn btn-primary' onClick={onMobileSign}>휴대폰 인증</p>
                 </div>
             </div>
-            <button className={`mt-5 ${styles.fbtn}`} onClick={() => nextPage()}><HiArrowCircleRight /></button>
+            <button className={`mt-5 ${styles.fbtn}`} onClick={() => nextPage()}><TfiArrowRight /></button>
         </div>
     );
 };

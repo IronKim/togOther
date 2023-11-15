@@ -1,5 +1,7 @@
 package com.finalProject.togOther.dto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.finalProject.togOther.domain.User;
@@ -28,7 +30,9 @@ public class UserDTO {
 	//이름
 	private String name;
 	//생년월일
-	private Date age;
+	private LocalDate birthday;
+	//핸드폰 번호
+	private String phone;
 	//성별
 	private String gender;
 	//국적
@@ -59,7 +63,8 @@ public class UserDTO {
 				   .id(user.getId())
 				   .pwd(user.getPwd())
 				   .name(user.getName())
-				   .age(user.getAge())
+				   .birthday(user.getBirthday())
+				   .phone(user.getPhone())
 				   .gender(user.getGender())
 				   .national(user.getNational())
 				   .profileImage(user.getProfileImage())

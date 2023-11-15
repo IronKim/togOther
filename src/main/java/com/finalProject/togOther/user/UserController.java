@@ -1,5 +1,7 @@
 package com.finalProject.togOther.user;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.RegisterDTO;
+import com.finalProject.togOther.dto.SSODTO;
 
 @RestController
 @RequestMapping("api/user")
@@ -41,6 +44,12 @@ public class UserController {
 	public ResponseEntity<RegisterDTO> getUserByEmail(@PathVariable String userEmail) {
 		return userService.getUserByEmail(userEmail);
 	}
+	
+	@PostMapping(path = "handleCertificationRequest")
+    public ResponseEntity<SSODTO> handleCertificationRequest(@RequestBody Map<String, String> requestBody) {
+        String impUid = requestBody.get("imp_uid");
+        return userService.processCertificationRequest(impUid);
+    }
 	
 	
 }

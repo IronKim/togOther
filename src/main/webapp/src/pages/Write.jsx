@@ -25,7 +25,8 @@ const Write = () => {
         pwd: '',
         tel: '',
         name: '',
-        age: '',
+        birthday: '',
+        phone: '',
         gender: '',
         national: '',
         profileImage: '',
@@ -42,7 +43,8 @@ const Write = () => {
         pwd: '',
         tel: '',
         name: '',
-        age: '',
+        birthday: '',
+        phone: '',
         gender: '',
         national: '',
         profileImage: '',
@@ -125,13 +127,13 @@ const Write = () => {
             <WriteFormHeader page={page}/>
             <div style={{minHeight: '100%', marginTop: '6vw', marginBottom: '6vw'}} className='container'>
                 {
-                    page === 0 && <UserVerification nextPage={nextPage} inputUserData={inputUserData}/>
+                    page === 0 && <UserVerification nextPage={nextPage} inputUserData={inputUserData} userData={userData}/>
                 }
                 {
                     page === 1 && <Agree nextPage={nextPage} styles={styles} />
                 }
                 {
-                    page === 2 && <DefaultWrite onInput={onInput} inputUserData={inputUserData} nextPage={nextPage} styles={styles} />
+                    page === 2 && <DefaultWrite onInput={onInput} inputUserData={inputUserData} nextPage={nextPage} styles={styles} userData={userData} />
                 }
                 {
                     page === 3 && <DetailWrite onInput={onInput} inputUserData={inputUserData} prevPage={prevPage} nextPage={nextPage} styles={styles} />

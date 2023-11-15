@@ -402,16 +402,26 @@ const Agree = ({nextPage,styles}) => {
         }
     }
 
+    const isAllChecked = data.filter((item) => item.isChk !== true).length < 1;
+
+    const handleNextPage = () => {
+        // 필수 약관에 동의한 경우 다음 페이지로 이동
+        if (data.filter((item) => !item.text.includes('선택')).every((item) => item.isChk)) {
+        nextPage();
+        } else {
+        // 필수 약관에 동의하지 않은 경우 경고 메시지만 표시하고 다음 페이지로 이동하지 않음
+        alert('모든 필수 약관에 동의하셔야 합니다.');
+        }
+    };
+
     return (
         <div className={styles.writeContainer}>
             
             <div className='d-flex justify-content-center'>
                 <label>약관 모두 동의</label>
                 <input className={styles.chkI} id='allChk' type="checkbox" name="all" onChange={changeInput} 
-                checked={
-                    data.filter(item => item.isChk !== true).length < 1
-                }/>
-                <label className={`ms-3 ${styles.chk}`} for='allChk'></label>
+                checked={isAllChecked}/>
+                <label className={`ms-3 ${styles.chk}`} htmlFor='allChk'></label>
             </div>
             <hr />
             {
@@ -420,9 +430,9 @@ const Agree = ({nextPage,styles}) => {
                             <div className='d-flex justify-content-center mb-4'>
                                 <label>{item.text}</label><br/>
                                 <input className={styles.chkI} type="checkbox" id={item.id} name={item.name} checked={item.isChk} onChange={changeInput}/>
-                                <label className={`ms-3 ${styles.chk}`} for={item.id}></label>
+                                <label className={`ms-3 ${styles.chk}`} htmlFor={item.id}></label>
                             </div>
-                            {item.textarea !== `` && <textarea className={styles.agreeContext} rows={5} value={item.textarea} readOnly></textarea>}
+                            {item.textarea !== `` && <textarea className={styles.agreeContext} rows={3} value={item.textarea} readOnly></textarea>}
                         </div>
                     
                     
@@ -433,7 +443,7 @@ const Agree = ({nextPage,styles}) => {
                 //     {item.textarea !== `` && <textarea style={{display: 'inline-block'}} value={item.textarea} readOnly></textarea>}
                 // </p>)
             }
-           <button className={styles.fbtn} onClick={()=> nextPage()}> <HiArrowCircleRight /></button>
+           <button className={styles.fbtn} onClick={()=> handleNextPage()}> <HiArrowCircleRight /></button>
         </div>
         
     );

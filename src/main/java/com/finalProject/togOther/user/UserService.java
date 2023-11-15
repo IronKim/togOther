@@ -3,6 +3,7 @@ package com.finalProject.togOther.user;
 import org.springframework.http.ResponseEntity;
 
 import com.finalProject.togOther.dto.RegisterDTO;
+import com.finalProject.togOther.dto.SSODTO;
 
 public interface UserService {
 
@@ -12,4 +13,7 @@ public interface UserService {
 
 	public ResponseEntity<RegisterDTO> getUserByEmail(String userEmail);
 
+	public ResponseEntity<SSODTO> processCertificationRequest(String impUid);
+	
+	public ResponseEntity<Boolean> isUserExistsByPhone(String phone);
 }

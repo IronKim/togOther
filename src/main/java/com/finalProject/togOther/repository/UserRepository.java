@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	@Query(value = "select user from User user where user.name like concat('%', ?1, '%')")
 	public List<User> findListByName(String value);
+	
+	public Optional<User> findByPhone(String phone);
 }
