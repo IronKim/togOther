@@ -8,6 +8,9 @@ import RecommendCity from './RecommendCity';
 import ArrayStyle from '../../css/Info/Array.module.css';
 import { useNavigate } from 'react-router-dom';
 
+import blackPing from '../../img/좌표black.png'
+import bluePing from '../../img/좌표blue.png'
+
 const ArrayCity = ({selectedContinent, selectedCountry}) => {
 
     //도시 리스트
@@ -125,6 +128,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                         <Card
                             className={ArrayStyle.card}
                             style={{
+                            maxWidth:'100%',
                             width: '18rem',
                             height: '13.5rem',
                             margin: 10,
@@ -137,18 +141,22 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                         >
                             <Card.Body style={{ width: '100%', height: '100%', padding: 0 }}>
                             <img variant="top" src={item.cityImage} style={{ width: '100%', height: '100%', borderRadius: 15, boxShadow: '0px 2px 4px rgba(0,0,0,0.3)' }} />
-                            <div style={{ position: 'absolute', width: '100%', textAlign: 'left', padding: '10px' }}>
-                                <span
+                            <div style={{ position: 'absolute', width: '100%', textAlign: 'left', padding: '0.5em' }}>
+                                <div
                                 style={{
-                                    color: 'white',
-                                    fontSize: '25px',
+                                    fontSize: '1.9em',
                                     position: 'relative',
-                                    bottom: 215,
+                                    textAlign: 'center',
+                                    bottom: '7em',
+                                    width:'4.9em',
+                                    height:'1.2em',
                                     zIndex: 1,
-                                }}
+                                    borderRadius:15,
+                                    lineHeight: '1.4em',
+                                }} className={ArrayStyle.imgtext}
                                 >
                                 {item.cityName}
-                                </span>
+                                </div>
                             </div>
                             </Card.Body>
                         </Card>

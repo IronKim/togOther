@@ -90,11 +90,11 @@ const CityPage = () => {
             <div style={{width:1200, margin: '0 auto'}}>
                 {
                 filteredPlaceData.map((item, index) => (
-                        <div key={index} style={{ display: 'inline-block', marginBottom: '20px', justifyContent: 'center', userSelect: 'none'}}>
+                        <div key={index} style={{ display: 'inline-block', marginBottom: '2em', justifyContent: 'center', userSelect: 'none'}}>
                             <div>
                                 <div className={styles.list1} onClick={() => onToPlacePage(item.placeSeq)}>
                                     <div className={styles.imgDiv}>
-                                        <img src={item.image} style={{ width: '250px', height: '250px', borderRadius:16, userSelecter: 'none'}} />
+                                        <img src={item.image} style={{ width: '100%', height: '62.4%', borderRadius:16, userSelecter: 'none'}} />
                                     </div>
                                     <div className={styles.textDiv}>
                                         <div style={{fontSize:20, position:'relative', top:'5%'}}>{item.name}</div>
