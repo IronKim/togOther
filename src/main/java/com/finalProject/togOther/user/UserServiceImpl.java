@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService{
             
             // 만 14세 이상이 아닐 때
             if(!isAbove14(ssodto.getBirthday())) {
-            	return ResponseEntity.status(HttpStatus.TOO_EARLY).body(null);
+            	return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(null);
             }
             
             boolean result = isUserExistsByPhone(ssodto.getPhone()).getBody();
