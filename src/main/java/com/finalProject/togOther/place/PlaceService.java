@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.finalProject.togOther.dto.CustomPlaceDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
 
 public interface PlaceService {
@@ -12,8 +13,9 @@ public interface PlaceService {
 
 	public ResponseEntity<PlaceDTO> getPlaceByPlaceSeq(int placeSeq);
 
+
 	public ResponseEntity<List<PlaceDTO>> getPlaceListByCitySeq(int citySeq);
 
-
+	public int addCustomPlace(CustomPlaceDTO customPlaceDTO);
 
 }

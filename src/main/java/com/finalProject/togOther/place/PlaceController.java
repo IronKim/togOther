@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.finalProject.togOther.dto.CustomPlaceDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
 
 @RestController
@@ -24,7 +27,6 @@ public class PlaceController {
 		  return placeService.getPlaceListByCitySeq(citySeq);
 	  }
 	   
-	  
 	   @GetMapping(path = "getPlaceList")
 	   public ResponseEntity<List<PlaceDTO>> getPlaceList(Integer placeSeq) {
 	      return placeService.getPlaceList(placeSeq);
@@ -34,6 +36,11 @@ public class PlaceController {
 	   public ResponseEntity<PlaceDTO> getPlaceByPlaceSeq(@PathVariable int placeSeq) {
 		   return placeService.getPlaceByPlaceSeq(placeSeq);
 	   }
-	   
+
+	   @PostMapping(path = "addCustomPlace")
+	   public int addCustomPlace(@RequestBody CustomPlaceDTO customPlaceDTO) {
+		   return placeService.addCustomPlace(customPlaceDTO);
+	   }
+
 	
 }
