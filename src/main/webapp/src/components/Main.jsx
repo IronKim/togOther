@@ -4,8 +4,10 @@ import HeaderComponent from './HeaderComponent';
 import FooterComponent from './FooterComponent';
 import Home from '../pages/Home';
 import Advisor from '../pages/Advisor';
+
 import Login from '../pages/Login';
 import Write from '../pages/Write';
+
 
 const Main = () => {
     return (
