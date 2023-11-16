@@ -1,0 +1,69 @@
+
+.accordion_container h2 {
+  font-size: 24px;
+}
+
+.accordion_container li {
+  font-size: 20px;
+  margin-top: 15px;
+  margin-bottom: 22px;
+}
+.selected_city_image {
+  margin-top: 30px;
+  margin-bottom: 20px; /* 이미지 아래 여백 조절 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 0;
+  background: white;
+}
+
+.img {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ddd;
+  border-radius: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 10px; /* 이미지 위쪽 간격 조절 */
+  margin-bottom: 0; /* 이미지 아래 여백 제거 */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* 추가된 스타일: 이미지를 감싸는 div에도 가운데 정렬을 적용 */
+.selected_city_image > div {
+  text-align: center;
+  margin-top: 10px; /* 이미지 위쪽 간격 조절 */
+  margin-bottom: 10px; /* 이미지 아래 여백 조절 */
+}
+
+@font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @media (max-width: 1199px) {
+      .accordion_container {
+        display: block;
+        width: 100%;
+        font-family: 'BMJUA';
+      }
+    }
+  
+    @media (min-width: 1200px) {
+      .accordion_container {
+        display: none;
+        width: 1200px;
+      }
+    }
+    .footer {
+      clear: both; /* 이미지와 푸터가 겹치는 것을 방지하기 위해 추가 */
+    }
+  

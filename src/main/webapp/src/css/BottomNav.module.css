@@ -1,0 +1,43 @@
+.wrapper {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45px;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+}
+
+nav {
+    overflow: hidden;
+    border-top: 2px solid gray;
+}
+
+.nav_link {
+    text-align: center;
+    float: left;
+    width: 30%;
+
+    height: 45px;
+    line-height: 45px;
+}
+
+.nav_item {
+    color: gray;
+    font-size: 20px;
+}
+
+.active {
+    color: #2E8DFF;
+}
+
+@media (max-width: 1199px) {
+    .wrapper {
+      z-index: 100;
+      display: flex;
+      bottom: 0;
+      width: 100%;
+    }
+}

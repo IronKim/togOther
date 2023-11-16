@@ -4,6 +4,10 @@ import HeaderComponent from './HeaderComponent';
 import FooterComponent from './FooterComponent';
 import Home from '../pages/Home';
 import Advisor from '../pages/Advisor';
+import BottomNav from './BottomNav';
+import Homew from './Homew';
+import Homem from '../components/Homem';
+import Search from './Search';
 
 const Main = () => {
     return (
