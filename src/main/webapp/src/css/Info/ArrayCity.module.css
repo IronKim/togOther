@@ -1,3 +1,10 @@
+.arraymain{
+  display: inline-block;
+  flex-direction: column;
+  user-select: none;
+  width:100%;
+}
+
 .card{
   overflow: hidden;
   max-width:100%;
@@ -59,21 +66,5 @@
 
 /* 미디어 쿼리 추가 */
 @media (max-width: 1200px) {
-  .fadeentered {
-    display: inline-block;
-    justify-content: center;
-    flex-wrap: wrap; /* 여러 개의 카드가 나란히 표시되도록 설정 */
-  }
 
-  .card {
-    width: 100%; /* 2개씩 보이도록 조절 */
-    margin: 10px;
-  }
-}
-
-/* 초기에도 .fade-entered 클래스를 가진 컨테이너를 만들어 화면에 보이게끔 설정 */
-.fadeentered {
-  display: inline-block;
-  justify-content: center;
-  flex-wrap: wrap;
 }

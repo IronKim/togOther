@@ -85,7 +85,7 @@ const RecommendCity = () => {
             showIndicators={false}
             useKeyboardArrows={false}
             stopOnHover={true}
-            style={{ width: '80%', margin: 200}}>
+            style={{ width: '83em', margin: 200}}>
 
             {slides.map((slide, index) => (
                 <Carousel.Item key={index}>

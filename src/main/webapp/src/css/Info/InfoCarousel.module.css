@@ -46,6 +46,7 @@ image {
   align-items: center;
   justify-content: center;
   height: 60vh;
+  min-width: 90em;
   margin-left: -10em;
 }
 

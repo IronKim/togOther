@@ -106,7 +106,7 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
 
     return (
         
-        <div className="fade-entered" style={{ display: 'inline-block', flexDirection: 'column', userSelect: 'none', width:'100%'}}>
+        <div className={ArrayStyle.arraymain}>
             <TransitionGroup>
                 {slidesC.map((slide, index) => (
                 <Transition key={index} timeout={50}>
