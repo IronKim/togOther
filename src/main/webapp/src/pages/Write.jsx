@@ -131,7 +131,7 @@ const Write = () => {
           const exists = await getUserByEmail(email);
           return exists; 
         } catch (error) {
-
+            throw error;
         }
       };
 

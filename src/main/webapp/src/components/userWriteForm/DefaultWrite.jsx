@@ -31,6 +31,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
 
   // 입력 필드의 값이 비어있는지 확인하는 함수
   const validateField = (field, value) => {
+
     if (!value) {
       return `${field}을(를) 입력해주세요`;
     }
@@ -45,18 +46,24 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
 
   // 다음 단계로 넘어가는 함수
   const handleNext = async () => {
-    const requiredFields = ['email', 'pwd', 'name', 'gender', 'birthday'];
+    const requiredFields = ['email', 'pwd', 'name', 'birthday', 'gender'];
     let isValid = true;
     let updatedMessages = {};
-
+  
     // 필수 필드들의 유효성 검사를 수행하고 메시지를 업데이트
     requiredFields.some((field) => {
+        if(field === 'birthday' && (year === '' || month === '' || day === '')) {
+            updatedMessages['birthday'] = '생년월일을 선택해주세요';
+            isValid = false;
+            return true;
+        }
       const message = validateField(field, inputUserData[field]);
       updatedMessages[field] = message;
-      if (message !== '' && isValid) {
+      if (message !== '') {
         isValid = false;
-      }
-      return message !== ''; // 유효성 검사 메시지가 있는 첫 번째 필드 반환
+        return true;
+      } 
+      return false; // 유효성 검사 메시지가 있는 첫 번째 필드 반환
     });
 
     // 이메일 유효성 검사 수행
@@ -80,8 +87,6 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
 
 
     if(year === '' || month === '' || day === '') {
-        updatedMessages['birthday'] = '생년월일을 선택해주세요';
-        isValid = false;
     }else {
         onbirthInput(year + '-' + month + '-' + day);
     }
