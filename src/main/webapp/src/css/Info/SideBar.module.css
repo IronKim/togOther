@@ -1,0 +1,10 @@
+.Sidebar-total {
+    margin-top: 0.8em;
+    margin-left: 5em;
+    margin-right: -1em;
+    user-select: none;
+}
+  
+  .Sidebar-total label {
+    font-size: 2em;
+}

@@ -5,11 +5,8 @@ import { Transition, TransitionGroup } from 'react-transition-group';
 
 import Card from 'react-bootstrap/Card';
 import RecommendCity from './RecommendCity';
-import ArrayStyle from '../../css/Info/Array.module.css';
+import ArrayStyle from '../../css/Info/ArrayCity.module.css'
 import { useNavigate } from 'react-router-dom';
-
-import blackPing from '../../img/좌표black.png'
-import bluePing from '../../img/좌표blue.png'
 
 const ArrayCity = ({selectedContinent, selectedCountry}) => {
 
@@ -108,7 +105,8 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
     }
 
     return (
-        <div style={{ display: 'inline-block', flexDirection: 'column', userSelect: 'none', width:'100%'}}>
+        
+        <div className="fade-entered" style={{ display: 'inline-block', flexDirection: 'column', userSelect: 'none', width:'100%'}}>
             <TransitionGroup>
                 {slidesC.map((slide, index) => (
                 <Transition key={index} timeout={50}>
@@ -126,38 +124,16 @@ const ArrayCity = ({selectedContinent, selectedCountry}) => {
                     >
                         {slide.map((item) => (
                         <Card
-                            className={ArrayStyle.card}
-                            style={{
-                            maxWidth:'100%',
-                            width: '18rem',
-                            height: '13.5rem',
-                            margin: 10,
-                            cursor: 'pointer',
-                            display: 'inline-block',
-                            borderRadius: 20
-                            }}
-                            key={item.cityName}
-                            onClick={()=>onToCityPage(item.citySeq)}
-                        >
-                            <Card.Body style={{ width: '100%', height: '100%', padding: 0 }}>
-                            <img variant="top" src={item.cityImage} style={{ width: '100%', height: '100%', borderRadius: 15, boxShadow: '0px 2px 4px rgba(0,0,0,0.3)' }} />
-                            <div style={{ position: 'absolute', width: '100%', textAlign: 'left', padding: '0.5em' }}>
-                                <div
-                                style={{
-                                    fontSize: '1.9em',
-                                    position: 'relative',
-                                    textAlign: 'center',
-                                    bottom: '7em',
-                                    width:'4.9em',
-                                    height:'1.2em',
-                                    zIndex: 1,
-                                    borderRadius:15,
-                                    lineHeight: '1.4em',
-                                }} className={ArrayStyle.imgtext}
-                                >
-                                {item.cityName}
+                        className={ArrayStyle.card}
+                        key={item.cityName}
+                        onClick={()=>onToCityPage(item.citySeq)}>
+                            <Card.Body className={ArrayStyle.cardbody}>
+                                <img variant="top" src={item.cityImage} className={ArrayStyle.cardimg} />
+                                <div className={ArrayStyle.imgdiv}>
+                                    <div className={ArrayStyle.imgtext}>
+                                        {item.cityName}
+                                    </div>
                                 </div>
-                            </div>
                             </Card.Body>
                         </Card>
                         ))}

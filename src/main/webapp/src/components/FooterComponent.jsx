@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './FooterComponent.module.css';
+import styles from '../css/Info/FooterComponent.module.css';
 
 
 const paragraphStyles = {

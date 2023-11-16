@@ -4,6 +4,8 @@ import { getCity } from '../../api/AdvisorApiService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Accordion from 'react-bootstrap/Accordion';
 
+import sidebar from '../../css/Info/SideBar.module.css';
+
 const SideBar = ({onContinent, onCountry}) => {
 
     const [continentList, setContinentList] = useState([]);
@@ -53,29 +55,30 @@ const SideBar = ({onContinent, onCountry}) => {
     };
 
     return (
-      <div style={{ marginTop: 10, marginLeft: 80, marginRight: -40, userSelect: 'none' }}>
-        <div style={{ width: '16em' }}>
+      <div className={sidebar.total}>
+        <div style={{ width: '16em'}} className={sidebar['Sidebar-total']}>
+            <label style={{marginBottom: '1em', marginLeft:'2.1em'}}>도시 선택</label>
             <Accordion  defaultActiveKey={['0']}>
                 {continentList.map((continent, index) => {
                 const countriesInContinent = countryList.filter((country) => country.continentName === continent);
                 return (
-                    <Accordion.Item key={index} eventKey={continent}>
-                    <Accordion.Header onClick={() => onContinentClick(continent)}>
-                        {continent}
-                    </Accordion.Header>
-                    {countriesInContinent.map((country, countryIndex) => (
-                        <Accordion.Body
-                        key={countryIndex}
-                        onClick={() => onCountryClick(country)}
-                        onMouseEnter={() => handleMouseEnter(country)}
-                        onMouseLeave={handleMouseLeave}
-                        style={{ backgroundColor: hoveredItem === country ? 'lightgray' : 'white', cursor: 'pointer' }}
-                        >
-                        {country.countryName}
-                        </Accordion.Body>
-                    ))}
+                    <Accordion.Item key={index} eventKey={continent} >
+                        <Accordion.Header onClick={() => onContinentClick(continent)}>
+                            {continent}
+                        </Accordion.Header >
+                        {countriesInContinent.map((country, countryIndex) => (
+                            <Accordion.Body
+                            key={countryIndex}
+                            onClick={() => onCountryClick(country)}
+                            onMouseEnter={() => handleMouseEnter(country)}
+                            onMouseLeave={handleMouseLeave}
+                            style={{ backgroundColor: hoveredItem === country ? 'lightgray' : 'white', cursor: 'pointer' }}
+                            >
+                            {country.countryName}
+                            </Accordion.Body>
+                        ))}
                     </Accordion.Item>
-                );
+                    );
                 })}
             </Accordion>
         </div>

@@ -1,11 +1,8 @@
 /* 이미지 컨테이너 스타일 */
 image {
-  position: relative;
-  display: inline-block;
-  overflow: hidden; /* 이미지 내부의 요소를 감추기 위해 overflow 사용 */
-  flex: 0 0 20%;
   padding: 15px;
   position: relative;
+  margin: auto;
   transition: transform 0.3s;
 }
 
@@ -15,7 +12,6 @@ image {
 }
 
 .image{
-  flex: 0 0 20%;
   padding: 14px;
   position: relative;
   transition: transform 0.3s;
@@ -43,7 +39,6 @@ image {
   transition: transform 0.3s; /* 변환 효과의 지속 시간을 조절합니다 */
   display: block;
 }
-
 
 .carouselContainer {
   display: flex;
