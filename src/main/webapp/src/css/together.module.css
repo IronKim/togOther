@@ -1,0 +1,371 @@
+.bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.6;
+}
+input:focus {outline: 2px solid #194E8C;}
+textarea:focus {outline: 2px solid #194E8C;}
+textarea{
+    resize: none;
+}
+.calender {
+    display: inline-block;
+    vertical-align: top;
+    padding: 15px 0;
+    margin-left: 13%;
+}
+.addPlace{
+    border: 0;
+    font-weight: bold;
+}
+.placeCardForm {
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+    margin: 20px 0;
+    height: 390px;
+    overflow: auto;
+    overflow-x: hidden;
+
+}
+.placeCardForm div img{
+    float: right;
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+.placeCard{
+    background-color: antiquewhite;
+    width: 100%;
+    height: 80px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 2% auto;
+    text-align: left;
+    cursor: pointer;
+    overflow: auto;
+    overflow-x: hidden;
+} 
+.placeContextP{
+    width: 70%;
+    float: left;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.placeCardForm td{
+    width: 70%;
+    float: left;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.placeCardForm img{
+    margin-top: -35px;
+}
+.todoListForm{
+    height: 80px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.inputday{
+    width: 150px;
+}
+/* WriteForm */
+@media (min-width: 1199px) {
+    .writeForm{
+        width: 1200px; 
+    }
+}
+.writeForm{
+    margin:auto;
+    /* border: 1px solid; */
+}
+.writeFormInner{
+    width: 80%;
+    margin: auto;
+    /* border: 1px solid red; */
+}
+.startDate{
+    border: lightgray 1px solid;
+}
+.endDate{
+    border: lightgray 1px solid;
+}
+.mem{
+    border: lightgray 1px solid;
+}
+.title{
+    height: 40px;
+    width: 100%;
+    margin: 1% 0 1% 0;
+    border: lightgrey 1px solid;
+}
+.writedateCard{
+    border: lightgrey 1px solid;
+    height: 110px;
+    width: 100%;
+    margin: 1% 0 1% 0;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: left;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.writedateCard_top{
+    /* border: red 1px solid; */
+    height: 30%;
+    font-weight: bold;
+}
+.writedateCard_top p{
+    margin-left: 45%;
+}
+.writedateCard_top button{
+    float: right;
+}
+.updateSubDTO{
+    border: none;
+    margin-right: 5%;
+}
+.resetSubDTO{
+    border: none;
+    margin-right: 1%;
+}
+.writedateCard_foot{
+    margin-left: 5%;
+}
+.writedateCard_de{
+    /* border: 2px solid; */
+    background-color:whitesmoke ;
+    height: 80px;
+    width: 100%;
+    margin: 1% 0 1% 0;
+    border-radius: 5px;
+    padding: 10px;
+    cursor:pointer;
+}
+.writedateCard_de_text{
+    width: 100px;
+    height: 30px;
+    margin: auto;
+    margin-top: 3%;
+    color: gray;
+    font-weight: bold;
+}
+.writedateCard_de_text:hover{
+    text-decoration: underline;
+}
+.context{
+    width: 100%;
+    height: 400px;
+    margin: 1% 0 1% 0;
+    border: lightgrey 1px solid;
+}
+
+
+/* 커스텀 */
+.mapInput{
+    text-overflow:ellipsis;
+    outline:none;
+    font-size: 14px;
+    width:240px;
+    height: 32px;
+    box-shadow:0 2px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    margin-left: 6%;
+}
+.onCustomB{
+    border:0;
+    border-radius: 5px;
+    width: 60px;
+    height: 30px;
+    margin-left: 7%;
+    margin-top: 1%;
+    background-color: rgb(70, 70, 133);
+    color: white;
+}
+/********************* addPlace ********************/
+.bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.6;
+}
+.placeSearchForm {
+    border-radius: 2%;
+    width: 550px;
+    height: 550px;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 50%; 
+    padding: 30px;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%); 
+}
+.time{
+    margin-left: 10%;
+}
+.add{
+    border: 1px solid;
+}
+.placeContext {
+    border: 0;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    width: 100%;
+    height: 30%;
+    margin: 10px 0;
+    resize: none;
+    padding: 5px;
+}
+.placeContext:focus {
+    outline: none;
+    border: 0;
+}
+.placeCard {
+    background-color: lavender;
+    width: 100%;
+    height: 80px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 2% auto;
+    text-align: left;
+    cursor: pointer;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.placeImg{
+    float: right;
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+.timeItem {
+    display: inline-block;
+    text-align: center;
+    padding: 5px 16px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+.timeDiv {
+    margin:10px;
+    margin-top: 35px;;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    float: left;
+    white-space: wrap;
+    width: 81px ;
+    height: 81px ;
+    overflow: auto;
+    overflow-x: hidden;
+
+}
+.timeDiv::-webkit-scrollbar {
+    width:5px;
+}
+.timeDiv::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.timeDiv::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #194E8C;
+    cursor: pointer;
+}
+.xBut{
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+    border: 0;
+    margin-left: 45%;
+    border-radius: 5px;
+    background-color: rgb(70, 70, 133);
+    color: white;
+}
+.savebutton div{
+    float: left;
+}
+.save {
+    text-align: center;
+    width: 110px;
+    padding: 15px 20px;
+    background-color: rgb(70, 70, 133);
+    border-radius: 15px;
+    color: white;
+    border: 0;
+    cursor: pointer;
+    margin-left: 35%;
+}
+.reset{
+    text-align: center;
+    width: 110px;
+    padding: 15px 20px;
+    background-color: rgb(70, 70, 133);
+    border-radius: 15px;
+    color: white;
+    border: 0;
+    cursor: pointer;
+    margin-left: 1%;
+}
+.placeCardForm::-webkit-scrollbar {
+    width:7px;
+    height: 7px;
+}
+.placeCardForm::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.placeCardForm::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 7px;
+}
+.addButtons{
+    border:0;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    margin-left: 7%;
+    margin-top: 1%;
+    background-color: rgb(70, 70, 133);
+    color: white;
+}
+.searchCity{
+    margin-left: 17%;
+}
+.back{
+    border:0;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    margin-left: 20%;
+    margin-top: 1%;
+    background-color: rgb(70, 70, 133);
+    color: white;
+}
+.makeButtons{
+    border:0;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    margin-left: 18%;
+    margin-top: 1%;
+    background-color: rgb(70, 70, 133);
+    color: white;
+}
+@media (max-width: 599px) {
+    .placeSearchForm {
+        width: 90%;
+        min-height: 50%;
+    }
+}
