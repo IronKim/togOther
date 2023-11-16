@@ -21,9 +21,15 @@
 }
 .weather {
     border : 1px solid black;
-    width : 500px;
+    width : 250px;
     height : 70px;
-    margin : -70px 500px 0 0; 
+    margin : -70px 250px 0 0; 
+}
+.weatherIcon {
+    border : 1px solid blue;
+    width : 250px;
+    height : 70px;
+    margin : -70px 0 0 250px; 
 }
 .button {
     display: flex;
