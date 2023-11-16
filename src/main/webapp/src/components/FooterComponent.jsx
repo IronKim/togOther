@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+
 import styles from '../css/FooterComponent.module.css';
+
 
 
 const paragraphStyles = {
@@ -37,6 +39,7 @@ const FooterComponent = () => {
                         <span><em>관광사업등록번호</em><em>01234-0000-111111</em></span>
                         <address>서울특별시 강남구 강남대로94길 20 삼오빌딩 5-9층</address>
                     </div>
+
             <br />
 
             <div>

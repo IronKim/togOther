@@ -114,15 +114,11 @@ public class UserServiceImpl implements UserService{
 		
 	
 	}
-<<<<<<< HEAD
+
 
 	//포트원 통합인증 인증정보 조회
 	@Override
 	public ResponseEntity<SSODTO> processCertificationRequest(String impUid) {
-=======
-	
-	
->>>>>>> 99c187173fe560e724c4c8ee7a43ff5fefc1f224
 		
 		try {
             // 인증 토큰 발급 받기

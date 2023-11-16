@@ -22,7 +22,7 @@ const HeaderComponent = () => {
                 <nav className={ styles.nav }>
                     <ul>
                         <li><NavLink to='/' style={ linkStyle } className={ styles.activeL }>홈</NavLink></li>
-                        <li><NavLink to='/information' style={ linkStyle } activeClassName={ styles.activeLink } className={ styles.activeL }>여행정보</NavLink></li>
+                        <li><NavLink to='/info/cityList' style={ linkStyle } activeClassName={ styles.activeLink } className={ styles.activeL }>여행정보</NavLink></li>
                         <li><NavLink to='/travel' style={ linkStyle } className={ styles.activeL }>커뮤니티</NavLink></li>
                     </ul>
                 </nav>
