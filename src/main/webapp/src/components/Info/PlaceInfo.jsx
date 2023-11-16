@@ -63,7 +63,7 @@ const PlaceInfo = ({placeSeq}) => {
           {/* 다른 세부 정보 필드를 추가 */}
         </div>
       )}
-      <hr style={{width:"728px", display: "block", margin: "30px auto"}}/>
+      <hr style={{width:"728px", display: "block", margin: "30px auto" , borderWidth: "5px"}}/>
 
         
 

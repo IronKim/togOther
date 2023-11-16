@@ -53,7 +53,7 @@ const openGoogleMaps = () => {
     return (
       <div>
         <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
-          <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={17} gestureHandling='none' options={mapOptions}>
+          <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={16} gestureHandling='none' options={mapOptions}>
             <MarkerF position={center} icon={{markerImage, scaledSize: markerStyle}}></MarkerF>
           </GoogleMap>
         </LoadScript>
