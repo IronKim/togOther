@@ -3,6 +3,7 @@ import { HiArrowCircleRight } from 'react-icons/hi';
 
 const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData, checkEmail }) => {
   
+    const [passwordConfirm, setPasswordConfirm] = useState(''); // 비밀번호 확인 state 추가  
     const [year, setYear] = useState('');
     const [month, setMonth] = useState('');
     const [day, setDay] = useState('');
@@ -46,18 +47,16 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
 
   // 다음 단계로 넘어가는 함수
   const handleNext = async () => {
-    const requiredFields = ['email', 'pwd', 'name', 'birthday', 'gender'];
+    const requiredFields = ['email', 'pwd', 'name', 'gender'];
     let isValid = true;
     let updatedMessages = {};
   
     // 필수 필드들의 유효성 검사를 수행하고 메시지를 업데이트
     requiredFields.some((field) => {
-        if(field === 'birthday' && (year === '' || month === '' || day === '')) {
-            updatedMessages['birthday'] = '생년월일을 선택해주세요';
-            isValid = false;
-            return true;
-        }
+      
+      
       const message = validateField(field, inputUserData[field]);
+
       updatedMessages[field] = message;
       if (message !== '') {
         isValid = false;
@@ -66,18 +65,38 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
       return false; // 유효성 검사 메시지가 있는 첫 번째 필드 반환
     });
 
+
+
+    // 비밀번호와 비밀번호 확인 값이 다르면 에러 메시지 출력
+    if (updatedMessages == '' && inputUserData.pwd !== passwordConfirm) {
+      updatedMessages= {};
+      updatedMessages['pwd'] = '비밀번호가 일치하지 않습니다.';
+      isValid = false;
+    }
+
+
+    if(updatedMessages == '' && year === '' || month === '' || day === '') {
+      updatedMessages= {};
+      updatedMessages['birthday'] = '생년월일을 선택해주세요';
+      isValid = false;
+    }
+
+
     // 이메일 유효성 검사 수행
     const email = inputUserData.email;
     if (!email) {
+      updatedMessages= {};
       updatedMessages['email'] = 'email을(를) 입력해주세요';
       isValid = false;
     } else if (!validateEmail(email)) {
+      updatedMessages= {};
       updatedMessages['email'] = '올바른 email 형식을 입력해주세요';
       isValid = false;
     } else {
         try {
           const isEmailAvailable = await checkEmail(inputUserData.email);
           if (isEmailAvailable) {
+            updatedMessages= {};
             updatedMessages['email'] = '중복된 이메일입니다.';
             isValid = false;
           }
@@ -109,6 +128,11 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
     onInput(e);
+
+    // 비밀번호 확인 입력값이 변경되면 state 업데이트
+    if (name === 'pwdsw') {
+      setPasswordConfirm(value);
+    }
     
     if (name === 'email') {
       if (!validateEmail(value)) {
@@ -166,7 +190,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 maxLength={30}
                 required
             />
-            <label>이메일 입력<span > (@이외의 특수문자 제외, 30자 내외)</span></label>
+            <label>이메일 입력<span > (@이외의 특수문자 제외, 30자 이내)</span></label>
         </div>
 
           {validationMessages.email && <span style={{ color: 'red' }}>{validationMessages.email}</span>}
@@ -179,15 +203,14 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 maxLength={20}
                 required
             />
-            <label>비밀번호 입력<span > (20자 내외)</span></label>
+            <label>비밀번호 입력<span > (20자 이내)</span></label>
         </div>
           {validationMessages.pwd && <span style={{ color: 'red' }}>{validationMessages.pwd}</span>}
 
         <div className={styles.formGroup}>
             <input
                 type='password'
-                name='pwd'
-                value={inputUserData.pwd}
+                name='pwdsw'
                 onChange={onInput}
                 maxLength={20}
                 required
@@ -206,7 +229,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 readOnly={userData.name !== ''}
                 required
             />
-            <label>이름 입력<span > (30자 내외)</span></label>
+            <label>이름 입력<span > (30자 이내)</span></label>
         </div>
           {validationMessages.name && <span style={{ color: 'red' }}>{validationMessages.name}</span>}
         

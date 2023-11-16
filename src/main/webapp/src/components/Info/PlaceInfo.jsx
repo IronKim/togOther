@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPlaceBySeq } from '../../api/PlaceApiServeice';
+import { getPlaceBySeq } from '../../api/PlaceApiService';
 // import styles from '../../css/placepage.module.css';
 // import '../../css/placepage.module.css';
 import PlaceMap from './PlaceMap';

@@ -12,7 +12,6 @@ import com.finalProject.togOther.domain.CustomPlace;
 import com.finalProject.togOther.domain.Place;
 import com.finalProject.togOther.dto.CustomPlaceDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
-import com.finalProject.togOther.repository.CityRepository;
 import com.finalProject.togOther.repository.CustomPlaceRepository;
 import com.finalProject.togOther.repository.PlaceRepository;
 
@@ -22,6 +21,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class PlaceServiceImpl implements PlaceService {
 	private PlaceRepository placeRepository;
+
 	private CustomPlaceRepository customPlaceRepository;
 	
 	 public PlaceServiceImpl(PlaceRepository placeRepository,CustomPlaceRepository customPlaceRepository) {
@@ -70,6 +70,7 @@ public class PlaceServiceImpl implements PlaceService {
 			}
 		}
 
+
 		@Override
 		public int addCustomPlace(CustomPlaceDTO customPlaceDTO) {
 			CustomPlace customPlace = CustomPlace.toEntity(customPlaceDTO);
@@ -110,4 +111,7 @@ public class PlaceServiceImpl implements PlaceService {
 		}
 }
 
+
 		
+
+

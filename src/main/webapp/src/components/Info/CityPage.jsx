@@ -6,7 +6,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import CityMoneyApi from './CityMoneyApi';  
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCityBySeq } from '../../api/CityApiService';
-import { getPlaceListByCitySeq } from '../../api/PlaceApiServeice';
+import { getPlaceListByCitySeq } from '../../api/PlaceApiService';
 import WeatherIcon from '../../constants/WeatherIcon';
 import weatherData from '../../constants/WeatherData';
 
@@ -26,6 +26,7 @@ const CityPage = () => {
         getCityBySeq(citySeq)
             .then(res => {
                 setCity(res.data);
+                console.log(res);
                 setSelectedCity(res.data.cityName); // 선택된 도시 정보 업데이트
             })
             .catch(e => console.log(e));

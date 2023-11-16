@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.CustomPlaceDTO;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.finalProject.togOther.dto.CityDTO;
+
 import com.finalProject.togOther.dto.PlaceDTO;
 
 @RestController
@@ -21,11 +27,13 @@ public class PlaceController {
 	  public PlaceController(PlaceService placeService) {
 	      this.placeService = placeService;
 	   }
+
 	  
 	  @GetMapping(path= "getPlaceListByCitySeq/{citySeq}")
 	  public ResponseEntity<List<PlaceDTO>> getPlaceListByCitySeq(@PathVariable int citySeq) {
 		  return placeService.getPlaceListByCitySeq(citySeq);
 	  }
+
 	   
 	   @GetMapping(path = "getPlaceList")
 	   public ResponseEntity<List<PlaceDTO>> getPlaceList(Integer placeSeq) {
@@ -37,10 +45,12 @@ public class PlaceController {
 		   return placeService.getPlaceByPlaceSeq(placeSeq);
 	   }
 
+
 	   @PostMapping(path = "addCustomPlace")
 	   public int addCustomPlace(@RequestBody CustomPlaceDTO customPlaceDTO) {
 		   return placeService.addCustomPlace(customPlaceDTO);
 	   }
+
 
 	
 }

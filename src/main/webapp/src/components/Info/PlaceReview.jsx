@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { useState } from 'react';
 import PlaceReviewWrite from './PlaceReviewWrite';
 import PlaceReviewPhoto from './PlaceReviewPhoto';
-import { getPlaceReviewBySeq } from '../../api/PlaceApiServeice';
+import { getPlaceReviewBySeq } from '../../api/PlaceApiService';
 import { useEffect } from 'react';
 
 const PlaceReview = (placeSeq) => {
