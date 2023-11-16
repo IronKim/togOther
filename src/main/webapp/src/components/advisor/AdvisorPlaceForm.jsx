@@ -141,7 +141,7 @@ const AdvisorPlaceForm = ({selectedPlace,onInputPlace,getPlaceList, onTagChange,
 
             <div style={{width: '60em'}}>
 
-                <img className="rounded mx-auto d-block" src={image} onError={onErrorImg} alt='필수 이미지 링크' />
+                <img className={`${styles.defalutImg} rounded mx-auto d-block`} src={image} onError={onErrorImg} alt='필수 이미지 링크' />
 
                 <div className='input-group mb-3 mt-3'>
                     <span className='input-group-text'>🖼️</span>
@@ -156,7 +156,7 @@ const AdvisorPlaceForm = ({selectedPlace,onInputPlace,getPlaceList, onTagChange,
                     <label htmlFor='context1'>설명</label>
                 </div>
 
-                <img className="rounded mx-auto d-block" src={subImage1} onError={onErrorImg} alt='추가 이미지 링크1' />
+                <img className={`${styles.defalutImg} rounded mx-auto d-block`} src={subImage1} onError={onErrorImg} alt='추가 이미지 링크1' />
 
                 <div className='input-group mt-3 mb-3'>
                     <span className='input-group-text'>🖼️</span>
@@ -171,7 +171,7 @@ const AdvisorPlaceForm = ({selectedPlace,onInputPlace,getPlaceList, onTagChange,
                     <label htmlFor='context2'>설명</label>
                 </div>
 
-                <img className="rounded mx-auto d-block" src={subImage2} onError={onErrorImg} alt='추가 이미지 링크2' />
+                <img className={`${styles.defalutImg} rounded mx-auto d-block`} src={subImage2} onError={onErrorImg} alt='추가 이미지 링크2' />
                 
                 <div className='input-group mt-3 mb-3'>
                     <span className='input-group-text'>🖼️</span>

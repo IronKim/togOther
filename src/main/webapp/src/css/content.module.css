@@ -1,0 +1,164 @@
+@keyframes openCover{
+    0% {
+        transform: perspective(100vw) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(100vw) rotateY(-130deg);
+    }
+}
+@keyframes last{
+    50% {
+        transform: translateY(0%) scale(1);
+    }
+    70% {
+        transform: scale(0.8);
+    }
+    100% {
+        transform: translateY(200%);
+    }
+}
+@keyframes cover{
+    0% {
+        transform: perspective(100vw) rotateY(-130deg);
+    }
+    45% {
+        transform: perspective(100vw) rotateY(0deg);
+    }
+    55% {
+        transform: perspective(100vw) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(100vw) rotateY(-130deg);
+    }
+}
+@keyframes roll{
+    100% {
+        transform: perspective(100vw) rotateX(720deg);
+    }
+}
+@keyframes reRoll{
+    100% {
+        transform: perspective(100vw) rotateX(-720deg);
+    }
+}
+@keyframes fadeInD {
+    0% {
+        opacity: 1;
+    }
+    10% {
+        opacity: 0;
+    }
+    70% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.fadeInD {animation: fadeInD ease-in-out 3s;}
+.cover {animation: cover 3s;animation-fill-mode: forwards;}
+.roll {animation: roll 3s;}
+.reRoll {animation: reRoll 3s;}
+.fadeIn {animation: fadeIn 1.5s;}
+.openCover {animation: openCover 2s;animation-fill-mode: forwards;}
+.last {animation: last 4s;}
+
+.qsOutSection {
+    width: 35%;
+    height: 440px;
+    margin: 0 auto;
+    border: 1px solid darkgray;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), -2px 0 2px rgba(0, 0, 0, 0.2);
+}
+.qsSection {
+    position: absolute;
+    width: 35%;
+    height: 440px;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 0 10px 10px 0;
+    background-color: white;
+}
+.contentDiv {
+    display: inline-block;
+    width: 93%;
+}
+.chainDiv {
+    height: 100%;
+    display: inline-block;
+    width: 7%;
+    vertical-align: top;
+}
+.coverSection{
+    position: absolute;
+    width: calc(35% - 2px);
+    height: 440px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: lightgray;
+    transform: perspective(100vw) rotateY(-130deg);
+    border-left: 3px solid darkgray;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), -2px 0 2px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+.question {
+    width: 90%;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 21px;
+    font-weight: bold;
+}
+.answer {
+    width: 85%;
+    border:1.5px solid lightgray;
+    border-radius: 1px;
+    margin: 10px;
+    padding: 10px;
+    font-size: 15px;
+    background-color: whitesmoke;
+    opacity: 0.8;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.answer:hover {
+    border-color: black;
+    opacity: 1;
+}
+.prevBut {
+    width: 9%;
+    margin-left:20px;
+    float: left;
+    transition: 0.5s;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.prevBut img{
+    width: 100%;
+    transition: 1s;
+    opacity: 0.5;
+}
+.prevBut:hover img{
+    opacity: 1;
+}
+.calender{
+    width:25%;
+    margin: 20px auto;
+    transition: 1.8s ease-in-out;
+    padding: 10px 0 10px 0; 
+}
+.day{
+    text-align: center;
+    font-size: 2.4vw;
+    font-weight: bold;
+}

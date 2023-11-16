@@ -77,7 +77,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
 
     if(updatedMessages == '' && year === '' || month === '' || day === '') {
       updatedMessages= {};
-      updatedMessages['birthday'] = '생년월일을 선택해주세요' ;
+      updatedMessages['birthday'] = '생년월일을 선택해주세요';
       isValid = false;
     }
 

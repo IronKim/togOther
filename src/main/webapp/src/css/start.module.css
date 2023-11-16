@@ -1,0 +1,80 @@
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes startIn {
+    33% {transform: rotate(3deg)}
+    66% {transform: rotate(-3deg)}
+    100% {transform: rotate(0deg)}
+}
+@keyframes roll{
+    100% {
+        transform: perspective(100vw) rotateX(360deg);
+    }
+}
+@keyframes rollT{
+    33% {transform: rotate(3deg)}
+    66% {transform: rotate(-3deg)}
+    100% {transform: rotate(0deg)}
+}
+.fadeOut {animation: fadeOut 1.5s;animation-fill-mode: forwards;}
+.roll {animation: roll 1.5s;}
+
+.noteDiv {
+    width: calc(35% - 2px);
+    height: 440px;
+    margin: 0 auto;
+    text-align: center;
+    border-left: 3px solid darkgray;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4), -2px 0 2px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    overflow: hidden;
+}
+.contentDiv {
+    display: inline-block;
+    width: 93%;
+}
+.chainDiv {
+    height: 100%;
+    display: inline-block;
+    width: 7%;
+    vertical-align: top;
+}
+.calender{
+    width:25%;
+    margin: 20px auto;
+    padding: 10px 0 10px 0; 
+}
+.day{
+    text-align: center;
+    font-size: 2.4vw;
+    font-weight: bold;
+}
+.title {
+    width: 40%;
+    margin: 70px auto;
+    padding: 10%;
+    color:black;
+    font-size: 1.5vw;
+    font-weight: bold;
+    animation: rollT 6s linear infinite;
+    background-repeat: no-repeat;
+}
+.start {
+    background: none;
+    border: 0;
+    width: 5%;
+    margin: 40px auto;
+    padding: 12%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.start:hover {
+    transform-origin: 50% -250%;
+    animation: startIn 4s infinite;
+}

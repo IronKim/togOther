@@ -2,6 +2,8 @@ import React from 'react';
 import { addCity, updateCity } from '../../api/AdvisorApiService';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
+import styles from '../../css/advisor.module.css';
+
 const AdvisorCityForm = ({selectedCity, onInputCity, getCityList, onErrorImg}) => {
 
     const {citySeq, continentName, countryName, cityName, cityImage } = selectedCity
@@ -70,7 +72,7 @@ const AdvisorCityForm = ({selectedCity, onInputCity, getCityList, onErrorImg}) =
                                 </div>
                             </div>
                       
-                            <img className="rounded mx-auto d-block" src={cityImage} alt='도시 대표이미지 ' onError={onErrorImg}/>
+                            <img className={`${styles.defalutImg} rounded mx-auto d-block`} src={cityImage} alt='도시 대표이미지 ' onError={onErrorImg}/>
                             <button className="btn btn-success m-5 " type='button' onClick={citySeq === '0' ? create : update}>{citySeq === '0' ? '추가': '수정'}</button>
                         </Form>
                         )

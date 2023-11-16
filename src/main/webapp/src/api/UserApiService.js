@@ -1,10 +1,10 @@
 import { apiClient } from './ApiClient';
 
+export const addUser = (user) => apiClient.post('api/user/addUser', user);
 
-export const retrieveMain = () => apiClient.get('/');
+export const certificationRequest = (requestBody) => apiClient.post('api/user/handleCertificationRequest', requestBody);
 
-export const retrieveCityList = () => apiClient.get('/getCityList');
+export const getUserByEmail = (userEmail) => apiClient.get(`api/user/getUserByEmail/${userEmail}`);
 
-export const retrievePlaceList = (id) => apiClient.get(`/getPlaceList/${id}`);
 
 

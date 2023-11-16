@@ -1,27 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/advisor/Sidebar';
 import Dashboard from '../components/advisor/Dashboard';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../css/advisor.module.css';
 import AdvisorHeader from '../components/advisor/AdvisorHeader';
+import { ADVISORTAG } from '../constants/ADVISORTAG';
 
 const Advisor = () => {
 
-    const tags = [
-        '사용자 관리',
-        '도시 관리',
-        '장소 관리'
-    ]
+    const [tags, setTags] = useState([])
 
-    const [currentTag, setCurrentTag] = useState(tags[0]);
+    //관리자페이지 태그 불러오기
+    useEffect(() => {
+
+        const newTags = [];
+
+        for (const key in ADVISORTAG) {
+
+            if (ADVISORTAG.hasOwnProperty(key)) {
+              const value = ADVISORTAG[key];
+              newTags.push(value);
+            }
+          }  
+
+          setTags(newTags);
+
+    }, [])
+
+    //선택된 현재 태그
+    const [currentTag, setCurrentTag] = useState();
+
+    console.log(currentTag);
 
     return (
         <div> 
-            <AdvisorHeader />
+            <AdvisorHeader styles={styles} />
             <div className={styles.container} > 
-                <Sidebar className={styles.item} tags={tags} setCurrentTag={setCurrentTag}  />
-                <Dashboard className={styles.item} currentTag={currentTag} />
+                <Sidebar className={styles.item} styles={styles} currentTag={currentTag} tags={tags} setCurrentTag={setCurrentTag}  />
+                <Dashboard className={styles.item}  styles={styles} currentTag={currentTag} />
             </div>
         </div>
     );

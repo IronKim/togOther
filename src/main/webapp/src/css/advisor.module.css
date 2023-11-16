@@ -1,9 +1,5 @@
-.container {
-    display: flex;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 5em;
+:root {
+    --sidebar-width: 15em;
 }
 
 .advisorHeader {
@@ -11,28 +7,171 @@
     width: 100%;
     height: 5em;
     top: 0em;
-
     background: #90e5ff;
+}
 
+.advisorHeader .logoImg {
+    height: 5em;
+    position: absolute;
+    left: 0;
+    
+}
+
+.container {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    top: 5em;
+}
+
+.container .item {
+    
 }
 
 .sidebar {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 20em;
-    background: rgb(255, 244, 144);
+    width: var(--sidebar-width);
+    min-height: 60em;
+    max-height: 100%;
+    background: #7DA8DC;
+}
+
+.sidebar .tagBtn {
+    margin: 1em;
+    padding: 1.3em;
+    width: 13em;
+    border-radius: 20px;
+    border: none;
+    background-color: #C8DAEF;
+   
+}
+
+.tagBtn:hover {
+    background-color: #4275B4;
+}
+
+.tagBtn.active {
+    background-color: #4275B4;
 }
 
 .dashboard {
-    width: 100%;
+
+    width: calc(100% - var(--sidebar-width));
     background: #f8faff;
 }
 
-img {
-    width: 500px;
-    height: 500px;
+.userTable {
+    border: 1px #a39485 solid;
+    font-size: .9em;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+ .userTable th {
+    text-align: left;
+  }
+    
+  .userTable thead {
+    font-weight: bold;
+    color: #fff;
+    background: #73685d;
+  }
+    
+  .userTable td,.userTable th {
+    padding: 1em .5em;
+    vertical-align: middle;
+  }
+
+  .userTable .info:hover td {
+    background-color: #f0f0f0; 
+  }
+
+  .userTable .active td{
+    background-color: #f0f0f0; 
+  }
+    
+  .userTable td {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    background: #fff;
+  }
+
+  .userDetail {
+    width: 100%;
+    display: flex;
+    min-height: 9em;
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  .hideScrollbar {
+    overflow-y: auto;
+    max-height: 350px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  } 
+
+  .hideScrollbar::-webkit-scrollbar { /* WebKit */
+      display: none;
+  }
+
+  .defalutImg {
+    width: 30em;
+    height: 30em;
     object-fit: cover;
-}
+    border-radius: 50%;
+    margin: 10px;
+  }
+
+   /* @media all and (max-width: 1200px) {
+      
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+    
+    th {
+      text-align: right;
+    }
+    
+    table {
+      position: relative; 
+      padding-bottom: 0;
+      border: none;
+      box-shadow: 0 0 10px rgba(0,0,0,.2);
+    }
+    
+    thead {
+      float: left;
+      white-space: nowrap;
+    }
+    
+    tbody {
+      overflow-x: auto;
+      overflow-y: hidden;
+      position: relative;
+      white-space: nowrap;
+    }
+    
+    tr {
+      display: inline-block;
+      vertical-align: top;
+    }
+    
+    th {
+      border-bottom: 1px solid #a39485;
+    }
+    
+    td {
+      border-bottom: 1px solid #e5e5e5;
+    }
+    
+    
+    } */
 
 
+    
+  

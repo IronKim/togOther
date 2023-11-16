@@ -1,5 +1,9 @@
 package com.finalProject.togOther.domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import org.hibernate.annotations.ColumnDefault;
 
 import com.finalProject.togOther.dto.RegisterDTO;
@@ -35,8 +39,10 @@ public class User {
 	private String pwd;
 	//이름
 	private String name;
-	//나이
-	private int age;
+	//생년월일
+	private LocalDate birthday;
+	//핸드폰 번호
+	private String phone;
 	//성별
 	@ColumnDefault("M")
 	private String gender;
@@ -62,6 +68,8 @@ public class User {
 	//고정도시
 	private String cityFix;
 	
+	private byte certification;
+	
 	public static User toEntity(UserDTO userDTO) {
 		return User.builder()
 				   .userSeq(userDTO.getUserSeq())
@@ -69,7 +77,8 @@ public class User {
 				   .id(userDTO.getId())
 				   .pwd(userDTO.getPwd())
 				   .name(userDTO.getName())
-				   .age(userDTO.getAge())
+				   .birthday(userDTO.getBirthday())
+				   .phone(userDTO.getPhone())
 				   .gender(userDTO.getGender())
 				   .national(userDTO.getNational())
 				   .profileImage(userDTO.getProfileImage())
@@ -91,7 +100,8 @@ public class User {
 				   .id(registerDTO.getId())
 				   .pwd(registerDTO.getPwd())
 				   .name(registerDTO.getName())
-				   .age(registerDTO.getAge())
+				   .birthday(registerDTO.getBirthday())
+				   .phone(registerDTO.getPhone())
 			       .gender(registerDTO.getGender())
 				   .national(registerDTO.getNational())
 				   .profileImage(registerDTO.getProfileImage())
@@ -99,6 +109,7 @@ public class User {
 				   .likingFood(registerDTO.getLikingFood())
 				   .likingTrip(registerDTO.getLikingTrip())
 				   .mBTI(registerDTO.getMBTI())
+				   .certification(registerDTO.getCertification())
 				   .build();
 	}
 	

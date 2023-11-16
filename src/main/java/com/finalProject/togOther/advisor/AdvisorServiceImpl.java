@@ -99,6 +99,38 @@ public class AdvisorServiceImpl implements AdvisorService {
 		
 	}
 	
+	//컬럼 유저 조회
+	@Override
+	public ResponseEntity<List<UserDTO>> getUserByColumn(String column, String value) {
+		
+		try {
+			
+			List<User> userList = new ArrayList<User>();
+			
+			if(column.equals("email")) {
+				userList = userRepository.findListByEmail(value);
+				
+			}else if(column.equals("name")) {
+				userList = userRepository.findListByName(value);
+			}
+			
+			List<UserDTO> userDTOList = new ArrayList<UserDTO>();
+			
+			for (User user : userList) {
+				
+				UserDTO userDTO = UserDTO.toDTO(user);
+				
+				userDTOList.add(userDTO);
+			}
+				
+			return ResponseEntity.ok(userDTOList);
+		
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
 	//유저 조회 아이디
 	@Override
 	public ResponseEntity<UserDTO> getUserById(String id) {
@@ -341,6 +373,8 @@ public class AdvisorServiceImpl implements AdvisorService {
 		}
 		
 	}
+
+	
 
 	
 	
