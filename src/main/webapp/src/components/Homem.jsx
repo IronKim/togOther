@@ -213,7 +213,7 @@ const Homem = () => {
                                             <img className={ sty.img } src={selectedCity.cityImage} alt={selectedCity.cityName} />
                                         </div>
                                     )}
-            </div>
+      </div>
     </div>
   );
 };

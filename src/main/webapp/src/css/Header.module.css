@@ -4,48 +4,47 @@
     width: 100%;
     height: 100%;
     top: 5em;
+}
   
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 30px 70px 20px;
-    background-color:white;  
-    font-size: 20px;
-    font-family: 'BMJUA';
-  }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px 70px 20px;
+  background-color:white;  
+  font-size: 20px;
+  font-family: 'BMJUA';
+}
 
-  .logo {
-    margin-right: 40px;
-    }
+.logo {
+  margin-right: 40px;
+}
   
-  .logo img {
-    width: 200px;
-    height: auto;
-  }
+.logo img {
+  width: 200px;
+  height: auto;
+}
   
-  .nav ul {
-    list-style: none;
-    display: flex;
-    padding: 0;
-    margin: 0;
-  }
+.nav ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
   
-  .nav ul li {
-    margin-right: 30px;
-  }
+.nav ul li {
+  margin-right: 30px;
+}
   
-  .nav ul li:last-child {
-    margin-right: 20;
-    margin-left: 5000;
-  }
+.nav ul li:last-child {
+  margin-right: 20;
+  margin-left: 5000;
+}
 
-  .login_section {
-    display: flex;
-    align-items: left;
-    margin-left: auto;
+.login_section {
+  display: flex;
+  align-items: left;
+  margin-left: auto;
 }
 
 @font-face {
@@ -56,21 +55,21 @@
 }
 
 .activeLink {
-    color: cadetblue;
+  color: cadetblue;
 }
   
-  @media (max-width: 1199px) {
-    .header {
-      display: none;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-    }
+@media (max-width: 1199px) {
+  .header {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
+}
 
-  @media (min-width: 1200px) {
-    .header {
-      width: 1200px;
-      margin: 0 auto;
-    }
+@media (min-width: 1200px) {
+  .header {
+    width: 1200px;
+    margin: 0 auto;
   }
+}

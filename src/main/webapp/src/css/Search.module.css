@@ -1,83 +1,83 @@
 .search_container {
-    display: none;
-    justify-content: center;
-    align-items: center;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 1200px;
+  font-family: 'BMJUA';
+  padding: 0 0 30px 0;
+}
+
+.search_container input[type="text"] {
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  margin-right: -70px;
+}
+  
+.search_container button {
+  width: 100px;
+  font-size: 20px;
+  background-color: #2E8DFF;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  margin-left: 100px;
+  cursor: pointer;
+}
+  
+.search_container button:hover {
+  background-color:#194E8C;
+}
+
+.search_input_wrapper {
+  position: relative;
+}
+  
+.search_icon_wrapper {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+  
+.search_icon {
+  font-size: 18px;
+}
+  
+.search_input {
+  padding-left: 30px;
+}
+
+@font-face {
+  font-family: 'BMJUA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media (min-width: 1200px) {
+  .search_container {
+    display: flex;
     width: 1200px;
-    font-family: 'BMJUA';
-    padding: 0 0 30px 0;
+    margin: 0 auto;
   }
-
   .search_container input[type="text"] {
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    margin-right: -70px;
+    padding: 15px 15px 15px 42px;
+    width: 500px;
   }
-  
   .search_container button {
-    width: 100px;
-    font-size: 20px;
-    background-color: #2E8DFF;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    margin-left: 100px;
-    cursor: pointer;
+    padding: 14px 20px;
   }
-  
-  .search_container button:hover {
-    background-color:#194E8C;
-  }
+}
 
-  .search_input_wrapper {
-    position: relative;
-  }
-  
-  .search_icon_wrapper {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-  }
-  
-  .search_icon {
-    font-size: 18px;
-  }
-  
-  .search_input {
-    padding-left: 30px;
-  }
-
-  @font-face {
-    font-family: 'BMJUA';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  @media (min-width: 1200px) {
-    .search_container {
-      display: flex;
-      width: 1200px;
-      margin: 0 auto;
-    }
-    .search_container input[type="text"] {
-      padding: 15px 15px 15px 42px;
-      width: 500px;
-    }
-    .search_container button {
-      padding: 14px 20px;
-    }
-  }
-
-  @media (max-width: 1199px) {
-    .search_container {
-      display: flex;
-      bottom: 0;
-      margin: 0 auto;
-      width: 100%;
-      margin-bottom: 40px;
-      margin-top: 20px;
+@media (max-width: 1199px) {
+  .search_container {
+    display: flex;
+    bottom: 0;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 40px;
+    margin-top: 20px;
   }
   .search_container input[type="text"] {
     padding: 10px 10px 10px 42px;
@@ -86,4 +86,4 @@
   .search_container button {
     padding: 10px 20px;
   }
-  }
+}
