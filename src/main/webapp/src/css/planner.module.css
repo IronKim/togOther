@@ -248,6 +248,8 @@
 }
 .nDayText {
     width: 100%;
+    background-size: 260px;
+    line-height: 21.65px;
     resize: none;
     overflow:hidden;
     border: none;
@@ -435,6 +437,10 @@
     cursor: pointer;
     overflow: auto;
     overflow-x: hidden;
+    transition: 0.5s;
+} 
+.placeCard:hover{
+   background-color: rgb(205, 205, 255);
 } 
 .placeContextP{
     width: 70%;

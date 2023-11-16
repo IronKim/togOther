@@ -249,7 +249,7 @@ const PlaceClick = (pl,cu) =>{
                 {/* 장소들어갈 박스 */}
                 {
                 subDTO.place !== null && 
-                    <div className={styles.placeCard}>
+                    <div className={styles.placeCard} onClick={onSearchSelect}>
                         {subDTO.place.name}
                         <img src={subDTO.place.image}  className={styles.placeImg} />
                         <br/><br/>
@@ -258,7 +258,7 @@ const PlaceClick = (pl,cu) =>{
                 }
                 {
                 subDTO.customDTO !== null &&
-                    <div className={styles.placeCard}>
+                    <div className={styles.placeCard} onClick={onSearchSelect}>
                         {subDTO.customDTO.placeName}
                         <br/><br/>
                         <p className={styles.placeContextP}>{subDTO.customDTO.address}</p>
@@ -268,8 +268,9 @@ const PlaceClick = (pl,cu) =>{
                 <textarea rows="5" cols="40" value={subDTO.context} className={styles.addPlaceContext}
                 onChange={(e) => setSubDTO({...subDTO,context : e.target.value}) } />
                 <br/>
-                <img className={styles.xBut} style={{float:'right' , margin:'4px'}} 
-                onClick={upDTO === undefined ?  () => onSave(subDTO) : () => onUpdate(upDTO,subDTO)}  src={plusBut}/> 
+                <button style={{float:'left'}} className={styles.buttons} 
+                onClick={upDTO === undefined ?  () => onSave(subDTO) : () => onUpdate(upDTO,subDTO)}>등록</button>
+      
             </div>}
                 {/*  */}
 
@@ -312,7 +313,7 @@ const PlaceClick = (pl,cu) =>{
                                 onClick={onSearch}  src={backBut}/> 
                                 {/* 커스텀으로 간다 */}
                                 {searchCity === '' && (
-                                    <button style={{float:'right'}} className={styles.buttons} onClick={onCustom}>장소 생성</button>
+                                    <button style={{float:'right'}} className={styles.buttons} onClick={onCustom}>지도로 찾기</button>
                                     )}
                                 <div style={{clear:'left'}}></div>
                                 {/* 검색 */}
