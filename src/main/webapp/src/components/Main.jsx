@@ -33,7 +33,9 @@ const Main = () => {
                         <Route path='city/:citySeq' element={ <City />}/>
                     </Route>
                     <Route path='planner' element= { <Planner />} />
-                    <Route path='place' element= { <Together/> } />
+                    <Route path='community'>
+                        <Route path='togetherWrite' element= { <Together/> } />
+                    </Route>
                 </Routes>
 
                 <FooterComponent />

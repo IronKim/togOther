@@ -19,7 +19,7 @@ public class TogetherController {
 	}
 
 	@PostMapping(path = "addTogether")
-	public ResponseEntity<String> addTogether(@RequestBody TogetherDTO togetherDTO) {
+	public ResponseEntity<Integer> addTogether(@RequestBody TogetherDTO togetherDTO) {
 		return togetherService.addTogether(togetherDTO);
 	}
 }

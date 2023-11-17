@@ -24,6 +24,7 @@ public class Together {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int togetherSeq;
 	private int userSeq;
+	private byte code;
 	private String title;
 	private LocalDate startDate;
 	private LocalDate endDate;
@@ -34,6 +35,7 @@ public class Together {
 		return Together.builder()
 					   .togetherSeq(togetherDTO.getTogetherSeq())
 					   .userSeq(togetherDTO.getUserSeq())
+					   .code(togetherDTO.getCode())
 					   .title(togetherDTO.getTitle())
 					   .startDate(togetherDTO.getStartDate())
 					   .endDate(togetherDTO.getEndDate())

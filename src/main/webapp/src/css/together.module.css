@@ -6,6 +6,7 @@
     top: 0;
     background: #000;
     opacity: 0.6;
+    
 }
 input:focus {outline: 2px solid #194E8C;}
 textarea:focus {outline: 2px solid #194E8C;}
@@ -16,7 +17,6 @@ textarea{
     display: inline-block;
     vertical-align: top;
     padding: 15px 0;
-    margin-left: 13%;
 }
 .addPlace{
     border: 0;
@@ -50,6 +50,10 @@ textarea{
     overflow: auto;
     overflow-x: hidden;
 } 
+.placeCardDiv{
+    border: 1px solid red;
+    height: 100px;
+}
 .placeContextP{
     width: 70%;
     float: left;
@@ -58,7 +62,10 @@ textarea{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
+.placeSearchCon{
+    /* border: 1px solid red; */
+    margin-bottom: -200px;
+}
 .placeCardForm td{
     width: 70%;
     float: left;
@@ -79,13 +86,9 @@ textarea{
     width: 150px;
 }
 /* WriteForm */
-@media (min-width: 1199px) {
-    .writeForm{
-        width: 1200px; 
-    }
-}
 .writeForm{
     margin:auto;
+    width: 1200px; 
     /* border: 1px solid; */
 }
 .writeFormInner{
@@ -168,8 +171,6 @@ textarea{
     margin: 1% 0 1% 0;
     border: lightgrey 1px solid;
 }
-
-
 /* 커스텀 */
 .mapInput{
     text-overflow:ellipsis;
@@ -212,6 +213,7 @@ textarea{
     padding: 30px;
     box-sizing: border-box;
     transform: translate(-50%, -50%); 
+    z-index: 500;
 }
 .time{
     margin-left: 10%;
@@ -258,20 +260,24 @@ textarea{
     font-size: 17px;
     font-weight: bold;
     cursor: pointer;
-
+    
+}
+.timeDiv p{
+    text-align: center;
+    font-size: 18px;
+    color: gray;
 }
 .timeDiv {
     margin:10px;
     margin-top: 35px;;
     border-radius: 5px;
     background-color: whitesmoke;
-    float: left;
+    float: right;
     white-space: wrap;
     width: 81px ;
     height: 81px ;
     overflow: auto;
-    overflow-x: hidden;
-
+    overflow-x: hidden; 
 }
 .timeDiv::-webkit-scrollbar {
     width:5px;
@@ -285,14 +291,29 @@ textarea{
     cursor: pointer;
 }
 .xBut{
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+.onScheduleDiv{
     width: 60px;
     height: 30px;
-    cursor: pointer;
+    margin:auto;
+}
+.onSchedule{
+    width: 60px;
+    height: 30px;
     border: 0;
-    margin-left: 45%;
     border-radius: 5px;
     background-color: rgb(70, 70, 133);
     color: white;
+}
+.savebutton{
+    margin: auto 0;
+    width: 230px;
+    height: 50px;;
+    /* border: 1px solid; */
+    margin: auto;
 }
 .savebutton div{
     float: left;
@@ -306,7 +327,6 @@ textarea{
     color: white;
     border: 0;
     cursor: pointer;
-    margin-left: 35%;
 }
 .reset{
     text-align: center;
@@ -317,7 +337,7 @@ textarea{
     color: white;
     border: 0;
     cursor: pointer;
-    margin-left: 1%;
+    margin-left: 3px;
 }
 .placeCardForm::-webkit-scrollbar {
     width:7px;
@@ -335,37 +355,86 @@ textarea{
     border-radius: 5px;
     width: 100px;
     height: 30px;
-    margin-left: 7%;
     margin-top: 1%;
     background-color: rgb(70, 70, 133);
     color: white;
 }
+.searchCityDiv{
+    width: 300px;
+    height: 30px;
+    margin: auto;
+}
 .searchCity{
-    margin-left: 17%;
+    width: 300px;
+    height: 30px;
+}
+.backDiv{
+    width: 100px;
+    height: 30px;
 }
 .back{
     border:0;
     border-radius: 5px;
     width: 100px;
     height: 30px;
-    margin-left: 20%;
-    margin-top: 1%;
     background-color: rgb(70, 70, 133);
     color: white;
 }
+.customGoDiv{
+    width: 100px;
+    height: 100%;
+    margin: auto;
+}
 .makeButtons{
+    margin-top: 10%;
     border:0;
     border-radius: 5px;
     width: 100px;
     height: 30px;
-    margin-left: 18%;
-    margin-top: 1%;
     background-color: rgb(70, 70, 133);
     color: white;
 }
-@media (max-width: 599px) {
+
+@media (max-width: 1199px) {
+    .writeForm{
+        margin:auto;
+        width: 90%; 
+        /* border: 1px solid; */
+    }
+    .writedateCard_de{
+        height: 50px;
+    }
+    .writedateCard_de_text{
+        /* border: solid 1px; */
+        height: 15px;
+        width: 60px;
+    }
+    .save {
+        width: 80px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .reset{
+        width: 80px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .savebutton{
+        width: 170px;
+        height: 50px;;
+        /* border: 1px solid; */
+    }
+    .context{
+        height: 300px;
+    }
+    
+}
+@media (max-width: 500px){
+    /* search */
     .placeSearchForm {
-        width: 90%;
-        min-height: 50%;
+        border-radius: 2%;
+        width: 95%;
+        height: 550px;
+        padding: 30px;
     }
 }

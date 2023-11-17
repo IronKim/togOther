@@ -18,11 +18,8 @@ import jakarta.transaction.Transactional;
 public class TogetherServiceImpl implements TogetherService {
 
 	private CityRepository cityRepository;
-
 	private PlaceRepository placeRepository;
-
 	private UserRepository userRepository;
-
 	private TogetherRepository togetherRepository;
 
 	public TogetherServiceImpl(CityRepository cityRepository, PlaceRepository placeRepository,
@@ -34,19 +31,22 @@ public class TogetherServiceImpl implements TogetherService {
 	}
 
 	@Override
-	public ResponseEntity<String> addTogether(TogetherDTO togetherDTO) {
+	public ResponseEntity<Integer> addTogether(TogetherDTO togetherDTO) {
 
 		Together together = Together.toEntity(togetherDTO);
 		try {
 			togetherRepository.save(together);
-
-			String responseMessage = "동행이 추가되었습니다.";
-
-			return ResponseEntity.ok(responseMessage);
+			
+			int togetherSeq = together.getTogetherSeq();
+			
+			return ResponseEntity.ok(togetherSeq);
+			
 		} catch (Exception e) {
-			String errorMessage = "동행 추가 중 오류가 발생했습니다.";
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+			
+			return ResponseEntity.ok(-1);
+			
 		}
+		
 
 	}
 
