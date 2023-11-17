@@ -2,8 +2,6 @@ package com.finalProject.togOther.dto;
 
 
 import com.finalProject.togOther.domain.PlannerImage;
-import com.finalProject.togOther.domain.PlannerText;
-import com.finalProject.togOther.domain.SubItem;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,11 +24,11 @@ public class PlannerImageDTO {
 	public static PlannerImageDTO toDTO(PlannerImage plannerImage) {
 		
 		return PlannerImageDTO.builder()
-				.plImageSeq(plannerImage.getPlImageSeq())
-				.plMainSeq(plannerImage.getPlMainSeq())
-				.nday(plannerImage.getNday())
-				.image(plannerImage.getImage())
-				.build();
+							  .plImageSeq(plannerImage.getPlImageSeq())
+							  .plMainSeq(plannerImage.getPlMainSeq())
+							  .nday(plannerImage.getNday())
+							  .image(plannerImage.getImage())
+							  .build();
 	}
 	
 }

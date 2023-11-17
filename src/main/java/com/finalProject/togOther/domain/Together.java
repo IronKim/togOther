@@ -1,6 +1,6 @@
 package com.finalProject.togOther.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.finalProject.togOther.dto.TogetherDTO;
 
@@ -25,8 +25,8 @@ public class Together {
 	private int togetherSeq;
 	private int userSeq;
 	private String title;
-	private Date startDate;
-	private Date endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	private String context;
 	private int tnum;
 	

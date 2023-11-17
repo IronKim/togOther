@@ -1,8 +1,6 @@
 package com.finalProject.togOther.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import com.finalProject.togOther.domain.User;
 
@@ -58,25 +56,25 @@ public class UserDTO {
 	
 	public static UserDTO toDTO(User user) {
 		return UserDTO.builder()
-				   .userSeq(user.getUserSeq())
-				   .email(user.getEmail())
-				   .id(user.getId())
-				   .pwd(user.getPwd())
-				   .name(user.getName())
-				   .birthday(user.getBirthday())
-				   .phone(user.getPhone())
-				   .gender(user.getGender())
-				   .national(user.getNational())
-				   .profileImage(user.getProfileImage())
-				   .profileText(user.getProfileText())
-				   .likingFood(user.getLikingFood())
-				   .likingTrip(user.getLikingTrip())
-				   .mBTI(user.getMBTI())
-				   .coin(user.getCoin())
-				   .dupLogin(user.getDupLogin())
-				   .cityList(user.getCityList())
-				   .cityFix(user.getCityFix())
-				   .build();
+				      .userSeq(user.getUserSeq())
+				      .email(user.getEmail())
+				      .id(user.getId())
+				      .pwd(user.getPwd())
+				      .name(user.getName())
+				      .birthday(user.getBirthday())
+				      .phone(user.getPhone())
+				      .gender(user.getGender())
+				      .national(user.getNational())
+				      .profileImage(user.getProfileImage())
+				      .profileText(user.getProfileText())
+				      .likingFood(user.getLikingFood())
+				      .likingTrip(user.getLikingTrip())
+				      .mBTI(user.getMBTI())
+				      .coin(user.getCoin())
+				      .dupLogin(user.getDupLogin())
+				      .cityList(user.getCityList())
+				      .cityFix(user.getCityFix())
+				      .build();
 	}
 	
 }

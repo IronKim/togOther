@@ -27,12 +27,12 @@ public class PlaceReviewDTO {
 
 	public static PlaceReviewDTO toDTO(PlaceReview placeReview) {
 		return PlaceReviewDTO.builder()
-				.reviewSeq(placeReview.getReviewSeq())
-				.placeSeq(placeReview.getPlaceSeq())
-				.userSeq(placeReview.getUserSeq())
-				.date(placeReview.getDate())
-				.context(placeReview.getContext())
-				.image(placeReview.getImage())
-				.build();
+							 .reviewSeq(placeReview.getReviewSeq())
+							 .placeSeq(placeReview.getPlaceSeq())
+							 .userSeq(placeReview.getUserSeq())
+							 .date(placeReview.getDate())
+							 .context(placeReview.getContext())
+							 .image(placeReview.getImage())
+							 .build();
 	}
 }

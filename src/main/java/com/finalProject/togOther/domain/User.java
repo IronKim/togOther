@@ -1,8 +1,6 @@
 package com.finalProject.togOther.domain;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.hibernate.annotations.ColumnDefault;
 

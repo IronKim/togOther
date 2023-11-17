@@ -8,9 +8,7 @@ import com.finalProject.togOther.dto.CityDTO;
 
 public interface CityService {
 
-   public List<CityDTO> getCityList(String countryName);
-
-   public ResponseEntity<CityDTO> getCityByCitySeq(int citySeq);
+	public ResponseEntity<CityDTO> getCityByCitySeq(int citySeq);
 
 	public ResponseEntity<List<CityDTO>> getCityList();
 

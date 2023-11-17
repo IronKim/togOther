@@ -14,6 +14,6 @@ public interface UserService {
 	public ResponseEntity<RegisterDTO> getUserByEmail(String userEmail);
 
 	public ResponseEntity<SSODTO> processCertificationRequest(String impUid);
-	
+
 	public ResponseEntity<Boolean> isUserExistsByPhone(String phone);
 }

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styles from '../../css/start.module.css'
-import covers from '../../img/cover.png'
-import coverChain from '../../img/coverChain.jpg'
-import calender from '../../img/calender.png'
-import title from '../../img/title.png'
-import start from '../../img/start.png'
+import covers from '../../assets/image/mbti/cover.png'
+import coverChain from '../../assets/image/mbti/coverChain.jpg' 
+import calender from '../../assets/image/mbti/calender.png'
+import title from '../../assets/image/mbti/title.png'
+import start from '../../assets/image/mbti/start.png'
 
 const Start = (props) => {
     const {nextStatus} = props

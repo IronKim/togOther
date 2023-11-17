@@ -2,7 +2,6 @@ package com.finalProject.togOther.dto;
 
 
 import com.finalProject.togOther.domain.PlannerText;
-import com.finalProject.togOther.domain.SubItem;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ import lombok.Setter;
 public class PlannerTextDTO {
 	private int plTextSeq;
 	private int plMainSeq;
-	private String id;
+	private byte id;
 	private int nday;
 	private int orders;
 	private String context;
@@ -27,13 +26,13 @@ public class PlannerTextDTO {
 	public static PlannerTextDTO toDTO(PlannerText plannerText) {
 		
 		return PlannerTextDTO.builder()
-				.plTextSeq(plannerText.getPlTextSeq())
-				.plMainSeq(plannerText.getPlMainSeq())
-				.id(plannerText.getId())
-				.nday(plannerText.getNday())
-				.orders(plannerText.getOrders()) //0 플래너 1 동행 2 둘다
-				.context(plannerText.getContext())
-				.build();
+							 .plTextSeq(plannerText.getPlTextSeq())
+							 .plMainSeq(plannerText.getPlMainSeq())
+							 .id(plannerText.getId())
+							 .nday(plannerText.getNday())
+							 .orders(plannerText.getOrders()) //0 플래너 1 동행 2 둘다
+							 .context(plannerText.getContext())
+							 .build();
 	}
 	
 }

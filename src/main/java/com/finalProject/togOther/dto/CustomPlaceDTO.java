@@ -2,13 +2,7 @@ package com.finalProject.togOther.dto;
 
 
 import com.finalProject.togOther.domain.CustomPlace;
-import com.finalProject.togOther.domain.PlannerImage;
-import com.finalProject.togOther.domain.PlannerText;
-import com.finalProject.togOther.domain.SubItem;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,12 +27,12 @@ public class CustomPlaceDTO {
 	public static CustomPlaceDTO toDTO(CustomPlace customPlace) {
 		
 		return CustomPlaceDTO.builder()
-				.plCustomSeq(customPlace.getPlCustomSeq())
-				.placeName(customPlace.getPlaceName())
-				.address(customPlace.getAddress())
-				.latitude(customPlace.getLatitude())
-				.longitude(customPlace.getLongitude())
-				.build();
+							 .plCustomSeq(customPlace.getPlCustomSeq())
+							 .placeName(customPlace.getPlaceName())
+							 .address(customPlace.getAddress())
+							 .latitude(customPlace.getLatitude())
+							 .longitude(customPlace.getLongitude())
+							 .build();
 	}
 	
 	

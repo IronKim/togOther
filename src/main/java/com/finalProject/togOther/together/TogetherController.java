@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.finalProject.togOther.dto.CityDTO;
 import com.finalProject.togOther.dto.TogetherDTO;
 
 @RestController
@@ -14,13 +13,13 @@ import com.finalProject.togOther.dto.TogetherDTO;
 public class TogetherController {
 
 	private TogetherService togetherService;
-	
+
 	public TogetherController(TogetherService togetherService) {
 		this.togetherService = togetherService;
 	}
-	
-	@PostMapping(path="addTogether")
-	public ResponseEntity<String> addTogether(@RequestBody TogetherDTO togetherDTO){
+
+	@PostMapping(path = "addTogether")
+	public ResponseEntity<String> addTogether(@RequestBody TogetherDTO togetherDTO) {
 		return togetherService.addTogether(togetherDTO);
 	}
 }

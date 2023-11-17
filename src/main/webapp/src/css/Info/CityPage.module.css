@@ -1,31 +1,28 @@
 .citypage {
     width : 100%;
-    height : 21em;
+    height : 25em;
     position: relative;
     opacity: 0.7;
 }
-
 .cityName{
     position: absolute;
-    top: 5%;
+    top: 19%;
     left: 5%;
-    width: 3em;
+    width: 5em;
     height: 1.3em;
     line-height: 1.4em;
     text-align: center;
-    font-size: 4em; 
+    font-size: 4em;
     border-radius: 1em;
     color: #D1D5D6;
     background-color: rgba( 0, 0, 0, 0.7 );
 }
-
 .api {
     width : 64em;
     height : 7em;
-    position: absolute;
+    position: relative;
     left: 50%;
-    right: 50%;
-    top : 29em;
+    top :10em;
     transform: translate(-50%, -50%);
 }
 .money {
@@ -37,23 +34,22 @@
     border : 1px solid black;
     width : 30em;
     height : 4.8em;
-    margin : -4.5em 50em 0 0; 
+    margin : -4.5em 50em 0 0;
 }
 .weatherIcon {
     border : 1px solid blue;
     width : 250px;
     height : 70px;
-    margin : -70px 0 0 250px; 
+    margin : -70px 0 0 250px;
 }
 .button {
     display: flex;
     justify-content: center;
-    margin: 10em;
+    margin: 5em;
 }
-
 .list1 {
     display: flex;
-    border:1px solid #ebeaec;
+    border:1px solid #EBEAEC;
     border-radius:16px;
     box-shadow:0px 2px 4px rgba(0,0,0,0.3);
     width : 31em;
@@ -64,18 +60,15 @@
     cursor: pointer;
     user-select: none;
 }
-
 .imgDiv {
     width : 25em;
     height : 25em;
 }
-
 .textDiv {
     width : 25em;
     height : 25em;
     user-select: none;
 }
-
 .textDiv1{
     width: 14.5em;
     height: 10em;
@@ -83,7 +76,6 @@
     position:relative;
     top: 21%;
     font-size:15;
-    
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
@@ -98,7 +90,7 @@
 }
 /* --------------------검색-------------------- */
 .inputBox{
-    border-radius: 15px;  
+    border-radius: 15px;
     width: 600px;
     height: 100px;
     position: absolute;
@@ -111,7 +103,6 @@
     position: relative;
     width: 300px;
 }
-  
 .input {
     width: 100%;
     border: 1px solid #bbb;
@@ -119,7 +110,6 @@
     padding: 10px 12px;
     font-size: 14px;
 }
-  
 .img {
     position : absolute;
     width: 17px;

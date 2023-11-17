@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import data from './Data';
 import styles from '../../css/content.module.css'
-import note from '../../img/note.jpg'
-import chain from '../../img/chain.png'
-import covers from '../../img/cover.png'
-import coverChain from '../../img/coverChain.jpg'
-import calender from '../../img/calender.png'
-import back from '../../img/back.png'
+import note from '../../assets/image/mbti/note.jpg'
+import chain from '../../assets/image/mbti/chain.png'
+import covers from '../../assets/image/mbti/cover.png'
+import coverChain from '../../assets/image/mbti/coverChain.jpg'
+import calender from '../../assets/image/mbti/calender.png'
+import back from '../../assets/image/mbti/back.png'
 
 const Content = (props) => {
     const{nextStatus,updateType,minusType} = props

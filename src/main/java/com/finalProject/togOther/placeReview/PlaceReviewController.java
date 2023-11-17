@@ -13,16 +13,15 @@ import com.finalProject.togOther.dto.PlaceReviewDTO;
 @RestController
 @RequestMapping("api/placeReview")
 public class PlaceReviewController {
-	
+
 	private PlaceReviewService placeReviewService;
-	
-	
+
 	public PlaceReviewController(PlaceReviewService placeReviewService) {
-	      this.placeReviewService = placeReviewService;
-	   }
-	
-	 @GetMapping(path = "getPlaceReviewList/{placeSeq}")
-	   public ResponseEntity<List<PlaceReviewDTO>> getPlaceReviewByPlaceSeq(@PathVariable int placeSeq) {
-		   return placeReviewService.getPlaceReviewByPlaceSeq(placeSeq);
-	   }
+		this.placeReviewService = placeReviewService;
+	}
+
+	@GetMapping(path = "getPlaceReviewList/{placeSeq}")
+	public ResponseEntity<List<PlaceReviewDTO>> getPlaceReviewByPlaceSeq(@PathVariable int placeSeq) {
+		return placeReviewService.getPlaceReviewByPlaceSeq(placeSeq);
+	}
 }

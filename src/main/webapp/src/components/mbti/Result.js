@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../css/result.module.css'
-import ticket  from '../../img/ticket.png'
-import stamp from '../../img/stamp/stamp-01.png'
+import ticket  from '../../assets/image/mbti/ticket.png'
+import stamp from '../../assets/image/mbti/stamp/stamp-01.png'
 
 const Result = (props) => {
     const {ie,sn,tf,jp,onMbti} = props

@@ -8,5 +8,4 @@ public interface TogetherService {
 
 	ResponseEntity<String> addTogether(TogetherDTO togetherDTO);
 
-
 }

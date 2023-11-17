@@ -13,12 +13,8 @@ public interface PlaceService {
 
 	public ResponseEntity<PlaceDTO> getPlaceByPlaceSeq(int placeSeq);
 
-
-
 	public ResponseEntity<List<PlaceDTO>> getPlaceListByCitySeq(int citySeq);
 
-	public int addCustomPlace(CustomPlaceDTO customPlaceDTO);
-
-
+	public ResponseEntity<Integer> addCustomPlace(CustomPlaceDTO customPlaceDTO);
 
 }

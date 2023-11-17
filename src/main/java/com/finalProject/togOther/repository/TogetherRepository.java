@@ -6,5 +6,4 @@ import com.finalProject.togOther.domain.Together;
 
 public interface TogetherRepository extends JpaRepository<Together, Integer> {
 
-
 }

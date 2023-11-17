@@ -30,11 +30,23 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
     birthday: '',
   });
 
+  const fieldNamesInKorean = {
+    email: '이메일',
+    pwd: '비밀번호',
+    name: '이름',
+    birthday: '생년월일',
+    gender: '성별',
+  };
+
   // 입력 필드의 값이 비어있는지 확인하는 함수
   const validateField = (field, value) => {
 
+    if(!value && field === 'pwd') {
+      return `${fieldNamesInKorean[field]}를 입력해주세요`;
+    }
+
     if (!value) {
-      return `${field}을(를) 입력해주세요`;
+      return `${fieldNamesInKorean[field]}을 입력해주세요`;
     }
     return '';
   };
@@ -47,7 +59,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
 
   // 다음 단계로 넘어가는 함수
   const handleNext = async () => {
-    const requiredFields = ['email', 'pwd', 'name', 'gender'];
+    const requiredFields = ['email', 'pwd', 'name',  'gender'];
     let isValid = true;
     let updatedMessages = {};
   
@@ -60,43 +72,37 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
       updatedMessages[field] = message;
       if (message !== '') {
         isValid = false;
-        return true;
       } 
-      return false; // 유효성 검사 메시지가 있는 첫 번째 필드 반환
     });
 
 
 
     // 비밀번호와 비밀번호 확인 값이 다르면 에러 메시지 출력
-    if (updatedMessages == '' && inputUserData.pwd !== passwordConfirm) {
-      updatedMessages= {};
+    if (inputUserData.pwd !== passwordConfirm) {
       updatedMessages['pwd'] = '비밀번호가 일치하지 않습니다.';
       isValid = false;
     }
 
-
-    if(updatedMessages == '' && year === '' || month === '' || day === '') {
-      updatedMessages= {};
-      updatedMessages['birthday'] = '생년월일을 선택해주세요';
+    if((year === '' || month === '' || day === '')) {
+      updatedMessages['birthday'] = '생년월일을 입력해주세요';
       isValid = false;
+    }else{
+      updatedMessages['birthday'] = '';
     }
 
 
     // 이메일 유효성 검사 수행
     const email = inputUserData.email;
     if (!email) {
-      updatedMessages= {};
-      updatedMessages['email'] = 'email을(를) 입력해주세요';
+      updatedMessages['email'] = '이메일을 입력해주세요';
       isValid = false;
     } else if (!validateEmail(email)) {
-      updatedMessages= {};
-      updatedMessages['email'] = '올바른 email 형식을 입력해주세요';
+      updatedMessages['email'] = '올바른 이메일 형식을 입력해주세요';
       isValid = false;
     } else {
         try {
           const isEmailAvailable = await checkEmail(inputUserData.email);
           if (isEmailAvailable) {
-            updatedMessages= {};
             updatedMessages['email'] = '중복된 이메일입니다.';
             isValid = false;
           }
@@ -105,9 +111,8 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
     }
 
 
-    if(year === '' || month === '' || day === '') {
-    }else {
-        onbirthInput(year + '-' + month + '-' + day);
+    if(!(year === '' || month === '' || day === '')) {
+      onbirthInput(year + '-' + month + '-' + day);
     }
     
 
@@ -138,7 +143,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
       if (!validateEmail(value)) {
         setValidationMessages((prevMessages) => ({
           ...prevMessages,
-          email: value ? '올바른 email 형식을 입력해주세요' : 'email을(를) 입력해주세요',
+          email: value ? '올바른 이메일 형식을 입력해주세요' : '이메일을 입력해주세요',
         }));
       } else {
         try {
@@ -155,7 +160,35 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
             email: '',
           }));
           // 에러 발생 시 처리
-        }}}
+        }}}else if (name === 'pwd' || name === 'name' || name === 'gender') {
+          const message = validateField(name, value);
+          if (message === '') {
+            setValidationMessages((prevMessages) => ({
+              ...prevMessages,
+              [name]: '',
+            }));
+          }
+        }
+    };
+
+    const handleBirthChange = (e) => {
+      const { name, value } = e.target;
+      if (name === 'year') {
+        setYear(value);
+      } else if (name === 'month') {
+        setMonth(value);
+      } else if (name === 'day') {
+        setDay(value);
+      }
+
+      // 수정해야됨
+    
+      if (year !== '' || month !== '' || day !== '') {
+        setValidationMessages((prevMessages) => ({
+          ...prevMessages,
+          birthday: '',
+        }));
+      }
     };
 
   // 이름 입력값 변경 시 특수 문자 제거 및 상태 업데이트
@@ -172,6 +205,14 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
           value: filteredValue, // 특수 문자가 제거된 값으로 상태 업데이트
         },
       });
+    }else if (name === 'pwd' || name === 'name' || name === 'gender') {
+      const message = validateField(name, value);
+      if (message === '') {
+        setValidationMessages((prevMessages) => ({
+          ...prevMessages,
+          [name]: '',
+        }));
+      }
     }
   };
 
@@ -199,7 +240,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 type='password'
                 name='pwd'
                 value={inputUserData.pwd}
-                onChange={onInput}
+                onChange={handleInputChange}
                 maxLength={20}
                 required
             />
@@ -211,7 +252,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
             <input
                 type='password'
                 name='pwdsw'
-                onChange={onInput}
+                onChange={handleInputChange}
                 maxLength={20}
                 required
             />
@@ -236,17 +277,17 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
         <div className='mb-3 mt-3' style={{width: '80%', margin: '0 auto'}}>
             <p className='fs-3 mb-3' style={{textAlign: 'left' }}>생년월일</p>
             <div className='d-flex justify-content-evenly'>
-                <select className={styles.selectBox} name='year' onChange={(e) => setYear(e.target.value)}>
+                <select className={styles.selectBox} name='year' onChange={handleBirthChange}>
                     <option value=''>년도</option>
                     {years.map(year => <option key={year} value={year}>{year}</option>)}
                 </select>
                 {validationMessages.year && <span style={{ color: 'red' }}>{validationMessages.year}</span>}
-                <select className={styles.selectBox} name='month' onChange={(e) => setMonth(e.target.value)}>
+                <select className={styles.selectBox} name='month' onChange={handleBirthChange}>
                     <option value=''>월</option>
                     {months.map(month => <option key={month} value={month}>{month}</option>)}
                 </select>
                 {validationMessages.month && <span style={{ color: 'red' }}>{validationMessages.month}</span>}
-                <select className={styles.selectBox} name='day' onChange={(e) => setDay(e.target.value)}>
+                <select className={styles.selectBox} name='day' onChange={handleBirthChange}>
                     <option value=''>일</option>
                     {days.map(day => <option key={day} value={day}>{day}</option>)}
                 </select>
@@ -262,7 +303,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 name='gender'
                 value='M'
                 checked={inputUserData.gender === 'M'}
-                onChange={onInput}
+                onChange={handleInputChange}
                     />
             <span className={styles.radioMark}></span>
             남자
@@ -273,7 +314,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 name='gender'
                 value='F'
                 checked={inputUserData.gender === 'F'}
-                onChange={onInput} />
+                onChange={handleInputChange} />
             <span className={styles.radioMark}></span>
             여자
             </label>

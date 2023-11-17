@@ -7,9 +7,8 @@ import org.springframework.context.annotation.PropertySource;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Configuration
-@PropertySource("classpath:storage/naver.properties")//classpath: <= resources를 기준으로 파일을 찾는다
+@PropertySource("classpath:storage/naver.properties") // classpath: <= resources를 기준으로 파일을 찾는다
 @Getter
 @Setter
 public class NaverConfiguration {

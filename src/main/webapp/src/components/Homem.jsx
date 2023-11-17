@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { getCity } from '../api/AdvisorApiService';
 import Accordion from 'react-bootstrap/Accordion';
 import sty from '../css/Homem.module.css';
 import BottomNav from './BottomNav';
+import { getCityList } from '../api/CityApiService';
 
 const Homem = () => {
   // 대륙 리스트
@@ -38,8 +38,8 @@ const Homem = () => {
 
   const [activeAccordion, setActiveAccordion] = useState("0");
 
-  const getCityList = () => {
-    getCity() 
+  const getCity = () => {
+    getCityList() 
       .then(res => {
         const cityListFromAPI = res.data;
         setCityList(cityListFromAPI);
@@ -59,7 +59,7 @@ const Homem = () => {
   };
 
   useEffect(() => {
-    getCityList();
+    getCity();
   }, []);
 
   useEffect(() => {

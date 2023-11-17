@@ -2,9 +2,6 @@ package com.finalProject.togOther.dto;
 
 import com.finalProject.togOther.domain.Place;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,21 +49,21 @@ public class PlaceDTO {
 	
 	public static PlaceDTO toDTO(Place place) {
 		return PlaceDTO.builder()
-				.placeSeq(place.getPlaceSeq())
-				.citySeq(place.getCitySeq())
-				.code(place.getCode())
-				.name(place.getName())
-				.address(place.getAddress())
-				.longitude(place.getLongitude())
-				.latitude(place.getLatitude())
-				.image(place.getImage())
-				.subImage1(place.getSubImage1())
-				.subImage2(place.getSubImage2())
-				.context1(place.getContext1())
-				.context2(place.getContext2())
-				.context3(place.getContext3())
-				.likeCnt(place.getLikeCnt())
-				.tag(place.getTag())
-				.build();
+					   .placeSeq(place.getPlaceSeq())
+					   .citySeq(place.getCitySeq())
+					   .code(place.getCode())
+					   .name(place.getName())
+				   	   .address(place.getAddress())
+					   .longitude(place.getLongitude())
+					   .latitude(place.getLatitude())
+					   .image(place.getImage())
+					   .subImage1(place.getSubImage1())
+					   .subImage2(place.getSubImage2())
+					   .context1(place.getContext1())
+					   .context2(place.getContext2())
+					   .context3(place.getContext3())
+					   .likeCnt(place.getLikeCnt())
+					   .tag(place.getTag())
+					   .build();
 	}
 }
