@@ -1,19 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../css/login.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
   const navigate = useNavigate();
+
+  const [loginDTO, setLoginDTO] = useState({
+    email: '',
+    pwd: ''
+  });
+
+  const oninput = (e) => {
+    const { name, value } = e.target;
+    
+    setLoginDTO({
+      ...loginDTO,
+      [name]: value
+    });
+
+  }
+
+  const onsubmit = (e) => {
+    e.preventDefault();
+    console.log(loginDTO);
+  }
+
   const handleSignUp = () => {
     
     navigate('/user/write');
   };
 
   return (
- 
-
     <div className={styles.container}>
-      <div className={styles.screen}>
+      <div className={styles["login-box"]}>
+        <h2>Login</h2>
+        <form>
+          <div className={styles["user-box"]}>
+            <input type="text" name="email" value={loginDTO.email} onChange={(e)=> oninput(e)} required />
+            <label>Email</label>
+          </div>
+          <div className={styles["user-box"]}>
+            <input type="password" name="pwd" value={loginDTO.pwd} onChange={(e)=> oninput(e)} required />
+            <label>Password</label>
+          </div>
+          <button type="submit" onClick={onsubmit}>로그인</button>
+        </form>
+      </div>
+
+      {/* <div className={styles.screen}>
         <div className={styles["screen__content"]}>
           <form className={styles.login}>
             <div className={styles["login__field"]}>
@@ -33,14 +68,6 @@ const Login = () => {
               <i className={`${styles["button__icon"]} fas fa-chevron-right`}></i>
             </button>
           </form>
-          {/* <div className={styles["social-login"]}>
-            <h3>log in via</h3>
-            <div className={styles["social-icons"]}>
-              <a href="#" className={`${styles["social-login__icon"]} fab fa-instagram`}></a>
-              <a href="#" className={`${styles["social-login__icon"]} fab fa-facebook`}></a>
-              <a href="#" className={`${styles["social-login__icon"]} fab fa-twitter`}></a>
-            </div>
-          </div> */}
         </div>
         <div className={styles["screen__background"]}>
           <span className={`${styles["screen__background__shape"]} ${styles["screen__background__shape4"]}`}></span>
@@ -48,9 +75,8 @@ const Login = () => {
           <span className={`${styles["screen__background__shape"]} ${styles["screen__background__shape2"]}`}></span>
           <span className={`${styles["screen__background__shape"]} ${styles["screen__background__shape1"]}`}></span>
         </div>
-      </div>
+      </div> */}
     </div>
-      // </Desktop>
   );
 };
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.finalProject.togOther.domain.User;
+import com.finalProject.togOther.dto.LoginDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 import com.finalProject.togOther.repository.UserRepository;
@@ -33,7 +35,8 @@ public class UserServiceImpl implements UserService {
 	private String apiSecret;
 
 	private UserRepository userRepository;
-
+	
+	@Lazy
 	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -44,7 +47,8 @@ public class UserServiceImpl implements UserService {
 
 		System.out.println(registerDTO.getEmail());
 		System.out.println(registerDTO.getCertification());
-
+		
+		
 		User user = User.toEntity(registerDTO);
 
 		try {
@@ -179,6 +183,18 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			return ResponseEntity.ok(false);
 		}
+	}
+	
+	@Override
+	public ResponseEntity<String> LoginUser(LoginDTO loginDTO) {
+		
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return null;
 	}
 
 	// 나이가 14세 이상인지 확인하는 함수

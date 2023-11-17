@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.finalProject.togOther.dto.LoginDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 
@@ -20,7 +21,7 @@ public class UserController {
 
 	private UserService userService;
 
-	public UserController(UserServiceImpl userService) {
+	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 
@@ -44,10 +45,18 @@ public class UserController {
 		return userService.getUserByEmail(userEmail);
 	}
 
+	// 통합인증 정보조회
 	@PostMapping(path = "handleCertificationRequest")
 	public ResponseEntity<SSODTO> handleCertificationRequest(@RequestBody Map<String, String> requestBody) {
 		String impUid = requestBody.get("imp_uid");
 		return userService.processCertificationRequest(impUid);
+	}
+	
+	
+	// 로그인
+	@PostMapping(path = "loginUser")
+	public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO) {
+		return userService.LoginUser(loginDTO);
 	}
 
 }
