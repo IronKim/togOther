@@ -14,6 +14,7 @@ import MbtiMain from '../components/mbti/MbtiMain';
 import { addUser } from '../api/UserApiService';
 import Agree from '../components/userWriteForm/Agree';
 import { getUserByEmail } from '../api/UserApiService';
+import WriteFormComplete from '../components/userWriteForm/WriteFormComplete';
 
 
 const Write = () => {
@@ -24,7 +25,6 @@ const Write = () => {
         id: '',
         email: '',
         pwd: '',
-        tel: '',
         name: '',
         birthday: '',
         phone: '',
@@ -42,7 +42,6 @@ const Write = () => {
         id: '',
         email: '',
         pwd: '',
-        tel: '',
         name: '',
         birthday: '',
         phone: '',
@@ -99,7 +98,7 @@ const Write = () => {
 
     const onSubmitWrite = async() => {
         await updateUserData();
-        //createUesr();
+        nextPage();
 
     };
 
@@ -121,7 +120,6 @@ const Write = () => {
         addUser(userData)
         .then(res => {
             console.log(res.data);
-            navigate('/user/login');
         })
         .catch(e => console.log(e));
     };
@@ -158,9 +156,13 @@ const Write = () => {
                 {
                     page === 5 && <MbtiMain onInput={onInput} onMbti={onMbti} prevPage={prevPage} nextPage={nextPage} onSubmitWrite={onSubmitWrite} styles={styles} />
                 } 
-
-                {/* <button  onClick={()=> createUesr()}>유저만들기</button> */}
+                {
+                    page === 6 && <WriteFormComplete createUesr={createUesr}/>
+                }
+                
             </div>
+            <button onClick={prevPage}>이전</button>
+            <button onClick={nextPage}>다음</button>
         </div>
     );
 };

@@ -23,7 +23,7 @@ const WriteFormHeader = ({page}) => {
 
     return (
         <div style={{width: '100%', margin: '0 auto', textAlign: 'center'}} >
-            <p style={{ width: '100%', margin: '0 auto', textAlign: 'center'}} className='fs-1'>회원가입</p>
+            <p style={{ width: '100%', margin: '0 auto', textAlign: 'center'}} className='fs-1 mt-4'>회원가입</p>
             <div style={{width: '80%', margin: '0 auto'}} className='mt-5 d-flex justify-content-evenly'>
                 <div>
                     <div className={circleNum === 0 ? styles.activeCircle: styles.circle}>

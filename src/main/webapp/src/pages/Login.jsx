@@ -8,21 +8,9 @@ const Login = () => {
     
     navigate('/user/write');
   };
-  // const Desktop = ({ children }) => {
-  //   const isDesktop = useMediaQuery({
-  //     minWidth: 1200
-  //   });
-  //   return isDesktop ? children : null;
-  // };
-  
-  // const Mobile = ({ children }) => {
-  //   const isMobile = useMediaQuery({ maxWidth: 1199});
-  //   return isMobile ? children : null;
-  // };
-
 
   return (
-      // <Desktop>
+ 
 
     <div className={styles.container}>
       <div className={styles.screen}>

@@ -401,3 +401,9 @@
   .selectBox option {
     font-size: 1.4rem;
   }
+
+  .selectBox[readonly] {
+    outline: black;
+    border: 1px solid black;
+    pointer-events: none;
+  }
