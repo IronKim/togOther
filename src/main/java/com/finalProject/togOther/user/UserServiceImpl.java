@@ -13,14 +13,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.LoginDTO;
+import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 import com.finalProject.togOther.repository.UserRepository;
+import com.finalProject.togOther.security.TokenProvider;
 
 import jakarta.transaction.Transactional;
 
@@ -35,23 +38,28 @@ public class UserServiceImpl implements UserService {
 	private String apiSecret;
 
 	private UserRepository userRepository;
+
+	private PasswordEncoder passwordEncoder;
 	
-	@Lazy
-	public UserServiceImpl(UserRepository userRepository) {
+	private TokenProvider tokenProvider;
+
+
+	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
+		this.tokenProvider = tokenProvider;
 	}
 
 	// 사용자 추가 서비스
 	@Override
 	public ResponseEntity<String> addUser(RegisterDTO registerDTO) {
 
-		System.out.println(registerDTO.getEmail());
-		System.out.println(registerDTO.getCertification());
-		
-		
-		User user = User.toEntity(registerDTO);
-
 		try {
+
+			// 비밀번호 인코딩
+			registerDTO.setPwd(passwordEncoder.encode(registerDTO.getPwd()));
+
+			User user = User.toEntity(registerDTO);
 			// 사용자 추가 서비스 호출
 			userRepository.save(user);
 
@@ -184,17 +192,34 @@ public class UserServiceImpl implements UserService {
 			return ResponseEntity.ok(false);
 		}
 	}
-	
+
 	@Override
-	public ResponseEntity<String> LoginUser(LoginDTO loginDTO) {
-		
+	public ResponseEntity<LoginInResponseDTO> LoginUser(LoginDTO loginDTO) {
+
 		try {
+
+			Optional<User> userOptional = userRepository.findByEmail(loginDTO.getEmail());
+			User user = userOptional.orElseThrow();
+
+			if (!passwordEncoder.matches(loginDTO.getPwd(), user.getPwd())) {
+				throw new Exception();
+			}
+
+			String token = tokenProvider.create(loginDTO.getEmail());
+			int exprTime = 3600000;
 			
+			LoginInResponseDTO loginInResponseDTO = LoginInResponseDTO.builder()
+																	  .token(token)
+																	  .exprTime(exprTime)
+																	  .user(user)
+																	  .build();
+
+			return ResponseEntity.ok(loginInResponseDTO);
+
 		} catch (Exception e) {
-			// TODO: handle exception
+
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
-		
-		return null;
 	}
 
 	// 나이가 14세 이상인지 확인하는 함수

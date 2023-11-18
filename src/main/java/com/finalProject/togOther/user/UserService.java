@@ -3,6 +3,7 @@ package com.finalProject.togOther.user;
 import org.springframework.http.ResponseEntity;
 
 import com.finalProject.togOther.dto.LoginDTO;
+import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 
@@ -18,5 +19,5 @@ public interface UserService {
 
 	public ResponseEntity<Boolean> isUserExistsByPhone(String phone);
 
-	public ResponseEntity<String> LoginUser(LoginDTO loginDTO);
+	public ResponseEntity<LoginInResponseDTO> LoginUser(LoginDTO loginDTO);
 }

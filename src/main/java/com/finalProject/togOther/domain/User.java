@@ -88,6 +88,7 @@ public class User {
 				   .dupLogin(userDTO.getDupLogin())
 				   .cityList(userDTO.getCityList())
 				   .cityFix(userDTO.getCityFix())
+				   .certification(userDTO.getCertification())
 				   .build();
 	}
 	

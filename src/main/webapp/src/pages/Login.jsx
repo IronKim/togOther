@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import styles from '../css/login.module.css';
 import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../api/UserApiService';
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
 
   const navigate = useNavigate();
+
+  const [cookies, setCookies, removeCookies] = useCookies();
 
   const [loginDTO, setLoginDTO] = useState({
     email: '',
@@ -23,7 +27,34 @@ const Login = () => {
 
   const onsubmit = (e) => {
     e.preventDefault();
-    console.log(loginDTO);
+
+    loginUser(loginDTO)
+    .then(res => {
+      console.log(res);
+      if(res.status === 200) {
+        alert('로그인 성공');
+
+        console.log(res.data);
+
+        const {token, exprTime, user} = res.data;
+
+        const expires = new Date();
+        expires.setMilliseconds(expires.getMilliseconds + exprTime);
+
+        // console.log(expires);
+
+        // setCookies('token', token);
+
+        navigate('/');
+      } else {
+        alert('로그인 실패');
+      }
+    })
+    .catch(e => {
+      console.log(e);
+      alert('로그인 실패');
+    })
+
   }
 
   const handleSignUp = () => {

@@ -54,6 +54,8 @@ public class UserDTO {
 	//고정도시
 	private String cityFix;
 	
+	private byte certification;
+	
 	public static UserDTO toDTO(User user) {
 		return UserDTO.builder()
 				      .userSeq(user.getUserSeq())
@@ -74,6 +76,7 @@ public class UserDTO {
 				      .dupLogin(user.getDupLogin())
 				      .cityList(user.getCityList())
 				      .cityFix(user.getCityFix())
+				      .certification(user.getCertification())
 				      .build();
 	}
 	

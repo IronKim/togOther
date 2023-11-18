@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.LoginDTO;
+import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 
@@ -28,8 +29,6 @@ public class UserController {
 	// 유저 추가
 	@PostMapping(path = "addUser")
 	public ResponseEntity<String> addUser(@RequestBody RegisterDTO registerDTO) {
-
-		System.out.println(registerDTO.getCertification());
 		return userService.addUser(registerDTO);
 	}
 
@@ -55,7 +54,7 @@ public class UserController {
 	
 	// 로그인
 	@PostMapping(path = "loginUser")
-	public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO) {
+	public ResponseEntity<LoginInResponseDTO> loginUser(@RequestBody LoginDTO loginDTO) {
 		return userService.LoginUser(loginDTO);
 	}
 
