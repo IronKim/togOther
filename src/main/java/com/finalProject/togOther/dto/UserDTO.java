@@ -2,6 +2,7 @@ package com.finalProject.togOther.dto;
 
 import java.time.LocalDate;
 
+import com.finalProject.togOther.constant.Authority;
 import com.finalProject.togOther.domain.User;
 
 import lombok.AccessLevel;
@@ -56,6 +57,8 @@ public class UserDTO {
 	
 	private byte certification;
 	
+	private Authority authority;
+	
 	public static UserDTO toDTO(User user) {
 		return UserDTO.builder()
 				      .userSeq(user.getUserSeq())
@@ -77,6 +80,7 @@ public class UserDTO {
 				      .cityList(user.getCityList())
 				      .cityFix(user.getCityFix())
 				      .certification(user.getCertification())
+				      .authority(user.getAuthority())
 				      .build();
 	}
 	

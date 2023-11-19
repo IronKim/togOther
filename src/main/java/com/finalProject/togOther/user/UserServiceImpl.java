@@ -221,6 +221,36 @@ public class UserServiceImpl implements UserService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
+	
+	@Override
+	public ResponseEntity<LoginInResponseDTO> getUserByToken(String authorizationHeader) {
+		
+		try {
+			String userEmail = tokenProvider.validate(authorizationHeader);
+			
+			System.out.println(userEmail);
+			
+			Optional<User> userOptional = userRepository.findByEmail(userEmail);
+			
+			User user = userOptional.orElseThrow();
+
+	
+			String token = tokenProvider.create(userEmail);
+			int exprTime = 3600000;
+			
+			LoginInResponseDTO loginInResponseDTO = LoginInResponseDTO.builder()
+																	  .token(token)
+																	  .exprTime(exprTime)
+																	  .user(user)
+																	  .build();
+
+			return ResponseEntity.ok(loginInResponseDTO);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+		
+	}
 
 	// 나이가 14세 이상인지 확인하는 함수
 	private boolean isAbove14(LocalDate birthdate) {

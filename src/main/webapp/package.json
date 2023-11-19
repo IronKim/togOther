@@ -23,7 +23,8 @@
     "react-router-dom": "^6.19.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.4.6"
   },
   "scripts": {
     "start": "react-scripts --max-http-header-size=1024 start",
@@ -48,5 +49,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://127.0.0.1:8080"
 }

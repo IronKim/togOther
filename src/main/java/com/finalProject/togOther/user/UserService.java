@@ -20,4 +20,6 @@ public interface UserService {
 	public ResponseEntity<Boolean> isUserExistsByPhone(String phone);
 
 	public ResponseEntity<LoginInResponseDTO> LoginUser(LoginDTO loginDTO);
+
+	public ResponseEntity<LoginInResponseDTO> getUserByToken(String authorizationHeader);
 }

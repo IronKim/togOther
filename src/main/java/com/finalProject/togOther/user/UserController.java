@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ import com.finalProject.togOther.dto.LoginDTO;
 import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
+import com.finalProject.togOther.dto.UserDTO;
 
 @RestController
 @RequestMapping("api/user")
@@ -57,5 +59,12 @@ public class UserController {
 	public ResponseEntity<LoginInResponseDTO> loginUser(@RequestBody LoginDTO loginDTO) {
 		return userService.LoginUser(loginDTO);
 	}
+	
+	// jwt토큰으로 로그인
+	@GetMapping(path = "getUserByToken")
+	public ResponseEntity<LoginInResponseDTO> getUserByToken(@RequestHeader("Authorization") String authorizationHeader) {
+
+        return userService.getUserByToken(authorizationHeader);
+    }
 
 }

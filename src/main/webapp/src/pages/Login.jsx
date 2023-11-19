@@ -3,12 +3,15 @@ import styles from '../css/login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api/UserApiService';
 import { useCookies } from 'react-cookie';
+import { useUserStore } from '../stores/mainStore';
 
 const Login = () => {
 
   const navigate = useNavigate();
 
   const [cookies, setCookies, removeCookies] = useCookies();
+
+  const {user, setUser} = useUserStore();
 
   const [loginDTO, setLoginDTO] = useState({
     email: '',
@@ -39,11 +42,10 @@ const Login = () => {
         const {token, exprTime, user} = res.data;
 
         const expires = new Date();
-        expires.setMilliseconds(expires.getMilliseconds + exprTime);
+        expires.setMilliseconds(expires.getMilliseconds() + exprTime);
 
-        // console.log(expires);
-
-        // setCookies('token', token);
+        localStorage.setItem('token', token);
+        setUser(user);
 
         navigate('/');
       } else {
@@ -64,6 +66,7 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
+      {user.name && <div>{user.name}</div>}
       <div className={styles["login-box"]}>
         <h2>Login</h2>
         <form>
@@ -77,6 +80,7 @@ const Login = () => {
           </div>
           <button type="submit" onClick={onsubmit}>로그인</button>
         </form>
+          <button type="button" onClick={() => navigate('/advisor')}>관리자페이지로</button>
       </div>
 
       {/* <div className={styles.screen}>
