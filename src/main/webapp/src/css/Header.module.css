@@ -73,3 +73,14 @@
     margin: 0 auto;
   }
 }
+
+.slash {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.activeLinkU:hover {
+  cursor: pointer;
+  text-underline-position : under;
+  text-decoration: underline;
+}

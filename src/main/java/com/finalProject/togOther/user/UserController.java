@@ -60,11 +60,16 @@ public class UserController {
 		return userService.LoginUser(loginDTO);
 	}
 	
-	// jwt토큰으로 로그인
-	@GetMapping(path = "getUserByToken")
-	public ResponseEntity<LoginInResponseDTO> getUserByToken(@RequestHeader("Authorization") String authorizationHeader) {
-
-        return userService.getUserByToken(authorizationHeader);
+	// access 토큰으로 로그인
+	@GetMapping(path = "getUserByAccessToken")
+	public ResponseEntity<LoginInResponseDTO> getUserByAccessToken(@RequestHeader("Authorization") String authorizationHeader) {
+        return userService.getUserByAccessToken(authorizationHeader);
     }
+	
+	// refresh 토큰으로 access토큰 발급
+	@GetMapping(path = "getTokenByRefreshToken")
+	public ResponseEntity<Void> getTokenByRefreshToken(@RequestHeader("Refresh-Token") String refreshToken) {
+		return userService.getTokenByRefreshToken(refreshToken);
+	}
 
 }

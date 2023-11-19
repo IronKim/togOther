@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import styles from '../css/login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api/UserApiService';
-import { useCookies } from 'react-cookie';
 import { useUserStore } from '../stores/mainStore';
+
+import loginFormImage from '../assets/image/loginFormImage.png';
 
 const Login = () => {
 
   const navigate = useNavigate();
-
-  const [cookies, setCookies, removeCookies] = useCookies();
 
   const {user, setUser} = useUserStore();
 
@@ -39,13 +38,16 @@ const Login = () => {
 
         console.log(res.data);
 
-        const {token, exprTime, user} = res.data;
+        const {accessToken, refreshToken, user} = res.data;
 
-        const expires = new Date();
-        expires.setMilliseconds(expires.getMilliseconds() + exprTime);
-
-        localStorage.setItem('token', token);
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
         setUser(user);
+
+        if(user.authority === 'ROLE_ADMIN') {
+          navigate('/advisor');
+          return;
+        }
 
         navigate('/');
       } else {
@@ -66,8 +68,12 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      {user.name && <div>{user.name}</div>}
-      <div className={styles["login-box"]}>
+      <p style={{fontSize: '3.4em', marginBottom: '3vw'}}>로그인</p>
+      <div>
+        <img className={styles.loginFormImage} src={loginFormImage} alt="loginFormImage" />
+      </div>
+
+      <div className={styles.loginBox}>
         <h2>Login</h2>
         <form>
           <div className={styles["user-box"]}>

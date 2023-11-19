@@ -21,5 +21,7 @@ public interface UserService {
 
 	public ResponseEntity<LoginInResponseDTO> LoginUser(LoginDTO loginDTO);
 
-	public ResponseEntity<LoginInResponseDTO> getUserByToken(String authorizationHeader);
+	public ResponseEntity<LoginInResponseDTO> getUserByAccessToken(String authorizationHeader);
+
+	public ResponseEntity<Void> getTokenByRefreshToken(String refreshToken);
 }

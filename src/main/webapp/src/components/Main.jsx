@@ -14,37 +14,68 @@ import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
 import useUserStore from '../stores/userStore';
-
-import axios from "axios";
+import { getTokenByRefreshToken, getUserByAccessToken } from '../api/UserApiService';
 
 const Main = () => {
     
     const {user, setUser} = useUserStore();
 
-
     const getUserByToken = async() => {
 
         // 로컬 스토리지에서 토큰 가져오기
-        const token = localStorage.getItem("token");
+        const accessToken = localStorage.getItem("accessToken");
+
+        if(accessToken === null) {
+            return;
+        }
         
-        try {
-            // 서버에 토큰을 보내서 사용자 데이터 가져오기
-            const response = await axios.get("/api/user/getUserByToken", {
-            headers: { Authorization: `${token}` },
-            });
-            console.log(response.data.user);
-            setUser(response.data.user);
+        await getUserByAccessToken(accessToken)
+        .then(res => {
+            console.log(res);
             
-        } catch (error) {
-            console.error("Error fetching user data:", error);
-            
+            console.log(res.data);
+            setUser(res.data.user);
+        })
+        .catch(e => {
+            console.log(e);
+            if(e.response.status === 401) {
+                console.log("accessToken토큰 만료");
+                localStorage.removeItem("accessToken");
+                getToken();
             }
+        })
     }
 
+    const getToken = async() => {
+            
+            // 로컬 스토리지에서 토큰 가져오기
+            const refreshToken = localStorage.getItem("refreshToken");
+    
+            if(refreshToken === null) {
+                return;
+            }
+            
+            await getTokenByRefreshToken(refreshToken)
+            .then(res => {
+                localStorage.setItem('accessToken', res.headers.authorization);
+                localStorage.setItem('refreshToken', res.headers['refresh-token']);
+                getUserByToken();
+            })
+            .catch(e => {
+                console.log(e);
+                if(e.response.status === 401) {
+                    console.log("refreshToken토큰 만료");
+                    localStorage.removeItem("refreshToken");
+                }
+            })
+        }
+
+    // 렌더링이 시작되면 실행
     const reRenderSite = async() => {
+        
+        // 로컬 스토리지에 토큰값이 있으면 유저 정보 가져오기
         await getUserByToken();
     }
-
 
     useEffect(() => {
 

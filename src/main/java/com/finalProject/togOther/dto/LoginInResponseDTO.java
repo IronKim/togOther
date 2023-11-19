@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginInResponseDTO {
 
-	private String token;
-	private int exprTime;
+	private String accessToken;
+	private String RefreshToken;
 	private User user;
 }

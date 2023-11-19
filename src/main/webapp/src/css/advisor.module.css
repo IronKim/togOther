@@ -1,27 +1,33 @@
 :root {
-    --sidebar-width: 15em;
+    --sidebar-width: 20em;
 }
 
 .advisorHeader {
     position: absolute;
     width: 100%;
-    height: 5em;
+    height: 6em;
     top: 0em;
-    background: #90e5ff;
+    background: #ffffff;
 }
 
 .advisorHeader .logoImg {
     height: 5em;
+    margin-top: 1vw;
+    margin-left: 3vw;
     position: absolute;
     left: 0;
     
+}
+
+.advisorHeader .logoImg:hover {
+  cursor: pointer;
 }
 
 .container {
     position: absolute;
     display: flex;
     width: 100%;
-    top: 5em;
+    top: 7em;
 }
 
 .container .item {
@@ -74,6 +80,7 @@
   
  .userTable th {
     text-align: left;
+    font-weight: normal;
   }
     
   .userTable thead {
