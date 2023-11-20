@@ -30,19 +30,19 @@ const FooterComponent = () => {
     return (
         <div>
             <div className={styles.footer}>
-                    <div>
+                    <div className={styles.div}>
                         <hr/><br/>
-                        <span><em>주식회사</em><em>투고아더</em></span>
-                        <span><em>대표</em><em>김재철</em></span>
-                        <span><em>개인정보보호책임자</em><em>문이빈</em></span>
-                        <span><em>사업자등록번호</em><em>123-12-34567</em></span>
-                        <span><em>관광사업등록번호</em><em>01234-0000-111111</em></span>
+                        <span className={styles.span}><em>주식회사</em><em>투고아더</em></span>
+                        <span className={styles.span}><em>대표</em><em>김재철</em></span>
+                        <span className={styles.span}><em>개인정보보호책임자</em><em>문이빈</em></span>
+                        <span className={styles.span}><em>사업자등록번호</em><em>123-12-34567</em></span>
+                        <span className={styles.span}><em>관광사업등록번호</em><em>01234-0000-111111</em></span>
                         <address>서울특별시 강남구 강남대로94길 20 삼오빌딩 5-9층</address>
                     </div>
 
             <br />
 
-            <div>
+            <div className={styles.div}>
                 {isVisible && (
                 <p style={ paragraphStyles }>
                     자사는 서울특별시관광협회 공제영업보증보험에 가입되어 있습니다.<br />

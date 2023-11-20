@@ -241,7 +241,7 @@ const PlaceSelect = (props) => {
             <div>
                 <div className={Style.day}>
                 <div className={Style.calender}>
-                    <input type='date'className={Style.inputday} name='endDate' min={startDate} max={endDate} 
+                    <input type='date'className={`${Style.inputday} ${Style.input}`} name='endDate' min={startDate} max={endDate} 
                     value={selDate === startDate ? 0 : selDate}
                     onChange={(e) => setSelDate(e.target.value)}/> 
                     
@@ -286,7 +286,7 @@ const PlaceSelect = (props) => {
                 }
                 </div>
                 <p style={{fontSize:'17px',fontWeight:'bold',marginBottom: '5px'}}>내용</p>
-                    <textarea rows="10" cols="43" value={subDTO.context} className={Style.placeContext}
+                    <textarea rows="10" cols="43" value={subDTO.context} className={`${Style.placeContext} ${Style.textarea}`}
                     onChange={(e) => setSubDTO({...subDTO,context : e.target.value})}/>
 
                     <button className={Style.xBut} onClick={(e) =>onSchedule(e)}>
@@ -318,7 +318,7 @@ const PlaceSelect = (props) => {
                                 type="text"
                                 id="autocomplete"
                                 placeholder="검색어 입력"
-                                className={Style.mapInput}
+                                className={`${Style.mapInput} ${Style.input}` }
                             />
                             </Autocomplete>
                         {/* <div>
@@ -342,7 +342,7 @@ const PlaceSelect = (props) => {
                         <div>
                             <input
                                 size={36}
-                                className={Style.searchCity}
+                                className={`${Style.searchCity} ${Style.input}`}
                                 type='text'
                                 name='search'
                                 value={searchCity}

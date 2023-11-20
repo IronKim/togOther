@@ -1,7 +1,6 @@
 
 .container {
   display: flex;
-  position: relative;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -11,16 +10,17 @@
 .loginBox {
   position: absolute;
   border: 1px solid #000000;
-  border-radius: 20px;
+  box-shadow: 0 11px 17px 5px rgb(0 0 0 / 33%);
+  border-radius: 50px;
   background: #fff;
   width: 400px;
   height: 600px;
-  top: 8vw;
-  left: 25vw;
+  top: 10px;
+  left: 100px;
   z-index: 2; 
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .loginForm {
@@ -33,5 +33,85 @@
   width: 100%;
   height: 100%;
   
+}
+
+
+
+
+
+
+.content {
+  width: 350px;
+  padding: 50px;
+  box-shadow: 0 11px 17px 5px rgb(0 0 0 / 33%);
+  border-radius: 50px;
+}
+
+.content > h1 {
+  text-align: center;
+}
+
+.inputBar {
+  width: 350px;
+  height: 60px;
+  border: 2px solid #000;
+  border-radius: 25px;
+  margin: 30px 0;
+  opacity: 0.5;
+  transition: 200ms;
+  font-weight: 600;
+  position: relative;
+}
+
+.inputBar:focus{
+  outline: none;
+  border: none;
+}
+
+.inputBar > label {
+  position: absolute;
+  font-size: 17px;
+  text-transform: capitalize;
+  top: 20px;
+  left: 45px;
+  transition: 200ms;
+}
+
+.inputBar > input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  box-sizing: border-box;
+  padding: 20px 45px 10px;
+  font-size: 18px;
+}
+
+.inputBar > .boxIcon {
+  position: absolute;
+  width: 26px;
+  top: 20px;
+  left: 10px;
+}
+
+.focus {
+  opacity: 1;
+}
+
+.focus > label {
+  top: 2px;
+  font-size: 12px;
+}
+
+#btn {
+  width: 350px;
+  border: none;
+  padding: 15px;
+  color: #fff;
+  background-color: #000;
+  font-size: 24px;
+  border-radius: 30px;
+  cursor: pointer;
 }
 

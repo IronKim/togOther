@@ -77,10 +77,10 @@ const Homem = () => {
       // 이전 스크롤 위치와 현재 스크롤 위치 비교
       if (scrollY > prevScrollY) {
         setShowNavbar(false)
-        console.log(scrollY)
+   
       } else {
         setShowNavbar(true)
-        console.log(scrollY)
+
       }
 
       setPrevScrollY(scrollY);
