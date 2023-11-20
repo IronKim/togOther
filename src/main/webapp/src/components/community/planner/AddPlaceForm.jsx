@@ -1,12 +1,8 @@
 import React,{useEffect,useState,useCallback,useRef} from 'react';
 import styles from '../../../css//planner.module.css'
-import plusBut from '../../../assets/image/plusBut.png'
 import backBut from '../../../assets/image/backBut.png'
-import { GoogleMap, LoadScript, Autocomplete } from '@react-google-maps/api';
 import { getCity } from '../../../api/AdvisorApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
-
-const libraries = ["places"];
 
 const containerStyle = {
     position: 'absolute',
@@ -21,7 +17,7 @@ const center = {
 };
 
 const AddPlaceForm = (props) => {
-    const {onClose,firstTime,lastTime,nDay,onSub,upDTO,updateItem} = props
+    const {onClose,firstTime,lastTime,nDay,onSub,upDTO,updateItem,GoogleMap,Autocomplete} = props
     const [opTime,setOpTime] = useState([]);
     const [sel,setSel] = useState(true)
     const [save,setSave] = useState(false)
@@ -249,7 +245,7 @@ const PlaceClick = (pl,cu) =>{
                 {/* 장소들어갈 박스 */}
                 {
                 subDTO.place !== null && 
-                    <div className={styles.placeCard}>
+                    <div className={styles.placeCard} onClick={onSearchSelect}>
                         {subDTO.place.name}
                         <img src={subDTO.place.image}  className={styles.placeImg} />
                         <br/><br/>
@@ -258,18 +254,19 @@ const PlaceClick = (pl,cu) =>{
                 }
                 {
                 subDTO.customDTO !== null &&
-                    <div className={styles.placeCard}>
+                    <div className={styles.placeCard} onClick={onSearchSelect}>
                         {subDTO.customDTO.placeName}
                         <br/><br/>
                         <p className={styles.placeContextP}>{subDTO.customDTO.address}</p>
                     </div>
                 }
                 <p style={{fontSize:'17px',fontWeight:'bold'}}>내용</p>
-                <textarea rows="5" cols="40" value={subDTO.context} className={styles.addPlaceContext}
+                <textarea rows="10" cols="40" value={subDTO.context} className={styles.addPlaceContext}
                 onChange={(e) => setSubDTO({...subDTO,context : e.target.value}) } />
                 <br/>
-                <img className={styles.xBut} style={{float:'right' , margin:'4px'}} 
-                onClick={upDTO === undefined ?  () => onSave(subDTO) : () => onUpdate(upDTO,subDTO)}  src={plusBut}/> 
+                <button style={{float:'left'}} className={styles.buttons} 
+                onClick={upDTO === undefined ?  () => onSave(subDTO) : () => onUpdate(upDTO,subDTO)}>등록</button>
+      
             </div>}
                 {/*  */}
 
@@ -312,7 +309,7 @@ const PlaceClick = (pl,cu) =>{
                                 onClick={onSearch}  src={backBut}/> 
                                 {/* 커스텀으로 간다 */}
                                 {searchCity === '' && (
-                                    <button style={{float:'right'}} className={styles.buttons} onClick={onCustom}>장소 생성</button>
+                                    <button style={{float:'right'}} className={styles.buttons} onClick={onCustom}>지도로 찾기</button>
                                     )}
                                 <div style={{clear:'left'}}></div>
                                 {/* 검색 */}
@@ -325,7 +322,7 @@ const PlaceClick = (pl,cu) =>{
                                             <div className={styles.placeCard} key={place.id}
                                             onClick={() => PlaceClick(place,null)} >
                                             <span>{place.name}</span>
-                                            <img src={place.image} className={styles.placeImg} />
+                                            <img src={place.image && place.image} className={styles.placeImg} />
                                             <br/><br/>
                                             <p className={styles.placeContextP}>{place.context1}</p>
                                             </div>
@@ -337,9 +334,6 @@ const PlaceClick = (pl,cu) =>{
                     )
                 }
 
-                <div style={{opacity:0}}>
-                    <LoadScript googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo" libraries={libraries}/>
-                </div>
                 {/*  */}
             </div>
         </>

@@ -1,15 +1,21 @@
 package com.finalProject.togOther.planner;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.PlannerImageDTO;
 import com.finalProject.togOther.dto.PlannerTextDTO;
 import com.finalProject.togOther.dto.SubItemDTO;
+import com.finalProject.togOther.dto.UserDTO;
 
 //플래너 컨트롤러
 @RestController
@@ -41,5 +47,27 @@ public class PlannerController {
 	public ResponseEntity<String> addPlannerImage(@RequestBody PlannerImageDTO plannerImageDTO) {
 		return plannerService.addPlannerImage(plannerImageDTO);
 	}
+
+	// 리스트 불러오기
+	@PostMapping(path = "getPlanner")
+	public ResponseEntity<List<PlannerDTO>> getPlanner(@RequestBody Map<String, Integer> requestBody) {
+	    int n = requestBody.get("n");
+		return plannerService.getPlanner(n);
+	}
+	
+	// 토탈 불러오기
+	@PostMapping(path = "totPlanner")
+	public ResponseEntity<Integer> totPlanner() {
+		return plannerService.totPlanner();
+	}
+	
+	//이미지 리스트 불러오기
+	// 리스트 불러오기
+	@PostMapping(path = "getImages")
+	public ResponseEntity<List<PlannerImageDTO>> getImages(@RequestBody Map<String, Integer> requestBody) {
+	    int n = requestBody.get("n");
+		return plannerService.getImages(n);
+	}
+	
 
 }

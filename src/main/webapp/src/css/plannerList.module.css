@@ -1,0 +1,24 @@
+.main {
+    width: 1200px;
+    margin: 0 auto;
+}
+.plannerItem {
+    width:22%;
+    height: 200px;
+    margin:1.5%;
+    background-color: white;
+    border-radius: 15px;
+    display: inline-block;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.plannerItem img{
+    object-fit: cover;
+    width: 100%;
+    height: 100px;
+}
+@media (max-width: 1199px) {
+    .main {
+        width: 100%;
+    }
+}

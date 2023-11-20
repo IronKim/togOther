@@ -21,7 +21,6 @@ const Togother = (props) => {
                         {togoItem.title === '' ? '동행 '+(index+1) : togoItem.title}</div>
                 </section>
                 <section className={styles.toRightSection} style={{opacity: num === toNum ? 1 : 0}}>
-                    <div style={{float:'right',marginBottom:'5px'}}>
                     {
                         subDTO.filter(item => item.toNum === num).length > 0 &&
                         (subDTO.filter(item => item.toNum === num).length > 1 ? (
@@ -30,7 +29,8 @@ const Togother = (props) => {
                         {calcDay(subDTO.filter(item => item.toNum === num).slice().sort((a, b) => 
                         a.nDay - b.nDay)[subDTO.filter(item => item.toNum === num).length-1].nDay)}</span>
                         ) : (<span className={styles.calcDay}>{calcDay(subDTO.find(item => item.toNum === num).nDay)}</span>
-                        ))}&nbsp;
+                    ))}&nbsp;
+                    <div style={{float:'right',marginBottom:'5px'}}>
                     인원 <input type="number" min="2" max="10" step="1" 
                     value={togoItem.tNum} className={styles.tNum} onChange={(e) => onToTNum(e,num)}/>&nbsp;&nbsp; 
                     <img style={{marginBottom:'-3.5px'}} onClick={() => onToDelete(num)} className={styles.xButSmall} src={xBut}/></div>
@@ -41,7 +41,11 @@ const Togother = (props) => {
                         subDTO.filter(item => item.toNum === num).length > 0 ?
                         <div className={styles.togoItem} onClick={()=>onToList(num)}>
                             <div className={styles.togoItemContext}>
-                            {subDTO.find(item2 => item2.toNum === num).context}</div>
+                            {subDTO.find(item2 => item2.toNum === num).place !== null 
+                            && subDTO.find(item2 => item2.toNum === num).place.name}
+                            {subDTO.find(item2 => item2.toNum === num).customDTO !== null 
+                            && subDTO.find(item2 => item2.toNum === num).customDTO.placeName}
+                            </div>
                             <div style={{float:'right'}}>{subDTO.filter(item => item.toNum === num).length
                             > 1 &&'외 ' + (subDTO.filter(item => item.toNum === num).length-1) }</div>
                             <div style={{clear:'both'}}></div>

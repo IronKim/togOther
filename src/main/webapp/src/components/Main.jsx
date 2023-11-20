@@ -13,6 +13,7 @@ import Write from '../pages/Write';
 import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
+import Community from '../pages/Community';
 
 
 const Main = () => {
@@ -32,8 +33,11 @@ const Main = () => {
                         <Route path='cityList' element={ <CityMain />} />
                         <Route path='city/:citySeq' element={ <City />}/>
                     </Route>
-                    <Route path='planner' element= { <Planner />} />
-                    <Route path='place' element= { <Together/> } />
+                    <Route path='community'>
+                        <Route path='' element={ <Community/>}/>
+                        <Route path='planner' element= { <Planner />} />
+                        <Route path='place' element= { <Together/> } />
+                    </Route>
                 </Routes>
 
                 <FooterComponent />

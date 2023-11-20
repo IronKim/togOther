@@ -6,6 +6,6 @@ import com.finalProject.togOther.dto.TogetherDTO;
 
 public interface TogetherService {
 
-	ResponseEntity<String> addTogether(TogetherDTO togetherDTO);
+	ResponseEntity<Integer> addTogether(TogetherDTO togetherDTO);
 
 }

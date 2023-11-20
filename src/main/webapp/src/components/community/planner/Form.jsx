@@ -1,12 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { addPlanner,addSubItem,addPlannerText,addPlannerImage,uploadPlannerImage } from '../../../api/PlannerApiService';
+import { getCityBySeq } from '../../../api/CityApiService';
 import { addCustomPlace } from '../../../api/PlaceApiService';
+import { addTogether } from '../../../api/TogetherApiService';
 import Nday from './Nday';
 import styles from '../../../css/planner.module.css'
 import Togother from './Togother';
 import TogoItemList from './TogoItemList';
 import xBut from '../../../assets/image/xBut.png';
 import arrow from '../../../assets/image/arrow.png'
+import { GoogleMap, LoadScript, Autocomplete, GroundOverlay } from '@react-google-maps/api';
+
+const libraries = ["places"];
 
 const Form = () => {
     const today = new Date();
@@ -21,7 +26,7 @@ const Form = () => {
     //날짜
     const [startDate,setStartDay] = useState(nowDay)
     const [endDate,setEndDay] = useState(nowDay)
-//
+    //
     const [dDay,setDDay] = useState([])
 
     //DTO 정보들
@@ -33,6 +38,23 @@ const Form = () => {
     const [tabNum,setTabNum] = useState(1)
     const [toNum,setToNum] = useState(0)
 
+    //플래너 이름 자동 생성 매커니즘
+    const [plannerTitle,setPlannerTitle] = useState([])
+
+    useEffect(()=>{
+        const getPlaces = [...subDTO].reverse().find(item => item.place !== null);
+        
+        if(getPlaces !== undefined) {        
+            getCityBySeq(getPlaces.place.citySeq)
+            .then(res => {
+                const planTitle = plannerTitle;
+                planTitle.push(res.data.cityName);
+                let disPlan = new Set(planTitle)
+                setPlannerTitle([...disPlan])
+            })
+            .catch(e => console.log(e));
+        }
+    },[subDTO])
     //동행리스트
     const [toList,setToList] = useState(0)
     const onToList = (seq) => {
@@ -40,13 +62,34 @@ const Form = () => {
     }
     //플래너 업로드 
     const uploadPlanner = () => {
+        const delTogo = [];
 
-        const planner = {title: '~~의 어디어디 일정',code: 100,startDate: startDate,
+        togoDTO.map(item => {
+            if(item.title === '') delTogo.push(item.seq)
+            else if(item.context === '') delTogo.push(item.seq)
+            else if(subDTO.findIndex(item2 => item2.toNum === item.seq) === -1) delTogo.push(item.seq)
+        })
+
+        if(delTogo.length > 0) {
+            if(window.confirm(delTogo.length + 
+                '건의 작성 되지않은 동행이 있습니다. 삭제하고 저장하시겠습니까?')) {
+                    Promise.all(delTogo.map(item => onToDelete(item)))
+                }else return;
+        }
+
+        let title = `인호의 ${plannerTitle.length > 0 ? plannerTitle[0] : ''}${//이름 나중에 유저 세션 이름으로
+        plannerTitle.length > 1 ? ` 외 ${plannerTitle.length - 1}곳` : ''} 여행 플래너`;
+
+        let cityName = '';
+        if(plannerTitle.length > 0 ) cityName = plannerTitle[0];
+
+        const planner = {title: title,startDate: startDate,cityName : cityName,
         endDate: endDate,publicPlan : publicPaln ? 0 : 1,hit : 0,likeCnt : 0}
 
         addPlanner(planner)
         .then(res => {
-            subDTO.map(item => {
+            console.log(res.data)
+            subDTO.filter(item2 => item2.toNum === undefined).map(item => {
                 if(item.place !== null) {
                     const subItem = {plMainSeq: res.data, nday: item.nDay, code : item.code,
                     startTime : item.startTime, endTime : item.endTime, context : item.context,
@@ -60,12 +103,52 @@ const Form = () => {
                         .then(res2 => {
                                 const subItem = {plMainSeq: res.data, nday: item.nDay, code : item.code,
                                 startTime : item.startTime, endTime : item.endTime, context : item.context,
-                                placeSw: 1, pCustomSeq : res2.data}
+                                placeSw: 1, plCustomSeq : res2.data}
                                 addSubItem(subItem)
+                                .then(res3 => console.log(res3))
+                                .catch(e => console.log(e))
                             }
                         )
                         .catch(e => console.log(e))
                     }
+            })
+            togoDTO.map(togo => {
+                const toStartDate = new Date(startDate);
+                toStartDate.setDate(toStartDate.getDate() + subDTO.filter(item => item.toNum === togo.seq)
+                .slice().sort((a, b) => a.nDay - b.nDay)[0].nDay - 1);
+
+                const toEndDate = new Date(startDate);
+                toEndDate.setDate(toEndDate.getDate() + 
+                subDTO.filter(item => item.toNum === togo.seq).slice().sort((a, b) => a.nDay - b.nDay)
+                [subDTO.filter(item => item.toNum === togo.seq).length-1].nDay - 1);
+
+                const togoItem = {tnum : togo.tNum,title : togo.title,context : togo.context, startDate: toStartDate,
+                                endDate: toEndDate}
+                addTogether(togoItem)
+                .then(tores => 
+                    subDTO.filter(item2 => item2.toNum !== togo.seq).map(item => {
+                        if(item.place !== null) {
+                            const subItem = {plMainSeq: res.data, nday: item.nDay, code : 2,
+                            startTime : item.startTime, endTime : item.endTime, context : item.context,
+                            placeSw: 0, placeSeq: item.place.placeSeq,toMainSeq: tores.data}
+                            addSubItem(subItem)
+                            .then(res2 => console.log(res2))
+                            .catch(e => console.log(e))
+                        }
+                        if(item.customDTO !== null) {
+                                addCustomPlace(item.customDTO)
+                                .then(res2 => {
+                                        const subItem = {plMainSeq: res.data, nday: item.nDay, code : 2,
+                                        startTime : item.startTime, endTime : item.endTime, context : item.context,
+                                        placeSw: 1, plCustomSeq : res2.data,toMainSeq: tores.data}
+                                        addSubItem(subItem)
+                                    }
+                                )
+                                .catch(e => console.log(e))
+                            }
+                    })
+                )
+                .catch(e => console.error(e) )
             })
             textDTO.map(item => {
                 const plannerText = {plMainSeq: res.data, id : item.id, nday: item.nDay,
@@ -99,18 +182,6 @@ const Form = () => {
             })
             ////
             alert(res.data)
-        })
-        .catch(e => console.log(e))
-    }
-    //플래너 임시저장
-    const savePlanner = () => {
-        const planner = {title: '~~의 어디어디 일정',code: 200,startDate: startDate,
-        endDate: endDate,publicPlan : publicPaln ? 0 : 1}
-
-        addPlanner(planner)
-        .then(res => {
-            console.log(res)
-            alert('완료');
         })
         .catch(e => console.log(e))
     }
@@ -320,12 +391,16 @@ const Form = () => {
             <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button>
             <section className={styles.topSection}>
             {/* 제목 */}
+            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}인호의 {plannerTitle.length > 0 && plannerTitle[0]}
+            {plannerTitle.length > 1 && ' 외 ' + (plannerTitle.length-1) + '곳 '}여행 플래너</div> 
             {/* 달력 */}
             <div className={styles.calender}>
-            <div><input type='date' min={nowDay} value={startDate} onChange={onStartDay}/>&nbsp;-&nbsp;
-            <input type='date' min={startDate} value={endDate} onChange={(e) => setEndDay(e.target.value)} id='endDate'/></div>
+            <div className={styles.inCalender}>
+                <input type='date' min={nowDay} value={startDate} onChange={onStartDay} />
+                <input type='date' min={startDate} value={endDate} onChange={(e) => setEndDay(e.target.value)} id='endDate'/>
+            </div>
             <h1 style={{clear:'both'}}></h1>
-            <p>{new Date(startDate).getMonth()+1}월 {new Date(startDate).getDate()}일&nbsp;&nbsp;-&nbsp;&nbsp; 
+            <p>{new Date(startDate).getMonth()+1}월 {new Date(startDate).getDate()}일&nbsp;&nbsp;|&nbsp;&nbsp; 
             {new Date(endDate).getMonth()+1}월 {new Date(endDate).getDate()}일</p></div>
             <div style={{clear:'both'}}></div>
             {toList === 0 ? <button className={styles.buttons} style={{float:'right'}} onClick={togoDTO.length < 8 ? () => addTo() : () => 
@@ -364,7 +439,8 @@ const Form = () => {
                                 <div key={index}>
                                 <Nday nDay={item} tabNum={tabNum} onTab={onTab} subDTO={subDTO} toNum={toNum}
                                 setSubDTO={setSubDTO} textDTO={textDTO} setTextDTO={setTextDTO} sDay={startDate}
-                                imageDTO={imageDTO} onImage={onImage} deleteImg={deleteImg}  xBut={xBut}/>
+                                imageDTO={imageDTO} onImage={onImage} deleteImg={deleteImg}  xBut={xBut}
+                                GoogleMap={GoogleMap} Autocomplete={Autocomplete} />
                                 {dDay.length !== 0 && index !== dDay.length - 1 && (
                                     <div className={styles.nDayDiv}><img  src={arrow}/></div>)}
                                 </div>
@@ -375,10 +451,12 @@ const Form = () => {
                 </section>
                 <div style={{clear:'both'}}></div>
                 <section className={styles.bottomSection}>
-                    <button className={styles.buttons} style={{float:'right',margin:'30px 10px'}} onClick={()=>uploadPlanner()}>업로드</button>
-                    <button className={styles.buttons} style={{float:'right',margin:'30px 10px'}} onClick={()=>savePlanner()}>임시저장</button>
+                    <button className={styles.buttons} style={{float:'right',margin:'30px 10px'}} onClick={()=>uploadPlanner()}>저장</button>
                 </section>
             </section>
+            <div style={{opacity:0}}>
+                    <LoadScript googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo" libraries={libraries}/>
+            </div>
         </div>
     );
 };
