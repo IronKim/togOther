@@ -1,56 +1,62 @@
 .citypage {
+    user-select: none;
     width : 100%;
     height : 25em;
+    object-fit: cover;
     position: relative;
-    opacity: 0.7;
+    opacity: 0.8;
 }
+
 .cityName{
+    user-select: none;
     position: absolute;
     top: 19%;
-    left: 5%;
+    left: 20%;
     width: 5em;
     height: 1.3em;
     line-height: 1.4em;
     text-align: center;
-    font-size: 4em;
+    font-size: 4em; 
     border-radius: 1em;
     color: #D1D5D6;
     background-color: rgba( 0, 0, 0, 0.7 );
 }
+
 .api {
+    user-select: none;
     width : 64em;
     height : 7em;
     position: relative;
     left: 50%;
-    top :10em;
+    top :7em;
     transform: translate(-50%, -50%);
 }
 .money {
     width : 30em;
     height : 4.8em;
-    margin : 0 0px 0 29em;
+    margin : 0 0px 0 36em;
 }
 .weather {
-    border : 1px solid black;
     width : 30em;
     height : 4.8em;
-    margin : -4.5em 50em 0 0;
+    margin : -4.5em 50em 0 0; 
 }
 .weatherIcon {
-    border : 1px solid blue;
     width : 250px;
     height : 70px;
-    margin : -70px 0 0 250px;
+    margin : -70px 0 0 250px; 
 }
 .button {
     display: flex;
     justify-content: center;
-    margin: 5em;
+    margin-top: 2em;
+    margin-bottom: 6em;
 }
-.list1 {
+
+.list {
     display: flex;
-    border:1px solid #EBEAEC;
-    border-radius:16px;
+    border:1px solid #ebeaec;
+    border-radius:15px;
     box-shadow:0px 2px 4px rgba(0,0,0,0.3);
     width : 31em;
     height : 15.7em;
@@ -59,16 +65,33 @@
     gap:0.6em;
     cursor: pointer;
     user-select: none;
+    overflow: hidden;
 }
+
 .imgDiv {
-    width : 25em;
     height : 25em;
+    width: 25em;
+    max-width: 100%;
+    overflow:  hidden;
+    border-radius:15px;
 }
+
+.imgDiv img{
+    width: 100%;
+    height: 62.4%;
+    border-radius:15px;
+    user-select: none;
+    overflow: hidden;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
 .textDiv {
     width : 25em;
     height : 25em;
     user-select: none;
 }
+
 .textDiv1{
     width: 14.5em;
     height: 10em;
@@ -88,9 +111,18 @@
     display: -webkit-box;
     -webkit-line-clamp: 6 ;
 }
+
+/* 호버 시 이미지 확대 */
+.list:hover img {
+    transform: scale(1.1); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+
 /* --------------------검색-------------------- */
-.inputBox{
-    border-radius: 15px;
+/* .inputBox{
+    border-radius: 15px;  
     width: 600px;
     height: 100px;
     position: absolute;
@@ -103,6 +135,7 @@
     position: relative;
     width: 300px;
 }
+  
 .input {
     width: 100%;
     border: 1px solid #bbb;
@@ -110,6 +143,7 @@
     padding: 10px 12px;
     font-size: 14px;
 }
+  
 .img {
     position : absolute;
     width: 17px;
@@ -117,4 +151,4 @@
     top: 10px;
     right: 12px;
     margin: 0;
-}
+} */
