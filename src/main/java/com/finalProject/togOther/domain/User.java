@@ -4,11 +4,14 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.finalProject.togOther.constant.Authority;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.UserDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -68,6 +71,9 @@ public class User {
 	
 	private byte certification;
 	
+	@Enumerated(EnumType.STRING)
+	private Authority authority;
+	
 	public static User toEntity(UserDTO userDTO) {
 		return User.builder()
 				   .userSeq(userDTO.getUserSeq())
@@ -88,6 +94,8 @@ public class User {
 				   .dupLogin(userDTO.getDupLogin())
 				   .cityList(userDTO.getCityList())
 				   .cityFix(userDTO.getCityFix())
+				   .certification(userDTO.getCertification())
+				   .authority(userDTO.getAuthority())
 				   .build();
 	}
 	

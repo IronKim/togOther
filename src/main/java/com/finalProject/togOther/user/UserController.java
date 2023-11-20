@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.finalProject.togOther.dto.LoginDTO;
+import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
+import com.finalProject.togOther.dto.UserDTO;
 
 @RestController
 @RequestMapping("api/user")
@@ -20,15 +24,13 @@ public class UserController {
 
 	private UserService userService;
 
-	public UserController(UserServiceImpl userService) {
+	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 
 	// 유저 추가
 	@PostMapping(path = "addUser")
 	public ResponseEntity<String> addUser(@RequestBody RegisterDTO registerDTO) {
-
-		System.out.println(registerDTO.getCertification());
 		return userService.addUser(registerDTO);
 	}
 
@@ -44,10 +46,30 @@ public class UserController {
 		return userService.getUserByEmail(userEmail);
 	}
 
+	// 통합인증 정보조회
 	@PostMapping(path = "handleCertificationRequest")
 	public ResponseEntity<SSODTO> handleCertificationRequest(@RequestBody Map<String, String> requestBody) {
 		String impUid = requestBody.get("imp_uid");
 		return userService.processCertificationRequest(impUid);
+	}
+	
+	
+	// 로그인
+	@PostMapping(path = "loginUser")
+	public ResponseEntity<LoginInResponseDTO> loginUser(@RequestBody LoginDTO loginDTO) {
+		return userService.LoginUser(loginDTO);
+	}
+	
+	// access 토큰으로 로그인
+	@GetMapping(path = "getUserByAccessToken")
+	public ResponseEntity<LoginInResponseDTO> getUserByAccessToken(@RequestHeader("Authorization") String authorizationHeader) {
+        return userService.getUserByAccessToken(authorizationHeader);
+    }
+	
+	// refresh 토큰으로 access토큰 발급
+	@GetMapping(path = "getTokenByRefreshToken")
+	public ResponseEntity<Void> getTokenByRefreshToken(@RequestHeader("Refresh-Token") String refreshToken) {
+		return userService.getTokenByRefreshToken(refreshToken);
 	}
 
 }

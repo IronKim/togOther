@@ -2,6 +2,8 @@ package com.finalProject.togOther.user;
 
 import org.springframework.http.ResponseEntity;
 
+import com.finalProject.togOther.dto.LoginDTO;
+import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 
@@ -16,4 +18,10 @@ public interface UserService {
 	public ResponseEntity<SSODTO> processCertificationRequest(String impUid);
 
 	public ResponseEntity<Boolean> isUserExistsByPhone(String phone);
+
+	public ResponseEntity<LoginInResponseDTO> LoginUser(LoginDTO loginDTO);
+
+	public ResponseEntity<LoginInResponseDTO> getUserByAccessToken(String authorizationHeader);
+
+	public ResponseEntity<Void> getTokenByRefreshToken(String refreshToken);
 }

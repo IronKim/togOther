@@ -7,9 +7,9 @@
     background: #000;
     opacity: 0.6;
 }
-input:focus {outline: 2px solid #194E8C;}
-textarea:focus {outline: 2px solid #194E8C;}
-textarea{
+.input:focus {outline: 2px solid #194E8C;}
+.textarea:focus {outline: 2px solid #194E8C;}
+.textarea{
     resize: none;
 }
 .calender {

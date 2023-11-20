@@ -16,7 +16,6 @@ const CityWeatherApi = ({ selectedCity, onWeatherData }) => {
           return;
         }
 
-        console.log('Selected City:', selectedCity);
         const englishCityName = getEnglishCityName(selectedCity);
 
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${englishCityName}&appid=ccbe72ea1cf97d70c81aa843786a32ba&units=metric`;
@@ -26,7 +25,8 @@ const CityWeatherApi = ({ selectedCity, onWeatherData }) => {
         setCityWeather(data);
         
         // 날씨 아이콘 코드를 부모 컴포넌트로 전달
-        onWeatherData(data.weather[0].icon);
+        onWeatherData(data);
+
       } catch (error) {
         console.log('날씨 API 요청 중 오류 발생:', error);
       }
@@ -40,6 +40,7 @@ const CityWeatherApi = ({ selectedCity, onWeatherData }) => {
 
   const getEnglishCityName = (englishCityName) => {
     return cityMapping[englishCityName] || englishCityName;
+
   };
 
   return (
@@ -48,7 +49,6 @@ const CityWeatherApi = ({ selectedCity, onWeatherData }) => {
       {/* 날씨 정보가 있을 때만 렌더링 */}
       {cityWeather !== null && cityWeather.main && cityWeather.main.temp !== undefined ? (
         <div>
-          
           <div>
             {/* 나머지 날씨 정보 표시 */}
             <p>{`온도: ${cityWeather.main.temp}°C`}</p>
@@ -62,5 +62,6 @@ const CityWeatherApi = ({ selectedCity, onWeatherData }) => {
     </div>
   );
 };
+
 
 export default CityWeatherApi;

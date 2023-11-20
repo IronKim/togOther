@@ -1,409 +1,419 @@
 :root {
-    --circle-width: 5rem;
-    --header-font-size: 1.5em;
+  --circle-width: 5rem;
+  --header-font-size: 1.5em;
 }
 
 @media (max-width: 1200px) {
 
-    :root {
-        --circle-width: 5rem;
-        --header-font-size: 1.2em;
-    }
+  :root {
+      --circle-width: 5rem;
+      --header-font-size: 1.2em;
+  }
 
-    .activeCircle,
-    .circle,
-    .fbtn,
-    .input_file_button,
-    .inputField,
-    .radioInput,
-    .inputFieldCk,
-    .buttonsContainer,
-    .buttons {
-        transform: scale(0.8);
-    }
-    
-    
+  .activeCircle,
+  .circle,
+  .fbtn,
+  .input_file_button,
+  .inputField,
+  .radioInput,
+  .inputFieldCk,
+  .buttonsContainer,
+  .buttons {
+      transform: scale(0.8);
+  }
+  
+  
 }
 
 .activeCircle {
-    position: relative;
-    margin: 0 auto;
-    width: var(--circle-width);
-    height: var(--circle-width);
-    background-color: #2E8DFF;
-    border-radius: 50%;
+  position: relative;
+  margin: 0 auto;
+  width: var(--circle-width);
+  height: var(--circle-width);
+  background-color: #2E8DFF;
+  border-radius: 50%;
 }
 
 .activeCircle p {
-    color: white;
-    font-size: var(--header-font-size);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  color: white;
+  font-size: var(--header-font-size);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .circle {
-    position: relative;
-    margin: 0 auto;
-    width: var(--circle-width);
-    height: var(--circle-width);
-    background-color: #EDEFF1;
-    border-radius: 50%;
+  position: relative;
+  margin: 0 auto;
+  width: var(--circle-width);
+  height: var(--circle-width);
+  background-color: #EDEFF1;
+  border-radius: 50%;
 }
 
 .circle p {
-    color: black;
-    font-size: var(--header-font-size);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  color: black;
+  font-size: var(--header-font-size);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .mainContainer {
-    min-height: 100%;
-    margin-top: 3vw;
-    margin-bottom: 6vw;
-    padding: 0; 
-    text-align: center;
+  min-height: 100%;
+  margin-top: 3vw;
+  margin-bottom: 6vw;
+  padding: 0; 
+  text-align: center;
 }
 
 
-  .fbtn{
-    color: #010607;
-    border: 0;
-    font-size: 2.4rem;
-    background-color: white;
-    margin-top: 10px;
-  }
-  /* .fbtn:hover {
-    color: #1b8fd6; /* 마우스 호버 시 배경색 변경 
-  } */
-  /* img{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-  } */
-  .input_file_button{
-    padding: 6px 25px;
-    background-color:#2ADDF5;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-    border: 0;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-
-  
-  .writeContainer {
-    max-width: 800px;
-    min-height: 100%;
-    max-height: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff; /* 배경색을 흰색으로 설정 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-  }
-
-  .inputLabel {
-    text-align: left;
-    margin-left: 2vw;
-    font-size: 1.5rem;
-  }
-  
-  .inputField {
-    width: 80%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 13px;
-    
-  }
-  
-  .radioInput {
-    margin-right: 5px;
-    margin-bottom: 20px;
-  }
-  .inputFieldCk {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 20px; /* 첫 번째 <p> 태그 위에 간격을 줍니다. */
-  }
-  
-  .inputFieldCk p {
-    margin-bottom: 10px; /* 각 <p> 태그 사이에 간격을 줍니다. */
-    flex: 1;
-  }
-  .writeContainerCk{
-    max-width: 800px;
-    min-height: 600px;
-    max-height: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff; /* 배경색을 흰색으로 설정 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between; /* 요소 간 간격을 최대한 넓혀 나타냅니다. */
+.fbtn{
+  color: #010607;
+  border: 0;
+  font-size: 2.4rem;
+  background-color: white;
+  margin-top: 10px;
 }
-  .buttonsContainer {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    margin-top: 20px;
+/* .fbtn:hover {
+  color: #1b8fd6; /* 마우스 호버 시 배경색 변경 
+} */
+.imagePreview{
+  width: 141px;
+  height: 141px;
+  object-fit: cover;
+}
+.input_file_button{
+  padding: 15px 40px;
+  background-color:#2E8DFF;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  border: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+
+.writeContainer {
+  max-width: 800px;
+  min-height: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff; /* 배경색을 흰색으로 설정 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+
+.inputLabel {
+  text-align: left;
+  margin-left: 2vw;
+  font-size: 1.5rem;
+}
+
+.inputField {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 20px;
+  
+}
+
+.radioInput {
+  margin-right: 5px;
+  margin-bottom: 20px;
+}
+.inputFieldCk {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.inputFieldCk p {
+  margin-bottom: 10px; /* 각 <p> 태그 사이에 간격을 줍니다. */
+  flex: 1;
+}
+.writeContainerCk{
+  max-width: 800px;
+  min-height: 600px;
+  max-height: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff; /* 배경색을 흰색으로 설정 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between; /* 요소 간 간격을 최대한 넓혀 나타냅니다. */
+}
+
+.writeContainerCk p{
+font-size: 22px;
+margin-bottom: 15px;
+}
+.inputFieldF p{
+font-size: 38px;
+margin-bottom: 25px;
+font-weight:normal;
+}
+
+.buttonsContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .buttons {
-    display: flex;
+  display: flex;
 }
 
 .verificationImage{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .verificationImageDiv{
-    width: 100%;
-    height: 20em;
-    margin: 1rem 0rem;
-    border: 1px solid #ccc;
+  width: 100%;
+  height: 20em;
+  margin: 1rem 0rem;
+  border: 1px solid #ccc;
 }
 
 .chk {
-  height: 20px;
-  width: 20px;
-  background-color: transparent;
-  border: 2px solid #bbbbbb;
-  border-radius: 5px;
-  box-sizing: border-box;
-  position: relative;
-  display: inline-block;
-  transition: border-color ease 0.2s;
-  cursor: pointer;
+height: 20px;
+width: 20px;
+background-color: transparent;
+border: 2px solid #bbbbbb;
+border-radius: 5px;
+box-sizing: border-box;
+position: relative;
+display: inline-block;
+transition: border-color ease 0.2s;
+cursor: pointer;
 }
 
 .chk::before, .chk::after {
-  position: absolute;
-  height: 0;
-  width: 4px;
-  background-color: #34b93d;
-  box-sizing: border-box;
-  display: inline-block;
-  transform-origin: left top;
-  border-radius: 5px;
-  content: ' ';
-  transition: opacity ease 0.5;
+position: absolute;
+height: 0;
+width: 4px;
+background-color: #34b93d;
+box-sizing: border-box;
+display: inline-block;
+transform-origin: left top;
+border-radius: 5px;
+content: ' ';
+transition: opacity ease 0.5;
 }
 
 .chk::before {
-  top: 14.4px;
-  left: 8.2px;
-  box-shadow: 0 0 0 1px transparent;
-  transform: rotate(-135deg);
+top: 14.4px;
+left: 8.2px;
+box-shadow: 0 0 0 1px transparent;
+transform: rotate(-135deg);
 }
 .chk::after {
-  top: 7.4px;
-  left: 1px;
-  transform: rotate(-45deg);
+top: 7.4px;
+left: 1px;
+transform: rotate(-45deg);
 }
 .chkI:checked + .chk {
-  border-color: #34b93d;
+border-color: #34b93d;
 }
 
 .chkI:checked + .chk::after {
-  height: 10px;
-  animation: bottomcheck 0.2s ease 0s forwards;
+height: 10px;
+animation: bottomcheck 0.2s ease 0s forwards;
 }
 .chkI:checked + .chk::before {
-  height: 24px;
-  animation: topcheck 0.4s ease 0s forwards;
+height: 24px;
+animation: topcheck 0.4s ease 0s forwards;
 }
 .chkI {
-	display: none;
+display: none;
 }
 @keyframes bottomcheck {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: 10px;
-  }
+0% {
+  height: 0;
+}
+100% {
+  height: 10px;
+}
 }
 @keyframes topcheck {
-  0% {
-    height: 0;
-  }
-  50% {
-    height: 0;
-  }
-  100% {
-    height: 24px;
-  }
+0% {
+  height: 0;
+}
+50% {
+  height: 0;
+}
+100% {
+  height: 24px;
+}
 
 }
 
 .agreeContext {
-  width:100%;
-  color:#999;
-  font-weight:400;
-  background:#fff;
-  border-radius:3px;
-  line-height:2em;
-  border:none;
-  box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
-  padding:30px;
-  -webkit-transition: height 2s ease;
-    -moz-transition: height 2s ease;
-    -ms-transition: height 2s ease;
-    -o-transition: height 2s ease;
-    transition: height 2s ease;
+width:100%;
+color:#999;
+font-weight:400;
+background:#fff;
+border-radius:3px;
+line-height:2em;
+border:none;
+box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
+padding:30px;
+-webkit-transition: height 2s ease;
+  -moz-transition: height 2s ease;
+  -ms-transition: height 2s ease;
+  -o-transition: height 2s ease;
+  transition: height 2s ease;
 }
 
 .agreeContext:focus {
-  outline:none;
-  box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
+outline:none;
+box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
 }
 
 .agreeContext {
-    resize: none;
+  resize: none;
 }
 
 
 
 .formGroup {
-    position: relative;
-    margin: 0 auto;
-    padding: 20px 0;
-    width: 80%;
-    max-width: 100%;
+  position: relative;
+  margin: 0 auto;
+  padding: 20px 0;
+  width: 80%;
+  max-width: 100%;
 }
 
 .formGroup input {
-    border: none;
-    border-bottom: 1px solid #9e9e9e;
-    color: #333;
-    display: block;
-    font-size: 1.6rem;
-    padding: 10px 0;
-    width: 100%;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  color: #333;
+  display: block;
+  font-size: 1.6rem;
+  padding: 10px 0;
+  width: 100%;
 }
 
 .formGroup label {
-    color: #9e9e9e;
-    font-size: 1.6rem;
-    font-weight: 100;
-    position: absolute;
-    top: 0;
-    left: 0;
+  color: #9e9e9e;
+  font-size: 1.6rem;
+  font-weight: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .formGroup label {
-    color: #9e9e9e;
-    font-size: 1.6rem;
-    font-weight: 100;
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    transform: translateY(30px);
+  color: #9e9e9e;
+  font-size: 1.6rem;
+  font-weight: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transform: translateY(30px);
 }
 
 .formGroup input:valid,
 .formGroup input:focus {
-    border-bottom-color: #070606;
-    outline: none;
+  border-bottom-color: #070606;
+  outline: none;
 }
 
 .formGroup input:valid + label,
 .formGroup input:focus + label,
 .formGroup input:read-only + label {
-    color: #070606;
-    font-size: 1.2rem;
-    transform: translateY(0);
+  color: #070606;
+  font-size: 1.2rem;
+  transform: translateY(0);
 }
 
 .formGroup label {
-    transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .formGroup input + label span {
-    transition: opacity 0.2s ease; /* 0.2초 동안 opacity 변경 애니메이션 */
-    opacity: 1; /* 기본적으로 완전히 불투명 */
-    font-size: calc(0.6rem + 0.3vw);
-    display: inline;
+  transition: opacity 0.2s ease; /* 0.2초 동안 opacity 변경 애니메이션 */
+  opacity: 1; /* 기본적으로 완전히 불투명 */
+  font-size: calc(0.6rem + 0.3vw);
+  display: inline;
 }
 
 .formGroup input:valid + label span,
 .formGroup input:focus + label span,
 .formGroup input:read-only + label span {
-    opacity: 0; /* 유효하거나 포커스를 받은 경우 완전히 투명 */
+  opacity: 0; /* 유효하거나 포커스를 받은 경우 완전히 투명 */
 }
 
 .radio {
-    display: flex;
-    align-items: center;
-    font-size: 1.4rem;
-    cursor: pointer;
-    width: 5rem;
-  }
-  .radio input {
-    display: none;
-  }
-  .radio input:checked ~ .radioMark:after {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  .radioMark {
-    margin-right: 0.5rem;
-    position: relative;
-    width: calc(1.5rem + 0.3vw);
-    height: calc(1.5rem + 0.3vw);
-    border-radius: 50%;
-    border: 0.2rem solid #000;
-  }
-  .radioMark:after {
-    position: absolute;
-    content: "";
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.5);
-    width: 70%;
-    height: 70%;
-    border-radius: 50%;
-    background: #000;
-    transition: all ease 0.1s;
-    opacity: 0;
-  }
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  width: 5rem;
+}
+.radio input {
+  display: none;
+}
+.radio input:checked ~ .radioMark:after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.radioMark {
+  margin-right: 0.5rem;
+  position: relative;
+  width: calc(1.5rem + 0.3vw);
+  height: calc(1.5rem + 0.3vw);
+  border-radius: 50%;
+  border: 0.2rem solid #000;
+}
+.radioMark:after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: #000;
+  transition: all ease 0.1s;
+  opacity: 0;
+}
 
-  .selectBox {
-    position: relative;
-    font-size: 1.4rem;
-    width: 26.5%;
-    height: 3rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    overflow: hidden;
-    cursor: pointer;
-  }
+.selectBox {
+  position: relative;
+  font-size: 1.4rem;
+  width: 26.5%;
+  height: 3rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  overflow: hidden;
+  cursor: pointer;
+}
 
-  .selectBox option {
-    font-size: 1.4rem;
-  }
+.selectBox option {
+  font-size: 1.4rem;
+}
 
-  .selectBox[readonly] {
-    outline: black;
-    border: 1px solid black;
-    pointer-events: none;
-  }
+.selectBox[readonly] {
+  outline: black;
+  border: 1px solid black;
+  pointer-events: none;
+}
