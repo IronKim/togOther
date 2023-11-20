@@ -16,27 +16,20 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().disable()
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable().cors().disable().httpBasic().disable()
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/api/advisor").denyAll()
                         .requestMatchers("/**", "/images/**", "/view/join", "/auth/join").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(login -> login
-                        .loginPage("/")
-                        .loginProcessingUrl("/login-process")
-                        .usernameParameter("userid")
-                        .passwordParameter("pw")
-                        .defaultSuccessUrl("/view/dashboard", true)
-                        .permitAll()
-                )
+                .formLogin(withDefaults())
                 .logout(withDefaults());
 
         return http.build();

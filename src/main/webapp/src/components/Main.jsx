@@ -15,8 +15,9 @@ import Planner from '../pages/Planner';
 import Together from '../pages/Together';
 import useUserStore from '../stores/userStore';
 import { getTokenByRefreshToken, getUserByAccessToken } from '../api/UserApiService';
+import BottomNav from './BottomNav';
 
-const Main = () => {
+const Main = ({ showNavbar }) => {
     
     const {user, setUser} = useUserStore();
 
@@ -118,6 +119,7 @@ const Main = () => {
                     </Route>
                     <Route path='planner' element= { <Planner />} />
                     <Route path='place' element= { <Together/> } />
+                    {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
 
                 <FooterComponent />
