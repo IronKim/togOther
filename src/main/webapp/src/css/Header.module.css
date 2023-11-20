@@ -54,8 +54,9 @@
   font-style: normal;
 }
 
-.activeLink {
-  color: cadetblue;
+.activeL {
+  text-decoration: none;
+  color: inherit;
 }
   
 @media (max-width: 1199px) {

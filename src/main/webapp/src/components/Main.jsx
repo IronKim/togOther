@@ -13,9 +13,10 @@ import Write from '../pages/Write';
 import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
+import BottomNav from './BottomNav';
 
 
-const Main = () => {
+const Main = ({ showNavbar }) => {
     return (
         <div>
             <BrowserRouter>
@@ -34,6 +35,7 @@ const Main = () => {
                     </Route>
                     <Route path='planner' element= { <Planner />} />
                     <Route path='place' element= { <Together/> } />
+                    {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
 
                 <FooterComponent />
