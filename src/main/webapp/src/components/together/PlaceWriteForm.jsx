@@ -144,19 +144,19 @@ const PlaceWriteForm = () => {
         <div className={Style.writeFormInner}>
             <div>
                 <input type="text" 
-                       className={Style.title}
+                       className={`${Style.title} ${Style.input}`}
                        name="title" 
                        value={title} 
                        onChange={onInput}
                        size="50" placeholder="ex) 12월 3박4일 제주 바다 보러갈 동행 3명 구해요"/>
             </div>        
             <div>
-                시작 날짜<input type='date' name='startDate' min={nowDay} value={startDate} className={Style.startDate}
+                시작 날짜<input type='date' name='startDate' min={nowDay} value={startDate} className={`${Style.startDate} ${Style.input}`}
                                 onChange={onInput}
                                 />
-                마지막 날짜<input type='date' name='endDate' min={startDate} value={endDate} onChange={onInput} className={Style.endDate}/>
+                마지막 날짜<input type='date' name='endDate' min={startDate} value={endDate} onChange={onInput} className={`${Style.endDate} ${Style.input}`}/>
                 <div style={{float:'right'}}>인원 
-                <input className={Style.mem} type="number" min="2" max="10" step="1" value={tNum} onChange={(e) => onToTNum(e)}/></div>
+                <input className={`${Style.mem} ${Style.input}`} type="number" min="2" max="10" step="1" value={tNum} onChange={(e) => onToTNum(e)}/></div>
             </div>            
             <div style={{clear:'both'}}></div>
 
@@ -188,7 +188,7 @@ const PlaceWriteForm = () => {
                 </div>
             </div>
             <div>
-                <textarea className={Style.context} name="context"  value={context} onChange={onInput} rows="10" cols="50"
+                <textarea className={`${Style.context} ${Style.textarea}`} name="context"  value={context} onChange={onInput} rows="10" cols="50"
                     placeholder="1. 현재 동행이 있나요? 
                     ex) 혼자에요 / 동행 1명이 있어요 
                     

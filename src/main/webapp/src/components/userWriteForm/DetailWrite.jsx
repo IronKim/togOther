@@ -1,6 +1,5 @@
 import React, {  useRef, useState } from 'react';
 import { HiArrowCircleRight } from 'react-icons/hi';
-import { HiArrowCircleLeft } from 'react-icons/hi';
 
 
 const DetailWrite = ({onInput,inputUserData,nextPage,styles}) => {
@@ -23,14 +22,6 @@ const DetailWrite = ({onInput,inputUserData,nextPage,styles}) => {
         }
     };
 
-    const handleNumberChange = (e) => {
-    const value = e.target.value;
-    const regex = /^[0-9]*$/;
-
-    if (regex.test(value) && value.length <= 15) {
-        onInput({ target: { name: 'tel', value: value } }); // inputUserData 업데이트
-    }
-};
     const imageInput = useRef();
     
     // 버튼클릭시 input태그에 클릭이벤트를 걸어준다. 
@@ -43,24 +34,13 @@ const DetailWrite = ({onInput,inputUserData,nextPage,styles}) => {
         <div className={styles.writeContainer}>
             <div> 
 
+                    {imagePreview && <img src={imagePreview} alt="Preview" className={styles.imagePreview}/>}
                 <div>
                     <button onClick={onCickImageUpload} className={styles.input_file_button}>프로필 사진 등록</button>
                     <input type="file" onChange={handleFileChange} name='profileImage'  style={{ display: "none" }} ref={imageInput}/>
                 </div>
-                    {imagePreview && <img src={imagePreview} alt="Preview" />}
                 <div>
-                    <textarea placeholder='프로필 사진과 소개글을 등록해주세요' name='profileText' rows="5" cols="40" onChange={onInput} value={inputUserData.profileText} className={styles.inputField}></textarea>
-                </div>
-                <br/>
-                <div>
-                <input
-                        type='text'
-                        value={inputUserData.tel} // inputUserData.tel 값으로 바인딩
-                        onChange={handleNumberChange}
-                        name='tel'
-                        placeholder="'-'를 제외한 핸드폰 번호"
-                        className={styles.inputField}
-                    />
+                    <textarea placeholder='프로필 사진과 소개글을 등록해주세요' name='profileText' rows="10" cols="40" onChange={onInput} value={inputUserData.profileText} className={styles.inputField}></textarea>
                 </div>
             </div>
             <br/>

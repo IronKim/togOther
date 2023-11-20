@@ -4,6 +4,7 @@ import AdvisorCityList from './advisor/AdvisorCityList';
 
 import home from '../css/Homew.module.css';
 import { CONTINENT } from '../constants/CONTINENT';
+import { Link } from 'react-router-dom';
 
 const Homew = () => {
     // 지역
@@ -118,7 +119,8 @@ const Homew = () => {
                                 });
                             }}
                             
-                            style={{ color: selectedStyle.continent === item ? '#6AAEFF' : 'black' }}
+                            style={{ color: selectedStyle.continent === item ? '#6AAEFF' : 'black',
+                                     textDecoration: selectedStyle.continent === item ? 'underline' : 'none' }}
                         >
                             {item}
                         </li>
@@ -148,7 +150,8 @@ const Homew = () => {
                                         });
                                     }}
                                     
-                                    style={{ color: selectedStyle.country === item.countryName ? '#2E8DFF' : 'black' }}
+                                    style={{ color: selectedStyle.country === item.countryName ? '#2E8DFF' : 'black',
+                                             textDecoration: selectedStyle.country === item.countryName ? 'underline' : 'none' }}
                                 >
                                     {item.countryName}
                                 </li>
@@ -179,7 +182,8 @@ const Homew = () => {
                                         });
                                     }}
                                     
-                                    style={{ color: selectedStyle.city === item.cityName ? '#1F5FAB' : 'black' }}
+                                    style={{ color: selectedStyle.city === item.cityName ? '#1F5FAB' : 'black',
+                                             textDecoration: selectedStyle.city === item.cityName ? 'underline' : 'none' }}
                                 >
                                     {item.cityName}
                                 </li>
@@ -191,8 +195,10 @@ const Homew = () => {
             {/* 이미지를 하단에 표시 */}
             <div className={`selected_city_image ${selectedCity.cityImage ? home.expanded : ''}`}>
                                     {selectedCity.cityImage && (
-                                        <div className={ home.image }>
-                                            <img className={ home.img } src={selectedCity.cityImage} alt={selectedCity.cityName} />
+                                        <div className={home.image}>
+                                            <Link to={`/info/city/${selectedCity.citySeq}`}>
+                                                <img className={home.img} src={selectedCity.cityImage} alt={selectedCity.cityName} />
+                                            </Link>
                                         </div>
                                     )}
             </div>

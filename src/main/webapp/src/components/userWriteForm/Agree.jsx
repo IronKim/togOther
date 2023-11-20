@@ -418,7 +418,7 @@ const Agree = ({nextPage,styles}) => {
         <div className={styles.writeContainer}>
             
             <div className='d-flex justify-content-center'>
-                <label>약관 모두 동의</label>
+                <label style={{margin: 'auto 0'}}>약관 모두 동의</label>
                 <input className={styles.chkI} id='allChk' type="checkbox" name="all" onChange={changeInput} 
                 checked={isAllChecked}/>
                 <label className={`ms-3 ${styles.chk}`} htmlFor='allChk'></label>
@@ -428,7 +428,7 @@ const Agree = ({nextPage,styles}) => {
                 data.map( item => 
                         <div className='mb-4' key={item.id} >
                             <div className='d-flex justify-content-center mb-4'>
-                                <label>{item.text}</label><br/>
+                                <label style={{margin: 'auto 0'}}>{item.text}</label><br/>
                                 <input className={styles.chkI} type="checkbox" id={item.id} name={item.name} checked={item.isChk} onChange={changeInput}/>
                                 <label className={`ms-3 ${styles.chk}`} htmlFor={item.id}></label>
                             </div>

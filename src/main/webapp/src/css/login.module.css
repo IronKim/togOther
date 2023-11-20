@@ -1,167 +1,117 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0; 
-  font-family: Raleway, sans-serif;
-}
-
-/* body {
-  background: linear-gradient(90deg, #dfddf6, #2ADDF5);   
-} */
 
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  flex-direction: column;
+  min-height: 100%;
 }
 
-.screen {   
-  background: linear-gradient(90deg, #2ADDF5, #f8f7fa);   
-  position: relative; 
-  height: 600px;
-  width: 360px; 
-  box-shadow: 0px 0px 24px #5C5696;
-}
-
-.screen__content {
-  z-index: 1;
-  position: relative; 
-  height: 100%;
-}
-
-.screen__background {   
+.loginBox {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  -webkit-clip-path: inset(0 0 0 0);
-  clip-path: inset(0 0 0 0);  
-}
-
-.screen__background__shape {
-  transform: rotate(45deg);
-  position: absolute;
-}
-
-.screen__background__shape1 {
-  height: 520px;
-  width: 520px;
-  background: #FFF; 
-  top: -50px;
-  right: 120px; 
-  border-radius: 0 72px 0 0;
-}
-
-.screen__background__shape2 {
-  height: 220px;
-  width: 220px;
-   background: rgb(125, 185, 215); /*상단 삼각 */
-  top: -172px;
-  right: 0; 
-  border-radius: 32px;
-}
-
-.screen__background__shape3 {
-  height: 540px;
-  width: 190px;
-  background: linear-gradient(270deg, #5481a4, rgb(125, 185, 215));
-  top: -24px;
-  right: 0; 
-  border-radius: 32px;
-}
-
-.screen__background__shape4 {
-  height: 400px;
-  width: 200px;
-  background: rgb(125, 185, 215);  /*하단 삼각 */
-  top: 420px;
-  right: 50px;  
-  border-radius: 60px;
-}
-
-.login {
-  width: 320px;
-  padding: 30px;
-  padding-top: 156px;
-}
-
-.login__field {
-  padding: 20px 0px;  
-  position: relative; 
-}
-
-.login__icon {
-  position: absolute;
-  top: 30px;
-  color: #7875B5;
-}
-
-.login__input {
-  border: none;
-  border-bottom: 2px solid #D1D1D4;
-  background: none;
-  padding: 10px;
-  padding-left: 24px;
-  font-weight: 700;
-  width: 90%;
-  transition: .2s;
-}
-
-.login__input:active,
-.login__input:focus,
-.login__input:hover {
-  outline: none;
-  border-bottom-color: #6A679E;
-}
-
-.login__submit {
+  border: 1px solid #000000;
+  box-shadow: 0 11px 17px 5px rgb(0 0 0 / 33%);
+  border-radius: 50px;
   background: #fff;
-  font-size: 14px;
-  margin-top: 14px;
-  padding: 16px 20px;
-  border-radius: 26px;
-  border: 1px solid #D4D3E8;
-  text-transform: uppercase;
-  font-weight: 700;
+  width: 400px;
+  height: 600px;
+  top: 10px;
+  left: 100px;
+  z-index: 2; 
   display: flex;
+  flex-direction: column;
   align-items: center;
+}
+
+.loginForm {
+  width: 80%;
+  height: 80%;
+}
+
+.loginFormImage {
+  filter: drop-shadow(6px 2px 3px rgb(226, 226, 238));
   width: 100%;
-  color: #4C489D;
-  box-shadow: 0px 2px 2px #5C5696;
-  cursor: pointer;
-  transition: .2s;
+  height: 100%;
+  
 }
 
-.login__submit:active,
-.login__submit:focus,
-.login__submit:hover {
-  border-color: #6A679E;
-  outline: none;
+
+
+
+
+
+.content {
+  width: 350px;
+  padding: 50px;
+  box-shadow: 0 11px 17px 5px rgb(0 0 0 / 33%);
+  border-radius: 50px;
 }
 
-.button__icon {
-  font-size: 24px;
-  margin-left: auto;
-  color: #7875B5;
-}
-
-.social-login { 
-  position: absolute;
-  height: 140px;
-  width: 160px;
+.content > h1 {
   text-align: center;
-  bottom: 0px;
-  right: 0px;
-  color: #fff;
 }
 
-.social-icons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.inputBar {
+  width: 350px;
+  height: 60px;
+  border: 2px solid #000;
+  border-radius: 25px;
+  margin: 30px 0;
+  opacity: 0.5;
+  transition: 200ms;
+  font-weight: 600;
+  position: relative;
 }
+
+.inputBar:focus{
+  outline: none;
+  border: none;
+}
+
+.inputBar > label {
+  position: absolute;
+  font-size: 17px;
+  text-transform: capitalize;
+  top: 20px;
+  left: 45px;
+  transition: 200ms;
+}
+
+.inputBar > input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  box-sizing: border-box;
+  padding: 20px 45px 10px;
+  font-size: 18px;
+}
+
+.inputBar > .boxIcon {
+  position: absolute;
+  width: 26px;
+  top: 20px;
+  left: 10px;
+}
+
+.focus {
+  opacity: 1;
+}
+
+.focus > label {
+  top: 2px;
+  font-size: 12px;
+}
+
+#btn {
+  width: 350px;
+  border: none;
+  padding: 15px;
+  color: #fff;
+  background-color: #000;
+  font-size: 24px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
