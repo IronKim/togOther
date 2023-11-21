@@ -3,14 +3,18 @@ package com.finalProject.togOther.together;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.finalProject.togOther.domain.CustomPlace;
+import com.finalProject.togOther.domain.Planner;
 import com.finalProject.togOther.domain.SubItem;
 import com.finalProject.togOther.domain.Together;
 import com.finalProject.togOther.dto.CustomPlaceDTO;
+import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.SubItemDTO;
 import com.finalProject.togOther.dto.TogetherDTO;
 import com.finalProject.togOther.repository.CityRepository;
@@ -74,11 +78,14 @@ public class TogetherServiceImpl implements TogetherService {
 	}
 
 	@Override
-	public ResponseEntity<List<TogetherDTO>> getTogetherList() {
+	public ResponseEntity<List<TogetherDTO>> getTogetherList(int n) {
 		try {
+			Pageable pageable = PageRequest.of(0, n);
 			
-			List<Together> togetherList = togetherRepository.findAll();
+			System.out.println(n);
 			
+			List<Together> togetherList = togetherRepository.findAllByOrderByTogetherSeqDesc(pageable);
+
 			List<TogetherDTO> togetherDTOList = new ArrayList<TogetherDTO>();
 			
 			for (Together together : togetherList) {
@@ -87,8 +94,8 @@ public class TogetherServiceImpl implements TogetherService {
 				togetherDTOList.add(togetherDTO);
 			}
 			return ResponseEntity.ok(togetherDTOList);
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
@@ -130,6 +137,18 @@ public class TogetherServiceImpl implements TogetherService {
 			
 		}catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<Integer> totTogether() {
+		try {
+			int total = (int) togetherRepository.count();
+			
+			return ResponseEntity.ok(total);
+			
+		} catch (Exception e) {
+			return ResponseEntity.ok(-1);
 		}
 	}
 

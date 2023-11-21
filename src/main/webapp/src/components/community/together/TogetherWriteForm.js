@@ -71,7 +71,7 @@ const PlaceWriteForm = () => {
                         }
                     })
                     alert('등록이 완료되었습니다.')
-                    navigate('/community/TogetherList')
+                    navigate('/community/')
                  })
                  .catch(error => console.error(error))
         }

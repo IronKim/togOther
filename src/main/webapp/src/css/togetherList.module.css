@@ -1,32 +1,56 @@
+@keyframes roll{
+    100% {transform: rotate(360deg) };
+}
+.loadingSection {
+    height: 200px;
+    padding: 50px;
+    text-align: center;
+}
+.loadingSection img{
+    width: 50px;
+    height: 50px;
+    animation: roll 2s infinite linear;
+}
 .listForm{
     width: 100%;
 }
 .listForminner{
     width: 1200px;
-    height: 900px;
     margin: auto;
     /* border: 1px solid blue; */
-    text-align: center;
 }
 .together{
-    border: 1px solid blue;
+    display: inline-block;
+    /* border: 1px solid blue; */
+    vertical-align: top;
     border-radius: 5px;
-    width: 279px;
-    height: 300px;
-    margin: 10px;
-    float: left;
+    width: 40%;
+    height: 200px;
+    margin: 5% 5% 5% 5%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
 .date{
+    background-color: rgb(255, 226, 171);
+    border-radius: 5px 5px 0 0 ;
     width: 100%;
     height: 20%;
+    text-align: center;
+    line-height:40px;
+    opacity: 0.8;
+}
+.togetherFoot{
+    height: 80%;
 }
 .imgDiv{
-    width: 100%;
-    height: 50%;
+    width: 200px;
+    height: 80%;
+    float: right;
+    /* border-radius: 10px; */
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid blue;
+    overflow: hidden;
 }
 .placeImg{
     width: 100%;
@@ -34,19 +58,47 @@
     object-fit: cover;
 }
 .title{
-    border: 1px solid blue;
-    width: 100%;
-    height: 10%;
-    line-height:30px;
-}
-.context{
-    border: 1px solid blue;
-
+    /* border: 1px solid blue; */
     width: 100%;
     height: 20%;
     line-height:30px;
+    padding-left: 3%;
 }
-/* @media (max-width: 1199px){
+.title p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.context{
+    /* border: 1px solid blue; */
+    width: 100%;
+    height: 60%;
+    padding-left: 3%;
+    line-height:30px;
+
+}
+.context p{
+    padding-top: 5%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.placeInfo{
+    padding-left: 3%;
+    line-height:30px;
+    /* border: 1px solid blue; */
+    width: 100%;
+    height: 20%;
+    background-color: #add2ff;
+    border-radius: 0 0 5px 5px ;
+    opacity: 0.8;
+}
+.user{
+    width: 50%;
+    /* border: 1px solid blue; */
+    float: right;
+}
+@media (max-width: 1199px){
     .listForminner{
         width: 80%;
     }
@@ -54,4 +106,4 @@
         width: 100%;
         height: 200px;
     }
-} */
+}

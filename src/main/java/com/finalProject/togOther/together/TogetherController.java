@@ -1,6 +1,7 @@
 package com.finalProject.togOther.together;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +30,17 @@ public class TogetherController {
 	}
 	
 	//동행 리스트 불러오기
-	@GetMapping(path="getTogetherList")
-	public ResponseEntity<List<TogetherDTO>> getTogetherList(){
-		return togetherService.getTogetherList();
+	@PostMapping(path="getTogetherList")
+	public ResponseEntity<List<TogetherDTO>> getTogetherList(@RequestBody Map<String, Integer> requestBody) {
+	    int n = requestBody.get("n");
+		return togetherService.getTogetherList(n);
 	}
+	// 토탈 불러오기
+	@PostMapping(path = "totTogether")
+	public ResponseEntity<Integer> totTogether() {
+		return togetherService.totTogether();
+	}
+		
 	
 	//서브아이템 리스트 불러오기
 	@GetMapping(path="getSubItemList")

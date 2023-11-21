@@ -12,11 +12,13 @@ public interface TogetherService {
 
 	public ResponseEntity<Integer> addTogether(TogetherDTO togetherDTO);
 
-	public ResponseEntity<List<TogetherDTO>> getTogetherList();
+	public ResponseEntity<List<TogetherDTO>> getTogetherList(int n);
 
 	public ResponseEntity<List<SubItemDTO>> getSubItemList();
 
 	public ResponseEntity<List<CustomPlaceDTO>> getCustomList();
+
+	public ResponseEntity<Integer> totTogether();
 
 
 }
