@@ -47,15 +47,17 @@
   margin-left: auto;
 }
 
-@font-face {
-  font-family: 'BMJUA';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+.activeL {
+  text-decoration: none;
+  color: inherit;
 }
 
-.activeLink {
-  color: cadetblue;
+.navli:hover {
+  color: #1E3ED1;
+}
+
+.login_section a:hover{
+  color: #1E3ED1;
 }
   
 @media (max-width: 1199px) {
@@ -72,4 +74,15 @@
     width: 1200px;
     margin: 0 auto;
   }
+}
+
+.slash {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.activeLinkU:hover {
+  cursor: pointer;
+  text-underline-position : under;
+  text-decoration: underline;
 }

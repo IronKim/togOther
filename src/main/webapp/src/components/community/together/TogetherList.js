@@ -5,7 +5,7 @@ import { getTogetherList, getSubItemList, getCustomList } from '../../../api/Tog
 import { getPlaceList } from '../../../api/PlaceApiService';
 
 const TogetherList = () => {
-
+    const[loading,setLoading] = useState(false)
      //together목록
      const [togetherDTO, setTogetherDTO] = useState([])
      
@@ -46,6 +46,7 @@ const TogetherList = () => {
         getPlaceList()
         .then(res =>{
             setPlace(res.data)
+            setLoading(true)
         })
         .catch(e => console.log(e))
     },[])
@@ -71,7 +72,7 @@ const TogetherList = () => {
                     } */}
                     {searchSub !== undefined &&
                         <div className={Style.imgDiv}>
-                            <img src={place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).image} 
+                            <img src={ loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).image} 
                             className={Style.placeImg} alt="Place Image" />
                         </div>}
                   <div className={Style.title}>{item.title}</div>

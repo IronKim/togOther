@@ -261,7 +261,7 @@ const PlaceSelect = (props) => {
             <div>
                 <div className={Style.day}>
                 <div className={Style.calender}>
-                    <input type='date'className={Style.inputday} name='endDate' min={startDate} max={endDate} 
+                    <input type='date'className={`${Style.inputday} ${Style.input}`} name='endDate' min={startDate} max={endDate} 
                     value={selDate === startDate ? 0 : selDate}
                     onChange={(e) => setSelDate(e.target.value)}/> 
                 </div>
@@ -343,7 +343,7 @@ const PlaceSelect = (props) => {
                                 type="text"
                                 id="autocomplete"
                                 placeholder="검색어 입력"
-                                className={Style.mapInput}
+                                className={`${Style.mapInput} ${Style.input}` }
                             />
                             </Autocomplete>
                         {/* <div>

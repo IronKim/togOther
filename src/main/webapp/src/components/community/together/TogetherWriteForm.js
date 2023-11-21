@@ -170,7 +170,7 @@ const PlaceWriteForm = () => {
         <div className={Style.writeFormInner}>
             <div>
                 <input type="text" 
-                       className={Style.title}
+                       className={`${Style.title} ${Style.input}`}
                        name="title" 
                        value={title} 
                        onChange={onInput}
@@ -219,7 +219,7 @@ const PlaceWriteForm = () => {
                 </div>
             </div>
             <div>
-                <textarea className={Style.context} name="context"  value={context} onChange={onInput} rows="10" cols="50"
+                <textarea className={`${Style.context} ${Style.textarea}`} name="context"  value={context} onChange={onInput} rows="10" cols="50"
                     placeholder="1. 현재 동행이 있나요? 
                     ex) 혼자에요 / 동행 1명이 있어요 
                     

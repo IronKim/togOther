@@ -3,6 +3,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import sty from '../css/Homem.module.css';
 import BottomNav from './BottomNav';
 import { getCityList } from '../api/CityApiService';
+import { Link } from 'react-router-dom';
 
 const Homem = () => {
   // 대륙 리스트
@@ -76,8 +77,10 @@ const Homem = () => {
       // 이전 스크롤 위치와 현재 스크롤 위치 비교
       if (scrollY > prevScrollY) {
         setShowNavbar(false)
+   
       } else {
         setShowNavbar(true)
+
       }
 
       setPrevScrollY(scrollY);
@@ -127,7 +130,8 @@ const Homem = () => {
                     setActiveAccordion("1"); // 지역을 선택하면 국가 리스트가 열리도록 설정
                   }}
                   
-                  style={{ color: selectedStyle.continent === item ? '#6AAEFF' : 'black' }}
+                  style={{ color: selectedStyle.continent === item ? '#6AAEFF' : 'black',
+                           textDecoration: selectedStyle.continent === item ? 'underline' : 'none' }}
                 >
                   {item}
                 </li>
@@ -163,7 +167,8 @@ const Homem = () => {
                     setActiveAccordion("2"); // 국가를 선택하면 도시 리스트가 열리도록 설정
                   }}
                   
-                  style={{ color: selectedStyle.country === item ? '#2E8DFF' : 'black' }}
+                  style={{ color: selectedStyle.country === item ? '#2E8DFF' : 'black',
+                           textDecoration: selectedStyle.country === item ? 'underline' : 'none' }}
                 >
                   {item}
                 </li>
@@ -198,7 +203,8 @@ const Homem = () => {
                       });
                     }}
                     
-                    style={{ color: selectedStyle.city === item.cityName ? '#1F5FAB' : 'black' }}
+                    style={{ color: selectedStyle.city === item.cityName ? '#1F5FAB' : 'black',
+                             textDecoration: selectedStyle.city === item.cityName ? 'underline' : 'none' }}
                   >
                     {item.cityName}
                   </li>
@@ -208,11 +214,13 @@ const Homem = () => {
         </Accordion.Item>
       </Accordion>
       <div className={`selected_city_image ${selectedCity.cityImage ? sty.expanded : ''}`}>
-                                    {selectedCity.cityImage && (
-                                        <div className={ sty.image }>
-                                            <img className={ sty.img } src={selectedCity.cityImage} alt={selectedCity.cityName} />
-                                        </div>
-                                    )}
+        {selectedCity.cityImage && (
+          <div className={sty.image}>
+            <Link to={`/info/city/${selectedCity.citySeq}`}>
+              <img className={sty.img} src={selectedCity.cityImage} alt={selectedCity.cityName} />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

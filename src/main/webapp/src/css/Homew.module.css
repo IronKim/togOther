@@ -42,12 +42,12 @@
   z-index: 1;
 }
 
-ul {
+.area ul {
   list-style: none;
   padding: 0;
 }
 
-li {
+.area li {
   margin-bottom: 8px;
 }
 
@@ -89,6 +89,10 @@ li {
   margin-bottom: 100px;
 }
 
+.img:hover {
+  cursor: pointer;
+}
+
 .selection_box.expanded {
   max-width: 100%;
   margin-bottom: 0; 
@@ -96,13 +100,6 @@ li {
 
 .selection_box:not(.expanded) {
   transition: max-width 0.3s ease, margin-bottom 0.3s ease; 
-}
-
-@font-face {
-  font-family: 'BMJUA';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
 }
 
 @media (min-width: 1200px) {
