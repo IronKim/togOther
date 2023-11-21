@@ -78,10 +78,9 @@ const ArrayCity = () => {
         }
     };
 
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
     const toggleSidebar = () => {
-        setIsSidebarExpanded(!isSidebarExpanded);
+        console.log('a')
+        setIsSidebarExpanded((prev) => !prev);
     };
 
     // 도시 리스트를 불러오면 나라 리스트도 다시 불러오는 함수
@@ -115,6 +114,7 @@ const ArrayCity = () => {
     const onCountryClick = (clickedCountry) => {
         onCountry(clickedCountry);
         setActiveKey(activeKey === clickedCountry ? null : clickedCountry);
+        setIsSidebarExpanded(false);
     };
 
     useEffect(()=>{
@@ -150,14 +150,23 @@ const ArrayCity = () => {
     for (let i = 0; i < cityList.length; i += 4) {
         slides.push(cityList.slice(i, i + 4));
     }
+    // Accordion.Body 클릭 시 사이드바 닫기
+    const handleAccordionBodyClick = () => {
+        setIsSidebarExpanded(false);
+    };
 
     return (
         <div>
         <div style={{display:'flex'}}>
-
         {/* --------------사이드바-------------- */}
-        <div className={ArrayStyle.Sidebartotal}>
-            <label className={ArrayStyle.Sidebarlabel}>도시 선택</label>
+        <div className={`${ArrayStyle.Sidebartotal} ${isSidebarExpanded ? ArrayStyle.open : ''}`}>
+            <button 
+                   className={ArrayStyle.hamburger} 
+                   onClick={toggleSidebar}>
+            <label className={ArrayStyle.Sidebarlabel}>
+                <span className={ArrayStyle.hamburgerIcon1}>도시 선택</span>
+            </label>
+            </button>
             <Accordion  defaultActiveKey={['0']}>
                 {continentList.map((continent, index) => {
                 const countriesInContinent = countryList.filter((country) => country.continentName === continent);
@@ -169,7 +178,7 @@ const ArrayCity = () => {
                         {countriesInContinent.map((country, countryIndex) => (
                             <Accordion.Body
                             key={countryIndex}
-                            onClick={() => onCountryClick(country)}
+                            onClick={ () => onCountryClick(country)}
                             onMouseEnter={() => handleMouseEnter(country)}
                             onMouseLeave={handleMouseLeave}
                             style={{ backgroundColor: hoveredItem === country ? 'lightgray' : 'white', cursor: 'pointer' }}
@@ -194,7 +203,7 @@ const ArrayCity = () => {
                         style={{
                         display: 'inline-block',
                         flexDirection: 'row',
-                        marginLeft: 100,
+                        marginLeft: 70,
                         opacity: state === 'entered' ? 1 : 0,
                         transform: state === 'entered' ? 'translateY(0)' : 'translateY(-20px)',
                         transition: 'opacity 0.1s, transform 0.1s',
@@ -224,10 +233,10 @@ const ArrayCity = () => {
         </div>
 
         {/* ------------- 캐러셀 ------------- */} 
-
+                            
         <div className={ArrayStyle.carouselContainer} style={{ maxWidth: '100%' }}>
             <p className={ArrayStyle.recoCity}>추천 도시</p>
-            <Carousel 
+            <Carousel
             data-bs-theme="dark"
             showThumbs={false}
             emulateTouch

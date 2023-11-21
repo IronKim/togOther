@@ -8,7 +8,7 @@
 .card{
   overflow: hidden;
   max-width:100%;
-  width: 15vw;
+  width: 14.5vw;
   height: 11vw;
   margin: 0.5em;
   cursor: pointer;
@@ -48,6 +48,7 @@
   z-index: 1;
   border-radius:15px;
   line-height: 2vw;
+  background-color: rgba( 255, 255, 255, 0.4 );
 }
 
 /* 호버 시 이미지 확대 */
@@ -55,10 +56,6 @@
   transform: scale(1.1); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
   cursor: pointer;
   transition: all 0.3s linear;
-}
-
-.imgtext{
-  background-color: rgba( 255, 255, 255, 0.4 );
 }
 
 .card:hover .imgtext{
@@ -81,6 +78,7 @@
   margin: 0.2vw;
   transition: transform 0.3s;
 }
+
 
 /* 텍스트 스타일 */
 .customcaption {
@@ -139,46 +137,29 @@
 .Sidebartotal {
   margin-top: 0.8vw;
   margin-left: 4vw;
-  margin-right: -1vw;
   user-select: none;
-  width: 15vw;
+  width: 13vw;
 }
 
 .Sidebarlabel{
   margin-bottom: 2vw; 
-  margin-left: 3vw;
+  margin-left: 2vw;
   font-size: 2vw;
 }
-
+/* -----------------------햄버거----------------------- */
+.hamburger{
+  user-select: none;
+  border: none;
+  background-color: white;
+}
 /* 미디어 쿼리 추가 */
 @media (max-width: 1199px) {
 
-  .Sidebartotal{
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 0;
-    overflow-x: hidden;
-    z-index: 1000;
-    background-color: #333; /* 사이드바 배경색 설정 */
-  }
-
   .carouselContainer {
-    width: 100%; /* 적절한 너비로 조절하세요 */
+    width: 90%; /* 적절한 너비로 조절하세요 */
     margin-left: auto;
     margin-right: auto;
     padding: auto;
-  }
-
-  .Carousel {
-    width: 100%;
-    margin: 0; /* 기본 마진 제거 */
-    padding: auto;
-    margin-left: 0
-  }
-  
-  .carouselSlide {
-    width: 100%;
   }
   
   .image {
@@ -199,8 +180,8 @@
     font-size: 20px;
   }
   .recoCity{
-    font-size: 20px;
-    left:0%;
+    font-size: 3vw;
+    right:10%;
   }
   .Carous{
     padding: auto;
@@ -209,35 +190,13 @@
   }
 
   .arraymain{
-    display: inline-block;
-    flex-direction: column;
-    user-select: none;
-    margin-left: 10vw;
-    width:100%;
+    margin-left: 4%;
   }
   
   .card{
-    overflow: hidden;
-    max-width:100%;
-    width: 30vw;
+    width: 35vw;
     height: 13.5em;
     margin: 0.5em;
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 20px;
-  }
-  
-  .cardbody{
-    width: 100%;
-    height: 100%; 
-    padding: 0;
-  }
-  
-  .imgdiv{
-    position: absolute;
-    width: 100%;
-    text-align: left;
-    padding: 0.5em;
   }
   
   .cardimg{
@@ -250,56 +209,89 @@
   }
 
   .imgdiv{
-    position: absolute;
-    width: 100%;
-    text-align: left;
     padding: 1vw;
     top: 11vw;
   }
   
   .imgtext{
     font-size: 1.9vw;
-    position: relative;
-    text-align: center;
     width:4.9em;
     height:1.2em;
-    z-index: 1;
-    border-radius:15px;
     line-height: 1.4em;
+  }
+  /* -----------------------햄버거----------------------- */
+  .hamburger{
+    display: block;
+    border: none;
+    background-color: #dedede;
+  }
+  .hamburgerIcon1 {
+    user-select: none;
+    display: block;
+    position: absolute;
+    text-align: center;
+    font-size: 30px;
+    width: 40px;
+    height: 120px;
+    cursor: pointer;
+    border-radius : 0 10px 10px 0;
+    box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
+    left: 100%;
+  }
+  .Sidebartotal {
+    position: fixed;
+    display: block;
+    left: -94%;
+    width: 90%;
+    z-index: 10;
+    background-color: #dedede; /* 사이드바 배경색 설정 */
+    opacity: 0.95;
+    transition: all 300ms;
+    padding: 20px 20px 20px 20px;
+    box-sizing: border-box;
+  }
+  .open{
+    left: 0 !important;
   }
 
   @media (max-width: 754px) { 
 
+    .carouselContainer {
+      width: 90%; /* 적절한 너비로 조절하세요 */
+      margin-left: auto;
+      margin-right: auto;
+      padding: auto;
+    }
+    .image {
+      padding: 4px;
+      position: relative;
+      transition: transform 0.3s;
+      max-width: 100%; /* 이미지가 부모 요소를 벗어나지 않도록 최대 너비 지정 */
+      height: auto;
+    }
+    .customcircle{
+      width: 16vw;
+      height: 16vw;
+      padding: auto;
+    }
+    .customcaption{
+      margin-left: 0;
+      font-size: 20px;
+    }
+    .recoCity{
+      font-size: 3vw;
+      right:10vw;
+    }
+
+  
     .arraymain{
       display: inline-block;
-      flex-direction: column;
-      user-select: none;
-      width:100%;
-      margin-left: -5vw;
     }
-    
     .card{
-      overflow: hidden;
-      max-width:100%;
-      width: 39vw;
-      height: 13.5em;
+      width: 8em;
+      height: 25vw;
       margin: 0.5em;
-      cursor: pointer;
-      display: inline-block;
-      border-radius: 20px;
-    }
-    
-    .cardbody{
-      width: 100%;
-      height: 100%; 
-      padding: 0;
-    }
-    
-    .imgdiv{
-      position: absolute;
-      width: 100%;
-      text-align: left;
-      padding: 0.5em;
+      left: -10%;
     }
     
     .cardimg{
@@ -312,32 +304,50 @@
     }
   
     .imgdiv{
-      position: absolute;
-      width: 100%;
-      text-align: left;
       padding: 1vw;
       top: 11vw;
     }
     
     .imgtext{
       font-size: 1.9vw;
-      position: relative;
-      text-align: center;
       width:4.9em;
       height:1.2em;
-      z-index: 1;
-      border-radius:15px;
       line-height: 1.4em;
     }
 
-    .Sidebartotal{
+    /* -----------------------햄버거----------------------- */
+    .hamburger{
+      display: block;
+      border: none;
+      background-color: #dedede;
+    }
+    .hamburgerIcon1 {
+      user-select: none;
+      display: block;
+      position: absolute;
+      text-align: center;
+      font-size: 30px;
+      width: 40px;
+      height: 120px;
+      cursor: pointer;
+      border-radius : 0 10px 10px 0;
+      box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
+      left: 100%;
+    }
+    .Sidebartotal {
       position: fixed;
-      left: 0;
-      top: 0;
-      width: 0;
-      overflow-x: hidden;
-      z-index: 1000;
-      background-color: #333; /* 사이드바 배경색 설정 */
+      display: block;
+      left: -94%;
+      width: 90%;
+      z-index: 10;
+      background-color: #dedede; /* 사이드바 배경색 설정 */
+      opacity: 0.95;
+      transition: all 300ms;
+      padding: 20px 20px 20px 20px;
+      box-sizing: border-box;
+    }
+    .open{
+      left: -16px !important;
     }
   }
 
