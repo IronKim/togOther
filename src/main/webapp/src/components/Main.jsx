@@ -14,6 +14,7 @@ import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
 import TogetherList from './community/together/TogetherList';
+import Community from '../pages/Community';
 import useUserStore from '../stores/userStore';
 import { getTokenByRefreshToken, getUserByAccessToken } from '../api/UserApiService';
 import BottomNav from './BottomNav';
@@ -118,10 +119,10 @@ const Main = ({ showNavbar }) => {
                         <Route path='cityList' element={ <CityMain />} />
                         <Route path='city/:citySeq' element={ <City />}/>
                     </Route>
-                    <Route path='planner' element= { <Planner />} />
                     <Route path='community'>
+                        <Route path='' element={ <Community/>}/>
+                        <Route path='planner' element= { <Planner />} />
                         <Route path='togetherWrite' element= { <Together/> } />
-                        <Route path='togetherList' element= { <TogetherList/> } />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>

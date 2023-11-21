@@ -1,0 +1,27 @@
+.toggle {
+    height: 40px;
+    width: 240px;
+    border-radius: 40px;
+    background-color: lightgray;
+    margin: 0 auto;
+    margin-bottom: 60px;
+    padding: 3px;
+    cursor: pointer;
+    transition: 1s;
+} 
+.toggleBox {
+    height:34px;
+    width:117px;
+    border-radius: 34px;
+    background-color: darkgray;
+}
+.toggleLeft{
+    position: absolute;
+    margin-top: 10px;
+    transition: 1s;
+}
+.toggleRight{
+    position: absolute;
+    margin-top: 10px;
+    transition: 1s;
+}

@@ -5,3 +5,6 @@ export const addSubItem = (subItem) => apiClient.post('api/planner/addSubItem', 
 export const addPlannerText = (plannerText) => apiClient.post('api/planner/addPlannerText', plannerText);
 export const uploadPlannerImage = (plannerImage) => apiClient.post('api/storage/upload', plannerImage);
 export const addPlannerImage = (plannerImage) => apiClient.post('api/planner/addPlannerImage', plannerImage);
+export const totPlanner = () => apiClient.post('api/planner/totPlanner');
+export const getPlanner = (n) => apiClient.post('api/planner/getPlanner', n);
+export const getImages = (n) => apiClient.post('api/planner/getImages', n);

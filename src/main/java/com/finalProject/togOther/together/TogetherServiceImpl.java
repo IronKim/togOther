@@ -59,6 +59,16 @@ public class TogetherServiceImpl implements TogetherService {
 			
 			return ResponseEntity.ok(-1);
 			
+//=======
+//
+//			int togetherSeq = together.getTogetherSeq();
+//
+//			return ResponseEntity.ok(togetherSeq);
+//
+//		} catch (Exception e) {
+//
+//			return ResponseEntity.ok(-1);
+//>>>>>>> b366596aeacfc7203d0d74ef7be37c4df0f26726
 		}
 		
 	}

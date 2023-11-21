@@ -18,4 +18,5 @@ public interface TogetherService {
 
 	public ResponseEntity<List<CustomPlaceDTO>> getCustomList();
 
+
 }
