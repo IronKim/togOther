@@ -8,9 +8,9 @@
     opacity: 0.6;
     
 }
-input:focus {outline: 2px solid #194E8C;}
-textarea:focus {outline: 2px solid #194E8C;}
-textarea{
+.writeForm input:focus {outline: 2px solid #194E8C;}
+.writeForm textarea:focus {outline: 2px solid #194E8C;}
+.writeForm textarea{
     resize: none;
 }
 .calender {

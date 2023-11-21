@@ -13,6 +13,7 @@ import Write from '../pages/Write';
 import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
+import TogetherList from './community/together/TogetherList';
 
 
 const Main = () => {
@@ -35,6 +36,7 @@ const Main = () => {
                     <Route path='planner' element= { <Planner />} />
                     <Route path='community'>
                         <Route path='togetherWrite' element= { <Together/> } />
+                        <Route path='togetherList' element= { <TogetherList/> } />
                     </Route>
                 </Routes>
 

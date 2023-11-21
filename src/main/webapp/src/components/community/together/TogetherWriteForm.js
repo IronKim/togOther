@@ -7,6 +7,8 @@ import { addCustomPlace } from '../../../api/PlaceApiService';
 import PlaceSelect from './TogetherPlaceSelect';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 
+import { useNavigate } from 'react-router-dom';
+
 
 const PlaceWriteForm = () => {
     
@@ -31,6 +33,7 @@ const PlaceWriteForm = () => {
     
     const{togetherSeq,userSeq,title,startDate,endDate,context,tnum} = togetherDTO
 
+    const navigate = useNavigate()
     const togetherSave = (e) => {
         e.preventDefault()
 
@@ -68,6 +71,7 @@ const PlaceWriteForm = () => {
                         }
                     })
                     alert('등록이 완료되었습니다.')
+                    navigate('/community/TogetherList')
                  })
                  .catch(error => console.error(error))
         }

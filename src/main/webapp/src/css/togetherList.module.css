@@ -1,0 +1,57 @@
+.listForm{
+    width: 100%;
+}
+.listForminner{
+    width: 1200px;
+    height: 900px;
+    margin: auto;
+    /* border: 1px solid blue; */
+    text-align: center;
+}
+.together{
+    border: 1px solid blue;
+    border-radius: 5px;
+    width: 279px;
+    height: 300px;
+    margin: 10px;
+    float: left;
+}
+.date{
+    width: 100%;
+    height: 20%;
+}
+.imgDiv{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid blue;
+}
+.placeImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.title{
+    border: 1px solid blue;
+    width: 100%;
+    height: 10%;
+    line-height:30px;
+}
+.context{
+    border: 1px solid blue;
+
+    width: 100%;
+    height: 20%;
+    line-height:30px;
+}
+/* @media (max-width: 1199px){
+    .listForminner{
+        width: 80%;
+    }
+    .together{
+        width: 100%;
+        height: 200px;
+    }
+} */
