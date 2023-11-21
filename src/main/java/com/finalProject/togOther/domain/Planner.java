@@ -27,7 +27,7 @@ public class Planner {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int plannerSeq;
-	private String cityName;
+	private int citySeq;
 	private String title;
 	private String startDate;
 	private String endDate;
@@ -43,7 +43,7 @@ public class Planner {
 		
 		return Planner.builder()
 					  .plannerSeq(plannerDTO.getPlannerSeq())
-					  .cityName(plannerDTO.getCityName())
+					  .citySeq(plannerDTO.getCitySeq())
 					  .title(plannerDTO.getTitle())
 					  .startDate(plannerDTO.getStartDate())
 					  .endDate(plannerDTO.getEndDate())

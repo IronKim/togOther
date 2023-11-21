@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PlannerDTO {
 	private int plannerSeq;
-	private String cityName;
+	private int citySeq;
 	private String title;
 	private String startDate;
 	private String endDate;
@@ -34,7 +34,7 @@ public class PlannerDTO {
 		
 		return PlannerDTO.builder()
 						 .plannerSeq(planner.getPlannerSeq())
-						 .cityName(planner.getCityName())
+						 .citySeq(planner.getCitySeq())
 						 .title(planner.getTitle())
 						 .startDate(planner.getStartDate())
 						 .endDate(planner.getEndDate())

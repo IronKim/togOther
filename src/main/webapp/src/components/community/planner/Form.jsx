@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { addPlanner,addSubItem,addPlannerText,addPlannerImage,uploadPlannerImage } from '../../../api/PlannerApiService';
-import { getCityBySeq } from '../../../api/CityApiService';
+import { getCity } from '../../../api/AdvisorApiService';
 import { addCustomPlace } from '../../../api/PlaceApiService';
 import { addTogether } from '../../../api/TogetherApiService';
 import Nday from './Nday';
@@ -33,6 +33,7 @@ const Form = () => {
     const [subDTO,setSubDTO] = useState([])
     const [togoDTO,setTogoDTO] = useState([])
     const [textDTO,setTextDTO] = useState([])
+    const[city,setCity] = useState([])
 
     //실시간 가지고있는 값
     const [tabNum,setTabNum] = useState(1)
@@ -42,18 +43,11 @@ const Form = () => {
     const [plannerTitle,setPlannerTitle] = useState([])
 
     useEffect(()=>{
-        const getPlaces = [...subDTO].reverse().find(item => item.place !== null);
-        
-        if(getPlaces !== undefined) {        
-            getCityBySeq(getPlaces.place.citySeq)
-            .then(res => {
-                const planTitle = plannerTitle;
-                planTitle.push(res.data.cityName);
-                let disPlan = new Set(planTitle)
-                setPlannerTitle([...disPlan])
-            })
-            .catch(e => console.log(e));
-        }
+        const getPlaces = subDTO.filter(item => item.place !== null).slice().sort((a, b) => a.nDay - b.nDay).map(item2 => item2.place.citySeq)
+
+        const getPlaces2 = new Set(getPlaces)
+
+        setPlannerTitle([...getPlaces2])
     },[subDTO])
     //동행리스트
     const [toList,setToList] = useState(0)
@@ -77,13 +71,14 @@ const Form = () => {
                 }else return;
         }
 
-        let title = `인호의 ${plannerTitle.length > 0 ? plannerTitle[0] : ''}${//이름 나중에 유저 세션 이름으로
-        plannerTitle.length > 1 ? ` 외 ${plannerTitle.length - 1}곳` : ''} 여행 플래너`;
+        let title = `인호의 ${plannerTitle.length > 0 ? //이름 나중에 유저 세션 이름으로
+            city.find(item => item.citySeq === plannerTitle[0]).cityName : ''}${
+            plannerTitle.length > 1 ? ` 외 ${plannerTitle.length - 1}곳` : ''} 여행 플래너`;
 
-        let cityName = '';
-        if(plannerTitle.length > 0 ) cityName = plannerTitle[0];
+        let citySeq = -1;
+        if(plannerTitle.length > 0 ) citySeq = plannerTitle[0];
 
-        const planner = {title: title,startDate: startDate,cityName : cityName,
+        const planner = {title: title,startDate: startDate,citySeq : citySeq,
         endDate: endDate,publicPlan : publicPaln ? 0 : 1,hit : 0,likeCnt : 0}
 
         addPlanner(planner)
@@ -370,6 +365,11 @@ const Form = () => {
     } 
 //******************************************
     useEffect(() => {//tab키 이동시
+        getCity()
+        .then(res => {
+            setCity(res.data)
+        })
+        .catch(e => console.log(e))
         const handleTabPress = (e) => {
           if (e.key === 'Tab') {
             e.preventDefault() 
@@ -391,7 +391,8 @@ const Form = () => {
             <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button>
             <section className={styles.topSection}>
             {/* 제목 */}
-            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}인호의 {plannerTitle.length > 0 && plannerTitle[0]}
+            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}인호의 {plannerTitle.length > 0 && 
+            city.find(item => item.citySeq === plannerTitle[0]).cityName}
             {plannerTitle.length > 1 && ' 외 ' + (plannerTitle.length-1) + '곳 '}여행 플래너</div> 
             {/* 달력 */}
             <div className={styles.calender}>

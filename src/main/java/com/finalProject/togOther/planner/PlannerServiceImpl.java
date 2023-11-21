@@ -122,6 +122,8 @@ public class PlannerServiceImpl implements PlannerService {
 		try {
 			Pageable pageable = PageRequest.of(0, n);
 			
+			System.out.println(n);
+			
 			List<Planner> plannerList = plannerRepository.findAllByOrderByLogTimeDesc(pageable);
 
 			List<PlannerDTO> plannerDTOList = new ArrayList<PlannerDTO>();
