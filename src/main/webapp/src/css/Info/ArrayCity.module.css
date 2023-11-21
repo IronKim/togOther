@@ -152,12 +152,15 @@
 
 /* 미디어 쿼리 추가 */
 @media (max-width: 1199px) {
-  .Sidebartotal {
-    margin-top: 0.8vw;
-    margin-left: 5vw;
-    margin-right: -1vw;
-    user-select: none;
-    width: 16em;
+
+  .Sidebartotal{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    overflow-x: hidden;
+    z-index: 1000;
+    background-color: #333; /* 사이드바 배경색 설정 */
   }
 
   .carouselContainer {
@@ -209,13 +212,14 @@
     display: inline-block;
     flex-direction: column;
     user-select: none;
+    margin-left: 10vw;
     width:100%;
   }
   
   .card{
     overflow: hidden;
     max-width:100%;
-    width: 25vw;
+    width: 30vw;
     height: 13.5em;
     margin: 0.5em;
     cursor: pointer;
