@@ -29,7 +29,7 @@
     height: 100px;
 }
 .loadingSection {
-    height: 200px;
+    height: 700px;
     padding: 50px;
     text-align: center;
 }
@@ -89,6 +89,13 @@
     text-overflow: ellipsis;
     overflow: hidden;
 } 
+.lastSection {
+    padding: 150px;
+    height: 400px;
+    text-align: center;
+    font-size: 25px;
+    color: darkgray;
+}
 @media (max-width: 1199px) {
     .main {
         width: 100%;

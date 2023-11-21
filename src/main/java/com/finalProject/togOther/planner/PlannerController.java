@@ -50,15 +50,17 @@ public class PlannerController {
 
 	// 리스트 불러오기
 	@PostMapping(path = "getPlanner")
-	public ResponseEntity<List<PlannerDTO>> getPlanner(@RequestBody Map<String, Integer> requestBody) {
-	    int n = requestBody.get("n");
-		return plannerService.getPlanner(n);
+	public ResponseEntity<List<PlannerDTO>> getPlanner(@RequestBody Map<String, String> requestBody) {
+	    int n = Integer.parseInt(requestBody.get("n"));
+	    String search = requestBody.get("search");
+		return plannerService.getPlanner(n,search);
 	}
 	
 	// 토탈 불러오기
 	@PostMapping(path = "totPlanner")
-	public ResponseEntity<Integer> totPlanner() {
-		return plannerService.totPlanner();
+	public ResponseEntity<Integer> totPlanner(@RequestBody Map<String, String> requestBody) {
+		String search = requestBody.get("search");
+		return plannerService.totPlanner(search);
 	}
 	
 	//이미지 리스트 불러오기

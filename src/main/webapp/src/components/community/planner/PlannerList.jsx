@@ -7,7 +7,9 @@ import noImage from '../../../assets/image/travel_thumb.png'
 import loadingImg from '../../../assets/image/loading.png'
 import profileImg from '../../../assets/image/profile_thumb.png'
 
-const PlannerList = () => {
+const PlannerList = (props) => {
+    const {search} = props;
+
     const[total,setTotal] = useState(0)
     const[count,setCount] = useState(1)
     const[planner,setPlanner] = useState([])
@@ -19,6 +21,7 @@ const PlannerList = () => {
 
     //////////////스크롤 매커니즘////////////////
     const handleScroll = () => {
+
         const scrollY = window.scrollY;
     
         const scrollHeight = document.documentElement.scrollHeight;
@@ -46,7 +49,7 @@ const PlannerList = () => {
         })
         .catch(e => console.log(e))
         
-        totPlanner()
+        totPlanner({ search : search })
         .then(res2 => setTotal(res2.data))
         .catch(e => console.log(e))
     },[])
@@ -56,15 +59,20 @@ const PlannerList = () => {
         if(count * 20 > total) n = total;
         else n = count * 20;
 
-        getPlanner({ n: n })
-        .then(res => {
-                setPlanner(res.data)
-                setScrollLoading(false)
-                getImages({n : res.data[0].plannerSeq})
-                .then(res2 => setImages(res2.data))
-            }
-        )
-        .catch(e => console.log(e))
+        if(n > 0) {
+            getPlanner({ n: n, search : search ? search.trim() : '' })
+            .then(res => {
+                    setPlanner(res.data)
+                    setScrollLoading(false)
+                    getImages({n : res.data[0].plannerSeq})
+                    .then(res2 => setImages(res2.data))
+                }
+            )
+            .catch(e => console.log(e))
+        } else {
+            setScrollLoading(false)
+            setLast(true)
+        }
 ////////스크롤 매커니즘
         window.addEventListener('scroll', handleScroll);
 
@@ -73,6 +81,23 @@ const PlannerList = () => {
         };
 ////////
     },[count,total,scrollLoading,last])
+
+    useEffect(() => {
+        setScrollLoading(true)
+        setLast(false)
+
+        totPlanner({ search : search })
+        .then(res2 => {
+            setTotal(res2.data)
+        })
+        .catch(e => console.log(e))
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+        window.removeEventListener('scroll', handleScroll);
+        };
+    },[search])
 
     return (
         <div className={styles.main}>
@@ -93,11 +118,11 @@ const PlannerList = () => {
                     <p className={styles.title}>{item.title}</p>
                 </div>)
             }
-            <div className={styles.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}} >
+            <div className={styles.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}}>
                 <img src={loadingImg}/>
             </div>
-            <div style={{display: last ? 'block' : 'none',height:'100px',textAlign:'center'}}>
-                마지막
+            <div className={styles.lastSection} style={{display: last ? 'block' : 'none'}}>
+                {total}건 조회 되었습니다
             </div>
         </div>
     );

@@ -121,7 +121,7 @@ const Form = () => {
                                 endDate: toEndDate}
                 addTogether(togoItem)
                 .then(tores => 
-                    subDTO.filter(item2 => item2.toNum !== togo.seq).map(item => {
+                    subDTO.filter(item2 => item2.toNum === togo.seq).map(item => {
                         if(item.place !== null) {
                             const subItem = {plMainSeq: res.data, nday: item.nDay, code : 2,
                             startTime : item.startTime, endTime : item.endTime, context : item.context,
