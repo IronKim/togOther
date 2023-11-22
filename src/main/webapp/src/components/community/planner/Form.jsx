@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { addPlanner,addSubItem,addPlannerText,addPlannerImage,uploadPlannerImage } from '../../../api/PlannerApiService';
-import { getCity } from '../../../api/AdvisorApiService';
+import { getCityList } from '../../../api/CityApiService';
 import { addCustomPlace } from '../../../api/PlaceApiService';
 import { addTogether } from '../../../api/TogetherApiService';
 import Nday from './Nday';
@@ -10,6 +10,7 @@ import TogoItemList from './TogoItemList';
 import xBut from '../../../assets/image/xBut.png';
 import arrow from '../../../assets/image/arrow.png'
 import { GoogleMap, LoadScript, Autocomplete, GroundOverlay } from '@react-google-maps/api';
+import { useNavigate } from 'react-router-dom';
 
 const libraries = ["places"];
 
@@ -19,6 +20,8 @@ const Form = () => {
     const month = (today.getMonth() + 1).toString().padStart(2, '0');
     const date = today.getDate().toString().padStart(2, '0');
     const nowDay = `${year}-${month}-${date}`;
+
+    const navigate = useNavigate()
 
     const toSeq = useRef(0);
 //나중에 plannerDTO로 들어갈것들
@@ -176,7 +179,8 @@ const Form = () => {
                 })
             })
             ////
-            alert(res.data)
+            alert('등록 완료')
+            navigate(`/community`)
         })
         .catch(e => console.log(e))
     }
@@ -365,7 +369,7 @@ const Form = () => {
     } 
 //******************************************
     useEffect(() => {//tab키 이동시
-        getCity()
+        getCityList()
         .then(res => {
             setCity(res.data)
         })
@@ -455,9 +459,6 @@ const Form = () => {
                     <button className={styles.buttons} style={{float:'right',margin:'30px 10px'}} onClick={()=>uploadPlanner()}>저장</button>
                 </section>
             </section>
-            <div style={{opacity:0}}>
-                    <LoadScript googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo" libraries={libraries}/>
-            </div>
         </div>
     );
 };

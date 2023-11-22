@@ -1,7 +1,7 @@
 import React,{useEffect,useState,useCallback,useRef} from 'react';
 import styles from '../../../css//planner.module.css'
 import backBut from '../../../assets/image/backBut.png'
-import { getCity } from '../../../api/AdvisorApiService';
+import { getCityList } from '../../../api/CityApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
 
 const containerStyle = {
@@ -99,7 +99,7 @@ const onSearchSelect = () => {//장소추가 버튼
 //city목록 가져오기
 const [city, setCity] = useState([])
 useEffect(()=> {
-    getCity()
+    getCityList()
     .then(res => {
         setCity(res.data)
     })
@@ -300,6 +300,7 @@ const PlaceClick = (pl,cu) =>{
                                         mapContainerStyle={containerStyle}
                                         center={center}
                                         zoom={16}
+                                        options={{disableDefaultUI: true}}
                                         onLoad={(map) => setMap(map)}
                                     />
                             </div>)

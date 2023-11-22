@@ -18,6 +18,11 @@ import Community from '../pages/Community';
 import useUserStore from '../stores/userStore';
 import { getTokenByRefreshToken, getUserByAccessToken } from '../api/UserApiService';
 import BottomNav from './BottomNav';
+import View from './community/planner/View';
+
+import { LoadScript } from '@react-google-maps/api';
+
+const libraries = ["places"];
 
 const Main = ({ showNavbar }) => {
     
@@ -121,7 +126,10 @@ const Main = ({ showNavbar }) => {
                     </Route>
                     <Route path='community'>
                         <Route path='' element={ <Community/>}/>
-                        <Route path='planner' element= { <Planner />} />
+                        <Route path='planner'>
+                            <Route path='write' element= { <Planner />} />
+                            <Route path='view/:plannerSeq' element={ <View/>} />
+                        </Route>
                         <Route path='togetherWrite' element= { <Together/> } />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
@@ -140,6 +148,10 @@ const Main = ({ showNavbar }) => {
                     </Routes>
 
             </BrowserRouter>
+            <LoadScript
+                googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
+                libraries={libraries}
+            />
         </div>
     );
 };

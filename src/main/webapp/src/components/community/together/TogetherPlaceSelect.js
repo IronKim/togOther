@@ -2,10 +2,8 @@ import React,{useEffect,useState,useCallback,useRef} from 'react';
 import Style from '../../../css/together.module.css'
 import { getCityList } from '../../../api/CityApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
-import { GoogleMap, LoadScript, Autocomplete } from '@react-google-maps/api';
 import backBut from '../../../assets/image/backBut.png'
 
-const libraries = ["places"];
 const containerStyle = {
     width: '90%',
     height: '335px',
@@ -412,12 +410,6 @@ const PlaceSelect = (props) => {
             </div> 
             )
         }
-        <div style={{opacity:0}}>
-            <LoadScript
-                googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
-                libraries={libraries}
-            />
-        </div>
         {/* <div className="map"
                              style={{ width: "500px", height: "500px" }}
                              ref={mapRef}

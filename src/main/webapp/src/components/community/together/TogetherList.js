@@ -5,9 +5,8 @@ import loadingImg from '../../../assets/image/loading.png'
 
 import { getTogetherList, getSubItemList, getCustomList, totTogether } from '../../../api/TogetherApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
-import { GoogleMap,Marker,LoadScript,MarkerF } from '@react-google-maps/api';
+import { GoogleMap,Marker } from '@react-google-maps/api';
 
-const libraries = ["places"];
 const containerStyle = {
   width: '100%',
   height: '100%',
@@ -76,9 +75,6 @@ const TogetherList = () => {
      //together목록
      const [togetherDTO, setTogetherDTO] = useState([])
 
-     useEffect(()=> {
-     },[])
-
      //subItem목록
      const [subItemDTO, setSubItemDTO] = useState([])
      
@@ -116,10 +112,6 @@ const TogetherList = () => {
     return (
         <div className={Style.listForm}>
           <div className={Style.listForminner}>
-          <LoadScript
-                googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
-                libraries={libraries}
-            >
             {togetherDTO.map(item => {
               // togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
@@ -176,7 +168,7 @@ const TogetherList = () => {
                     </div>
                     <div className={Style.title}><p>{item.title}</p></div>
                     <div className={Style.context}><p>{item.context}</p></div>
-                    <div className={Style.placeInfo}>{customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
+                    <div className={Style.placeInfo}>{loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
                         <div className={Style.user}>유저정보</div>
                     </div>
                   </div>)}
@@ -184,7 +176,6 @@ const TogetherList = () => {
                   </div>
                 );
             })}
-            </LoadScript>
             <div className={Style.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}} >
                 <img src={loadingImg}/>
             </div>

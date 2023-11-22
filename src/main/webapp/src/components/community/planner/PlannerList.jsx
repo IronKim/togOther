@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { totPlanner,getPlanner,getImages } from '../../../api/PlannerApiService';
-import { getCity } from '../../../api/AdvisorApiService';
+import { getCityList } from '../../../api/CityApiService';
 import styles from '../../../css/plannerList.module.css'
 
 import noImage from '../../../assets/image/travel_thumb.png'
 import loadingImg from '../../../assets/image/loading.png'
 import profileImg from '../../../assets/image/profile_thumb.png'
+import { useNavigate } from 'react-router-dom';
 
 const PlannerList = (props) => {
     const {search} = props;
@@ -18,6 +19,12 @@ const PlannerList = (props) => {
     const[city,setCity] = useState([])
     const[last,setLast] = useState(false)
     const[scrollLoading,setScrollLoading] = useState(true)
+
+    const navigate = useNavigate()
+
+    const onPlanner = (plannerSeq) => {
+        navigate(`planner/view/${plannerSeq}`)
+    }
 
     //////////////스크롤 매커니즘////////////////
     const handleScroll = () => {
@@ -42,7 +49,10 @@ const PlannerList = (props) => {
     
     ////////////////////////////////////////////
     useEffect(() => {
-        getCity()
+        setScrollLoading(true)
+        setLast(false)
+
+        getCityList()
         .then(res => {
             setCity(res.data)
             setLoading(true)
@@ -72,7 +82,7 @@ const PlannerList = (props) => {
             .catch(e => console.log(e))
         } else {
             setScrollLoading(false)
-            setLast(true)
+            // setLast(true)
         }
 ////////스크롤 매커니즘
         window.addEventListener('scroll', handleScroll);
@@ -103,7 +113,7 @@ const PlannerList = (props) => {
     return (
         <div className={styles.main}>
             {
-                planner.map(item => <div className={styles.plannerItem}>
+                planner.map(item => <div className={styles.plannerItem} onClick={() => onPlanner(item.plannerSeq)}>
                     <img className={styles.plannerImage} src={images.find(item2 => item2.plMainSeq === item.plannerSeq) !== undefined ?
                         images.find(item2 => item2.plMainSeq === item.plannerSeq).image :
                         item.citySeq !== -1 && loading ? city.find(item2 => item2.citySeq === item.citySeq).cityImage : noImage}/>
