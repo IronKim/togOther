@@ -14,6 +14,7 @@ import MbtiMain from '../components/mbti/MbtiMain';
 import { addUser } from '../api/UserApiService';
 import Agree from '../components/userWriteForm/Agree';
 import { getUserByEmail } from '../api/UserApiService';
+import { uploadPlannerImage } from '../api/PlannerApiService';
 import WriteFormComplete from '../components/userWriteForm/WriteFormComplete';
 
 
@@ -117,12 +118,23 @@ const Write = () => {
     }, [userData]);
 
     const createUesr = () => {
-        addUser(userData)
-        .then(res => {
-            console.log(res.data);
-        })
-        .catch(e => console.log(e));
-    };
+    const formData = new FormData();
+
+    fetch(inputUserData.profileImage)
+    .then(response => response.blob())
+    .then(blob => {
+      const file = new File([blob], 'image.png', { type: 'image/png' });
+      formData.append('files', file);
+
+      return uploadPlannerImage(formData);
+    })
+    .then(res2 => {
+      const userDt = { ...inputUserData, profileImage: res2.data };
+      return addUser(userDt);
+    })
+
+    .catch(e => console.log(e));
+};
 
     const checkEmail = async (email) => {
         try {
@@ -157,7 +169,7 @@ const Write = () => {
                     page === 5 && <MbtiMain onInput={onInput} onMbti={onMbti} prevPage={prevPage} nextPage={nextPage} onSubmitWrite={onSubmitWrite} styles={styles} />
                 } 
                 {
-                    page === 6 && <WriteFormComplete createUesr={createUesr}/>
+                    page === 6 && <WriteFormComplete createUesr={createUesr} styles={styles}/>
                 }
                 
             </div>

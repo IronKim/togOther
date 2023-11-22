@@ -135,7 +135,7 @@ const Login = () => {
             <button className={styles.loginBtn} type="submit" onClick={onsubmit}>로그인</button>
           <div style={{display: 'flex', justifyContent: 'space-around', width: '80%', marginTop: '3em'}}>
               <img src="https://img.icons8.com/ios/50/000000/google-logo.png" alt="google" />
-              <img src="https://img.icons8.com/ios/50/000000/facebook-new.png" alt="facebook" />
+              <img src="https://img.icons8.com/ios/50/000000/naver.png" alt="naver" />
               <img src="https://img.icons8.com/ios/50/000000/kakao-talk.png" alt="kakao" />
           </div>
         </div>

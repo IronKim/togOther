@@ -9,17 +9,12 @@ const DetailWrite = ({onInput,inputUserData,nextPage,styles}) => {
     const handleFileChange = (e) => {
         const file = e.target.files[0]; // 업로드된 파일
 
-        if (file) {
-            const reader = new FileReader();
+        const blobUrl = URL.createObjectURL(file);
 
-            reader.onload = (e) => {
-                const base64String = e.target.result; // 파일을 Base64로 인코딩된 문자열로 얻습니다.
-                setImagePreview(base64String); // 이미지 프리뷰로 설정합니다.
-                onInput({ target: { name: 'profileImage', value: base64String } }); // profileImage 업데이트
-            };
+        setImagePreview(blobUrl);
 
-            reader.readAsDataURL(file); // 파일을 읽고 Base64로 변환합니다.
-        }
+        onInput({ target: { name: 'profileImage', value: blobUrl } }); // profileImage 업데이트
+        
     };
 
     const imageInput = useRef();
