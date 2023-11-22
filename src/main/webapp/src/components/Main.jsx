@@ -122,7 +122,8 @@ const Main = ({ showNavbar }) => {
                     <Route path='community'>
                         <Route path='' element={ <Community/>}/>
                         <Route path='planner' element= { <Planner />} />
-                        <Route path='togetherWrite' element= { <Together/> } />
+                        <Route path='together' element= { <Together/> } >
+                        </Route>
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>

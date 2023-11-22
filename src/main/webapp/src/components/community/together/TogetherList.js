@@ -5,7 +5,8 @@ import loadingImg from '../../../assets/image/loading.png'
 
 import { getTogetherList, getSubItemList, getCustomList, totTogether } from '../../../api/TogetherApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
-import { GoogleMap,Marker,LoadScript,MarkerF } from '@react-google-maps/api';
+import { GoogleMap,Marker,LoadScript } from '@react-google-maps/api';
+import TogetherView from './TogetherView';
 
 const libraries = ["places"];
 const containerStyle = {
@@ -113,20 +114,24 @@ const TogetherList = () => {
         .catch(e => console.log(e))
     },[])
 
+    //view로 갈게이제
+    const [isView, setIsView] = useState(true)
+
+    const onView = () => {
+        setIsView(false)
+    }
+
     return (
         <div className={Style.listForm}>
           <div className={Style.listForminner}>
-          <LoadScript
-                googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
-                libraries={libraries}
-            >
+          
             {togetherDTO.map(item => {
               // togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
               
               return (
-                <div className={Style.together} key={item.togetherSeq}>
+             <div className={Style.together} key={item.togetherSeq} onClick={() => onView()}>
                     <div className={Style.date}>{item.startDate}~{item.endDate}</div>
                   
                 {searchSub !== undefined &&
@@ -155,6 +160,10 @@ const TogetherList = () => {
                         {/* {customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus?.plCustomSeq)?.placeName}   */}
                         {/* 여기에 지도 넣을거야 */}
                         {loading &&
+                          <LoadScript
+                              googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
+                              libraries={libraries}
+                          >
                         <GoogleMap
                           mapContainerStyle={containerStyle}
                           center={{
@@ -169,22 +178,28 @@ const TogetherList = () => {
                             lat: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).latitude),
                             lng: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).longitude)
                           }}
+                          
                         />
                       </GoogleMap>
+                      </LoadScript>
                     }
                         </div>
                     </div>
                     <div className={Style.title}><p>{item.title}</p></div>
                     <div className={Style.context}><p>{item.context}</p></div>
-                    <div className={Style.placeInfo}>{customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
+                    <div className={Style.placeInfo}>{loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
                         <div className={Style.user}>유저정보</div>
                     </div>
                   </div>)}
-                
-                  </div>
+                  {
+                    isView === false &&
+                    <TogetherView/>
+                  }
+              </div>
                 );
             })}
-            </LoadScript>
+            
+            
             <div className={Style.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}} >
                 <img src={loadingImg}/>
             </div>
@@ -192,10 +207,11 @@ const TogetherList = () => {
                 마지막
             </div>
           </div>
-          <div style={{opacity:0}}>
-            
+          
+        <div style={{opacity:0}}>
+          
         </div>
-        </div>
+      </div>
       );
     };
 
