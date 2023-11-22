@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
+import logo from '../../assets/image/Logo.png';
 
-const WriteFormComplete = ({createUesr}) => {
+const WriteFormComplete = ({createUesr,styles}) => {
 
     useEffect(() => {
         createUesr();
@@ -8,10 +9,10 @@ const WriteFormComplete = ({createUesr}) => {
 
     return (
         <div>
+            <p className={styles.welcome}>welcome!</p>
+            <img src={ logo } alt='로고' className={styles.writeLogo}/>
             <div>
-                <p>환영합니다</p>
-                <p>회원가입이 완료되었습니다.</p>
-                <button>로그인</button> 
+                <button style={{fontSize:20}} className={styles.input_file_button}>로그인</button>
             </div>
         </div>
     );

@@ -8,8 +8,8 @@
 .card{
   overflow: hidden;
   max-width:100%;
-  width: 18em;
-  height: 13.5em;
+  width: 14.5vw;
+  height: 11vw;
   margin: 0.5em;
   cursor: pointer;
   display: inline-block;
@@ -34,18 +34,21 @@
   height: 100%;
   border-radius : 15px;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
 }
 
 .imgtext{
-  font-size: 1.9em;
+  font-size: 1.5vw;
   position: relative;
   text-align: center;
-  bottom: 7em;
-  width:4.9em;
-  height:1.2em;
+  bottom: 11vw;
+  width: 8vw;
+  height:1.8vw;
   z-index: 1;
   border-radius:15px;
-  line-height: 1.4em;
+  line-height: 2vw;
+  background-color: rgba( 255, 255, 255, 0.4 );
 }
 
 /* 호버 시 이미지 확대 */
@@ -55,16 +58,266 @@
   transition: all 0.3s linear;
 }
 
-.imgtext{
-  background-color: rgba( 255, 255, 255, 0.4 );
-}
-
 .card:hover .imgtext{
   color: #D1D5D6;
   background-color: rgba( 0, 0, 0, 0.7 );
 }
 
+/* 이미지 컨테이너 스타일 */
+
+.carouselSlide {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.CarouselimageDiv{
+  padding: 14px;
+  position: relative;
+  margin: 0.2vw;
+  transition: transform 0.3s;
+}
+
+
+/* 텍스트 스타일 */
+.customcaption {
+  position: absolute;
+  top: 51%; /* 상단 위치를 중앙으로 조정 */
+  left: 0;
+  right: 0;
+  transform: translateY(-50%); /* 수직 중앙 정렬 */
+  color: white;
+  text-align: center;
+  font-size: 2vw; 
+}
+
+/* 이미지 스타일 */
+.customcircle {
+  width: 12.5vw; /* 이미지 내부의 요소를 컨테이너 너비에 맞추기 */
+  height: 12.5vw; /* 이미지 내부의 요소의 가로 세로 비율 유지 */
+  margin: 0 auto;
+  border-radius: 50%; /* 이미지를 원 모양으로 만듭니다. */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.9); /* 그림자 스타일 및 설정 */
+  transition: transform 0.3s; /* 변환 효과의 지속 시간을 조절합니다 */
+  display: block;
+}
+
+.carouselContainer {
+  margin: 0 auto;
+  margin-left: 5vw;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  max-width: 84em;
+  user-select: none !important;
+}
+
+/* 호버 시 이미지 확대 */
+.CarouselimageDiv:hover .customcircle {
+  transform: scale(1.05); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.recoCity{
+  position:relative;
+  top:25%;
+  margin-left: 15vw;
+  font-size: 2.5vw;
+}
+
+.Carous{
+  width: 70vw;
+  margin: 12em;
+  max-width: 100%;
+}
+
+.Sidebartotal {
+  margin-top: 0.8vw;
+  margin-left: 4vw;
+  user-select: none;
+  width: 13vw;
+}
+
+.Sidebarlabel{
+  margin-bottom: 2vw; 
+  margin-left: 2vw;
+  font-size: 2vw;
+}
+/* -----------------------햄버거----------------------- */
+.hamburger{
+  user-select: none;
+  border: none;
+  background-color: white;
+}
 /* 미디어 쿼리 추가 */
-@media (max-width: 1200px) {
+@media (max-width: 1199px) {
+
+  .carouselContainer {
+    width: 90%; /* 적절한 너비로 조절하세요 */
+    margin-left: auto;
+    margin-right: auto;
+    padding: auto;
+  }
+  
+  .CarouselimageDiv {
+    padding: auto;
+    position: relative;
+    transition: transform 0.3s;
+    max-width: 100%; /* 이미지가 부모 요소를 벗어나지 않도록 최대 너비 지정 */
+    height: auto;
+  }
+  .customcircle{
+    width: 15vw;
+    height: 15vw;
+    padding: auto;
+  }
+  .customcaption{
+    margin-left: 0;
+    font-size: 20px;
+  }
+  .recoCity{
+    font-size: 3vw;
+    right:10%;
+  }
+  .Carous{
+    padding: auto;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .arraymain{
+    margin-left: 4%;
+  }
+  
+  .card{
+    width: 35vw;
+    height: 13.5em;
+    margin: 0.5em;
+  }
+  
+  .cardimg{
+    width: 100%;
+    height: 100%;
+    border-radius : 15px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .imgdiv{
+    top: 11vw;
+  }
+  
+  .imgtext{
+    font-size: 3vw;
+    width:4.9em;
+    height:1.2em;
+    line-height: 1.4em;
+  }
+  /* -----------------------햄버거----------------------- */
+  .hamburger{
+    display: block;
+    border: none;
+    background-color: #dedede;
+  }
+  .hamburgerIcon1 {
+    user-select: none;
+    display: block;
+    position: absolute;
+    text-align: center;
+    font-size: 30px;
+    width: 40px;
+    height: 120px;
+    cursor: pointer;
+    border-radius : 0 10px 10px 0;
+    box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
+    left: 100%;
+  }
+  .Sidebartotal {
+    position: fixed;
+    display: block;
+    left: -94%;
+    width: 90%;
+    z-index: 10;
+    background-color: #dedede; /* 사이드바 배경색 설정 */
+    opacity: 0.95;
+    transition: all 300ms;
+    padding: 20px 20px 20px 20px;
+    box-sizing: border-box;
+    border-radius : 15px;
+  }
+  .open{
+    left: 0 !important;
+  }
+
+  @media (max-width: 391px) { 
+
+    .CarouselimageDiv {
+      padding: 4px;
+    }
+    .customcircle{
+      width: 16vw;
+      height: 16vw;
+      padding: auto;
+    }
+    .carouselContainer {
+      width: 90%; /* 적절한 너비로 조절하세요 */
+      max-height: 300px;
+      height: 40vh;
+      margin-top: -160px;
+    }
+    .recoCity{
+      position:relative;
+      top:60%;
+      margin-left: 15vw;
+      font-size: 5vw;
+    }
+
+    .arraymain{
+      display: inline-block;
+    }
+    .card{
+      width: 8em;
+      height: 25vw;
+      margin: 0.5em;
+      left: -10%;
+    }
+    
+    .imgtext{
+      position: relative;
+      font-size: 6vw;
+      width:4.9em;
+      height:1.2em;
+      line-height: 1.4em;
+      left: -2px;
+    }
+
+    /* -----------------------햄버거----------------------- */
+    .hamburger{
+      display: block;
+      border: none;
+      background-color: #dedede;
+    }
+    .hamburgerIcon1 {
+      user-select: none;
+      display: block;
+      position: absolute;
+      text-align: center;
+      font-size: 26px;
+      width: 40px;
+      height: 105px;
+      cursor: pointer;
+      border-radius : 0 10px 10px 0;
+      box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
+      left: 100%;
+    }
+
+    .open{
+      left: -16px !important;
+    }
+  }
 
 }

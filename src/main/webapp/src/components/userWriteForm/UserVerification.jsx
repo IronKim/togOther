@@ -6,6 +6,7 @@ import ssoimage from '../../assets/image/sso.png';
 import smsimage from '../../assets/image/sms.png';
 import { TfiArrowRight } from "react-icons/tfi";
 import { certificationRequest } from '../../api/UserApiService';
+import { HiArrowCircleRight } from 'react-icons/hi';
 
 const UserVerification = ({nextPage, inputUserData, userData}) => {
 
@@ -84,7 +85,7 @@ const UserVerification = ({nextPage, inputUserData, userData}) => {
                     <p className='btn btn-primary' onClick={onMobileSign}>휴대폰 인증</p>
                 </div>
             </div>
-            <button className={`mt-5 ${styles.fbtn}`} onClick={() => nextPage()}><TfiArrowRight /></button>
+            <button className={styles.fbtn} onClick={()=> nextPage()}><HiArrowCircleRight/></button>
         </div>
     );
 };

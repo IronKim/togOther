@@ -43,7 +43,7 @@ const Detail2Write = ({ onInput, inputUserData, nextPage, prevPage, styles }) =>
 
             <div className={styles.inputFieldCk}>
                 <div className={styles.inputFieldF}>
-                    <p>음식취향(다중선택가능)</p>
+                    <p>음식취향<br/>(다중선택가능)</p>
                 </div>
 
                 <p>여행은 술과 함께 즐겨요🍷&nbsp;<input type='checkbox' className={styles.chkI} id='id' value='펍' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('펍')} /><label className={` ${styles.chk}`} htmlFor='id'></label></p>
@@ -55,15 +55,15 @@ const Detail2Write = ({ onInput, inputUserData, nextPage, prevPage, styles }) =>
                 <p>현지에서는 로컬음식과 함께!🌮&nbsp;<input type='checkbox' className={styles.chkI} id='id7' value='로컬' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('로컬')}></input><label className={` ${styles.chk}`} htmlFor='id7'></label></p>
                 <p>저는 비건입니다~🥬&nbsp;<input type='checkbox' className={styles.chkI} id='id8' value='비건' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('비건')}></input><label className={` ${styles.chk}`} htmlFor='id8'></label></p>
                 <p>저는 육식공룡이에요!🍖&nbsp;<input type='checkbox' className={styles.chkI} id='id9' value='육류' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('육류')}></input><label className={` ${styles.chk}`} htmlFor='id9'></label></p>
-                <p>바닷속의 맛을 즐기는 해산물 마니아! &nbsp;🦪<input type='checkbox' className={styles.chkI} id='id10' value='해산물' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('해산물')}></input><label className={` ${styles.chk}`} htmlFor='id10'></label></p>
+                <p>바닷속의 맛! 해산물 마니아! &nbsp;🦪<input type='checkbox' className={styles.chkI} id='id10' value='해산물' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('해산물')}></input><label className={` ${styles.chk}`} htmlFor='id10'></label></p>
                 <p>후루룩~! 면을 좋아해요~🍜&nbsp;<input type='checkbox' className={styles.chkI} id='id11' value='면류' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('면류')}></input><label className={` ${styles.chk}`} htmlFor='id11'></label></p>
                 <p>한국사람은 밥심!&nbsp;🥘<input type='checkbox' className={styles.chkI} id='id12' value='밥류' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('밥류')}></input><label className={` ${styles.chk}`} htmlFor='id12'></label></p>
-                <p>국이 없으면 수저를 들지않아요~🍲&nbsp;<input type='checkbox' className={styles.chkI} id='id13' value='국류' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('국류')}></input><label className={` ${styles.chk}`} htmlFor='id13'></label></p>
+                <p>국이 없으면 수저를 들지않아요!🍲&nbsp;<input type='checkbox' className={styles.chkI} id='id13' value='국류' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('국류')}></input><label className={` ${styles.chk}`} htmlFor='id13'></label></p>
                 <p>무엇이든 상관 없이 잘 먹지요~😋&nbsp;<input type='checkbox' className={styles.chkI} id='id14' value='기타' onChange={handleFoodCheckboxChange} checked={inputUserData.likingFood?.includes('기타')}></input><label className={` ${styles.chk}`} htmlFor='id14'></label></p>
             </div>
             <div className={styles.inputFieldCk}>
                 <div className={styles.inputFieldF}>
-                    <p>여행취향(다중선택가능)</p>
+                    <p>여행취향<br/>(다중선택가능)</p>
                 </div>
                 <p>자연에서 느끼는 힐링~🌱&nbsp;<input type='checkbox' className={styles.chkI} id='id15' value='자연' onChange={handleTripCheckboxChange} checked={inputUserData.likingTrip?.includes('자연')}></input><label className={` ${styles.chk}`} htmlFor='id15'></label></p>
                 <p>각지의 문화를 느껴요&nbsp;🧑‍🤝‍🧑<input type='checkbox' className={styles.chkI} id='id16' value='문화' onChange={handleTripCheckboxChange} checked={inputUserData.likingTrip?.includes('문화')}></input><label className={` ${styles.chk}`} htmlFor='id16'></label></p>
@@ -72,7 +72,7 @@ const Detail2Write = ({ onInput, inputUserData, nextPage, prevPage, styles }) =>
                 <p>쇼핑하며 플렉스!&nbsp;🎁<input type='checkbox' className={styles.chkI} id='id19' value='쇼핑' onChange={handleTripCheckboxChange} checked={inputUserData.likingTrip?.includes('쇼핑')}></input><label className={` ${styles.chk}`} htmlFor='id19'></label></p>
                 <p>핫플만 찾아 다니는 인싸!🎉&nbsp;<input type='checkbox' className={styles.chkI} id='id20' value='핫플' onChange={handleTripCheckboxChange} checked={inputUserData.likingTrip?.includes('핫플')}></input><label className={` ${styles.chk}`} htmlFor='id20'></label></p>
                 <p>액티비티 좋아하시나요..?🥽&nbsp;<input type='checkbox' className={styles.chkI} id='id21' value='활동' onChange={handleTripCheckboxChange} checked={inputUserData.likingTrip?.includes('활동')}></input><label className={` ${styles.chk}`} htmlFor='id21'></label></p>
-                <p>함께 신나는 놀이기구를 타볼까요?🎪&nbsp;<input type='checkbox' value='테마' className={styles.chkI} id='id22' onChange={handleTripCheckboxChange} checked={inputUserData.likingTrip?.includes('테마')}></input><label className={` ${styles.chk}`} htmlFor='id22'></label></p>
+                <p>신나는 놀이기구를 타볼까요?🎪&nbsp;<input type='checkbox' value='테마' className={styles.chkI} id='id22' onChange={handleTripCheckboxChange} checked={inputUserData.likingTrip?.includes('테마')}></input><label className={` ${styles.chk}`} htmlFor='id22'></label></p>
                 <div>
                     <button className={styles.fbtn} onClick={prevPage}><HiArrowCircleLeft /></button>&nbsp;
                     <button className={styles.fbtn} onClick={nextPage}><HiArrowCircleRight /></button>&nbsp;

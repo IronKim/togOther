@@ -18,6 +18,7 @@ import Community from '../pages/Community';
 import useUserStore from '../stores/userStore';
 import { getTokenByRefreshToken, getUserByAccessToken } from '../api/UserApiService';
 import BottomNav from './BottomNav';
+import Mypage from '../pages/Mypage';
 import View from './community/planner/View';
 
 import { LoadScript } from '@react-google-maps/api';
@@ -118,6 +119,7 @@ const Main = ({ showNavbar }) => {
                     <Route path='user'>
                         <Route path='login' element ={ <Login />} />
                         <Route path='write' element ={ <Write />}/>
+                        <Route path='mypage' element ={ <Mypage />}/>
                     </Route>
                     <Route path='info'>
                         <Route path='place/:placeSeq' element={ <PlacePage />} />
