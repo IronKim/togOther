@@ -52,20 +52,30 @@ const PlaceWriteForm = () => {
                     // subDTO 저장
                     subDTO.map(item => {
                         if(item.place !== null){
-                            const subItem = {toMainSeq:res.data, nday: item.nDay, code : item.code,
-                                startTime : item.startTime, endTime : item.endTime, context : item.context,
-                                placeSw: 0, placeSeq: item.place.placeSeq}
+                            const subItem = {toMainSeq:res.data,
+                                             nday: item.nDay, code : item.code,
+                                             startTime : item.startTime, 
+                                             endTime : item.endTime, 
+                                             context : item.context,
+                                             placeSw: 0, 
+                                             placeSeq: item.place.placeSeq}
                                 addSubItem(subItem)
                                 .then(res2 => console.log(res2))
                                 .catch(e => console.log(e))
                         }
-                        if(item.customDTO !== null){//customDTO에 저장
+                        //customDTO에 저장
+                        if(item.customDTO !== null){
                             addCustomPlace(item.customDTO)
                             .then(res2 => {
-                                const subItem = {toMainSeq: res.data, nday: item.nDay, code : item.code,
-                                startTime : item.startTime, endTime : item.endTime, context : item.context,
-                                placeSw: 1, pCustomSeq : res2.data}
+                                const subItem = {toMainSeq: res.data, 
+                                                 nday: item.nDay, code : item.code,
+                                                 startTime : item.startTime, 
+                                                 endTime : item.endTime, 
+                                                 context : item.context,
+                                                 placeSw: 1, plCustomSeq : res2.data}
                                 addSubItem(subItem)
+                                .then(res3 => console.log(res3))
+                                .catch(e => console.log(e));
                             })
                         .catch(e => console.log(e))
                         }

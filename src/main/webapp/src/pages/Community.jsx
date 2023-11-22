@@ -11,6 +11,16 @@ const Community = () => {
 
     const onSearch = (e) => {
         setSearch(e.target.value)
+        // 구글맵 언로드
+        const scripts = document.head.getElementsByTagName('script');
+        for (let i = 0; i < scripts.length; i++) {
+        const script = scripts[i];
+        // 여기에서 Google Maps API 스크립트를 식별하고 언로드하는 로직 추가
+        if (script.src.includes('maps.googleapis.com')) {
+            script.remove();
+            break;
+        }
+        }
     }
     return (
         <div>

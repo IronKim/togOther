@@ -1,6 +1,6 @@
 import React,{useEffect,useState,useCallback,useRef} from 'react';
 import Style from '../../../css/together.module.css'
-import { getCity } from '../../../api/AdvisorApiService';
+import { getCityList } from '../../../api/CityApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
 import { GoogleMap, LoadScript, Autocomplete } from '@react-google-maps/api';
 import backBut from '../../../assets/image/backBut.png'
@@ -76,7 +76,7 @@ const PlaceSelect = (props) => {
     //city목록 가져오기
     const [city, setCity] = useState([])
     useEffect(()=> {
-        getCity()
+        getCityList()
         .then(res => {
             setCity(res.data)
         })
@@ -336,6 +336,7 @@ const PlaceSelect = (props) => {
                             zoom={16}
                             onLoad={(map) => setMap(map)}
                             className={Style.containerStyle}
+                            options={{disableDefaultUI: true}}
                             >
                             </GoogleMap>
                             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>

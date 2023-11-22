@@ -5,18 +5,22 @@ import loadingImg from '../../../assets/image/loading.png'
 
 import { getTogetherList, getSubItemList, getCustomList, totTogether } from '../../../api/TogetherApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
-import { GoogleMap, LoadScript, Autocomplete } from '@react-google-maps/api';
+import { GoogleMap,Marker,LoadScript,MarkerF } from '@react-google-maps/api';
 
 const libraries = ["places"];
 const containerStyle = {
-    width: '90%',
-    height: '335px',
-    margin: 'auto'
+  width: '100%',
+  height: '100%',
+  margin: 'auto'
 };
-const center = {
-  lat: 37.5538,
-  lng: 126.987
-};
+
+const myStyles = [
+  {
+    featureType: "poi",
+    elementType: "labels",
+    stylers: [{ visibility: "off" }],
+  },
+];
 
 const TogetherList = () => {
     const[loading,setLoading] = useState(false)
@@ -112,16 +116,20 @@ const TogetherList = () => {
     return (
         <div className={Style.listForm}>
           <div className={Style.listForminner}>
+          <LoadScript
+                googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
+                libraries={libraries}
+            >
             {togetherDTO.map(item => {
               // togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
-              const searchSub_Cus = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
+              const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
               
               return (
                 <div className={Style.together} key={item.togetherSeq}>
                     <div className={Style.date}>{item.startDate}~{item.endDate}</div>
                   
-                {searchSub !== undefined ?
+                {searchSub !== undefined &&
 
                   (<div className={Style.togetherFoot}>
                       <div className={Style.imgDiv}>
@@ -133,27 +141,50 @@ const TogetherList = () => {
                       <div className={Style.placeInfo}> {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
                           <div className={Style.user}>유저정보</div>
                       </div>
-                  </div>)
-                  :
+                  </div>)}
+
+                  {searchSub === undefined && searchSub_Cus !== undefined &&
+
                   (<div className={Style.togetherFoot}>
                     <div className={Style.imgDiv}>
                         <div className={Style.placeImg}>
-                        
-                        {/* {customDTO.find(cusItem => cusItem.plCustomSeq ===searchSub_Cus.plCustomSeq).placeName} */}
-                          
-
+                        {/* <button onClick={()=>{console.log(JSON.stringify(customDTO))}}></button>
+                        <button onClick={()=>{console.log(JSON.stringify(searchSub_Cus))}}></button> */}
+                        {/* {console.log(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq)) || customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName} */}
+                        {/* {searchSub_Cus.plCustomSeq} */}
+                        {/* {customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus?.plCustomSeq)?.placeName}   */}
+                        {/* 여기에 지도 넣을거야 */}
+                        {loading &&
+                        <GoogleMap
+                          mapContainerStyle={containerStyle}
+                          center={{
+                            lat: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).latitude),
+                            lng: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).longitude)
+                          }}
+                          zoom={15}
+                          options={{ disableDefaultUI: true, styles: myStyles }}
+                        >
+                        <Marker
+                          position={{
+                            lat: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).latitude),
+                            lng: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).longitude)
+                          }}
+                        />
+                      </GoogleMap>
+                    }
                         </div>
                     </div>
                     <div className={Style.title}><p>{item.title}</p></div>
                     <div className={Style.context}><p>{item.context}</p></div>
-                    <div className={Style.placeInfo}>  {}
+                    <div className={Style.placeInfo}>{customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
                         <div className={Style.user}>유저정보</div>
                     </div>
-                  </div>)
-                }
+                  </div>)}
+                
                   </div>
                 );
             })}
+            </LoadScript>
             <div className={Style.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}} >
                 <img src={loadingImg}/>
             </div>
@@ -161,18 +192,12 @@ const TogetherList = () => {
                 마지막
             </div>
           </div>
+          <div style={{opacity:0}}>
+            
+        </div>
         </div>
       );
     };
 
 export default TogetherList;
 
-// {place.find(placeItem => {
-//   placeItem.placeSeq === searchSub.placeSeq
-
-//   return(
-//     <div className={Style.imgDiv}>
-//         <img src={subDTO.place.image} className={Style.placeImg} alt="Place Image" />
-//     </div>
-//   )
-// })}
