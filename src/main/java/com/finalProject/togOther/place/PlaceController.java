@@ -41,5 +41,13 @@ public class PlaceController {
 	public ResponseEntity<Integer> addCustomPlace(@RequestBody CustomPlaceDTO customPlaceDTO) {
 		return placeService.addCustomPlace(customPlaceDTO);
 	}
-
+	
+	@GetMapping(path = "getCustomPlace/{plCustomSeq}")
+	public ResponseEntity<CustomPlaceDTO> getCustomPlace(@PathVariable int plCustomSeq) {
+		return placeService.getCustomPlace(plCustomSeq);
+	}
+	@GetMapping(path = "getPlace/{placeSeq}")
+	public ResponseEntity<PlaceDTO> getPlace(@PathVariable int placeSeq) {
+		return placeService.getPlace(placeSeq);
+	}
 }

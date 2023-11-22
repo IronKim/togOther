@@ -31,14 +31,16 @@ public class TogetherController {
 	
 	//동행 리스트 불러오기
 	@PostMapping(path="getTogetherList")
-	public ResponseEntity<List<TogetherDTO>> getTogetherList(@RequestBody Map<String, Integer> requestBody) {
-	    int n = requestBody.get("n");
-		return togetherService.getTogetherList(n);
+	public ResponseEntity<List<TogetherDTO>> getTogetherList(@RequestBody Map<String, String> requestBody) {
+	    int n = Integer.parseInt(requestBody.get("n"));
+	    String search = requestBody.get("search");
+		return togetherService.getTogetherList(n,search);
 	}
 	// 토탈 불러오기
 	@PostMapping(path = "totTogether")
-	public ResponseEntity<Integer> totTogether() {
-		return togetherService.totTogether();
+	public ResponseEntity<Integer> totTogether(@RequestBody Map<String, String> requestBody) {
+		String search = requestBody.get("search");
+		return togetherService.totTogether(search);
 	}
 		
 	

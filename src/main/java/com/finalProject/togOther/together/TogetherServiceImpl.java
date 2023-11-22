@@ -78,13 +78,14 @@ public class TogetherServiceImpl implements TogetherService {
 	}
 
 	@Override
-	public ResponseEntity<List<TogetherDTO>> getTogetherList(int n) {
+	public ResponseEntity<List<TogetherDTO>> getTogetherList(int n,String search) {
 		try {
 			Pageable pageable = PageRequest.of(0, n);
 			
 			System.out.println(n);
 			
-			List<Together> togetherList = togetherRepository.findAllByOrderByTogetherSeqDesc(pageable);
+			List<Together> togetherList = 
+					togetherRepository.findAllByTitleContainingOrContextContainingOrderByTogetherSeqDesc(pageable,search,search);
 
 			List<TogetherDTO> togetherDTOList = new ArrayList<TogetherDTO>();
 			
@@ -141,9 +142,9 @@ public class TogetherServiceImpl implements TogetherService {
 	}
 	
 	@Override
-	public ResponseEntity<Integer> totTogether() {
+	public ResponseEntity<Integer> totTogether(String search) {
 		try {
-			int total = (int) togetherRepository.count();
+			int total = (int) togetherRepository.countByTitleContainingOrContextContaining(search,search);
 			
 			return ResponseEntity.ok(total);
 			

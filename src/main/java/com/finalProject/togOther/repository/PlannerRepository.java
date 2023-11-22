@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import com.finalProject.togOther.domain.Planner;
 
 public interface PlannerRepository extends JpaRepository<Planner, Integer> {
-    List<Planner> findAllByTitleContainingOrderByLogTimeDesc(Pageable pageable,@Param("title") String search);
-    long countByTitleContaining(@Param("title") String search);
+    List<Planner> findAllByTitleContainingAndPublicPlanOrderByLogTimeDesc(Pageable pageable,
+    		@Param("title") String search,@Param("PublicPlan") int num);
+    long countByTitleContainingAndPublicPlan(@Param("title") String search,@Param("PublicPlan") int num);
+    Planner findOneByPlannerSeq(int plannerSeq);
 }

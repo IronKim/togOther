@@ -1,0 +1,24 @@
+.main {
+    width: 1200px;
+    margin: 0 auto;
+}
+.mapSection {
+    margin: 2.5%;
+    width: 95%;
+    height: 280px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+} 
+.title {
+    font-size: 35px;
+    padding: 10px;
+}
+@media (max-width: 1199px) {
+    .main {
+        width: 100%;
+    }
+    .mapSection {
+        height: 220px;
+    } 
+}

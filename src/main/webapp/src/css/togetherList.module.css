@@ -97,6 +97,13 @@
     /* border: 1px solid blue; */
     float: right;
 }
+.lastSection {
+    padding: 150px;
+    height: 350px;
+    text-align: center;
+    font-size: 25px;
+    color: darkgray;
+}
 @media (max-width: 1199px){
     .listForminner{
         width: 80%;

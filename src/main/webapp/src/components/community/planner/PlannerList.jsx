@@ -132,7 +132,7 @@ const PlannerList = (props) => {
             <div className={styles.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}}>
                 <img src={loadingImg}/>
             </div>
-            <div className={styles.lastSection} style={{display: last ? 'block' : 'none'}}>
+            <div className={styles.lastSection} style={{opacity: last ? 1 : 0}}>
                 {total}건 조회 되었습니다
             </div>
         </div>

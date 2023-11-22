@@ -21,7 +21,9 @@ const myStyles = [
   },
 ];
 
-const TogetherList = () => {
+const TogetherList = (props) => {
+    const {search} = props;
+
     const[loading,setLoading] = useState(false)
     const[total,setTotal] = useState(0)
     const[count,setCount] = useState(1)
@@ -29,7 +31,10 @@ const TogetherList = () => {
     const[scrollLoading,setScrollLoading] = useState(true)
     /////////////////////////////////////////////
     useEffect(() => {
-      totTogether()
+      setScrollLoading(true)
+      setLast(false)
+
+      totTogether({ search : search })
       .then(res2 => setTotal(res2.data))
       .catch(e => console.log(e))
     },[])
@@ -57,20 +62,42 @@ const TogetherList = () => {
     let n = 0;
     if(count * 10 > total) n = total;
     else n = count * 10;
+    if(n > 0) {
+      getTogetherList({ n: n, search : search ? search.trim() : '' })
+      .then(res => {
+        setTogetherDTO(res.data)
+        setScrollLoading(false)
+      })
+      .catch(e => console.log(e))
+    } else {
+        setScrollLoading(false)
+        // setLast(true)
+    }
+    window.addEventListener('scroll', handleScroll);
 
-    getTogetherList({ n: n })
-    .then(res => {
-       setTogetherDTO(res.data)
-       setScrollLoading(false)
-    })
-    .catch(e => console.log(e))
+    return () => {
+    window.removeEventListener('scroll', handleScroll);
+    };
+
+  },[count,total,scrollLoading,last])
+////////////////////////검색/////////////////
+useEffect(() => {
+  setScrollLoading(true)
+  
+  totTogether({ search : search })
+  .then(res2 => {
+      setLast(false)
+      setTotal(res2.data)
+  })
+  .catch(e => console.log(e))
+
   window.addEventListener('scroll', handleScroll);
 
   return () => {
   window.removeEventListener('scroll', handleScroll);
   };
+},[search])
 
-},[count,total,scrollLoading,last])
   ////////////////////////////////////////////
      //together목록
      const [togetherDTO, setTogetherDTO] = useState([])
@@ -179,13 +206,10 @@ const TogetherList = () => {
             <div className={Style.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}} >
                 <img src={loadingImg}/>
             </div>
-            <div style={{display: last ? 'block' : 'none',height:'100px',textAlign:'center'}}>
-                마지막
+            <div className={Style.lastSection} style={{opacity: last ? 1 : 0}}>
+                {total}건 조회 되었습니다
             </div>
           </div>
-          <div style={{opacity:0}}>
-            
-        </div>
         </div>
       );
     };

@@ -68,6 +68,38 @@ public class PlaceServiceImpl implements PlaceService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
+	
+	@Override
+	public ResponseEntity<PlaceDTO> getPlace(int placeSeq) {
+		try {
+			Optional<Place> placeOptional = placeRepository.findById(placeSeq);
+			
+			Place place = placeOptional.orElseThrow();
+			
+			PlaceDTO placeDTO = PlaceDTO.toDTO(place);
+			
+			return ResponseEntity.ok(placeDTO);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<CustomPlaceDTO> getCustomPlace(int plCustomSeq) {
+		try {
+			Optional<CustomPlace> placeOptional = customPlaceRepository.findById(plCustomSeq);
+			
+			CustomPlace customPlace = placeOptional.orElseThrow();
+			
+			CustomPlaceDTO customPlaceDTO = CustomPlaceDTO.toDTO(customPlace);
+			
+			return ResponseEntity.ok(customPlaceDTO);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 
 	@Override
 	public ResponseEntity<Integer> addCustomPlace(CustomPlaceDTO customPlaceDTO) {
