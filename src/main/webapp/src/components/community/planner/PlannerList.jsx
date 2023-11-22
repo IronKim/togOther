@@ -63,6 +63,7 @@ const PlannerList = (props) => {
             getPlanner({ n: n, search : search ? search.trim() : '' })
             .then(res => {
                     setPlanner(res.data)
+
                     setScrollLoading(false)
                     getImages({n : res.data[0].plannerSeq})
                     .then(res2 => setImages(res2.data))
@@ -84,10 +85,10 @@ const PlannerList = (props) => {
 
     useEffect(() => {
         setScrollLoading(true)
-        setLast(false)
-
+        
         totPlanner({ search : search })
         .then(res2 => {
+            setLast(false)
             setTotal(res2.data)
         })
         .catch(e => console.log(e))
