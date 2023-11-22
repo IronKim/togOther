@@ -35,7 +35,10 @@ const TogetherList = (props) => {
       setLast(false)
 
       totTogether({ search : search })
-      .then(res2 => setTotal(res2.data))
+      .then(res2 => {
+        setTotal(res2.data)
+        if(res2.data === 0) setLast(true);
+      })
       .catch(e => console.log(e))
     },[])
     //////////////스크롤 매커니즘////////////////

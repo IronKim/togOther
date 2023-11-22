@@ -77,7 +77,12 @@ const View = () => {
 
     return (
         <div className={styles.main}>
-            <h1 className={styles.title}>{planner && planner.title}</h1>
+            <div className={styles.title}>{planner && planner.title}</div>
+            <div className={styles.timeDate}>{planner && 
+                <div>{planner.startDate.split('-')[1]}/{planner.startDate.split('-')[2]}&nbsp;&nbsp;~&nbsp;&nbsp;
+                    {planner.endDate.split('-')[1]}/{planner.endDate.split('-')[2]}
+                </div> }
+            </div>
             <section className={styles.mapSection}>
                 <GoogleMap
                     mapContainerStyle={containerStyle}
@@ -97,27 +102,8 @@ const View = () => {
                 </GoogleMap>
             </section>
         </div>
+    
     );
 };
 
 export default View;
-
-{/* <GoogleMap
-mapContainerStyle={containerStyle}
-center={
-  custom && {
-  lat: parseFloat(custom.latitude),
-  lng: parseFloat(custom.longitude) }
-}
-zoom={15}
-options={{disableDefaultUI: true}}
-onLoad={() => setMap(myPoint)}
->
-<Marker
-position={
-  custom && {
-  lat: parseFloat(custom.latitude),
-  lng: parseFloat(custom.longitude) }
-}
-/>
-</GoogleMap> */}

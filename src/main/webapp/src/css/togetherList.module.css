@@ -103,6 +103,7 @@
     text-align: center;
     font-size: 25px;
     color: darkgray;
+    transition: 1s;
 }
 @media (max-width: 1199px){
     .listForminner{
