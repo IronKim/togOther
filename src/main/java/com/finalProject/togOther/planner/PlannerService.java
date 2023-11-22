@@ -1,5 +1,8 @@
 package com.finalProject.togOther.planner;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 
 import com.finalProject.togOther.dto.PlannerDTO;
@@ -16,5 +19,13 @@ public interface PlannerService {
 	public ResponseEntity<String> addPlannerText(PlannerTextDTO plannerTextDTO);
 
 	public ResponseEntity<String> addPlannerImage(PlannerImageDTO plannerImageDTO);
+
+	public ResponseEntity<List<PlannerDTO>> getPlanner(int n,String search);
+
+	public ResponseEntity<Integer> totPlanner(String search);
+
+	public ResponseEntity<List<PlannerImageDTO>> getImages(int n);
+
+	public ResponseEntity<Map<String, Object>> getPlannerView(int plannerSeq);
 
 }

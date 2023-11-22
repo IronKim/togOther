@@ -23,7 +23,7 @@ public class PlannerText {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int plTextSeq;
 	private int plMainSeq;
-	private byte id; //0 플래너 1 동행 2 둘다
+	private String id;
 	private int nday;
 	private int orders;
 	private String context;
