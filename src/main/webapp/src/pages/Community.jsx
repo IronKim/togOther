@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import PlannerList from '../components/community/planner/PlannerList';
 import styles from '../css/community.module.css'
 import TogetherList from '../components/community/together/TogetherList';
+import CommunitySearch from '../components/community/CommunitySearch';
 
 const Community = () => {
     const[toggle,setToggle] = useState(true)
 
+    const[search,setSearch] = useState('')
+
+    const onSearch = (e) => {
+        setSearch(e.target.value)
+    }
     return (
         <div>
+            <CommunitySearch search={search} onSearch={onSearch}/>
             <div className={styles.toggle} style={{paddingLeft: toggle ? '3px' : '120px' }}
             onClick={()=>setToggle(!toggle)}>
             <div className={styles.toggleLeft} style={{marginLeft: toggle ? '38px' : '-79px',
@@ -17,7 +24,7 @@ const Community = () => {
             <div className={styles.toggleBox}></div>
             </div>
             {
-                toggle ? <PlannerList/> : <TogetherList/>
+                toggle ? <PlannerList search={search}/> : <TogetherList/>
             }
         </div>
     );

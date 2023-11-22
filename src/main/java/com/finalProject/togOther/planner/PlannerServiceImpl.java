@@ -118,13 +118,13 @@ public class PlannerServiceImpl implements PlannerService {
 	}
 //플래너 리스트 20개 + 20개 + 20개... 으로 불러오기
 	@Override
-	public ResponseEntity<List<PlannerDTO>> getPlanner(int n) {
+	public ResponseEntity<List<PlannerDTO>> getPlanner(int n,String search) {
 		try {
 			Pageable pageable = PageRequest.of(0, n);
 			
-			System.out.println(n);
 			
-			List<Planner> plannerList = plannerRepository.findAllByOrderByLogTimeDesc(pageable);
+			List<Planner> plannerList = 
+				plannerRepository.findAllByTitleContainingOrderByLogTimeDesc(pageable,search);
 
 			List<PlannerDTO> plannerDTOList = new ArrayList<PlannerDTO>();
 
@@ -143,9 +143,9 @@ public class PlannerServiceImpl implements PlannerService {
 	}
 //플래너 리스트 전체 개수 불러오기
 	@Override
-	public ResponseEntity<Integer> totPlanner() {
+	public ResponseEntity<Integer> totPlanner(String search) {
 		try {
-			int total = (int) plannerRepository.count();
+			int total = (int) plannerRepository.countByTitleContaining(search);
 			
 			return ResponseEntity.ok(total);
 			

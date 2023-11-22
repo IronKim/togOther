@@ -89,6 +89,13 @@
     text-overflow: ellipsis;
     overflow: hidden;
 } 
+.lastSection {
+    padding: 150px;
+    height: 400px;
+    text-align: center;
+    font-size: 25px;
+    color: darkgray;
+}
 @media (max-width: 1199px) {
     .main {
         width: 100%;

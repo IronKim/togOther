@@ -19,9 +19,9 @@ public interface PlannerService {
 
 	public ResponseEntity<String> addPlannerImage(PlannerImageDTO plannerImageDTO);
 
-	public ResponseEntity<List<PlannerDTO>> getPlanner(int n);
+	public ResponseEntity<List<PlannerDTO>> getPlanner(int n,String search);
 
-	public ResponseEntity<Integer> totPlanner();
+	public ResponseEntity<Integer> totPlanner(String search);
 
 	public ResponseEntity<List<PlannerImageDTO>> getImages(int n);
 
