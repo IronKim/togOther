@@ -1,6 +1,12 @@
 @keyframes roll{
     100% {transform: rotate(360deg) };
 }
+@keyframes rollD{
+    100% {
+            transform: rotate(360deg);
+            display: none;
+        };
+}
 .main {
     width: 1200px;
     margin: 0 auto;

@@ -20,5 +20,10 @@ public interface TogetherService {
 
 	public ResponseEntity<Integer> totTogether();
 
+	public ResponseEntity<TogetherDTO> getTogetherSeq(int togetherSeq);
+
+	public ResponseEntity<SubItemDTO> getTogetherBySub(int togetherSeq);
+
+
 
 }

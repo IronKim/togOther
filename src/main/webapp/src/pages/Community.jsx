@@ -24,7 +24,7 @@ const Community = () => {
             <div className={styles.toggleBox}></div>
             </div>
             {
-                toggle ? <PlannerList search={search}/> : <TogetherList/>
+                toggle ? <PlannerList search={search}/> : <TogetherList search={search}/>
             }
         </div>
     );

@@ -2,6 +2,7 @@ package com.finalProject.togOther.together;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -149,6 +150,38 @@ public class TogetherServiceImpl implements TogetherService {
 			
 		} catch (Exception e) {
 			return ResponseEntity.ok(-1);
+		}
+	}
+
+	@Override
+	public ResponseEntity<TogetherDTO> getTogetherSeq(int togetherSeq) {
+		try {
+			Optional<Together> togetherOptional = togetherRepository.findById(togetherSeq);
+			
+			Together together = togetherOptional.orElseThrow();
+			
+			TogetherDTO togetherDTO = TogetherDTO.toDTO(together);
+			
+			return ResponseEntity.ok(togetherDTO);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	@Override
+	public ResponseEntity<SubItemDTO> getTogetherBySub(int togetherSeq) {
+		try {
+			Optional<SubItem> subItemOptional = subItemRepository.findById(togetherSeq);
+			
+			SubItem subItem = subItemOptional.orElseThrow();
+			
+			SubItemDTO subItemDTO = SubItemDTO.toDTO(subItem);
+			
+			return ResponseEntity.ok(subItemDTO);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
 

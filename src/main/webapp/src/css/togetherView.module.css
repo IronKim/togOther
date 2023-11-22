@@ -1,0 +1,14 @@
+.viewForm{
+    width: 100%;
+}
+.viewInner{
+    border: 1px solid red;
+    width: 1200px;
+    margin: auto;
+}
+@media (max-width: 1199px){
+    .viewInner{
+        width: 80%;
+    }
+    
+}

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Style from '../../../css/togetherList.module.css'
 
 import loadingImg from '../../../assets/image/loading.png'
 
 import { getTogetherList, getSubItemList, getCustomList, totTogether } from '../../../api/TogetherApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
-import { GoogleMap,Marker,LoadScript } from '@react-google-maps/api';
-import TogetherView from './TogetherView';
+import { GoogleMap,Marker } from '@react-google-maps/api';
 
-const libraries = ["places"];
 const containerStyle = {
   width: '100%',
   height: '100%',
@@ -77,9 +76,6 @@ const TogetherList = () => {
      //together목록
      const [togetherDTO, setTogetherDTO] = useState([])
 
-     useEffect(()=> {
-     },[])
-
      //subItem목록
      const [subItemDTO, setSubItemDTO] = useState([])
      
@@ -115,23 +111,22 @@ const TogetherList = () => {
     },[])
 
     //view로 갈게이제
-    const [isView, setIsView] = useState(true)
+    const navigate = useNavigate()
 
-    const onView = () => {
-        setIsView(false)
-    }
+    const onTogetherView = (togetherSeq) => {
+      navigate(`together/view/${togetherSeq}`)
+  }
 
     return (
         <div className={Style.listForm}>
           <div className={Style.listForminner}>
-          
             {togetherDTO.map(item => {
               // togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
               
               return (
-             <div className={Style.together} key={item.togetherSeq} onClick={() => onView()}>
+             <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
                     <div className={Style.date}>{item.startDate}~{item.endDate}</div>
                   
                 {searchSub !== undefined &&
@@ -160,10 +155,6 @@ const TogetherList = () => {
                         {/* {customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus?.plCustomSeq)?.placeName}   */}
                         {/* 여기에 지도 넣을거야 */}
                         {loading &&
-                          <LoadScript
-                              googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
-                              libraries={libraries}
-                          >
                         <GoogleMap
                           mapContainerStyle={containerStyle}
                           center={{
@@ -181,7 +172,6 @@ const TogetherList = () => {
                           
                         />
                       </GoogleMap>
-                      </LoadScript>
                     }
                         </div>
                     </div>
@@ -191,15 +181,10 @@ const TogetherList = () => {
                         <div className={Style.user}>유저정보</div>
                     </div>
                   </div>)}
-                  {
-                    isView === false &&
-                    <TogetherView/>
-                  }
+                  
               </div>
                 );
             })}
-            
-            
             <div className={Style.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}} >
                 <img src={loadingImg}/>
             </div>

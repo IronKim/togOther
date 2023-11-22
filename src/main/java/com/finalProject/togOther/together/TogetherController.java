@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,4 +54,16 @@ public class TogetherController {
 	public ResponseEntity<List<CustomPlaceDTO>> getCustomList(){
 		return togetherService.getCustomList();
 	}
+	
+	//togetherSeq에 해당하는 togetherDTO 불러오기
+	@GetMapping(path="getTogetherSeq/{togetherSeq}")
+	public ResponseEntity<TogetherDTO> getTogetherSeq(@PathVariable int togetherSeq){
+		return togetherService.getTogetherSeq(togetherSeq);
+	}
+	//togetherSeq에 해당하는 sub 불러오기
+		@GetMapping(path="getTogetherBySub/{togetherSeq}")
+		public ResponseEntity<SubItemDTO> getTogetherBySub(@PathVariable int togetherSeq){
+			return togetherService.getTogetherBySub(togetherSeq);
+		}
+	
 }
