@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { useUserStore } from '../../stores/mainStore';
-import { addPlaceReview } from '../../api/PlaceApiService';
+import { addPlaceReview } from '../../api/PlaceReviewApiService';
 
 function PlaceReviewWrite({ placeSeq }) {
   const [show, setShow] = useState(false);

@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import PlaceReviewWrite from './PlaceReviewWrite';
 import PlaceReviewPhoto from './PlaceReviewPhoto';
-import { getPlaceReviewBySeq } from '../../api/PlaceApiService';
+import { getPlaceReviewBySeq } from '../../api/PlaceReviewApiService';
 
 const PlaceReview = ({ placeSeq }) => {
   const [selectedPlaceReview, setSelectedPlaceReview] = useState([]);

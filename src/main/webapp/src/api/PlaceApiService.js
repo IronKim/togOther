@@ -7,7 +7,3 @@ export const getPlaceBySeq = (placeSeq) => apiClient.get(`api/place/getPlaceList
 export const addCustomPlace = (customPlace) => apiClient.post(`api/place/addCustomPlace`,customPlace)
 
 export const getPlaceListByCitySeq = (citySeq) => apiClient.get(`api/place/getPlaceListByCitySeq/${citySeq}`)
-
-export const getPlaceReviewBySeq = (placeSeq) => apiClient.get(`api/placeReview/getPlaceReviewList/${placeSeq}`)
-
-export const addPlaceReview = (placeReview) => apiClient.post('api/placeReview/addPlaceReview', placeReview);
