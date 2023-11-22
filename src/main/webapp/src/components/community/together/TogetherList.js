@@ -5,6 +5,18 @@ import loadingImg from '../../../assets/image/loading.png'
 
 import { getTogetherList, getSubItemList, getCustomList, totTogether } from '../../../api/TogetherApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
+import { GoogleMap, LoadScript, Autocomplete } from '@react-google-maps/api';
+
+const libraries = ["places"];
+const containerStyle = {
+    width: '90%',
+    height: '335px',
+    margin: 'auto'
+};
+const center = {
+  lat: 37.5538,
+  lng: 126.987
+};
 
 const TogetherList = () => {
     const[loading,setLoading] = useState(false)
@@ -103,21 +115,15 @@ const TogetherList = () => {
             {togetherDTO.map(item => {
               // togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
-              // console.log(searchSub)
+              const searchSub_Cus = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
+              
               return (
                 <div className={Style.together} key={item.togetherSeq}>
                     <div className={Style.date}>{item.startDate}~{item.endDate}</div>
                   
-                  {/* {searchSub.map(filterItem => {
-                        //place 찾기
-                        const searchPlace = place.find(placeItem => placeItem.placeSeq === filterItem.placeSeq);
-                        
-                        return (
-                        )})
-                    } */}
-                    {searchSub !== undefined &&
+                {searchSub !== undefined ?
 
-                  <div className={Style.togetherFoot}>
+                  (<div className={Style.togetherFoot}>
                       <div className={Style.imgDiv}>
                           <img src={ loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).image} 
                           className={Style.placeImg} alt="Place Image" />
@@ -127,10 +133,26 @@ const TogetherList = () => {
                       <div className={Style.placeInfo}> {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
                           <div className={Style.user}>유저정보</div>
                       </div>
+                  </div>)
+                  :
+                  (<div className={Style.togetherFoot}>
+                    <div className={Style.imgDiv}>
+                        <div className={Style.placeImg}>
+                        
+                        {/* {customDTO.find(cusItem => cusItem.plCustomSeq ===searchSub_Cus.plCustomSeq).placeName} */}
+                          
+
+                        </div>
+                    </div>
+                    <div className={Style.title}><p>{item.title}</p></div>
+                    <div className={Style.context}><p>{item.context}</p></div>
+                    <div className={Style.placeInfo}>  {}
+                        <div className={Style.user}>유저정보</div>
+                    </div>
+                  </div>)
+                }
                   </div>
-                  }
-                </div>
-              );
+                );
             })}
             <div className={Style.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}} >
                 <img src={loadingImg}/>

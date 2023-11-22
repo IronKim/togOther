@@ -413,8 +413,8 @@ const PlaceSelect = (props) => {
         }
         <div style={{opacity:0}}>
             <LoadScript
-                    googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
-                    libraries={libraries}
+                googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
+                libraries={libraries}
             />
         </div>
         {/* <div className="map"
