@@ -212,7 +212,7 @@
   }
   
   .imgtext{
-    font-size: 1.9vw;
+    font-size: 3vw;
     width:4.9em;
     height:1.2em;
     line-height: 1.4em;
@@ -285,16 +285,14 @@
       margin: 0.5em;
       left: -10%;
     }
-  
-    .imgdiv{
-      top: 11vw;
-    }
     
     .imgtext{
-      font-size: 1.9vw;
+      position: relative;
+      font-size: 6vw;
       width:4.9em;
       height:1.2em;
       line-height: 1.4em;
+      left: -2px;
     }
 
     /* -----------------------햄버거----------------------- */
