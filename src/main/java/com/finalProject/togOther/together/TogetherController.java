@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.CustomPlaceDTO;
@@ -32,14 +33,16 @@ public class TogetherController {
 	
 	//동행 리스트 불러오기
 	@PostMapping(path="getTogetherList")
-	public ResponseEntity<List<TogetherDTO>> getTogetherList(@RequestBody Map<String, Integer> requestBody) {
-	    int n = requestBody.get("n");
-		return togetherService.getTogetherList(n);
+	public ResponseEntity<List<TogetherDTO>> getTogetherList(@RequestBody Map<String, String> requestBody) {
+	    int n = Integer.parseInt(requestBody.get("n"));
+	    String search = requestBody.get("search");
+		return togetherService.getTogetherList(n,search);
 	}
 	// 토탈 불러오기
 	@PostMapping(path = "totTogether")
-	public ResponseEntity<Integer> totTogether() {
-		return togetherService.totTogether();
+	public ResponseEntity<Integer> totTogether(@RequestBody Map<String, String> requestBody) {
+		String search = requestBody.get("search");
+		return togetherService.totTogether(search);
 	}
 		
 	
@@ -57,13 +60,9 @@ public class TogetherController {
 	
 	//togetherSeq에 해당하는 togetherDTO 불러오기
 	@GetMapping(path="getTogetherSeq/{togetherSeq}")
-	public ResponseEntity<TogetherDTO> getTogetherSeq(@PathVariable int togetherSeq){
+	public ResponseEntity<Map<String, Object>> getTogetherSeq(@PathVariable int togetherSeq){
 		return togetherService.getTogetherSeq(togetherSeq);
 	}
-	//togetherSeq에 해당하는 sub 불러오기
-		@GetMapping(path="getTogetherBySub/{togetherSeq}")
-		public ResponseEntity<SubItemDTO> getTogetherBySub(@PathVariable int togetherSeq){
-			return togetherService.getTogetherBySub(togetherSeq);
-		}
+		
 	
 }

@@ -1,7 +1,9 @@
 package com.finalProject.togOther.planner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -124,7 +126,7 @@ public class PlannerServiceImpl implements PlannerService {
 			
 			
 			List<Planner> plannerList = 
-				plannerRepository.findAllByTitleContainingOrderByLogTimeDesc(pageable,search);
+				plannerRepository.findAllByTitleContainingAndPublicPlanOrderByLogTimeDesc(pageable,search,0);
 
 			List<PlannerDTO> plannerDTOList = new ArrayList<PlannerDTO>();
 
@@ -145,7 +147,7 @@ public class PlannerServiceImpl implements PlannerService {
 	@Override
 	public ResponseEntity<Integer> totPlanner(String search) {
 		try {
-			int total = (int) plannerRepository.countByTitleContaining(search);
+			int total = (int) plannerRepository.countByTitleContainingAndPublicPlan(search,0);
 			
 			return ResponseEntity.ok(total);
 			
@@ -170,6 +172,54 @@ public class PlannerServiceImpl implements PlannerService {
 			}
 
 			return ResponseEntity.ok(plannerImageDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> getPlannerView(int plannerSeq) {
+		try {
+			
+			Planner planner = plannerRepository.findOneByPlannerSeq(plannerSeq);
+			List<PlannerImage> plannerImageList = plannerImageRepository.findByPlMainSeq(plannerSeq);
+			List<PlannerText> plannerTextList = plannerTextRepository.findByPlMainSeq(plannerSeq);
+			List<SubItem> subItemList = subItemRepository.findByPlMainSeq(plannerSeq);
+
+			Map<String, Object> planners = new HashMap<String, Object>();
+
+			List<PlannerImageDTO> plannerImageDTOList = new ArrayList<PlannerImageDTO>();
+			List<PlannerTextDTO> plannerTextDTOList = new ArrayList<PlannerTextDTO>();
+			List<SubItemDTO> subItemDTOList = new ArrayList<SubItemDTO>();
+			
+			PlannerDTO plannerDTO = PlannerDTO.toDTO(planner);
+			
+			for (PlannerImage plannerImage : plannerImageList) {
+				
+				PlannerImageDTO plannerImageDTO = PlannerImageDTO.toDTO(plannerImage);
+				
+				plannerImageDTOList.add(plannerImageDTO);
+			}
+			for (PlannerText plannerText : plannerTextList) {
+				
+				PlannerTextDTO plannerTextDTO = PlannerTextDTO.toDTO(plannerText);
+				
+				plannerTextDTOList.add(plannerTextDTO);
+			}
+			for (SubItem subItem : subItemList) {
+				
+				SubItemDTO subItemDTO = SubItemDTO.toDTO(subItem);
+				
+				subItemDTOList.add(subItemDTO);
+			}
+			
+			planners.put("planner", plannerDTO);
+			planners.put("plannerImage", plannerImageDTOList);
+			planners.put("plannerText", plannerTextDTOList);
+			planners.put("subItem", subItemDTOList);
+			
+			return ResponseEntity.ok(planners);
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

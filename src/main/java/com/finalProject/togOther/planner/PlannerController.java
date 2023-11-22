@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.finalProject.togOther.dto.CityDTO;
 import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.PlannerImageDTO;
 import com.finalProject.togOther.dto.PlannerTextDTO;
@@ -71,5 +73,9 @@ public class PlannerController {
 		return plannerService.getImages(n);
 	}
 	
-
+	//seq로 데이터 불러오기
+	@GetMapping(path = "getPlannerView/{plannerSeq}")
+	public ResponseEntity<Map<String, Object>> getPlanner(@PathVariable int plannerSeq) {
+		return plannerService.getPlannerView(plannerSeq);
+	}
 }

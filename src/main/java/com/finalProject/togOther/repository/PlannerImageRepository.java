@@ -8,4 +8,5 @@ import com.finalProject.togOther.domain.PlannerImage;
 
 public interface PlannerImageRepository extends JpaRepository<PlannerImage, Integer> {
 	List<PlannerImage> findByPlMainSeqBetween(int minValue, int maxValue);
+	List<PlannerImage> findByPlMainSeq(int plMainSeq);
 }

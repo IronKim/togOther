@@ -1,7 +1,9 @@
 package com.finalProject.togOther.together;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
@@ -79,13 +81,14 @@ public class TogetherServiceImpl implements TogetherService {
 	}
 
 	@Override
-	public ResponseEntity<List<TogetherDTO>> getTogetherList(int n) {
+	public ResponseEntity<List<TogetherDTO>> getTogetherList(int n,String search) {
 		try {
 			Pageable pageable = PageRequest.of(0, n);
 			
 			System.out.println(n);
 			
-			List<Together> togetherList = togetherRepository.findAllByOrderByTogetherSeqDesc(pageable);
+			List<Together> togetherList = 
+					togetherRepository.findAllByTitleContainingOrContextContainingOrderByTogetherSeqDesc(pageable,search,search);
 
 			List<TogetherDTO> togetherDTOList = new ArrayList<TogetherDTO>();
 			
@@ -142,9 +145,9 @@ public class TogetherServiceImpl implements TogetherService {
 	}
 	
 	@Override
-	public ResponseEntity<Integer> totTogether() {
+	public ResponseEntity<Integer> totTogether(String search) {
 		try {
-			int total = (int) togetherRepository.count();
+			int total = (int) togetherRepository.countByTitleContainingOrContextContaining(search,search);
 			
 			return ResponseEntity.ok(total);
 			
@@ -154,35 +157,32 @@ public class TogetherServiceImpl implements TogetherService {
 	}
 
 	@Override
-	public ResponseEntity<TogetherDTO> getTogetherSeq(int togetherSeq) {
+	public ResponseEntity<Map<String, Object>> getTogetherSeq(int togetherSeq) {
 		try {
-			Optional<Together> togetherOptional = togetherRepository.findById(togetherSeq);
 			
-			Together together = togetherOptional.orElseThrow();
+			Map<String, Object> togethers = new HashMap<String, Object>();
 			
+			Together together = togetherRepository.findOneByTogetherSeq(togetherSeq);
 			TogetherDTO togetherDTO = TogetherDTO.toDTO(together);
 			
-			return ResponseEntity.ok(togetherDTO);
+			List<SubItem> subItemList = subItemRepository.findByToMainSeq(togetherSeq);
+			List<SubItemDTO> subItemDTOList = new ArrayList<SubItemDTO>();
 			
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			for (SubItem subItem : subItemList) {
+				
+				SubItemDTO subItemDTO = SubItemDTO.toDTO(subItem);
+				
+				subItemDTOList.add(subItemDTO);
+			}
+			
+			togethers.put("together", togetherDTO);
+			togethers.put("subItem", subItemDTOList);
+			
+			return ResponseEntity.ok(togethers);
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
 
-	@Override
-	public ResponseEntity<SubItemDTO> getTogetherBySub(int togetherSeq) {
-		try {
-			Optional<SubItem> subItemOptional = subItemRepository.findById(togetherSeq);
-			
-			SubItem subItem = subItemOptional.orElseThrow();
-			
-			SubItemDTO subItemDTO = SubItemDTO.toDTO(subItem);
-			
-			return ResponseEntity.ok(subItemDTO);
-			
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
-	}
 
 }

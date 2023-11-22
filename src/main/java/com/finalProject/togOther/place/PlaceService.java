@@ -17,4 +17,8 @@ public interface PlaceService {
 
 	public ResponseEntity<Integer> addCustomPlace(CustomPlaceDTO customPlaceDTO);
 
+	public ResponseEntity<CustomPlaceDTO> getCustomPlace(int plCustomSeq);
+
+	public ResponseEntity<PlaceDTO> getPlace(int placeSeq);
+
 }
