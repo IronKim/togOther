@@ -1,68 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../css/login.module.css';
 import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../api/UserApiService';
+import { useUserStore } from '../stores/mainStore';
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import loginFormImage from '../assets/image/loginFormImage.png';
 
 const Login = () => {
+
   const navigate = useNavigate();
+
+  const {user, setUser} = useUserStore();
+
+  const [loginDTO, setLoginDTO] = useState({
+    email: '',
+    pwd: ''
+  });
+
+  const oninput = (e) => {
+    const { name, value } = e.target;
+    
+    setLoginDTO({
+      ...loginDTO,
+      [name]: value
+    });
+
+  }
+
+  const onsubmit = (e) => {
+    e.preventDefault();
+
+    loginUser(loginDTO)
+    .then(res => {
+      console.log(res);
+      if(res.status === 200) {
+        alert('로그인 성공');
+
+        console.log(res.data);
+
+        const {accessToken, refreshToken, user} = res.data;
+
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        setUser(user);
+
+        if(user.authority === 'ROLE_ADMIN') {
+          navigate('/advisor');
+          return;
+        }
+
+        navigate('/');
+      } else {
+        alert('로그인 실패');
+      }
+    })
+    .catch(e => {
+      console.log(e);
+      alert('로그인 실패');
+    })
+
+  }
+
   const handleSignUp = () => {
     
     navigate('/user/write');
   };
-  // const Desktop = ({ children }) => {
-  //   const isDesktop = useMediaQuery({
-  //     minWidth: 1200
-  //   });
-  //   return isDesktop ? children : null;
-  // };
-  
-  // const Mobile = ({ children }) => {
-  //   const isMobile = useMediaQuery({ maxWidth: 1199});
-  //   return isMobile ? children : null;
-  // };
-
 
   return (
-      // <Desktop>
-
     <div className={styles.container}>
-      <div className={styles.screen}>
-        <div className={styles["screen__content"]}>
-          <form className={styles.login}>
-            <div className={styles["login__field"]}>
-              <i className={`${styles["login__icon"]} fas fa-user`}></i>
-              <input type="text" className={styles["login__input"]} placeholder="User Email" />
+
+      <div style={{position: 'relative'}}>
+        <img className={styles.loginFormImage} src={loginFormImage} alt="loginFormImage" />
+        
+        <div className={styles.loginBox}>
+          <p style={{fontSize: '3.4em', marginTop: '1em', marginBottom: '3em'}}>로그인</p>
+          <form>
+            <div className={styles.inputBar}>
+              <label htmlFor='email'>Email</label>
+              <input type="text" name="email" value={loginDTO.email} onChange={(e)=> oninput(e)} required />
+              <MdOutlineAlternateEmail className={styles.boxIcon} />
             </div>
-            <div className={styles["login__field"]}>
-              <i className={`${styles["login__icon"]} fas fa-lock`}></i>
-              <input type="password" className={styles["login__input"]} placeholder="Password" />
+            <div className={styles["user-box"]}>
+              <input type="password" name="pwd" value={loginDTO.pwd} onChange={(e)=> oninput(e)} required />
+              <label>Password</label>
             </div>
-            <button type="submit" className={`${styles["button"]} ${styles["login__submit"]}`}>
-              <span className={styles["button__text"]}>Log In Now</span>
-              <i className={`${styles["button__icon"]} fas fa-chevron-right`}></i>
-            </button>
-            <button type="submit" className={`${styles["button"]} ${styles["login__submit"]}`} onClick={handleSignUp}>
-              <span className={styles["button__text"]}>Sign Up</span>
-              <i className={`${styles["button__icon"]} fas fa-chevron-right`}></i>
-            </button>
+            <button type="submit" onClick={onsubmit}>로그인</button>
           </form>
-          {/* <div className={styles["social-login"]}>
-            <h3>log in via</h3>
-            <div className={styles["social-icons"]}>
-              <a href="#" className={`${styles["social-login__icon"]} fab fa-instagram`}></a>
-              <a href="#" className={`${styles["social-login__icon"]} fab fa-facebook`}></a>
-              <a href="#" className={`${styles["social-login__icon"]} fab fa-twitter`}></a>
-            </div>
-          </div> */}
-        </div>
-        <div className={styles["screen__background"]}>
-          <span className={`${styles["screen__background__shape"]} ${styles["screen__background__shape4"]}`}></span>
-          <span className={`${styles["screen__background__shape"]} ${styles["screen__background__shape3"]}`}></span>
-          <span className={`${styles["screen__background__shape"]} ${styles["screen__background__shape2"]}`}></span>
-          <span className={`${styles["screen__background__shape"]} ${styles["screen__background__shape1"]}`}></span>
+            <button type="button" onClick={() => navigate('/advisor')}>관리자페이지로</button>
         </div>
       </div>
     </div>
-      // </Desktop>
   );
 };
 

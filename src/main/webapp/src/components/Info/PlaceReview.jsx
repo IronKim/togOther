@@ -90,7 +90,7 @@ const PlaceReview = ({ placeSeq }) => {
     <div style={{ maxWidth: '728px', width: '100%', display: 'flex', justifyContent: 'space-between', margin: '10px auto' }}>
       <p className="fs-3">리뷰 {selectedPlaceReview.length}</p>
       <p style={{ margin: '0', alignSelf: 'flex-end' }}>
-        <PlaceReviewWrite />
+        <PlaceReviewWrite placeSeq = { placeSeq } />
       </p>
     </div>
 
@@ -98,7 +98,7 @@ const PlaceReview = ({ placeSeq }) => {
         <div key={review.reviewSeq} style={{ maxWidth: '728px', width: '100%', display: 'block', margin: 'auto' }}>
           <Col xs={6} md={4} style={{ display: 'flex', alignItems: 'center' }}>
             <Image
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA5MThfMTU2%2FMDAxNjk1MDM2NzI3MzE3.Z-Oq4mYlrCaT0r5TB2oQalAWRLiLVJhBthI-M2nwyL0g.xSi69LOEMKWOBo4DWwciZn0kiZvA7LW0ERmIRjog11Mg.JPEG.depingo_%2Falpaca-2907771_1920-e1638893381620.jpg&type=sc960_832"
+              src="https://media.triple.guide/triple-cms/c_limit,f_auto,h_1280,w_1280/67d63e89-7296-43d2-838c-b314fc6903b7.jpeg"
               roundedCircle
               style={{ width: '40px', height: '40px' }} // 원하는 크기로 조절
             />

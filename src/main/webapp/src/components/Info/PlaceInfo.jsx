@@ -21,7 +21,7 @@ const PlaceInfo = ({ placeSeq }) => {
     <div style={{ maxWidth: '728px',   margin: '0 auto' }}> 
       {selectedPlace && (
         <div style={{margin: '0 auto'}}>
-          <p className="fs-1" style={{ width: '100%', textAlign: 'center', margin: '30px auto' , fontSize: '3vw'  }}>
+          <p className="fs-1" style={{ width: '100%', textAlign: 'center', margin: '30px auto' , fontSize: '3em'  }}>
             {selectedPlace.name}
           </p>
 
@@ -41,7 +41,7 @@ const PlaceInfo = ({ placeSeq }) => {
           />
 
           {selectedPlace.context1 && (
-            <p className="fs-6" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5' ,fontSize: '1.5vw'  }}>
+            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5' ,fontSize: '1.5vw'  }}>
               {selectedPlace.context1}
             </p>
           )}
@@ -66,7 +66,7 @@ const PlaceInfo = ({ placeSeq }) => {
           )}
 
           {selectedPlace.context2 && (
-            <p className="fs-6" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5'  ,fontSize: '1.5vw' }}>
+            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5'  ,fontSize: '1.5vw' }}>
               {selectedPlace.context2}
             </p>
           )}
@@ -91,12 +91,12 @@ const PlaceInfo = ({ placeSeq }) => {
           )}
 
           {selectedPlace.context3 && (
-            <p className="fs-6" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5'  ,fontSize: '1.5vw' }}>
+            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5'  ,fontSize: '1.5vw' }}>
               {selectedPlace.context3}
             </p>
           )}
 
-          <p className="fs-4" style={{ width: '100%', textAlign: 'center', margin: '30px auto' }}>
+          <p className="fs-2" style={{ width: '100%', textAlign: 'center', margin: '30px auto' }}>
             기본정보
           </p>
 

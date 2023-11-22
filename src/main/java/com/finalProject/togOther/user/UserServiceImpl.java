@@ -7,18 +7,25 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.finalProject.togOther.domain.RefreshToken;
 import com.finalProject.togOther.domain.User;
+import com.finalProject.togOther.dto.LoginDTO;
+import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
+import com.finalProject.togOther.repository.RefreshTokenRepository;
 import com.finalProject.togOther.repository.UserRepository;
+import com.finalProject.togOther.security.TokenProvider;
 
 import jakarta.transaction.Transactional;
 
@@ -33,21 +40,32 @@ public class UserServiceImpl implements UserService {
 	private String apiSecret;
 
 	private UserRepository userRepository;
+	
+	private RefreshTokenRepository refreshTokenRepository;
 
-	public UserServiceImpl(UserRepository userRepository) {
+	private PasswordEncoder passwordEncoder;
+	
+	private TokenProvider tokenProvider;
+
+
+	public UserServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository,
+			PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
 		this.userRepository = userRepository;
+		this.refreshTokenRepository = refreshTokenRepository;
+		this.passwordEncoder = passwordEncoder;
+		this.tokenProvider = tokenProvider;
 	}
 
 	// 사용자 추가 서비스
 	@Override
 	public ResponseEntity<String> addUser(RegisterDTO registerDTO) {
 
-		System.out.println(registerDTO.getEmail());
-		System.out.println(registerDTO.getCertification());
-
-		User user = User.toEntity(registerDTO);
-
 		try {
+
+			// 비밀번호 인코딩
+			registerDTO.setPwd(passwordEncoder.encode(registerDTO.getPwd()));
+
+			User user = User.toEntity(registerDTO);
 			// 사용자 추가 서비스 호출
 			userRepository.save(user);
 
@@ -179,6 +197,122 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			return ResponseEntity.ok(false);
 		}
+	}
+
+	@Override
+	public ResponseEntity<LoginInResponseDTO> LoginUser(LoginDTO loginDTO) {
+
+		try {
+			
+			// 이메일이 없거나 다르면 에러
+			Optional<User> userOptional = userRepository.findByEmail(loginDTO.getEmail());
+			User user = userOptional.orElseThrow();
+			
+
+			// 이메일이 같지만 비밀번호가 다르면 에러
+			if (!passwordEncoder.matches(loginDTO.getPwd(), user.getPwd())) {
+				throw new Exception();
+			}
+			
+			// accessToken토큰과 refreshToken토큰 생성
+			String accessToken = tokenProvider.createAccessToken(user.getEmail());
+			String refreshToken = tokenProvider.createRefreshToken();
+			
+			// 해당 이메일에 refreshToken토큰이 있는지 확인후 없으면 만들어주고 있으면 토큰값만 수정하고 db에 저장
+			Optional<RefreshToken> rOptional = refreshTokenRepository.findByUserEmail(user.getEmail());
+						
+			RefreshToken rToken = rOptional.orElse(RefreshToken.builder()
+															   .userEmail(user.getEmail())
+															   .token(refreshToken)
+															   .build());
+			rToken.setToken(refreshToken);
+			
+			refreshTokenRepository.save(rToken);
+			
+			// accessToken토큰과 refreshToken토큰과 유저 정보를 클라이언트에게 전달
+			LoginInResponseDTO loginInResponseDTO = LoginInResponseDTO.builder()
+																	  .accessToken(accessToken)
+																	  .RefreshToken(refreshToken)
+																	  .user(user)
+																	  .build();
+
+			return ResponseEntity.ok(loginInResponseDTO);
+
+		} catch (Exception e) {
+
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<LoginInResponseDTO> getUserByAccessToken(String authorizationHeader) {
+		
+		try {
+			
+			String userEmail;
+			try {
+				userEmail = tokenProvider.validate(authorizationHeader);
+			} catch (Exception e) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+			}
+			
+			Optional<User> userOptional = userRepository.findByEmail(userEmail);
+			
+			User user = userOptional.orElseThrow();
+
+	
+			String accessToken = tokenProvider.createAccessToken(userEmail);
+			
+			LoginInResponseDTO loginInResponseDTO = LoginInResponseDTO.builder()
+																	  .accessToken(accessToken)
+																	  .user(user)
+																	  .build();
+
+			return ResponseEntity.ok(loginInResponseDTO);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+		
+	}
+	
+	// refreshToken으로 access토큰 발급
+	@Override
+	public ResponseEntity<Void> getTokenByRefreshToken(String refreshToken) {
+		
+		try {
+			
+			Optional<RefreshToken> optionalReToken = refreshTokenRepository.findByToken(refreshToken);
+			
+			// db에 해당 refresh토큰이 없으면 에러
+			RefreshToken rToken = optionalReToken.orElseThrow();
+			
+			// 유효기간이 지난 refresh토큰일 경우 에러(다시 로그인 해야함)
+			try {
+				tokenProvider.validate(rToken.getToken());
+			} catch (Exception e) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+			}
+			
+			// 유효기간이 지나지 않았을 경우 access토큰 재발급
+			String accessToken = tokenProvider.createAccessToken(rToken.getUserEmail());
+			// 한번 access토큰을 발급해준 refresh토큰 재발급
+			String updatedRefreshToken = tokenProvider.createRefreshToken();
+			
+			rToken.setToken(updatedRefreshToken);
+			
+			refreshTokenRepository.save(rToken);
+			
+			return ResponseEntity.ok()
+			        .header(HttpHeaders.AUTHORIZATION, accessToken)
+			        .header("Refresh-Token", updatedRefreshToken)
+			        .build();
+					
+		} catch (Exception e) {
+			
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		}
+		
 	}
 
 	// 나이가 14세 이상인지 확인하는 함수

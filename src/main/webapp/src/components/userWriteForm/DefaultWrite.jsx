@@ -10,7 +10,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
 
     const currentYear = new Date().getFullYear();
     const years = Array.from({length: 87}, (_, i) => currentYear - i - 14);
-    const months = Array.from({length: 12}, (_, i) => i + 1);
+    const months = Array.from({length: 12}, (_, i) => (i + 1).toString().padStart(2, '0'));
 
     // 기본적으로 1일부터 31일까지 설정
     let days = Array.from({length: 31}, (_, i) => i + 1);
@@ -216,6 +216,16 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
     }
   };
 
+  useEffect(() => {
+    if(userData.birthday !== '') {
+      const birthday = userData.birthday.split('-');
+      console.log(birthday);
+      setYear(birthday[0]);
+      setMonth(birthday[1]);
+      setDay(birthday[2]);
+    }
+  }, []);
+
   return (
     <div className={styles.writeContainer}>
       <div className='mb-3'>
@@ -277,22 +287,19 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
         <div className='mb-3 mt-3' style={{width: '80%', margin: '0 auto'}}>
             <p className='fs-3 mb-3' style={{textAlign: 'left' }}>생년월일</p>
             <div className='d-flex justify-content-evenly'>
-                <select className={styles.selectBox} name='year' onChange={handleBirthChange}>
+                <select className={styles.selectBox} name='year' value={year} readOnly={userData.birthday !== ''} onChange={handleBirthChange}>
                     <option value=''>년도</option>
                     {years.map(year => <option key={year} value={year}>{year}</option>)}
                 </select>
-                {validationMessages.year && <span style={{ color: 'red' }}>{validationMessages.year}</span>}
-                <select className={styles.selectBox} name='month' onChange={handleBirthChange}>
+                <select className={styles.selectBox} name='month' value={month} readOnly={userData.birthday !== ''} onChange={handleBirthChange}>
                     <option value=''>월</option>
                     {months.map(month => <option key={month} value={month}>{month}</option>)}
                 </select>
-                {validationMessages.month && <span style={{ color: 'red' }}>{validationMessages.month}</span>}
-                <select className={styles.selectBox} name='day' onChange={handleBirthChange}>
+                <select className={styles.selectBox} name='day' value={day} readOnly={userData.birthday !== ''} onChange={handleBirthChange}>
                     <option value=''>일</option>
                     {days.map(day => <option key={day} value={day}>{day}</option>)}
                 </select>
             </div>
-                {validationMessages.day && <span style={{ color: 'red' }}>{validationMessages.day}</span>}
         </div>
 
         {validationMessages.birthday && <span style={{ color: 'red' }}>{validationMessages.birthday}</span>}

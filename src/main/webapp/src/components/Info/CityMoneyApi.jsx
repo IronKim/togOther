@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moneyIcon from '../../assets/image/money.png'
 
 const CityMoneyApi = ({ selectedCity }) => {
   const [cityExchangeRate, setCityExchangeRate] = useState(null);
@@ -82,12 +83,12 @@ const CityMoneyApi = ({ selectedCity }) => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div>
-        <img style={{ width: 70, height: 70 }} src='https://cdn-icons-png.flaticon.com/512/1580/1580782.png' alt="Currency Icon" />
+      <div style={{width:'50%',textAlign:'center'}}>
+        <img style={{ width: 70, height: 70 }} src={ moneyIcon } alt='환율 아이콘' />
       </div>
-      <div style={{ marginLeft: 50, marginTop: 8 }}>
+      <div style={{width:'50%',textAlign:'center'}}>
         {cityExchangeRate !== null ? (
-          <div>
+          <div style={{display:'flex',alignItems:'center',height:'100%'}}>
             <h1>{`1000KRW / ${(amountInKRW / cityExchangeRate).toFixed(2)} ${selectedCityCurrencyCode}입니다.`}</h1>
           </div>
         ) : (
