@@ -1,8 +1,6 @@
 import CityWeatherApi from './CityWeatherApi';
 import React, { useEffect, useState } from 'react';
 import styles from '../../css/Info/CityPage.module.css';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import CityMoneyApi from './CityMoneyApi';  
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCityBySeq } from '../../api/CityApiService';
@@ -68,13 +66,17 @@ const CityPage = () => {
     //날씨 정보를 받아오는 함수
     const handleWeatherData = (weatherData) => {
         setCityWeather(weatherData);
+        
     };
 
     return (
-        <>
-            <img src={city.cityImage} className={ styles.citypage }/>
+
+        <div style={{userSelect:'none'}}>
+            <div className={ styles.mainImgDiv }>
+                <img src={city.cityImage} className={ styles.citypage }/>
+                <div className={ styles.cityName }>{city.cityName}</div>
+            </div>
             <div className={styles.main}>
-            <div className={ styles.cityName }>{city.cityName}</div>
             {/* ----------------검색---------------- */}
             {/* <div className={ styles.inputBox }>
                 <input className={ styles.input } type= 'text' placeholder='Search...'/>
@@ -125,7 +127,7 @@ const CityPage = () => {
                     ))
                 }
             </div>
-        </>
+        </div>
     );
 };
 
