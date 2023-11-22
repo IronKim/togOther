@@ -72,11 +72,11 @@ const CityPage = () => {
     return (
 
         <div style={{userSelect:'none'}}>
-            <div style={{margin: '0 auto', width: '62%', textAlign: 'center'}}>
+            <div className={ styles.mainImgDiv }>
                 <img src={city.cityImage} className={ styles.citypage }/>
+                <div className={ styles.cityName }>{city.cityName}</div>
             </div>
             <div className={styles.main}>
-            <div className={ styles.cityName }>{city.cityName}</div>
             {/* ----------------검색---------------- */}
             {/* <div className={ styles.inputBox }>
                 <input className={ styles.input } type= 'text' placeholder='Search...'/>

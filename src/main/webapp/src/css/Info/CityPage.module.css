@@ -2,6 +2,11 @@
     width: 1200px;
     margin: 0 auto;
 }
+.mainImgDiv{
+    margin: 0 auto;
+    width: 73.8em;
+    text-align: center;
+}
 .citypage {
     user-select: none;
     width : 100%;
@@ -16,7 +21,6 @@
     user-select: none;
     position: absolute;
     top: 17%;
-    left: 20%;
     width: 5em;
     height: 1.3em;
     line-height: 1.4em;
@@ -25,6 +29,7 @@
     border-radius: 1em;
     color: #D1D5D6;
     background-color: rgba( 0, 0, 0, 0.6 );
+    margin-left: 1vw;
 }
 
 .api {
@@ -194,12 +199,18 @@
     right: 12px;
     margin: 0;
 }
-@media (max-width: 1199px) { 
+@media (max-width: 1201px) { 
     .main {
         width: 100%;
     }
+    .mainImgDiv{
+        width: 100%;
+    }
     .citypage {
+        object-fit: cover;
         width : 100%;
+        height: 20em;
+        border-radius: 0 0 20px 20px;
     }
     .api {
         width : 100%;
@@ -213,6 +224,15 @@
     }
 }
 @media (max-width: 754px) { 
+    .cityName{
+        top: 1%;
+        margin-left: 20%;
+    }
+    .citypage {
+        width : 100%;
+        height: 13em;
+        border-radius: 0 0 20px 20px;
+    }
     .money {
         width : calc(100% - 22px);
     }
@@ -226,5 +246,6 @@
     }
     .textDiv1 {
         height: 7.2em;
+        -webkit-line-clamp: 6 ;
     }
 }

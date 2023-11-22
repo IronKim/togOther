@@ -255,7 +255,7 @@ const ArrayCity = () => {
                     <div className={ArrayStyle.carouselSlide}>
                         {
                         slide.map((item) => (
-                            <div key={item.cityName} className={ArrayStyle.image} onClick={()=>onToCityPage(item.citySeq)} >
+                            <div key={item.cityName} className={ArrayStyle.CarouselimageDiv} onClick={()=>onToCityPage(item.citySeq)} >
                                 <img src={item.cityImage} alt={item.cityName} className={ArrayStyle.customcircle}/>
                                 <div className={ArrayStyle.customcaption}>
                                     <h1>{item.cityName}</h1>

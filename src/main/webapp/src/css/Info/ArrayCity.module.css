@@ -72,7 +72,7 @@
   width: 100%;
 }
 
-.image{
+.CarouselimageDiv{
   padding: 14px;
   position: relative;
   margin: 0.2vw;
@@ -115,7 +115,7 @@
 }
 
 /* 호버 시 이미지 확대 */
-.image:hover .customcircle {
+.CarouselimageDiv:hover .customcircle {
   transform: scale(1.05); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
@@ -162,14 +162,13 @@
     padding: auto;
   }
   
-  .image {
+  .CarouselimageDiv {
     padding: auto;
     position: relative;
     transition: transform 0.3s;
     max-width: 100%; /* 이미지가 부모 요소를 벗어나지 않도록 최대 너비 지정 */
     height: auto;
   }
-  
   .customcircle{
     width: 15vw;
     height: 15vw;
@@ -209,7 +208,6 @@
   }
 
   .imgdiv{
-    padding: 1vw;
     top: 11vw;
   }
   
@@ -249,41 +247,35 @@
     transition: all 300ms;
     padding: 20px 20px 20px 20px;
     box-sizing: border-box;
+    border-radius : 15px;
   }
   .open{
     left: 0 !important;
   }
 
-  @media (max-width: 754px) { 
+  @media (max-width: 391px) { 
 
-    .carouselContainer {
-      width: 90%; /* 적절한 너비로 조절하세요 */
-      margin-left: auto;
-      margin-right: auto;
-      padding: auto;
-    }
-    .image {
+    .CarouselimageDiv {
       padding: 4px;
-      position: relative;
-      transition: transform 0.3s;
-      max-width: 100%; /* 이미지가 부모 요소를 벗어나지 않도록 최대 너비 지정 */
-      height: auto;
     }
     .customcircle{
       width: 16vw;
       height: 16vw;
       padding: auto;
     }
-    .customcaption{
-      margin-left: 0;
-      font-size: 20px;
+    .carouselContainer {
+      width: 90%; /* 적절한 너비로 조절하세요 */
+      max-height: 300px;
+      height: 40vh;
+      margin-top: -160px;
     }
     .recoCity{
-      font-size: 3vw;
-      right:10vw;
+      position:relative;
+      top:60%;
+      margin-left: 15vw;
+      font-size: 5vw;
     }
 
-  
     .arraymain{
       display: inline-block;
     }
@@ -293,18 +285,8 @@
       margin: 0.5em;
       left: -10%;
     }
-    
-    .cardimg{
-      width: 100%;
-      height: 100%;
-      border-radius : 15px;
-      box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
-      object-fit: cover;
-      transition: transform 0.3s ease-in-out;
-    }
   
     .imgdiv{
-      padding: 1vw;
       top: 11vw;
     }
     
@@ -326,26 +308,15 @@
       display: block;
       position: absolute;
       text-align: center;
-      font-size: 30px;
+      font-size: 26px;
       width: 40px;
-      height: 120px;
+      height: 105px;
       cursor: pointer;
       border-radius : 0 10px 10px 0;
       box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
       left: 100%;
     }
-    .Sidebartotal {
-      position: fixed;
-      display: block;
-      left: -94%;
-      width: 90%;
-      z-index: 10;
-      background-color: #dedede; /* 사이드바 배경색 설정 */
-      opacity: 0.95;
-      transition: all 300ms;
-      padding: 20px 20px 20px 20px;
-      box-sizing: border-box;
-    }
+
     .open{
       left: -16px !important;
     }
