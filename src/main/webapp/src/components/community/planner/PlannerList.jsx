@@ -134,6 +134,7 @@ const PlannerList = (props) => {
             }
             <div className={styles.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}}>
                 <img src={loadingImg}/>
+                <p>페이지가 느리게 로딩되면 새로고침을 해주세요.</p>
             </div>
             <div className={styles.lastSection} style={{opacity: last ? 1 : 0}}>
                 {total}건 조회 되었습니다
