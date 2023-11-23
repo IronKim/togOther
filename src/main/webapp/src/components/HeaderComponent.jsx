@@ -99,6 +99,17 @@ const HeaderComponent = () => {
                         커뮤니티
                       </NavLink>
                     </li>
+
+                    <li>
+                      <NavLink
+                        to='/packageMain'
+                        style={location.pathname === '/packageMain' ? { color: '#2E8DFF' } : {}}
+                        activeClassName={styles.activeLink}
+                        className={styles.activeL}
+                      >
+                        여행 상점
+                      </NavLink>
+                    </li>
                   </ul>
                 </nav>
                 <div className={ styles['login_section'] }>

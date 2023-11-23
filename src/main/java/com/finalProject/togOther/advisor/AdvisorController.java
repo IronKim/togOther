@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.CityDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
+import com.finalProject.togOther.dto.TourPackageDTO;
+import com.finalProject.togOther.dto.TourPackageDetailDTO;
 import com.finalProject.togOther.dto.UserDTO;
 
 //관리자 컨트롤러
@@ -123,6 +125,60 @@ public class AdvisorController {
 	@GetMapping(path = "getPlaceByCitySeq/{citySeq}")
 	public ResponseEntity<List<PlaceDTO>> getPlaceByCitySeq(@PathVariable int citySeq) {
 		return advisorService.getPlaceByCitySeq(citySeq);
+	}
+	
+	// 패키지 추가
+	@PostMapping(path = "addPackage")
+	public ResponseEntity<String> addPackage(@RequestBody TourPackageDTO tourPackageDTO) {
+		return advisorService.addPackage(tourPackageDTO);
+	}
+	
+	// 패키지 수정
+	@PutMapping(path = "updatePackage/{tpSeq}")
+	public ResponseEntity<TourPackageDTO> updatePackage(@PathVariable int tpSeq, @RequestBody TourPackageDTO tourPackageDTO) {
+		return advisorService.updatePackage(tpSeq, tourPackageDTO);
+	}
+	
+	// 패키지 삭제
+	@DeleteMapping(path = "deletePackage/{tpSeq}")
+	public ResponseEntity<String> deletePackageByTpSeq(@PathVariable int tpSeq) {
+		return advisorService.deletePackageByTpSeq(tpSeq);
+	}
+	
+	// 패키지 리스트 불러오기
+	@GetMapping(path = "getPackage")
+	public ResponseEntity<List<TourPackageDTO>> getPackage() {
+		return advisorService.getPackage();
+	}
+	
+	// citySeq값에 따른 패키지 불러오기
+	@GetMapping(path = "getPackageByCitySeq/{citySeq}")
+	public ResponseEntity<List<TourPackageDTO>> getPackageByCitySeq(@PathVariable int citySeq) {
+		return advisorService.getPackageByCitySeq(citySeq);
+	}
+	
+	// 상세 패키지 추가
+	@PostMapping(path = "addPackageDetail")
+	public ResponseEntity<String> addPackageDetail(@RequestBody TourPackageDetailDTO tourPackageDetailDTO) {
+		return advisorService.addPackageDetail(tourPackageDetailDTO);
+	}
+	
+	// 상세 패키지 수정
+	@PutMapping(path = "updatePackageDetail/{tpdSeq}")
+	public ResponseEntity<TourPackageDetailDTO> updatePackageDetail(@PathVariable int tpdSeq, @RequestBody TourPackageDetailDTO tourPackageDetailDTO) {
+		return advisorService.updatePackageDetail(tpdSeq, tourPackageDetailDTO);
+	}
+	
+	// 상세 패키지 삭제
+	@DeleteMapping(path = "deletePackageDetailByTpSeq/{tpSeq}")
+	public ResponseEntity<String> deletePackageDetailByTpSeq(@PathVariable int tpSeq) {
+		return advisorService.deletePackageDetailByTpSeq(tpSeq);
+	}
+	
+	// citySeq값에 따른 패키지 불러오기
+	@GetMapping(path = "getPackageDetailByTpSeq/{tpSeq}")
+	public ResponseEntity<TourPackageDetailDTO> getPackageDetailByTpSeq(@PathVariable int tpSeq) {
+		return advisorService.getPackageDetailByTpSeq(tpSeq);
 	}
 
 }

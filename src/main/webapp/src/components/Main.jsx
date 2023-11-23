@@ -11,6 +11,8 @@ import City from '../pages/City';
 import Login from '../pages/Login';
 import Write from '../pages/Write';
 import Planner from '../pages/Planner';
+import PackageMain from './package/PackageMain';
+import PackageDetail from './package/PackageDetail';
 
 import Together from '../pages/Together';
 import useUserStore from '../stores/userStore';
@@ -116,6 +118,10 @@ const Main = ({ showNavbar }) => {
                         <Route path='place/:placeSeq' element={ <PlacePage />} />
                         <Route path='cityList' element={ <CityMain />} />
                         <Route path='city/:citySeq' element={ <City />}/>
+                    </Route>
+                    <Route>
+                        <Route path='packageMain' element ={ <PackageMain />} />
+                        <Route path='packageDetail' element ={ <PackageDetail />}/>
                     </Route>
                     <Route path='planner' element= { <Planner />} />
                     <Route path='place' element= { <Together/> } />

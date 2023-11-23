@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ADVISORTAG} from '../../constants/ADVISORTAG';
+import {ADVISORTAG} from '../../constants/advisorTag';
 import AdvisorDashboardCity from './AdvisorDashboardCity';
 import AdvisorDashboardUser from './AdvisorDashboardUser';
 

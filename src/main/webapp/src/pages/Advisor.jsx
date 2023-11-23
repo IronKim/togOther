@@ -5,8 +5,7 @@ import Dashboard from '../components/advisor/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../css/advisor.module.css';
 import AdvisorHeader from '../components/advisor/AdvisorHeader';
-import { ADVISORTAG } from '../constants/ADVISORTAG';
-
+import { ADVISORTAG } from '../constants/advisorTag'
 const Advisor = () => {
 
     const [tags, setTags] = useState([])

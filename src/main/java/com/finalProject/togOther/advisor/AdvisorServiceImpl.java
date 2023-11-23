@@ -10,12 +10,18 @@ import org.springframework.stereotype.Service;
 
 import com.finalProject.togOther.domain.City;
 import com.finalProject.togOther.domain.Place;
+import com.finalProject.togOther.domain.TourPackage;
+import com.finalProject.togOther.domain.TourPackageDetail;
 import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.CityDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
+import com.finalProject.togOther.dto.TourPackageDTO;
+import com.finalProject.togOther.dto.TourPackageDetailDTO;
 import com.finalProject.togOther.dto.UserDTO;
 import com.finalProject.togOther.repository.CityRepository;
 import com.finalProject.togOther.repository.PlaceRepository;
+import com.finalProject.togOther.repository.TourPackageDetailRepository;
+import com.finalProject.togOther.repository.TourPackageRepository;
 import com.finalProject.togOther.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -29,12 +35,19 @@ public class AdvisorServiceImpl implements AdvisorService {
 	private PlaceRepository placeRepository;
 
 	private UserRepository userRepository;
+	
+	private TourPackageRepository tourPackageRepository;
+	
+	private TourPackageDetailRepository tourPackageDetailRepository;
 
 	public AdvisorServiceImpl(CityRepository cityRepository, PlaceRepository placeRepository,
-			UserRepository userRepository) {
+			UserRepository userRepository, TourPackageRepository tourPackageRepository,
+			TourPackageDetailRepository tourPackageDetailRepository) {
 		this.cityRepository = cityRepository;
 		this.placeRepository = placeRepository;
 		this.userRepository = userRepository;
+		this.tourPackageRepository = tourPackageRepository;
+		this.tourPackageDetailRepository = tourPackageDetailRepository;
 	}
 
 	// 유저 수정 (전체 정보)
@@ -374,4 +387,180 @@ public class AdvisorServiceImpl implements AdvisorService {
 
 	}
 
+	// 패키지 추가
+	@Override
+	public ResponseEntity<String> addPackage(TourPackageDTO tourPackageDTO) {
+
+		try {
+			TourPackage tourPackage = TourPackage.toEntity(tourPackageDTO);
+			tourPackageRepository.save(tourPackage);
+
+			String responseMessage = "패키지가 추가되었습니다.";
+
+			return ResponseEntity.ok(responseMessage);
+
+		} catch (Exception e) {
+
+			// 도시 추가 중 에러가 발생했을 때
+			String errorMessage = "장소 추가 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+	
+	// 패키지 수정
+	@Override
+	public ResponseEntity<TourPackageDTO> updatePackage(int tpSeq, TourPackageDTO tourPackageDTO) {
+
+		try {
+			Optional<TourPackage> PackageOptional = tourPackageRepository.findById(tpSeq);
+
+			PackageOptional.orElseThrow();
+
+			TourPackage updatedPackage = tourPackageRepository.save(TourPackage.toEntity(tourPackageDTO));
+
+			return ResponseEntity.ok(TourPackageDTO.toDTO(updatedPackage));
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	// 패키지 삭제
+	@Override
+	public ResponseEntity<String> deletePackageByTpSeq(int tpSeq) {
+
+		try {
+			tourPackageRepository.deleteById(tpSeq);
+
+			// 사용자가 성공적으로 삭제되었을 때
+			String responseMessage = "패키지가 삭제되었습니다.";
+			return ResponseEntity.ok(responseMessage);
+		} catch (Exception e) {
+
+			// 사용자 삭제 중 에러가 발생했을 때
+			String errorMessage = "장소 삭제 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+
+	// 패키지 전체 조회
+	@Override
+	public ResponseEntity<List<TourPackageDTO>> getPackage() {
+		
+		try {
+			List<TourPackage> packageList = tourPackageRepository.findAll();
+
+			List<TourPackageDTO> packagaeDTOList = new ArrayList<TourPackageDTO>();
+
+			for (TourPackage tourPackage : packageList) {
+
+				TourPackageDTO tourPackageDTO = TourPackageDTO.toDTO(tourPackage);
+
+				packagaeDTOList.add(tourPackageDTO);
+			}
+
+			return ResponseEntity.ok(packagaeDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
+	// 패키지 조회 citySeq
+	@Override
+	public ResponseEntity<List<TourPackageDTO>> getPackageByCitySeq(int citySeq) {
+		
+		try {
+			List<TourPackage> packageList = tourPackageRepository.findByCitySeq(citySeq);
+
+			List<TourPackageDTO> tourPackageDTOList = new ArrayList<TourPackageDTO>();
+
+			for (TourPackage tourPackage : packageList) {
+
+				TourPackageDTO tourPackageDTO = TourPackageDTO.toDTO(tourPackage);
+
+				tourPackageDTOList.add(tourPackageDTO);
+			}
+
+			return ResponseEntity.ok(tourPackageDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
+	// 상세 패키지 추가
+	@Override
+	public ResponseEntity<String> addPackageDetail(TourPackageDetailDTO tourPackageDetailDTO) {
+		
+		try {
+			TourPackageDetail tourPackageDetail = TourPackageDetail.toEntity(tourPackageDetailDTO);
+			tourPackageDetailRepository.save(tourPackageDetail);
+
+			String responseMessage = "패키지 상세 정보가 추가되었습니다.";
+
+			return ResponseEntity.ok(responseMessage);
+
+		} catch (Exception e) {
+
+			// 도시 추가 중 에러가 발생했을 때
+			String errorMessage = "장소 추가 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+
+	// 상세 패키지 조회
+	@Override
+	public ResponseEntity<TourPackageDetailDTO> updatePackageDetail(int tpdSeq,
+			TourPackageDetailDTO tourPackageDetailDTO) {
+		
+		try {
+			Optional<TourPackageDetail> PackageDetailOptional = tourPackageDetailRepository.findById(tpdSeq);
+
+			PackageDetailOptional.orElseThrow();
+
+			TourPackageDetail updatedPackageDetail = tourPackageDetailRepository.save(TourPackageDetail.toEntity(tourPackageDetailDTO));
+
+			return ResponseEntity.ok(TourPackageDetailDTO.toDTO(updatedPackageDetail));
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
+	// 상세 패키지 삭제
+	@Override
+	public ResponseEntity<String> deletePackageDetailByTpSeq(int tpSeq) {
+		
+		try {
+			tourPackageDetailRepository.deleteById(tpSeq);
+
+			// 사용자가 성공적으로 삭제되었을 때
+			String responseMessage = "패키지가 삭제되었습니다.";
+			return ResponseEntity.ok(responseMessage);
+		} catch (Exception e) {
+
+			// 사용자 삭제 중 에러가 발생했을 때
+			String errorMessage = "장소 삭제 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+
+	// 상세 패키지 조회 tpSeq
+	@Override
+	public ResponseEntity<TourPackageDetailDTO> getPackageDetailByTpSeq(int tpSeq) {
+		
+		try {
+			Optional<TourPackageDetail> tourPackageDetailOptional = tourPackageDetailRepository.findByTpSeq(tpSeq);
+
+			TourPackageDetail tourPackageDetail = tourPackageDetailOptional.orElseThrow();
+
+			TourPackageDetailDTO tourPackageDetailDTO = TourPackageDetailDTO.toDTO(tourPackageDetail);
+
+			return ResponseEntity.ok(tourPackageDetailDTO);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 }
