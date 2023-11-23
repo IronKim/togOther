@@ -12,8 +12,10 @@ const WriteFormHeader = ({page}) => {
             setCircleNum(0);
         }else if(page === 1){
             setCircleNum(1);
-        }else if(page >= 2 && page <= 4){
+        }else if(page >= 2 && page <= 5){
             setCircleNum(2);
+        }else{
+            setCircleNum(3);
         }
     }, [page]);
 

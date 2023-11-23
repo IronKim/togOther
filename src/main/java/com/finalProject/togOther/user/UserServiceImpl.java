@@ -60,6 +60,10 @@ public class UserServiceImpl implements UserService {
 	public ResponseEntity<String> addUser(RegisterDTO registerDTO) {
 
 		try {
+			
+			if(!(registerDTO.getGender().equals("M")  || registerDTO.getGender().equals("F"))){
+				throw new Exception();
+			}
 
 			// 비밀번호 인코딩
 			registerDTO.setPwd(passwordEncoder.encode(registerDTO.getPwd()));
