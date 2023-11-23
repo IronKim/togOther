@@ -1,6 +1,17 @@
 @keyframes roll{
     100% {transform: rotate(360deg) };
 }
+@keyframes ppp{
+    0% {
+        opacity: 0;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    };
+}
 .loadingSection {
     height: 700px;
     padding: 50px;
@@ -10,6 +21,12 @@
     width: 50px;
     height: 50px;
     animation: roll 2s infinite linear;
+}
+.loadingSection p{
+    margin-top: 30px;
+    font-size: 20px;
+    color: darkgray;
+    animation: ppp 5s;
 }
 .listForm{
     width: 100%;
@@ -113,6 +130,7 @@
     text-align: center;
     font-size: 25px;
     color: darkgray;
+    transition: 1s;
 }
 @media (max-width: 1199px){
     .listForminner{
