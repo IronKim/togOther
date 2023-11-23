@@ -22,6 +22,8 @@ import Mypage from '../pages/Mypage';
 import View from './community/planner/View';
 
 import { LoadScript } from '@react-google-maps/api';
+import AdvisorRoute from './AdvisorRoute';
+import UserRoute from './UserRoute';
 
 const libraries = ["places"];
 
@@ -40,9 +42,6 @@ const Main = ({ showNavbar }) => {
         
         await getUserByAccessToken(accessToken)
         .then(res => {
-            console.log(res);
-            
-            console.log(res.data);
             setUser(res.data.user);
         })
         .catch(e => {
@@ -93,22 +92,6 @@ const Main = ({ showNavbar }) => {
 
     }, []);
     
-    
-    const AdvisorRoute = ({children}) => {
-
-        console.log(user.name);
-    
-        if(user === null) {
-            return <Navigate to="/" />
-        }
-    
-        if(user.authority === 'ROLE_ADMIN') {
-            return children;
-        }
-    
-        return <Navigate to="/" />
-    }
-
     return (
         <div>
             <BrowserRouter>
@@ -119,7 +102,11 @@ const Main = ({ showNavbar }) => {
                     <Route path='user'>
                         <Route path='login' element ={ <Login />} />
                         <Route path='write' element ={ <Write />}/>
-                        <Route path='mypage' element ={ <Mypage />}/>
+                        <Route path='mypage' element ={ 
+                            <UserRoute>
+                                <Mypage />
+                            </UserRoute>
+                        }/>
                     </Route>
                     <Route path='info'>
                         <Route path='place/:placeSeq' element={ <PlacePage />} />

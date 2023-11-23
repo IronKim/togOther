@@ -60,6 +60,13 @@ public class UserController {
 		return userService.LoginUser(loginDTO);
 	}
 	
+	// 로그아웃
+	@GetMapping(path = "logoutUser")
+	public ResponseEntity<String> logoutUser(@RequestHeader("Refresh-Token") String refreshToken) {
+		System.out.println(refreshToken);
+		return userService.logoutUser(refreshToken);
+	}
+	
 	// access 토큰으로 로그인
 	@GetMapping(path = "getUserByAccessToken")
 	public ResponseEntity<LoginInResponseDTO> getUserByAccessToken(@RequestHeader("Authorization") String authorizationHeader) {

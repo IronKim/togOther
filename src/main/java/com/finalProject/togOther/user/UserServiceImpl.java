@@ -275,6 +275,28 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
+	@Override
+	public ResponseEntity<String> logoutUser(String refreshToken) {
+		
+		try {
+			
+			Optional<RefreshToken> optionalReToken = refreshTokenRepository.findByToken(refreshToken);
+			
+			// db에 해당 refresh토큰이 없으면 에러
+			RefreshToken rToken = optionalReToken.orElseThrow();
+			
+			refreshTokenRepository.deleteById(rToken.getRefreshTokenSeq());
+			
+			String responseMessage = "성공적으로 로그아웃 하였습니다.";
+			return ResponseEntity.ok(responseMessage);
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "로그아웃 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+	
 	// refreshToken으로 access토큰 발급
 	@Override
 	public ResponseEntity<Void> getTokenByRefreshToken(String refreshToken) {
