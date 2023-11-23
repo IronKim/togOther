@@ -166,7 +166,7 @@ const Write = () => {
                     page === 4 && <Detail2Write onInput={onInput} inputUserData={inputUserData} prevPage={prevPage} nextPage={nextPage} styles={styles} />
                 }
                 {
-                    page === 5 && <MbtiMain onInput={onInput} onMbti={onMbti} prevPage={prevPage} nextPage={nextPage} onSubmitWrite={onSubmitWrite} styles={styles} />
+                    page === 5 && <MbtiMain onInput={onInput} onMbti={onMbti} prevPage={prevPage} nextPage={nextPage} onSubmitWrite={onSubmitWrite} styles={styles} inputUserData={inputUserData} />
                 } 
                 {
                     page === 6 && <WriteFormComplete createUesr={createUesr} styles={styles}/>
