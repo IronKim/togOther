@@ -173,8 +173,6 @@ public class UserServiceImpl implements UserService {
 
 			boolean result = isUserExistsByPhone(ssodto.getPhone()).getBody();
 
-			System.out.println(result);
-
 			// 해당 핸드폰으로 가입되어있지 않을땐 ssodto를 넘겨주고 가입이 되어 있으면 서버에러를 띄워줌
 			if (!result) {
 				return ResponseEntity.ok(ssodto);

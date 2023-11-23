@@ -460,3 +460,14 @@ box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
 
   transform: scale(0.95);
 }
+
+.tagDiv{
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 1199px) {
+  .tagDiv{
+    flex-direction: column;
+  }
+}

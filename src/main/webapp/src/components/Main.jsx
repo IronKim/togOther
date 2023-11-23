@@ -16,7 +16,6 @@ import Together from '../pages/Together';
 import TogetherList from './community/together/TogetherList';
 import Community from '../pages/Community';
 import useUserStore from '../stores/userStore';
-import { getTokenByRefreshToken, getUserByAccessToken } from '../api/UserApiService';
 import BottomNav from './BottomNav';
 import Mypage from '../pages/Mypage';
 import View from './community/planner/View';
@@ -29,60 +28,13 @@ const libraries = ["places"];
 
 const Main = ({ showNavbar }) => {
     
-    const {user, setUser} = useUserStore();
-
-    const getUserByToken = async() => {
-
-        // 로컬 스토리지에서 토큰 가져오기
-        const accessToken = localStorage.getItem("accessToken");
-
-        if(accessToken === null) {
-            return;
-        }
-        
-        await getUserByAccessToken(accessToken)
-        .then(res => {
-            setUser(res.data.user);
-        })
-        .catch(e => {
-            console.log(e);
-            if(e.response.status === 401) {
-                console.log("accessToken토큰 만료");
-                localStorage.removeItem("accessToken");
-                getToken();
-            }
-        })
-    }
-
-    const getToken = async() => {
-            
-            // 로컬 스토리지에서 토큰 가져오기
-            const refreshToken = localStorage.getItem("refreshToken");
-    
-            if(refreshToken === null) {
-                return;
-            }
-            
-            await getTokenByRefreshToken(refreshToken)
-            .then(res => {
-                localStorage.setItem('accessToken', res.headers.authorization);
-                localStorage.setItem('refreshToken', res.headers['refresh-token']);
-                getUserByToken();
-            })
-            .catch(e => {
-                console.log(e);
-                if(e.response.status === 401) {
-                    console.log("refreshToken토큰 만료");
-                    localStorage.removeItem("refreshToken");
-                }
-            })
-        }
+    const {user, getUserByToken} = useUserStore();
 
     // 렌더링이 시작되면 실행
     const reRenderSite = async() => {
         
         // 로컬 스토리지에 토큰값이 있으면 유저 정보 가져오기
-        await getUserByToken();
+        getUserByToken();
     }
 
     useEffect(() => {
@@ -100,7 +52,7 @@ const Main = ({ showNavbar }) => {
 
                     <Route path='/' element= { <Home />} />
                     <Route path='user'>
-                        <Route path='login' element ={ <Login />} />
+                        <Route path='login' element ={ user.name === '' ? <Login /> : <Navigate to={'/'}></Navigate>} />
                         <Route path='write' element ={ <Write />}/>
                         <Route path='mypage' element ={ 
                             <UserRoute>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import WriteFormHeader from '../components/userWriteForm/WriteFormHeader';
+import Swal from 'sweetalert2';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../css/userWriteForm.module.css';
@@ -134,8 +135,18 @@ const Write = () => {
       return addUser(userDt);
     })
     .catch(e => {
-        console.error(e);
-        alert('잘못된 접근입니다.');
+        Swal.fire({
+            icon: 'error',
+            title: '회원가입 실패',
+            html: '다시 시도해주세요.',
+            confirmButtonText: '확인',
+            allowOutsideClick: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+          });
+        
     });
 };
 
