@@ -30,14 +30,23 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
-
+.dateTop{
+    height: 20%;
+}
 .date{
+    padding-left: 3%;
     color: orange;
     border-radius: 5px 5px 0 0 ;
-    width: 100%;
-    height: 20%;
-    text-align: center;
+    width: 50%;
     line-height:40px;
+    float: left;
+}
+.user{
+    color: orange;
+    border-radius: 5px 5px 0 0 ;
+    width: 50%;
+    line-height:40px;
+    float: right;
 }
 .togetherFoot{
     height: 80%;

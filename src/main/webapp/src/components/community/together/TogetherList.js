@@ -154,8 +154,10 @@ useEffect(() => {
               
               return (
              <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
+                  <div className={Style.dateTop}>
                     <div className={Style.date}>{item.startDate}~{item.endDate}</div>
-                  
+                    <div className={Style.user}>모집인원 {item.tnum}</div>
+                  </div>
                 {searchSub !== undefined &&
 
                   (<div className={Style.togetherFoot}>
@@ -166,7 +168,7 @@ useEffect(() => {
                       <div className={Style.title}><p>{item.title}</p></div>
                       <div className={Style.context}><p>{item.context}</p></div>
                       <div className={Style.placeInfo}> {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
-                          <div className={Style.user}>유저정보</div>
+                          <div className={Style.user}>유저정보 {item.userSeq}</div>
                       </div>
                   </div>)}
 
