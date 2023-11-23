@@ -18,6 +18,8 @@ import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 import com.finalProject.togOther.dto.UserDTO;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/user")
 public class UserController {
@@ -30,7 +32,7 @@ public class UserController {
 
 	// 유저 추가
 	@PostMapping(path = "addUser")
-	public ResponseEntity<String> addUser(@RequestBody RegisterDTO registerDTO) {
+	public ResponseEntity<String> addUser(@Valid @RequestBody RegisterDTO registerDTO) {
 		return userService.addUser(registerDTO);
 	}
 

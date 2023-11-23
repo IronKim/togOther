@@ -130,10 +130,13 @@ const Write = () => {
     })
     .then(res2 => {
       const userDt = { ...inputUserData, profileImage: res2.data };
+      console.log(userDt)
       return addUser(userDt);
     })
-
-    .catch(e => console.log(e));
+    .catch(e => {
+        console.error(e);
+        alert('잘못된 접근입니다.');
+    });
 };
 
     const checkEmail = async (email) => {
