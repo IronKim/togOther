@@ -10,6 +10,8 @@ import com.finalProject.togOther.dto.SSODTO;
 public interface UserService {
 
 	public ResponseEntity<String> addUser(RegisterDTO registerDTO);
+	
+	public ResponseEntity<String> smsCertificationRequest(String userPhone);
 
 	public ResponseEntity<String> deleteUser(String userEmail);
 
@@ -26,4 +28,5 @@ public interface UserService {
 	public ResponseEntity<Void> getTokenByRefreshToken(String refreshToken);
 
 	public ResponseEntity<String> logoutUser(String refreshToken);
+
 }

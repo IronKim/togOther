@@ -5,6 +5,7 @@ import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -27,6 +28,11 @@ import com.finalProject.togOther.repository.UserRepository;
 import com.finalProject.togOther.security.TokenProvider;
 
 import jakarta.transaction.Transactional;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Service
 @Transactional
@@ -37,6 +43,15 @@ public class UserServiceImpl implements UserService {
 
 	@Value("${iamport.api.secret}")
 	private String apiSecret;
+	
+	@Value("${sms.APIKey}")
+	private String APIKey;
+	
+	@Value("${sms.secretKey}")
+	private String secretKey;
+	
+	@Value("${sms.fromNumber}")
+	private String fromNumber;
 
 	private UserRepository userRepository;
 	
@@ -45,6 +60,8 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passwordEncoder;
 	
 	private TokenProvider tokenProvider;
+	
+	private DefaultMessageService messageService;
 
 
 	public UserServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository,
@@ -81,6 +98,43 @@ public class UserServiceImpl implements UserService {
 			// 사용자 추가 중 에러가 발생했을 때
 			String errorMessage = "사용자 추가 중 오류가 발생했습니다.";
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+
+	}
+	
+	@Override
+	public ResponseEntity<String> smsCertificationRequest(String userPhone) {
+		
+		try {
+			
+			boolean result = isUserExistsByPhone(userPhone).getBody();
+			
+			// 해당 핸드폰으로 가입되어있지 않을땐 ssodto를 넘겨주고 가입이 되어 있으면 서버에러를 띄워줌
+			if (result) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+			}
+			
+			if(messageService == null)
+				messageService = NurigoApp.INSTANCE.initialize(APIKey, secretKey, "https://api.coolsms.co.kr");
+			
+			Message message = new Message();
+			
+			String code = randomRange(6);
+						
+	        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+	        message.setFrom(fromNumber);
+	        message.setTo(userPhone);
+	        message.setText("[togOther] 문자 본인인증 서비스 : 인증번호는 " + "[" + code + "]" + " 입니다.");
+
+	        SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
+       
+	        return ResponseEntity.ok(code);
+	        
+		} catch (Exception e) {
+			
+			String errorMessage = "인증번호 발송중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+			
 		}
 
 	}
@@ -346,4 +400,15 @@ public class UserServiceImpl implements UserService {
 		// 만 14세 이상인 경우 true 반환
 		return age.getYears() >= 14;
 	}
+	
+	// 인증번호 범위 지정
+    private String randomRange(int digit) {
+    	 Random rand  = new Random();
+         String numStr = "";
+         for(int i=0; i<digit; i++) {
+             String ran = Integer.toString(rand.nextInt(10));
+             numStr+=ran;
+         }
+         return numStr;
+    }
 }

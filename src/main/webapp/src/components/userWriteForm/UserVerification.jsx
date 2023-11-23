@@ -5,7 +5,7 @@ import styles from '../../css/userWriteForm.module.css';
 
 import ssoimage from '../../assets/image/sso.png';
 import smsimage from '../../assets/image/sms.png';
-import { certificationRequest } from '../../api/UserApiService';
+import { certificationRequest, smsCertificationRequest } from '../../api/UserApiService';
 import { HiArrowCircleRight } from 'react-icons/hi';
 
 const UserVerification = ({nextPage, inputUserData, userData}) => {
@@ -85,6 +85,26 @@ const UserVerification = ({nextPage, inputUserData, userData}) => {
     }
 
     const onMobileSign = () => {
+
+        let wrongAttempts = 0; // 틀린 횟수를 저장할 변수
+
+        const showInvalidCodeModal = () => {
+            Swal.fire({
+                icon: 'error',
+                title: '인증 오류',
+                text: '인증번호를 3번 이상 틀렸습니다. 다시 시도해주세요.',
+            });
+        };
+
+        const showLoadingodal = () => {
+            Swal.fire({
+                title: '인증번호 전송 중...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                allowEnterKey: false,
+                });
+        };
+
         Swal.fire({
             title: '휴대폰 인증',
             input: 'text',
@@ -94,6 +114,10 @@ const UserVerification = ({nextPage, inputUserData, userData}) => {
             allowOutsideClick: false,
             confirmButtonText: '전송',
             cancelButtonText: '취소',
+            inputAttributes: {
+                pattern: '[0-9]{15}', // 여기서 [0-9]는 숫자, {15}는 15자리 숫자를 의미
+                maxLength: 15,
+              },
             inputValidator: (value) => {
                 // 숫자만 허용하는 정규표현식을 사용하여 유효성 검사
                 const isValidPhoneNumber = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/.test(value);
@@ -103,31 +127,64 @@ const UserVerification = ({nextPage, inputUserData, userData}) => {
                 }
                 return undefined; // 유효성 검사 통과
               },
+              
           }).then((phoneNumberResult) => {
             if (phoneNumberResult.isConfirmed) {
               const phoneNumber = phoneNumberResult.value;
-          
-              // 전송 버튼 클릭 후의 로직
-              Swal.fire({
-                title: '휴대폰 인증',
-                text: `${phoneNumber}로 인증번호가 전송되었습니다.`,
-                input: 'text',
-                inputLabel: '인증번호',
-                inputPlaceholder: '인증번호를 입력하세요',
-                showCancelButton: true,
-                allowOutsideClick: false,
-                confirmButtonText: '확인',
-                cancelButtonText: '취소',
-              }).then((verificationCodeResult) => {
-                if (verificationCodeResult.isConfirmed) {
-                  const verificationCode = verificationCodeResult.value;
-          
-                  // 확인 버튼 클릭 후의 로직
-                  console.log('입력된 인증번호:', verificationCode);
-          
-                  // 여기에서 입력된 인증번호에 대한 추가 로직을 수행하세요.
-                }
-              });
+
+              showLoadingodal();
+
+              smsCertificationRequest(phoneNumber)
+                .then(res => {
+                    console.log(res.data);   
+                    Swal.fire({
+                        title: '휴대폰 인증',
+                        text: `${phoneNumber}로 인증번호가 전송되었습니다.`,
+                        input: 'text',
+                        inputLabel: '인증번호',
+                        inputPlaceholder: '인증번호를 입력하세요',
+                        showCancelButton: true,
+                        allowOutsideClick: false,
+                        inputAttributes: {
+                            pattern: '[0-9]{6}', // 여기서 [0-9]는 숫자, {6}는 6자리 숫자를 의미
+                            maxLength: 6,
+                          },
+                          inputValidator: (value) => {
+                            // 입력된 값이 서버 응답과 일치하는지 확인
+                            if (Number(value) === Number(res.data)) {
+                                return undefined; // 유효성 검사 통과
+                            } else {
+                                wrongAttempts++; // 틀린 횟수 증가
+                                if (wrongAttempts >= 3) {
+                                    return undefined;
+                                } else {
+                                    return '인증번호가 일치하지 않습니다. 남은시도 횟수: ' + (3 - wrongAttempts) + '회';
+                                }
+                            }
+                        },
+                        confirmButtonText: '확인',
+                        cancelButtonText: '취소',
+                      }).then((verificationCodeResult) => {
+                        if (verificationCodeResult.isConfirmed) {
+
+                            if(Number(verificationCodeResult.value) !== Number(res.data)) {
+                                showInvalidCodeModal();
+                                return;
+                            }
+                          userData.phone = phoneNumber;
+                          inputUserData.phone = phoneNumber;
+                          nextPage();
+                        }
+                      });
+                })
+                .catch(e => {
+                    if(e.response.status === 409) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '이미 가입된 회원입니다.',
+                            });
+                    }
+                });
             }
           });
     }
