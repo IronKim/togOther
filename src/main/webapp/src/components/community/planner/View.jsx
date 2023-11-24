@@ -6,11 +6,14 @@ import { GoogleMap,Marker } from '@react-google-maps/api';
 
 import styles from '../../../css/plannerView.module.css'
 import WhatDay from './WhatDay';
+import Modal from './Modal';
+import ImgModal from './ImgModal';
 
 const containerStyle = {
     width: '100%',
     height: '100%',
-    margin: 'auto'
+    margin: 'auto',
+    zIndex: 0
 };
 
 // const myStyles = [
@@ -22,6 +25,26 @@ const containerStyle = {
 //   ];
 
 const View = () => {
+    const [modal,setModal] = useState({sw: -1 ,seq: -1})
+    const [add, setAdd] = useState(false)
+    const [img, setImg] = useState(false)
+    const [link,setLink] = useState('')
+    const [mouse,setMouse] = useState({x:0,y:0})
+    const onAdd = (sw,seq) => {
+        setAdd(true)
+        setImg(false)
+        setModal({sw,seq})
+    }
+    const onImg = (e,li) => {
+        setAdd(false)
+        setImg(true)
+        setLink(li)
+        setMouse({ x: e.clientX, y: e.clientY })
+    }
+    const onClose = () => {
+        setAdd(false)
+        setImg(false)
+    }
 //지도
     const [map, setMap] = useState(null);
 
@@ -140,6 +163,12 @@ const View = () => {
 
     return (
         <div className={styles.main}>
+            {
+                add && <Modal onClose={onClose} modal={modal} custom={custom} GoogleMap={GoogleMap} Marker={Marker} />
+            }
+            {
+                img && <ImgModal onClose={onClose} link={link} mouse={mouse}/>
+            }
             <div className={styles.title}>{planner && planner.title}</div>
             <div className={styles.timeDate}>{planner && 
                 <div>{planner.startDate.split('-')[1]}/{planner.startDate.split('-')[2]}&nbsp;&nbsp;-&nbsp;&nbsp;
@@ -187,11 +216,13 @@ const View = () => {
                     {
                         whatDay.map(item => 
                             <WhatDay key={item} getToday={getToday} nDay={item} 
-                                plannerImage={plannerImage.filter(plImg => plImg.nday === item)}
+                                plannerImage={plannerImage.find(plImg => plImg.nday === item)
+                                    && plannerImage.find(plImg => plImg.nday === item).image.split(',')}
                                 plannerText={plannerText.filter(plTxt => plTxt.nday === item)}
                                 subItem={subItem.filter(sub => sub.nday === item)}
                                 place={place} custom={custom}
                                 onMouseOn={onMouseOn} onMouseOff={onMouseOff} subHover={subHover}
+                                onAdd={onAdd} setModal={setModal} onImg={onImg}
                             />
                         )
                     }

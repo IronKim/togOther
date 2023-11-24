@@ -49,7 +49,7 @@ const TogetherList = (props) => {
       const scrollHeight = document.documentElement.scrollHeight;
   
       const windowHeight = window.innerHeight;
-      if (scrollY + windowHeight + 100 >= scrollHeight) {
+      if (scrollY + windowHeight + 300 >= scrollHeight) {
           if(!scrollLoading) {
           if(!last) {
                   if(count * 10 > total) setLast(true);
