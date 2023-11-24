@@ -19,7 +19,7 @@ const ImgModal = (props) => {
     return (
         <div>
             <div className={styles.bgImg} onClick={onClose}></div>
-                <img className={styles.onImg} src={link} id='img'></img>
+                <img className={styles.onImg} src={link} id='img' onClick={onClose}></img>
         </div>
     );
 };

@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
 	@Value("${iamport.api.secret}")
 	private String apiSecret;
 	
+
 //	@Value("${sms.APIKey}")
 //	private String APIKey;
 //	
@@ -52,6 +53,15 @@ public class UserServiceImpl implements UserService {
 //	
 //	@Value("${sms.fromNumber}")
 //	private String fromNumber;
+
+	//@Value("${sms.APIKey}")
+	private String APIKey;
+	
+	//@Value("${sms.secretKey}")
+	private String secretKey;
+	
+	//Value("${sms.fromNumber}")
+	private String fromNumber;
 
 	private UserRepository userRepository;
 	

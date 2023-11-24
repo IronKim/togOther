@@ -310,6 +310,12 @@
     }
 }
 @media (max-width: 754px) {
+    .onModal {
+        width: 95%;
+    }
+    .inPlace {
+        width: 100%;
+    }
     .leftPlace {
         width:100%;
     }
