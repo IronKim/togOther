@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Style from '../../../css/togetherList.module.css'
 
 import loadingImg from '../../../assets/image/loading.png'
@@ -35,7 +36,10 @@ const TogetherList = (props) => {
       setLast(false)
 
       totTogether({ search : search })
-      .then(res2 => setTotal(res2.data))
+      .then(res2 => {
+        setTotal(res2.data)
+        if(res2.data === 0) setLast(true);
+      })
       .catch(e => console.log(e))
     },[])
     //////////////스크롤 매커니즘////////////////
@@ -63,7 +67,7 @@ const TogetherList = (props) => {
     if(count * 10 > total) n = total;
     else n = count * 10;
     if(n > 0) {
-      getTogetherList({ n: n, search : search ? search.trim() : '' })
+      getTogetherList({ n: ''+n, search : search ? search.trim() : '' })
       .then(res => {
         setTogetherDTO(res.data)
         setScrollLoading(false)
@@ -136,6 +140,13 @@ useEffect(() => {
         .catch(e => console.log(e))
     },[])
 
+    //view로 갈게이제
+    const navigate = useNavigate()
+
+    const onTogetherView = (togetherSeq) => {
+      navigate(`together/view/${togetherSeq}`)
+  }
+
     return (
         <div className={Style.listForm}>
           <div className={Style.listForminner}>
@@ -145,9 +156,11 @@ useEffect(() => {
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
               
               return (
-                <div className={Style.together} key={item.togetherSeq}>
+             <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
+                  <div className={Style.dateTop}>
                     <div className={Style.date}>{item.startDate}~{item.endDate}</div>
-                  
+                    <div className={Style.user}>모집인원 {item.tnum}</div>
+                  </div>
                 {searchSub !== undefined &&
 
                   (<div className={Style.togetherFoot}>
@@ -158,7 +171,7 @@ useEffect(() => {
                       <div className={Style.title}><p>{item.title}</p></div>
                       <div className={Style.context}><p>{item.context}</p></div>
                       <div className={Style.placeInfo}> {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
-                          <div className={Style.user}>유저정보</div>
+                          <div className={Style.user}>유저정보 {item.userSeq}</div>
                       </div>
                   </div>)}
 
@@ -188,6 +201,7 @@ useEffect(() => {
                             lat: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).latitude),
                             lng: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).longitude)
                           }}
+                          
                         />
                       </GoogleMap>
                     }
@@ -199,18 +213,19 @@ useEffect(() => {
                         <div className={Style.user}>유저정보</div>
                     </div>
                   </div>)}
-                
-                  </div>
+                  
+              </div>
                 );
             })}
             <div className={Style.loadingSection} style={{display: scrollLoading ? 'block' : 'none'}} >
                 <img src={loadingImg}/>
+                <p>페이지가 느리게 로딩되면 새로고침을 해주세요.</p>
             </div>
             <div className={Style.lastSection} style={{opacity: last ? 1 : 0}}>
                 {total}건 조회 되었습니다
             </div>
           </div>
-        </div>
+      </div>
       );
     };
 

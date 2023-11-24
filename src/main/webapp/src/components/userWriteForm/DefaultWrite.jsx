@@ -13,12 +13,12 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
     const months = Array.from({length: 12}, (_, i) => (i + 1).toString().padStart(2, '0'));
 
     // 기본적으로 1일부터 31일까지 설정
-    let days = Array.from({length: 31}, (_, i) => i + 1);
+    let days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
 
     // 선택된 연도와 월에 따라 일의 범위를 동적으로 변경
     if (year && month) {
-    const lastDayOfMonth = new Date(year, month, 0).getDate();
-    days = Array.from({length: lastDayOfMonth}, (_, i) => i + 1);
+        const lastDayOfMonth = new Date(year, month, 0).getDate();
+        days = Array.from({ length: lastDayOfMonth }, (_, i) => (i + 1).toString().padStart(2, '0'));
     }
     
   // 각 입력 필드의 유효성 메시지를 관리하는 상태

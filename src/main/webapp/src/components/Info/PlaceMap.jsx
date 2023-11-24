@@ -42,11 +42,11 @@ const PlaceMap = ({ longitude, latitude, address }) => {
   function MyComponent() {
     return (
       <div>
-        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        {/* <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}> */}
           <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={16} gestureHandling='none' options={mapOptions}>
             <MarkerF position={center} icon={{ markerImage, scaledSize: markerStyle }}></MarkerF>
           </GoogleMap>
-        </LoadScript>
+        {/* </LoadScript> */}
         <p style={{ width: '100%', textAlign: 'center', margin: '30px auto' }}>
           주소: {address}
           <button onClick={openGoogleMaps} type="button" className="btn btn-link">

@@ -12,6 +12,8 @@ export const getTokenByRefreshToken = (refreshToken) => apiClient.get('api/user/
 
 export const certificationRequest = (requestBody) => apiClient.post('api/user/handleCertificationRequest', requestBody);
 
+export const smsCertificationRequest = (userPhone) => apiClient.get(`api/user/smsCertificationRequest/${userPhone}`);
+
 export const getUserByEmail = (userEmail) => apiClient.get(`api/user/getUserByEmail/${userEmail}`);
 
 

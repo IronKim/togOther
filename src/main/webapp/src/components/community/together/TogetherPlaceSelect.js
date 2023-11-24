@@ -245,7 +245,7 @@ const PlaceSelect = (props) => {
                 }
             );
         } else {
-            console.error('Geolocation is not supported by this browser.');
+            console.error('못가져와');
         }
     }, []);
 

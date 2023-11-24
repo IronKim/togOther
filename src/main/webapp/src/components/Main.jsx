@@ -25,6 +25,7 @@ import View from './community/planner/View';
 import { LoadScript } from '@react-google-maps/api';
 import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
+import TogetherView from './community/together/TogetherView';
 
 const libraries = ["places"];
 
@@ -79,7 +80,10 @@ const Main = ({ showNavbar }) => {
                             <Route path='write' element= { <Planner />} />
                             <Route path='view/:plannerSeq' element={ <View/>} />
                         </Route>
-                        <Route path='togetherWrite' element= { <Together/> } />
+                        <Route path='together'>
+                            <Route path='write' element= { <Together/>} />
+                            <Route path='view/:togetherSeq' element= { <TogetherView/>} />
+                        </Route>
                     </Route>
 
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}

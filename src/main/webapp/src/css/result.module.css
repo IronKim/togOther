@@ -6,9 +6,20 @@
         transform: rotate(0deg);
     }
 }
+.resultDiv div::-webkit-scrollbar {
+    width:7px;
+    height: 7px;
+}
+.resultDiv div::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.resultDiv div::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 7px;
+}
 .resultDiv{
     height: 680px;
-    padding: 3.7% 1%;
+    padding: 92px 50px 92px 30px;
     width: 330px;
     margin: 10px auto;
     text-align: center;
@@ -28,19 +39,19 @@
     color: #fffdf2;
 }
 .resultDiv div{ 
-    height: 100px;
+    height: 120px;
     padding:5px;
     font-size: 14px;
     font-weight: bold;
     color: #b58f6a;
-    overflow: scroll;
+    overflow: auto;
     overflow-x: hidden;
 }
 .resultDiv button{ 
     color: #5a5246;
     font-weight: bold;
     background-color: #a1dad4;
-    margin: 2px;
+    margin-top: 66px;
     border: 0;
     font-size: 12px;
     padding: 5px 17px;

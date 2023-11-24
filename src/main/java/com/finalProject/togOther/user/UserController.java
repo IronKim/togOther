@@ -16,7 +16,6 @@ import com.finalProject.togOther.dto.LoginDTO;
 import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
-import com.finalProject.togOther.dto.UserDTO;
 
 import jakarta.validation.Valid;
 
@@ -34,6 +33,12 @@ public class UserController {
 	@PostMapping(path = "addUser")
 	public ResponseEntity<String> addUser(@Valid @RequestBody RegisterDTO registerDTO) {
 		return userService.addUser(registerDTO);
+	}
+	
+	// 휴대폰 문자 인증
+	@GetMapping(path =  "smsCertificationRequest/{userPhone}")
+	public ResponseEntity<String> smsCertificationRequest(@PathVariable String userPhone) {
+		return userService.smsCertificationRequest(userPhone);
 	}
 
 	// 유저 삭제
