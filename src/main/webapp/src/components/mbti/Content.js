@@ -72,7 +72,7 @@ const Content = (props) => {
 
     return (
         <div>
-            <div style={{ width: '40%', margin: 'auto'}}>
+            <div className={styles.main}>
             <div className={`${styles.calender} ${roll && styles.roll} ${reRoll && styles.reRoll}`}
             style={{backgroundImage:`url(${calender})`,backgroundSize:'100%',backgroundRepeat:'no-repeat',opacity: last2 && 0}}>
                 <p className={`${styles.day} ${(roll || reRoll) && styles.fadeInD} ${first && styles.fadeIn}`}>   

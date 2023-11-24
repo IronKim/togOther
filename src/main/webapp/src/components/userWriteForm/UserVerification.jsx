@@ -173,6 +173,10 @@ const UserVerification = ({nextPage, inputUserData, userData}) => {
                             }
                           userData.phone = phoneNumber;
                           inputUserData.phone = phoneNumber;
+
+                          userData.certification = 1;
+                          inputUserData.certification = 1;
+                          
                           nextPage();
                         }
                       });

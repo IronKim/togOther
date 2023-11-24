@@ -44,6 +44,7 @@ const Result = (props) => {
                 { tf.indexOf(Math.max(...tf)) === 0 ? 'T' : 'F'}
                 { jp.indexOf(Math.max(...jp)) === 0 ? 'J' : 'P'}
             </h3>
+            <br/>
             <img src={stamp}/>
             <div>
                 대충 예쁘고 잘생기고 여행좋아하고 ....자유로운 영혼인당신께 파리를 추천드려요!
@@ -52,7 +53,7 @@ const Result = (props) => {
             <p>S : {percentA(sn)}% N : {percentB(sn)}%</p>
             <p>T : {percentA(tf)}% F : {percentB(tf)}%</p>
             <p>J : {percentA(jp)}% P : {percentB(jp)}%</p> */}
-            <button onClick={()=>mbti()}>저장</button><button>공유</button><button>다시</button>
+            
         </div>
         </>
     );

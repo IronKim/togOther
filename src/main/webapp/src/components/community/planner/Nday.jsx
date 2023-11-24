@@ -21,7 +21,7 @@ const Nday = (props) => {
     const [month, setMonth] = useState()
     
     useEffect(()=>{
-        id.current = textDTO.filter(item => item.nDay === nDay).length
+        id.current = textDTO.filter(item => item.nDay === nDay).length + 1
 
         const date = new Date(sDay)
         date.setDate(date.getDate() + nDay - 1);

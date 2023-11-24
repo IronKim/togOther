@@ -1,7 +1,32 @@
 .main {
     width: 1200px;
     margin: 0 auto;
+    font-size: 18px;
 }
+/*////////////// 스크롤 //////////////*/
+.listSection::-webkit-scrollbar {
+    width:7px;
+}
+.listSection::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.listSection::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 7px;
+}
+
+.rigthPlace p::-webkit-scrollbar {
+    width:7px;
+}
+.rigthPlace p::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.rigthPlace p::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 7px;
+}
+
+/* //////////////////////////// */
 .mapSection {
     margin: 2.5%;
     width: 95%;
@@ -10,9 +35,109 @@
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 } 
+.listSection {
+    overflow: auto;
+    overflow-x: hidden;
+    max-height: 650px;
+}
 .title {
     font-size: 35px;
     padding: 10px;
+}
+.timeDate {
+    float: right;
+    border-radius: 15px;
+    border: 3px solid lightgray;
+    padding: 5px 10px;
+    color: darkgray;
+    font-size: 25px;
+    text-align: center;
+    margin: 0 20px 20px 0;
+}
+.nDay {
+    border-radius: 30px;
+    width: 80px;
+    height: 33px;
+    padding: 7px 12px;
+    color: white;
+    background-color: #1F5FAB;
+    text-align: center;
+    font-size: 20px;
+    float: left;
+}
+.today {
+    padding: 10px;
+    float: left;
+    color: darkgray;
+    font-size: 15px;
+}
+.whatDaySection {
+    padding: 30px 10px;
+    margin: 30px 0;
+}
+.placeContext {
+    color: gray;
+    font-size: 20px;
+    margin: 15px 5px;
+}
+.times {
+    color: black;
+    font-size: 22px;
+    margin-top: 5px;
+}
+.subItem {
+    border: 2px solid;
+    border-radius: 15px;
+    transition: 0.3s;
+    padding: 10px;
+    margin: 30px 0;
+    background-color: white;
+    cursor: pointer;
+}
+.leftPlace {
+    float: left;
+    width: calc(100% - 400px);
+}
+.rigthPlace {
+    width: 340px;
+    float: right;
+    border-radius: 15px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.rigthPlace .plTop {
+    transition: 0.7s;
+    float: left;
+    height: 20px;
+    width: 150px;
+    text-align: center;
+    margin-left: 15px;
+    margin-top: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.rigthPlace .plBot {
+    transition: 0.7s;
+    width: 145px;
+    height: 110px;
+    overflow: auto;
+    overflow-x: hidden;
+    float: left;
+    margin: 5px 10px;
+    margin-left: 15px;
+    font-size: 17px;
+    line-height: 21px;
+    padding: 5px 0px 5px 2px;
+    border-top: 1px solid darkgray;
+    border-bottom: 1px solid darkgray;
+}
+.rigthPlace img {
+    float: right;
+    object-fit: cover;
+    width: 155px;
+    height: 155px;
+    border-radius: 15px;
 }
 @media (max-width: 1199px) {
     .main {
@@ -21,4 +146,39 @@
     .mapSection {
         height: 220px;
     } 
+    .times {
+        font-size: 19px;
+    }
+    .placeContext {
+        color: gray;
+        font-size: 17px;
+    }
+}
+@media (max-width: 754px) {
+    .leftPlace {
+        width:100%;
+    }
+    .rigthPlace {
+        width:95%;
+        margin: 2.5%;
+    }
+    .rigthPlace .plTop {
+        width: calc(100% - 180px);
+        font-size: 19px;
+    }
+    .rigthPlace .plBot {
+        width: calc(100% - 180px);
+        font-size: 17px;
+    }
+    .title {
+        margin-top: 20px;
+        font-size: 25px;
+        text-align: center;
+    }
+    .timeDate {
+        color: darkgray;
+        font-size: 20px;
+        text-align: center;
+        margin: 10px 20px 20px 0;
+    }
 }
