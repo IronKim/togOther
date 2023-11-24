@@ -190,7 +190,7 @@ const Form = () => {
     const onImage = (e,nDay) => {
         const files = e.target.files;        
         let image = ''
-        if(files.length > 5) alert('5개 이하로 선택해')
+        if(files.length > 3) alert('3개 이하로 선택해주세요')
         else {
             if(imageDTO.findIndex(item => item.nDay === nDay) === -1) {//이미지 파일 올린적 없을때
                 for (let i = 0; i < files.length; i++) {
@@ -445,7 +445,7 @@ const Form = () => {
                                 <Nday nDay={item} tabNum={tabNum} onTab={onTab} subDTO={subDTO} toNum={toNum}
                                 setSubDTO={setSubDTO} textDTO={textDTO} setTextDTO={setTextDTO} sDay={startDate}
                                 imageDTO={imageDTO} onImage={onImage} deleteImg={deleteImg}  xBut={xBut}
-                                GoogleMap={GoogleMap} Autocomplete={Autocomplete} />
+                                GoogleMap={GoogleMap} Autocomplete={Autocomplete} plannerTitle={plannerTitle}/>
                                 {dDay.length !== 0 && index !== dDay.length - 1 && (
                                     <div className={styles.nDayDiv}><img  src={arrow}/></div>)}
                                 </div>

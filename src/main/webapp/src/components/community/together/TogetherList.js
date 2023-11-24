@@ -49,7 +49,7 @@ const TogetherList = (props) => {
       const scrollHeight = document.documentElement.scrollHeight;
   
       const windowHeight = window.innerHeight;
-      if (scrollY + windowHeight + 100 >= scrollHeight) {
+      if (scrollY + windowHeight + 300 >= scrollHeight) {
           if(!scrollLoading) {
           if(!last) {
                   if(count * 10 > total) setLast(true);
@@ -67,7 +67,7 @@ const TogetherList = (props) => {
     if(count * 10 > total) n = total;
     else n = count * 10;
     if(n > 0) {
-      getTogetherList({ n: n, search : search ? search.trim() : '' })
+      getTogetherList({ n: ''+n, search : search ? search.trim() : '' })
       .then(res => {
         setTogetherDTO(res.data)
         setScrollLoading(false)
