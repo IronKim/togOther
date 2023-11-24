@@ -1,26 +1,37 @@
 import React from 'react';
 import styles from '../../css/MyPage.module.css';
+import { useUserStore } from '../../stores/mainStore';
 
 
 const MypageWrite = () => {
+
+    const { user, getUserByToken } = useUserStore();
+
+    console.log(user);
+
     return (
         <div>
             <p>여기가 계정 정보</p>
                 <div className={ styles.writeForm }>
                     <div className={ styles.photo_mbti }>
-                        <div className={ styles.photo }><img src={ null} style={{ width: '95px', height : '95px' }} /></div>
-                            <div className={ styles.mbti }>
-                                <span>내 mbti</span><span>ENFP</span>
+                        <div className={ styles.photo }>
+                            <img src={ user.profileImage} style={{ width: '95px', height : '95px' }} />
+                        </div>
+                        <div className={ styles.mbti }>
+                            {
+                                user.mbti === '' || user.mbti === null ? <span>MBTI가 없습니다.</span> : <span>{user.mbti}</span>
+                            }
+                            
 
-                                <input className={ styles.input } type='text' style={{ width : '230px', height : '45px', textAlign: 'center' }} />
-                            </div> {/* styles.mbti */}
+                            <button className={ styles.nameInput } style={{fontSize: '30px', width : '230px', height : '45px', textAlign: 'center' }} >{user.name}</button>
+                        </div> {/* styles.mbti */}
                     </div>
 
                 <div className={ styles.textdiv }>
                     <div>
                         <div>
                             <h3 style={{ marginTop: '80px', textAlign: 'left', marginLeft: '90px' }}>소개글</h3>
-                                <input type='text' readonly placeholder='소개글을 입력해주세요. (2000자 이내)' className={ styles.text1 } maxLength={ '2000' }></input>
+                                <textarea className={ styles.text1 } placeholder='소개글을 입력해주세요. (2000자 이내)' value={user.profileText} maxLength={ '2000' }></textarea>
                         </div>
 
                         <div>
