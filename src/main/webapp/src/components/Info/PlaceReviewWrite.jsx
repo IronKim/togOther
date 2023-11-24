@@ -4,18 +4,19 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { useUserStore } from '../../stores/mainStore';
 import { addPlaceReview } from '../../api/PlaceReviewApiService';
+import { uploadPlannerImage } from '../../api/PlannerApiService';
 
 function PlaceReviewWrite({ placeSeq }) {
   const [show, setShow] = useState(false);
   const { user } = useUserStore();
   const [reviewContext, setReviewContext] = useState('');
-  const [selectedImages, setSelectedImages] = useState([]);
+  const [selectedImages, setSelectedImages] = useState('');
 
   const handleClose = () => {
     setShow(false);
     // 모달이 닫힐 때 폼 필드를 초기화합니다.
     setReviewContext('');
-    setSelectedImages([]);
+    setSelectedImages('');
   };
 
   const handleShow = () => {
@@ -26,10 +27,19 @@ function PlaceReviewWrite({ placeSeq }) {
     }
   };
 
-  const handleFileUpload = (event) => {
+  const handleFileUpload = (e) => {
     // 파일 업로드를 처리합니다.
-    const files = event.target.files;
-    setSelectedImages(Array.from(files));
+    const files = e.target.files;        
+    let image = ''
+    if(files.length > 3) alert('3개 이하로 선택해')
+    else {
+      for (let i = 0; i < files.length; i++) {
+          image += URL.createObjectURL(files[i]);
+          if(i !== files.length-1) image += ',';
+      }
+    }
+
+    setSelectedImages(image);
   };
 
   const handleWriteReview = async () => {
@@ -39,15 +49,31 @@ function PlaceReviewWrite({ placeSeq }) {
       return;
     }
   
-    // 리뷰 데이터를 준비합니다.
-    const reviewData = {
-      placeSeq: placeSeq,
-      userSeq: user.userSeq,
-      context: reviewContext,
-      // 다른 필요한 속성들을 추가합니다.
-    };
-  
     try {
+        const formData = new FormData();
+        const images = selectedImages.split(',')
+        Promise.all(images.map((item2, index2) => {
+            return fetch(item2)
+            .then(response => response.blob())
+            .then(blob => {
+                const file = new File([blob], `image_${index2}.png`, { type: 'image/png' });
+                formData.append(`files`, file);
+            });
+        }))
+        .then(() => {
+            uploadPlannerImage(formData)
+            .then(res2 => {
+              const reviewData = {
+                placeSeq: placeSeq,
+                userSeq: user.userSeq,
+                context: reviewContext,
+                image: res2.data
+              };
+              addPlaceReview(reviewData)
+            })
+            .catch(e => console.log(e))
+        })
+    /*
       // FormData 객체를 생성하고 리뷰 데이터를 추가합니다.
       const formData = new FormData();
       for (const key in reviewData) {
@@ -60,7 +86,8 @@ function PlaceReviewWrite({ placeSeq }) {
       });
   
       // API를 호출하여 리뷰와 이미지를 추가합니다.
-      await addPlaceReview(formData);
+      await formData);
+    */
   
       // 리뷰 작성 성공 후 모달을 닫습니다.
       handleClose();
