@@ -15,12 +15,6 @@
     border-radius: 10px;
     overflow: hidden;
 }
-.innerText{
-    position: absolute;
-    top: 2%;
-    left: 2%;
-    z-index: 100;
-}
 .innerplaceImg{
     width: 100%;
     height: 100%;
@@ -49,10 +43,8 @@
 }
 .midScTdiv{
     margin: auto;
-    width: 290px;
 }
 .midScText{
-    float: left;
     color: gray;
 }
 .contextDiv{
@@ -77,7 +69,7 @@
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    margin: auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 .togetherMap{
     height: 60%;
@@ -124,21 +116,125 @@
     margin-top: 10px;
 }
 /*채팅*/
-/* .togetherChatDiv{
-    border: 1px solid red;
+.togetherChatDiv{
+    /* border: 3px solid red; */
     width: 40%;
     height: 800px;
     float: right;
     margin-top: 30px;
 }
-.togetherChat{
-    border: 1px solid violet;
+.togetherChatInner{
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius:10px 10px 0 0 ;
+    width: 100%;
+    height: 20%;
+    margin: auto;
+    margin-top: 10%;
+}
+.hrhr{
+    width: 80%;
+    height: 1px;
+    margin: auto;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.togetherChatInner2{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 10px 10px;
+    width: 100%;
+    height: 20%;
+    margin: auto;
+}
+.chatProfile{
+    width: 80%;
+    height: 100%;
+    position: relative;
+    margin: auto;
+    /* border: 1px solid red; */
+}
+.chatText{
+    /* border: 1px solid red; */
+    position:absolute; 
+    bottom:0px;
+}
+.chatProfileImg{
+    position: absolute;
+    border: 1px solid red;
+    width: 110px;
+    height: 110px;
+    border-radius: 70px;
+    top: 40%;
+    margin-top: -50px;
+}
+.inin{
+    /* border: 1px solid red; */
+    width: 55%;
+    height: 30%;
+    float: right;
+    margin-top: 18%;
+    font-size: 20px;
+}
+.chatProfileName{
+    /* border: 1px solid red; */
     height: 50%;
 }
-.togetherTo{
-    border: 1px solid black;
+.chatProfileInfo{
+    /* border: 1px solid red; */
     height: 50%;
-} */
+}
+.chatGoDiv{
+    width: 70%;
+    height: 70%;
+    margin: auto;
+}
+.chatGo{
+    width: 100%;
+    height: 70%;
+    border-radius: 20px;
+    border: none;
+    margin-top: 12%;
+    color: white;
+    font-size: 20px;
+    background-color: #1F5FAB;
+}
+.togetherTo{
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-top: 5%;
+    height: 45%;
+}
+.togetherTo p{
+    text-align: center;
+    padding-top: 20px;
+}
+.toGother{
+    /* border: 1px solid rebeccapurple; */
+    width: 90%;
+    height: 15%;
+    margin: auto;
+    margin-top: 5px;
+}
+.toGotherImg{
+    border: 1px solid rebeccapurple;
+    width: 52px;
+    height: 52px;
+    float: left;
+    border-radius: 70px;
+    text-align: center;
+}
+.toGotherInfo{
+    /* border: 1px solid rebeccapurple; */
+    width: 80%;
+    float: right;
+    font-size: 20px;
+    margin-top: 15px;
+}
+.toGotherInfo span{
+    margin: 0 30px 0 30px;
+}
 /*  */
 @media (max-width: 1199px){
     .viewInner{
@@ -159,18 +255,88 @@
     .viewForm{
         height: 1200px;
     }
+    .inin{
+        width: 45%;
+        margin-top: 22%;
+    }
+    .toGotherInfo{
+        width: 75%;
+    }
+    .toGotherInfo span{
+        margin: 0 10px 0 10px;
+    }
 }
 @media (max-width:900px){
     .togetherList{
         width: 80%;
     }
 }
-@media (max-width:840px){
+@media (max-width:810px){
+    .contextR{
+        width: 100%;
+    }
+    .innerTop{
+        display: none;
+    }
     .togetherList{
-        width: 90%;
+        margin: auto;
+        width: 100%;
+        height: 350px;
+    }
+    .togetherChatDiv{
+        width: 100%;
+        height: 80px;
+    }
+    .togetherChatInner{
+        display: none;
+    }
+    .togetherChatInner2{
+        border: none;
+    }
+    .chatGo{
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        width: 100%;
+        height: 70px;
+    }
+    .togetherTo{
+        height: 100%;
+    }
+    .togetherTo p{
+        float: left;
+        padding-top: 35px;
+        margin-left: 20px;
+    }
+    .toGother{
+        height: 90%;
+        width: 80%;
+        float: right;
+        margin-top: 15px;
+    }
+    .toGotherInfo{
+        width:85%;
     }
 }
-@media (max-width: 700px){
+@media (max-width:810px){
+    .toGother{
+        width:75%;
+    }
+    .toGotherInfo{
+        width:75%;
+        margin-top: 20px;
+    }
+}
+@media (max-width:530px){
+    .toGother{
+        width:65%;
+    }
+    .toGotherInfo{
+        width:75%;
+        font-size: 15px;
+    }
+}
+/* @media (max-width: 700px){
     .innerTop{
         height: 150px;
     }
@@ -190,4 +356,4 @@
         width: 55px;
         height: 35px;
     }
-}
+} */

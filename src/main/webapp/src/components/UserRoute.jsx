@@ -7,10 +7,10 @@ const UserRoute = ({ children }) => {
   const navigate = useNavigate();
   const { user, loading, getUserByToken } = useUserStore();
 
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 또는 user 정보가 변경될 때마다 호출
-    getUserByToken();
-  }, [getUserByToken]);
+  // useEffect(() => {
+  //   // 컴포넌트가 마운트될 때 또는 user 정보가 변경될 때마다 호출
+  //   getUserByToken();
+  // }, [getUserByToken]);
 
   // 로딩 중이면 로딩 화면을 렌더링
   if (loading) {
