@@ -22,14 +22,10 @@ public class TourPackageDetailDTO {
 	// 투어 패키지 시퀀스
 	private int tpSeq;
 	
-	// 투어 패키지 섬네일
-	private String tpdThumbnail;
 	// 투어 패키지 이미지
 	private String tpdImages;
 	// 투어 패키지 내용
 	private String tpdcontext;
-	// 투어패키지 가격
-	private String tpdPrice;
 	// 판매시작 날짜
 	private String tpdsaleStart;
 	// 판매종료 날짜
@@ -39,10 +35,8 @@ public class TourPackageDetailDTO {
 		return TourPackageDetailDTO.builder()
 					   .tpdSeq(tourPackageDetail.getTpdSeq())
 					   .tpSeq(tourPackageDetail.getTpSeq())
-					   .tpdThumbnail(tourPackageDetail.getTpdThumbnail())
 					   .tpdImages(tourPackageDetail.getTpdImages())
 				   	   .tpdcontext(tourPackageDetail.getTpdcontext())
-					   .tpdPrice(tourPackageDetail.getTpdPrice())
 					   .tpdsaleStart(tourPackageDetail.getTpdsaleStart())
 					   .tpdsaleEnd(tourPackageDetail.getTpdsaleEnd())
 					   .build();

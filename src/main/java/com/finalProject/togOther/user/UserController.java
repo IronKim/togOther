@@ -18,6 +18,8 @@ import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 import com.finalProject.togOther.dto.UserDTO;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/user")
 public class UserController {
@@ -30,7 +32,7 @@ public class UserController {
 
 	// 유저 추가
 	@PostMapping(path = "addUser")
-	public ResponseEntity<String> addUser(@RequestBody RegisterDTO registerDTO) {
+	public ResponseEntity<String> addUser(@Valid @RequestBody RegisterDTO registerDTO) {
 		return userService.addUser(registerDTO);
 	}
 
@@ -58,6 +60,13 @@ public class UserController {
 	@PostMapping(path = "loginUser")
 	public ResponseEntity<LoginInResponseDTO> loginUser(@RequestBody LoginDTO loginDTO) {
 		return userService.LoginUser(loginDTO);
+	}
+	
+	// 로그아웃
+	@GetMapping(path = "logoutUser")
+	public ResponseEntity<String> logoutUser(@RequestHeader("Refresh-Token") String refreshToken) {
+		System.out.println(refreshToken);
+		return userService.logoutUser(refreshToken);
 	}
 	
 	// access 토큰으로 로그인

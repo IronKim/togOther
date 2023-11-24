@@ -10,4 +10,6 @@ public interface PlaceReviewService {
 
 	public ResponseEntity<List<PlaceReviewDTO>> getPlaceReviewByPlaceSeq(int placeSeq);
 
+	public ResponseEntity<String> addPlaceReview(PlaceReviewDTO placeReviewDTO);
+
 }

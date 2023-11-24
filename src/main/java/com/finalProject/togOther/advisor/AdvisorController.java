@@ -146,8 +146,8 @@ public class AdvisorController {
 	}
 	
 	// 패키지 리스트 불러오기
-	@GetMapping(path = "getPackage")
-	public ResponseEntity<List<TourPackageDTO>> getPackage() {
+	@GetMapping(path = "getPackageList")
+	public ResponseEntity<List<TourPackageDTO>> getPackageList() {
 		return advisorService.getPackage();
 	}
 	

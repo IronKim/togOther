@@ -1,17 +1,25 @@
 import React, { useEffect } from 'react';
+import logo from '../../assets/image/Logo.png';
+import { useNavigate } from 'react-router-dom';
 
-const WriteFormComplete = ({createUesr}) => {
+const WriteFormComplete = ({createUesr,styles}) => {
 
     useEffect(() => {
         createUesr();
     }, []);
 
+    const navigate = useNavigate();
+    const onsubmit=()=>{
+
+        navigate('../../user/Login')
+    }
+
     return (
         <div>
+            <p className={styles.welcome}>welcome!</p>
+            <img src={ logo } alt='로고' className={styles.writeLogo}/>
             <div>
-                <p>환영합니다</p>
-                <p>회원가입이 완료되었습니다.</p>
-                <button>로그인</button> 
+                <button className={styles.loginBtn} type="submit" onClick={onsubmit}>Going To Login</button>
             </div>
         </div>
     );

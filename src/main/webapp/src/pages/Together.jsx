@@ -1,10 +1,11 @@
 import React from 'react';
-import PlaceWriteForm from '../components/together/PlaceWriteForm';
+import TogetherWriteForm from '../components/community/together/TogetherWriteForm';
 
 const Together = () => {
+    
     return (
         <div>
-            <PlaceWriteForm/>
+           <TogetherWriteForm/>
         </div>
     );
 };

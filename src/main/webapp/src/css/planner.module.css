@@ -86,7 +86,7 @@
 }
 
 .timeDiv::-webkit-scrollbar {
-    width:20px;
+    width:15px;
 }
 .timeDiv::-webkit-scrollbar-track {
     background-color: transparate;
@@ -133,6 +133,12 @@
     border-radius: 7px;
 }
 /**************Form***************/
+.plannerTitle {
+    width: 60%;
+    float: left;
+    font-size: 35px;
+    text-align: left;
+}
 .space {
     height: 75px;
 }
@@ -187,16 +193,33 @@
 } 
 .calender {
     float: right;
-    margin: 10px;
+    margin: 30px 0;
 }
 .calender div{
     float: right;
 }
 .calender p {
+    border-radius: 15px;
+    border: 3px solid darkgray;
     padding: 10px;
+    color: gray;
     font-size: 30px;
     font-weight: bold;
+    text-align: center;
 }
+.inCalender {
+    position: absolute;
+}
+.inCalender input{
+    height: 58px;
+    width: 143px;
+    opacity: 0;
+}
+.inCalender input::-webkit-calendar-picker-indicator {
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+  }
 .publicBut {
     float: left;
     width: 35px;
@@ -211,6 +234,10 @@
     height: 13px;
     border-radius: 50%;
     background-color: lightgray;
+}
+.minus{
+    vertical-align: middle;
+    width: 20px;
 }
 /********************nDay******************/
 .nDayDate{
@@ -248,6 +275,8 @@
 }
 .nDayText {
     width: 100%;
+    line-height: 18.33px;
+    background-size: 220px;
     resize: none;
     overflow:hidden;
     border: none;
@@ -267,26 +296,30 @@
     overflow: hidden;
 }
 .gapPlus {
-    width: 100%;
-    margin: 10px auto;
-    padding: 3px;
+    width:30%;
+    margin: 3px auto;
+    padding-top: 1px;
     background-color: whitesmoke;
     text-align: center;
     cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 2px;
+    border-radius: 25px;
+    height: 25px;
+}
+.gapPlus img{
+    width: 23px;
 }
 .textPlus {
-    width: 100%;
-    margin: 10px auto;
-    padding: 3px;
+    width:30%;
+    margin: 2px auto;
+    padding-top: 1px;
     background-color: aliceblue;
     text-align: center;
     cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 2px;
+    border-radius: 25px;
+    height: 25px;
+}
+.textPlus img{
+    width: 23px;
 }
 .imageSection {
     height: 140px;
@@ -358,13 +391,13 @@
     border-radius: 5%;
     width: 550px;
     height: 550px;
-    background-color: lightslategrey;
+    background-color: white;
     position: absolute;
     left: 50%;
     top: 50%; 
     padding: 30px;
     box-sizing: border-box;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, 0%); 
 }
 .day div{
     float: left;
@@ -382,7 +415,6 @@
     background-color: whitesmoke;
     border-radius: 10px;
     width: 100%;
-    height: 30%;
     margin: 10px 0;
     resize: none;
 }
@@ -395,6 +427,7 @@
     text-align: center;
     padding: 5px 16px;
     font-size: 17px;
+    width: 76px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -404,8 +437,8 @@
     background-color: #2E8DFF;
     float: left;
     white-space: wrap;
-    width: 96px ;
-    height: 81px ;
+    width: 91px ;
+    max-height: 81px ;
     overflow: auto;
     overflow-x: hidden;
 }
@@ -425,7 +458,7 @@
     object-fit: contain;
 }
 .placeCard{
-    background-color: lavender;
+    background-color: aliceblue;
     width: 100%;
     height: 80px;
     border-radius: 10px;
@@ -435,6 +468,10 @@
     cursor: pointer;
     overflow: auto;
     overflow-x: hidden;
+    transition: 0.5s;
+} 
+.placeCard:hover{
+    background-color: rgb(200, 229, 255);
 } 
 .placeContextP{
     width: 70%;
@@ -447,11 +484,15 @@
 .mapInput {
     border: 0;
     border-radius: 5px;
+    padding:5px;
+    background-color: whitesmoke;
 }
 .placeSearch {
     border: 0;
     border-radius: 5px;
     width: 50%;
+    padding:5px;
+    background-color: whitesmoke;
 }
 /******************* addPlace *******************/
 /********************togother******************/
@@ -531,15 +572,15 @@
     overflow: hidden;
 }
 .calcDay {
-    border: 1px solid black;
+    float: left;
+    font-weight: bold;
     color: black;
     border-radius: 2px;
-    padding: 0px 2px 1px 1px;
+    padding: 5px;
 }
-.tNum {
-    width: 40px;
+/* .tNum {
     padding:0;
-}
+} */
 /********************************************/
 /***************togoItemList**************/
 .toListItem {
@@ -571,11 +612,6 @@
 /**********************************************/
 /******************미디어쿼리****************/
 @media (max-width: 1199px) {
-    .calender p {
-        padding: 5px;
-        font-size: 25px;
-        font-weight: bold;
-    }
     .space {
         height: 20px;
     }
@@ -616,9 +652,35 @@
         float: none;
     }
 }
-@media (max-width: 599px) {
+@media (max-width: 754px) {
+    .plannerTitle {
+        width: 100%;
+        padding: 5%;
+        text-align: center;
+        font-size: 25px;
+    }
+    .calender {
+        float: right;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    .calender input{
+        width: 50%;
+    }
+    .calender p {
+        padding: 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .minus{
+        vertical-align: middle;
+        width: 5px;
+    }
     .addplaceform {
         width: 90%;
         min-height: 50%;
+    }
+    .inCalender input{
+        height: 50px;
     }
 }

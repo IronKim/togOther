@@ -12,18 +12,27 @@
 
   .activeCircle,
   .circle,
-  .fbtn,
   .input_file_button,
   .inputField,
   .radioInput,
-  .inputFieldCk,
   .buttonsContainer,
+  .welcome,
+  .writeLogo,
+  .loginBtn,
+  .loginBtn:hover,
   .buttons {
       transform: scale(0.8);
   }
-  
-  
+
+
+  .writeContainerCk {
+    display: flex;
+    flex-direction: column; 
+    overflow-y: auto; 
+  }
+
 }
+
 
 .activeCircle {
   position: relative;
@@ -71,15 +80,17 @@
 
 
 .fbtn{
-  color: #010607;
+  color: #83b2eb; 
   border: 0;
-  font-size: 2.4rem;
+  font-size: 3.3rem;
   background-color: white;
   margin-top: 10px;
 }
-/* .fbtn:hover {
-  color: #1b8fd6; /* 마우스 호버 시 배경색 변경 
-} */
+
+ .fbtn:hover {
+  color: #2E8DFF; 
+} 
+
 .imagePreview{
   width: 141px;
   height: 141px;
@@ -416,4 +427,47 @@ box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
   outline: black;
   border: 1px solid black;
   pointer-events: none;
+}
+.welcome{
+  font-size: 68px;
+  color: #55C8E3;
+  font-family: '나눔고딕';
+  font-weight: bold;
+
+}
+.writeLogo{
+  max-width: 600px;
+  width: 100%;
+  margin-top: 1.8vw;
+  margin-bottom: 1.8vw;
+
+}
+.loginBtn {
+  margin-top: 1.8em;
+  box-shadow: 0 8px 10px 1px rgb(0 0 0 / 33%);
+  border: none;
+  color: #fff;
+  font-size: 2em;
+  padding: 20px 100px;
+  border-radius: 48px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #55C8E3;
+
+}
+
+.loginBtn:hover {
+  box-shadow: none;
+
+  transform: scale(0.95);
+}
+
+.tagDiv{
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 1199px) {
+  .tagDiv{
+    flex-direction: column;
+  }
 }

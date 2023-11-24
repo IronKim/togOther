@@ -60,6 +60,10 @@ public class UserServiceImpl implements UserService {
 	public ResponseEntity<String> addUser(RegisterDTO registerDTO) {
 
 		try {
+			
+			if(!(registerDTO.getGender().equals("M")  || registerDTO.getGender().equals("F"))){
+				throw new Exception();
+			}
 
 			// 비밀번호 인코딩
 			registerDTO.setPwd(passwordEncoder.encode(registerDTO.getPwd()));
@@ -169,8 +173,6 @@ public class UserServiceImpl implements UserService {
 
 			boolean result = isUserExistsByPhone(ssodto.getPhone()).getBody();
 
-			System.out.println(result);
-
 			// 해당 핸드폰으로 가입되어있지 않을땐 ssodto를 넘겨주고 가입이 되어 있으면 서버에러를 띄워줌
 			if (!result) {
 				return ResponseEntity.ok(ssodto);
@@ -273,6 +275,28 @@ public class UserServiceImpl implements UserService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 		
+	}
+	
+	@Override
+	public ResponseEntity<String> logoutUser(String refreshToken) {
+		
+		try {
+			
+			Optional<RefreshToken> optionalReToken = refreshTokenRepository.findByToken(refreshToken);
+			
+			// db에 해당 refresh토큰이 없으면 에러
+			RefreshToken rToken = optionalReToken.orElseThrow();
+			
+			refreshTokenRepository.deleteById(rToken.getRefreshTokenSeq());
+			
+			String responseMessage = "성공적으로 로그아웃 하였습니다.";
+			return ResponseEntity.ok(responseMessage);
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "로그아웃 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
 	}
 	
 	// refreshToken으로 access토큰 발급

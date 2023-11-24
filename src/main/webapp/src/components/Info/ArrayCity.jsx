@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCity } from '../../api/AdvisorApiService';
+import { getCityList } from '../../api/CityApiService';
 
 import { Transition, TransitionGroup } from 'react-transition-group';
 
@@ -25,8 +25,8 @@ const ArrayCity = () => {
     }])
 
     //api를 이용해 도시를 불러와서 도시 리스트에 저장 하는 함수
-    const getCityList = () => {
-        getCity()
+    const getCity = () => {
+        getCityList()
         .then(res =>{
             // console.log(res.data);
             setCityList(res.data);
@@ -36,7 +36,7 @@ const ArrayCity = () => {
 
     // 컴포넌트가 시작되면 해당함수를 시작함
     useEffect(()=> {
-        getCityList(); //서버에서 도시를 가져와 도시리스트를 채움
+        getCity(); //서버에서 도시를 가져와 도시리스트를 채움
     }
     ,[])
 

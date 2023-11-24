@@ -5,3 +5,5 @@ export const getTourPackgeList = () => apiClient.get('api/package/getTourPackgeL
 export const getTourPackageByCitySeq = (citySeq) => apiClient.get(`api/package/getTourPackageByCitySeq/${citySeq}`)
 
 export const getTourDetailPackageByTpSeq = (tpSeq) => apiClient.get(`api/place/getTourDetailPackageByTpSeq/${tpSeq}`)
+
+export const getPackage = () => apiClient.get(`api/place/getPackage`)

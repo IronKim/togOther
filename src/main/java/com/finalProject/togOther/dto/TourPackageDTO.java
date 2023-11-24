@@ -18,16 +18,22 @@ public class TourPackageDTO {
 	
 	private int tpSeq;
 	
-	// 투어 패키지 제목
-	private String tpTitle;
-	
 	// 도시 시퀀스
 	private int citySeq;
+
+	// 투어 패키지 제목
+	private String tpTitle;
+	// 투어 패키지 섬네일
+	private String tpThumbnail;
+	// 투어패키지 가격
+	private String tpPrice;
 
 	public static TourPackageDTO toDTO(TourPackage tourPackage) {
 		return TourPackageDTO.builder()
 					   .tpSeq(tourPackage.getTpSeq())
 					   .tpTitle(tourPackage.getTpTitle())
+					   .tpThumbnail(tourPackage.getTpThumbnail())
+					   .tpPrice(tourPackage.getTpPrice())
 					   .citySeq(tourPackage.getCitySeq())
 					   .build();
 	}

@@ -18,7 +18,7 @@ import lombok.Setter;
 public class PlannerTextDTO {
 	private int plTextSeq;
 	private int plMainSeq;
-	private byte id;
+	private String id;
 	private int nday;
 	private int orders;
 	private String context;

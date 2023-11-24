@@ -26,7 +26,7 @@ public class SubItemDTO {
 	private String context;
 	private byte placeSw;//0 장소 검색 (placeSeq) 1 장소 커스텀 (pCustomSeq)
 	private int placeSeq;
-	private int pCustomSeq;	
+	private int plCustomSeq;	
 	
 	public static SubItemDTO toDTO(SubItem subItem) {
 		
@@ -41,7 +41,7 @@ public class SubItemDTO {
 						 .context(subItem.getContext())
 						 .placeSw(subItem.getPlaceSw())//0 장소 검색 (placeSeq) 1 장소 커스텀 (pCustomSeq)
 						 .placeSeq(subItem.getPlaceSeq())
-						 .pCustomSeq(subItem.getPCustomSeq())	
+						 .plCustomSeq(subItem.getPlCustomSeq())	
 						 .build();
 	}
 	

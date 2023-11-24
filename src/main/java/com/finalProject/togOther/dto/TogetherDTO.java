@@ -19,6 +19,7 @@ import lombok.Setter;
 public class TogetherDTO {
 	private int togetherSeq;
 	private int userSeq;
+	private byte code;
 	private String title;
 	private LocalDate startDate;
 	private LocalDate endDate;
@@ -30,6 +31,7 @@ public class TogetherDTO {
 		return TogetherDTO.builder()
 						  .togetherSeq(together.getTogetherSeq())
 					      .userSeq(together.getUserSeq())
+					      .code(together.getCode())
 					      .title(together.getTitle())
 					      .startDate(together.getStartDate())
 					      .endDate(together.getEndDate())
