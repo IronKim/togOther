@@ -427,7 +427,7 @@ public class UserServiceImpl implements UserService {
 		
 		try {
 			
-			if(updatedpwd.length() < 4) {
+			if(updatedpwd.length() < 4 ||updatedpwd.length() > 20) {
 				throw new Exception();
 			}
 			
@@ -455,6 +455,33 @@ public class UserServiceImpl implements UserService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
 		}
 		
+	}
+	
+	@Override
+	public ResponseEntity<String> updatePhone(int userSeq, String updatedPhone) {
+
+		try {
+			
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			UserDTO userDTO = UserDTO.toDTO(user);
+			
+			userDTO.setPhone(updatedPhone);
+			
+			userDTO.setCertification((byte) 1);
+			
+			userRepository.save(User.toEntity(userDTO));
+			
+			String responseMessage = "성공적으로 수정하였습니다.";
+			return ResponseEntity.ok(responseMessage);
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "수정 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
 	}
 	
 

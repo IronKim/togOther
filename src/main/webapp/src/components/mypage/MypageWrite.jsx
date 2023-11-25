@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../../css/MyPage.module.css';
 import { useUserStore } from '../../stores/mainStore';
-import { updatePassword, updateProfileText } from '../../api/UserApiService';
+import { smsCertificationRequest, updatePassword, updatePhone, updateProfileText } from '../../api/UserApiService';
 
 import { RiSave3Fill } from "react-icons/ri";
 import { GiCancel } from "react-icons/gi";
@@ -59,6 +59,10 @@ const MypageWrite = ({onErrorImg}) => {
                 '<input type="password" id="newPassword" class="swal2-input" placeholder="새로운 비밀번호 (4~20글자)">' +
                 '<input type="password" id="confirmPassword" class="swal2-input" placeholder="비밀번호 확인">',
             focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: '변경',
+            cancelButtonText: '취소',
+            allowOutsideClick: false,
             preConfirm: () => {
                 const currentPassword = Swal.getPopup().querySelector('#currentPassword').value;
                 const newPassword = Swal.getPopup().querySelector('#newPassword').value;
@@ -111,6 +115,133 @@ const MypageWrite = ({onErrorImg}) => {
         } else {
             Swal.fire('비밀번호 변경이 취소되었습니다.', '', 'info');
         }
+    };
+
+    // 휴대폰 번호 변경
+    const phoneChange = async () => {
+        let wrongAttempts = 0; // 틀린 횟수를 저장할 변수
+
+        const showInvalidCodeModal = () => {
+            Swal.fire({
+                icon: 'error',
+                title: '인증 오류',
+                text: '인증번호를 3번 이상 틀렸습니다. 다시 시도해주세요.',
+            });
+        };
+
+        const showLoadingodal = () => {
+            Swal.fire({
+                title: '인증번호 전송 중...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                allowEnterKey: false,
+                });
+        };
+
+        Swal.fire({
+            title: '휴대폰 인증',
+            input: 'text',
+            inputLabel: '전화번호',
+            inputPlaceholder: '전화번호를 입력하세요 (숫자만 입력)',
+            showCancelButton: true,
+            allowOutsideClick: false,
+            confirmButtonText: '전송',
+            cancelButtonText: '취소',
+            inputAttributes: {
+                pattern: '[0-9]{15}', // 여기서 [0-9]는 숫자, {15}는 15자리 숫자를 의미
+                maxLength: 15,
+              },
+            inputValidator: (value) => {
+                // 숫자만 허용하는 정규표현식을 사용하여 유효성 검사
+                const isValidPhoneNumber = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/.test(value);
+
+                if(user.phone === value) {
+                    return '현재 사용중인 전화번호입니다.';
+                }
+            
+                if (!isValidPhoneNumber) {
+                  return '유효하지 않은 전화번호입니다.';
+                }
+
+
+                return undefined; // 유효성 검사 통과
+              },
+              
+          }).then((phoneNumberResult) => {
+            if (phoneNumberResult.isConfirmed) {
+              const phoneNumber = phoneNumberResult.value;
+
+              showLoadingodal();
+
+              smsCertificationRequest(phoneNumber)
+                .then(res => {
+                    console.log(res.data);   
+                    Swal.fire({
+                        title: '휴대폰 인증',
+                        text: `${phoneNumber}로 인증번호가 전송되었습니다.`,
+                        input: 'text',
+                        inputLabel: '인증번호',
+                        inputPlaceholder: '인증번호를 입력하세요',
+                        showCancelButton: true,
+                        allowOutsideClick: false,
+                        inputAttributes: {
+                            pattern: '[0-9]{6}', // 여기서 [0-9]는 숫자, {6}는 6자리 숫자를 의미
+                            maxLength: 6,
+                          },
+                          inputValidator: (value) => {
+                            // 입력된 값이 서버 응답과 일치하는지 확인
+                            if (Number(value) === Number(res.data)) {
+                                return undefined; // 유효성 검사 통과
+                            } else {
+                                wrongAttempts++; // 틀린 횟수 증가
+                                if (wrongAttempts >= 3) {
+                                    return undefined;
+                                } else {
+                                    return '인증번호가 일치하지 않습니다. 남은시도 횟수: ' + (3 - wrongAttempts) + '회';
+                                }
+                            }
+                        },
+                        confirmButtonText: '확인',
+                        cancelButtonText: '취소',
+                      }).then((verificationCodeResult) => {
+                        if (verificationCodeResult.isConfirmed) {
+
+                            if(Number(verificationCodeResult.value) !== Number(res.data)) {
+                                showInvalidCodeModal();
+                                return;
+                            }
+
+
+                            updatePhone(user.userSeq, phoneNumber)
+                            .then((response) => {
+                                user.phone = phoneNumber;
+                                    Swal.fire({
+                                        title: '휴대폰번호 변경 성공',
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                    });
+                                window.location.reload();
+                            })
+                            .catch((error) => {
+                                Swal.fire({
+                                    title: '휴대폰번호 변경 실패',
+                                    text: error.response.data,
+                                    icon: 'error',
+                                });
+                            });  
+                        }
+                      });
+                })
+                .catch(e => {
+                    if(e.response.status === 409) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '이미 가입된 회원입니다.',
+                            });
+                    }
+                });
+            }
+          });
     };
 
     return (
@@ -204,7 +335,7 @@ const MypageWrite = ({onErrorImg}) => {
                             <ul>
                                 <li>
                                     <button onClick={passwordChange}>비밀번호 변경</button>
-                                    <button>휴대폰번호 변경</button>
+                                    <button onClick={phoneChange}>휴대폰번호 변경</button>
                                     <button>여행취향 변경</button>
                                     <button>음식취향 변경</button>
                                     <button>mbti 테스트</button>

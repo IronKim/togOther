@@ -102,5 +102,12 @@ public class UserController {
 		String updatedpwd = requestBody.get("updatePassword");
 		return userService.updatePassword(userSeq, pwd, updatedpwd);
 	}
+	
+	// 휴대전화 수정
+	@PutMapping(path = "updatePhone/{userSeq}")
+	public ResponseEntity<String> updatePhone(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
+		String updatedPhone = requestBody.get("updatePhone");
+		return userService.updatePhone(userSeq, updatedPhone);
+	}
 
 }

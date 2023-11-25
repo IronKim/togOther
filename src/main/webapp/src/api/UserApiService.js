@@ -20,4 +20,6 @@ export const updateProfileText = (userSeq, profileText) => apiClient.put(`api/us
 
 export const updatePassword = (userSeq, password, updatePassword) => apiClient.put(`api/user/updatePassword/${userSeq}`, {password, updatePassword});
 
+export const updatePhone = (userSeq, updatePhone) => apiClient.put(`api/user/updatePhone/${userSeq}`, {updatePhone});
+
 

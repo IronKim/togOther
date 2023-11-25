@@ -108,6 +108,15 @@
   transform: scale(0.95);
 }
 
+.LoginBoxText {
+  font-size: 1.3em;
+}
+
+.LoginBoxText:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 
 @media (max-width: 1199px) {
 

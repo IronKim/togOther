@@ -142,8 +142,8 @@ const Login = () => {
             </div>
             <div className={styles.inputError}>{passwordError || 'ㅤ'}</div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1em' }}>
-              <span style={{ fontSize: '1.3em' }}>아이디 / 비밀번호 찾기</span>
-              <span style={{ fontSize: '1.3em' }} onClick={handleSignUp}>회원가입</span>
+              <span className={styles.LoginBoxText} >아이디 / 비밀번호 찾기</span>
+              <span className={styles.LoginBoxText} onClick={handleSignUp}>회원가입</span>
             </div>
             <button className={styles.loginBtn} type="submit" onClick={onsubmit}>
               로그인
