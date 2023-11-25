@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import styles from '../../css/MyPage.module.css';
 import { useUserStore } from '../../stores/mainStore';
-import { updateProfileText } from '../../api/UserApiService';
+import { updatePassword, updateProfileText } from '../../api/UserApiService';
 
 import { RiSave3Fill } from "react-icons/ri";
 import { GiCancel } from "react-icons/gi";
 import { FaPen } from "react-icons/fa6";
 import { FaUserCheck } from "react-icons/fa";
 import { FaUserTimes } from "react-icons/fa";
+
+import Swal from 'sweetalert2'; // SweetAlert2 추가
 
 
 const MypageWrite = ({onErrorImg}) => {
@@ -46,6 +48,69 @@ const MypageWrite = ({onErrorImg}) => {
         });
 
         
+    };
+
+    // 마이페이지 비밀번호 변경
+    const passwordChange = async () => {
+        const { value: formValues } = await Swal.fire({
+            title: '비밀번호 변경',
+            html:
+                '<input type="password" id="currentPassword" class="swal2-input" placeholder="현재 비밀번호">' +
+                '<input type="password" id="newPassword" class="swal2-input" placeholder="새로운 비밀번호 (4~20글자)">' +
+                '<input type="password" id="confirmPassword" class="swal2-input" placeholder="비밀번호 확인">',
+            focusConfirm: false,
+            preConfirm: () => {
+                const currentPassword = Swal.getPopup().querySelector('#currentPassword').value;
+                const newPassword = Swal.getPopup().querySelector('#newPassword').value;
+                const confirmPassword = Swal.getPopup().querySelector('#confirmPassword').value;
+    
+                // 각 입력 필드의 값이 비어있는지 확인
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    Swal.showValidationMessage('모든 항목을 입력하세요.');
+                    return false;
+                }
+    
+                // 새로운 비밀번호와 확인 비밀번호가 일치하지 않는지 확인
+                if (newPassword !== confirmPassword) {
+                    Swal.showValidationMessage('비밀번호가 일치하지 않습니다.');
+                    return false;
+                }
+
+                // 새로운 비밀번호가 최소 4글자 이상이고 최대 20글자 이하인지 확인
+                if (newPassword.length < 4 || newPassword.length > 20) {
+                    Swal.showValidationMessage('비밀번호는 4글자 이상 20글자 이하로 입력하세요.');
+                    return false;
+                }
+    
+                // 서버에게 비밀번호 변경 요청을 보내는 비동기 처리 (여기서는 가정)
+                return updatePassword(user.userSeq, currentPassword, newPassword)
+                        .then((response) => {
+                         
+                            // 성공 메시지 처리
+                            Swal.fire({
+                                title: '비밀번호 변경 성공',
+                                text: response.data,
+                                icon: 'success',
+                            });
+                            return true;
+                        })
+                        .catch((error) => {
+                            Swal.fire({
+                                title: '비밀번호 변경 실패',
+                                text: error.response.data,
+                                icon: 'error',
+                            });
+                            return false;
+                        });
+                
+            },
+        });
+    
+        if (formValues) {
+            Swal.fire('비밀번호가 변경되었습니다.', '', 'success');
+        } else {
+            Swal.fire('비밀번호 변경이 취소되었습니다.', '', 'info');
+        }
     };
 
     return (
@@ -138,7 +203,7 @@ const MypageWrite = ({onErrorImg}) => {
                         <div className={ styles.change }>
                             <ul>
                                 <li>
-                                    <button>비밀번호 변경</button>
+                                    <button onClick={passwordChange}>비밀번호 변경</button>
                                     <button>휴대폰번호 변경</button>
                                     <button>여행취향 변경</button>
                                     <button>음식취향 변경</button>

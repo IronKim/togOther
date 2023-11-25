@@ -94,5 +94,13 @@ public class UserController {
 		String updatedProfileText = (profileText.get("profileText"));
 		return userService.updateProfileText(userSeq, updatedProfileText);
 	}
+	
+	// 비밀번호 수정
+	@PutMapping(path = "updatePassword/{userSeq}")
+	public ResponseEntity<String> updatePassword(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
+		String pwd = requestBody.get("password");
+		String updatedpwd = requestBody.get("updatePassword");
+		return userService.updatePassword(userSeq, pwd, updatedpwd);
+	}
 
 }

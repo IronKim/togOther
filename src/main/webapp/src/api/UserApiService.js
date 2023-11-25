@@ -18,4 +18,6 @@ export const getUserByEmail = (userEmail) => apiClient.get(`api/user/getUserByEm
 
 export const updateProfileText = (userSeq, profileText) => apiClient.put(`api/user/updateProfileText/${userSeq}`, {profileText});
 
+export const updatePassword = (userSeq, password, updatePassword) => apiClient.put(`api/user/updatePassword/${userSeq}`, {password, updatePassword});
+
 

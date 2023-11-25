@@ -31,4 +31,6 @@ public interface UserService {
 
 	public ResponseEntity<String> updateProfileText(int userSeq, String updatedProfileText);
 
+	public ResponseEntity<String> updatePassword(int userSeq, String pwd, String updatedpwd);
+
 }
