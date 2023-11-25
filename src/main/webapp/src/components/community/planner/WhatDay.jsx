@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../../../css/plannerView.module.css'
 
 const WhatDay = (props) => {
-    const {getToday,nDay,plannerImage,place,custom,onMouseOn,onMouseOff,subHover} = props;
+    const {getToday,nDay,plannerImage,place,custom,onMouseOn,onMouseOff,subHover,onAdd,onImg} = props;
 
     function replaceBr(text) {
         return text.split('\n').map((line, index, array) => 
@@ -23,14 +23,26 @@ const WhatDay = (props) => {
             <div className={styles.nDay}>Day{nDay}</div>
             <div className={styles.today}> | {getToday(nDay)}</div>
             <div style={{clear:'both',height:'30px'}}></div>
+            {/* {plannerImage} */}
+            {plannerImage !== undefined && 
+            <div className={plannerImage.length === 1 ? styles.imageDiv1 : 
+                            plannerImage.length === 2 ? styles.imageDiv2 :
+                            plannerImage.length === 3 && styles.imageDiv3}>{
+                plannerImage.map((plImg,index) =>
+                    <img key={index} src={plImg} onClick={(e)=>onImg(e,plImg)}/>
+                )
+            }</div>}
+            <div style={{clear:'both'}}></div>
             {
-                plannerText.filter(plTxt => plTxt.orders === 0).map(item => <p>{item.context}</p>)
+                plannerText.filter(plTxt => plTxt.orders === 0).map(item => <p className={styles.plannerText}>{item.context}</p>)
             }
             {
                 subItem.map(sub => <div>
-                    <div className={styles.subItem} 
+                    <div className={`${styles.subItem} scrolls`} 
+                        id={sub.subSeq}
                         style={{borderColor: subHover === sub.subSeq ? '#1F5FAB' : 'lightGray'}}
                         onMouseOver={() => onMouseOn(sub.subSeq)} onMouseOut={() => onMouseOff()}
+                        onClick={() => onAdd(sub.placeSw,sub.placeSw === 0 ? sub.placeSeq : sub.plCustomSeq)}
                     >
                     <div className={styles.leftPlace}>
                     <div className={styles.times}>{sub.startTime}시 - {sub.endTime}시</div>
@@ -58,12 +70,12 @@ const WhatDay = (props) => {
                     </div>
                     {
                         plannerText.filter(plTxt => plTxt.orders === sub.endTime).map(item => 
-                        <p>{replaceBr(item.context)}</p>)
+                        <p className={styles.plannerText}>{replaceBr(item.context)}</p>)
                     }
                 </div>)
             }
             <br/>
-            <hr/>
+            <div className={styles.hr}/>
         </section>
     );
 };

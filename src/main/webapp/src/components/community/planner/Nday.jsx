@@ -9,8 +9,8 @@ import calendarAdd from '../../../assets/image/calendarAdd.png'
 import textAdd from '../../../assets/image/textAdd.png'
 
 const Nday = (props) => {
-    const {nDay,tabNum,onTab,subDTO,setSubDTO,textDTO,setTextDTO,
-        sDay,toNum,imageDTO,onImage,deleteImg,xBut,GoogleMap,Autocomplete} = props
+    const {nDay,tabNum,onTab,subDTO,setSubDTO,textDTO,setTextDTO,sDay,toNum,
+        imageDTO,onImage,deleteImg,xBut,GoogleMap,Autocomplete,plannerTitle} = props
     
     const id = useRef(1);
     const [firstTime,setFirstTime] = useState(0)
@@ -220,11 +220,11 @@ const onSub = (subData) => {
             {/* 이미지 영역 */}
             {
                 add && <AddPlaceForm onClose={onClose} firstTime={firstTime} lastTime={24} onSub={onSub} nDay={nDay}
-                GoogleMap={GoogleMap} Autocomplete={Autocomplete}/>
+                GoogleMap={GoogleMap} Autocomplete={Autocomplete} plannerTitle={plannerTitle}/>
             }
             {
                 gap && <AddPlaceForm onClose={onClose} firstTime={gs} lastTime={ge}  onSub={onSub} nDay={nDay}
-                GoogleMap={GoogleMap} Autocomplete={Autocomplete}/>
+                GoogleMap={GoogleMap} Autocomplete={Autocomplete} plannerTitle={plannerTitle}/>
             }
             {
                 up && <AddPlaceForm onClose={onClose} upDTO={upDTO} firstTime={gs} lastTime={ge}  onSub={onSub} 

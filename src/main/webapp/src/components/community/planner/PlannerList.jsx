@@ -34,7 +34,7 @@ const PlannerList = (props) => {
         const scrollHeight = document.documentElement.scrollHeight;
     
         const windowHeight = window.innerHeight;
-        if (scrollY + windowHeight + 100 >= scrollHeight) {
+        if (scrollY + windowHeight + 300 >= scrollHeight) {
             if(!scrollLoading) {
             if(!last) {
                     if(count * 20 > total) setLast(true);
@@ -118,7 +118,7 @@ const PlannerList = (props) => {
             {
                 planner.map(item => <div className={styles.plannerItem} onClick={() => onPlanner(item.plannerSeq)}>
                     <img className={styles.plannerImage} src={images.find(item2 => item2.plMainSeq === item.plannerSeq) !== undefined ?
-                        images.find(item2 => item2.plMainSeq === item.plannerSeq).image :
+                        images.find(item2 => item2.plMainSeq === item.plannerSeq).image.split(',')[0] :
                         item.citySeq !== -1 && loading ? city.find(item2 => item2.citySeq === item.citySeq).cityImage : noImage}/>
                     <div className={styles.plannerInfo}>
                         <div className={styles.profile}>

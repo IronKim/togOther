@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Style from '../../../css/togetherView.module.css'
+import loadingImg from '../../../assets/image/loading.png'
 
 import { getTogetherSeq } from '../../../api/TogetherApiService';
 import { getPlace,getCustomPlace } from '../../../api/PlaceApiService';
@@ -30,6 +31,7 @@ const TogetherView = () => {
     const { togetherSeq } = useParams()
     const [custom,setCustom] = useState([])
     const [place, setPlace] = useState([])
+    const [loading, setLoading] = useState(true);
 
     //시티 소환
     const [city, setCity] = useState([])
@@ -74,19 +76,25 @@ const TogetherView = () => {
                         // 도시를 찾기 전에 도시 배열이 설정되었는지 확인
                         if (city.length > 0) {
                             const foundCity = city.find(item => item.citySeq === citySeq);
+                            
                             if (foundCity) {
                                 setCityFind(foundCity.cityName)
+                                console.log(cityFind)
+                                setLoading(false)
                             }
                         }
                     }
                 })
                 .catch(e => console.error( e))
-
+                setLoading(false)
             Promise.all(customDTO)
                 .then(responses => setCustom(responses.map(res => res.data)))
                 .catch(e => console.error( e))
         })
-    },[])
+    },[togetherSeq, city])
+
+    //sub를 nday를 기준으로 정렬
+    const sortedSubDTO = [...subDTO].sort((a, b) => a.nday - b.nday)
 
     //버튼누르면 nday받아와
     const [array, setArray] = useState(null)//sub배열
@@ -98,9 +106,9 @@ const TogetherView = () => {
         setArray(index)
     }
     useEffect(() => {
-        subDTO.forEach(item => {
+        sortedSubDTO.forEach(item => {
             if (array !== null && item.placeSw === 0) {
-                const placeL = place.find(p => subDTO[array].placeSeq === p.placeSeq)
+                const placeL = place.find(p => sortedSubDTO[array].placeSeq === p.placeSeq)
                 if(placeL){
                     setClickLat(placeL.latitude)
                     setClickLng(placeL.longitude)
@@ -108,7 +116,7 @@ const TogetherView = () => {
                 }
             }
             if (array !== null && item.placeSw === 1) {
-                const customL = custom.find(c=> subDTO[array].plCustomSeq === c.plCustomSeq)
+                const customL = custom.find(c=> sortedSubDTO[array].plCustomSeq === c.plCustomSeq)
                 if(customL){
                     setClickLat(customL.latitude)
                     setClickLng(customL.longitude)
@@ -127,9 +135,7 @@ const TogetherView = () => {
             <div className={Style.viewInner}>
                 {/* 상단지도/사진 */}
                 <div className={Style.innerTop}>
-                    <div className={Style.innerText}>
-                        {togetherDTO.startDate}~{togetherDTO.endDate} {togetherDTO.title}
-                    </div>
+                    
                     {custom !== null && custom.length > 0 && 
                         (<GoogleMap
                         mapContainerStyle={containerStyle}
@@ -162,11 +168,12 @@ const TogetherView = () => {
                     }
                 </div>
                 <div className={Style.midTitle}>{togetherDTO.title}</div>
-                {place !== null && place.length > 0 ?
+                {
+                place !== null && place.length > 0 ?
                     <div className={Style.midSc}>
-                        <div className={Style.midScTdiv}><div className={Style.midScText}>지역</div> &nbsp; {cityFind}</div>
-                        <div className={Style.midScTdiv}><div className={Style.midScText}>모집인원</div> &nbsp; {togetherDTO.tnum}</div>
-                        <div className={Style.midScTdiv}><div className={Style.midScText}>날짜</div> &nbsp; {togetherDTO.startDate}~{togetherDTO.endDate}</div>
+                        <div className={Style.midScTdiv}><span className={Style.midScText}>지역</span> &nbsp; {cityFind}</div>
+                        <div className={Style.midScTdiv}><span className={Style.midScText}>모집인원</span> &nbsp; {togetherDTO.tnum}</div>
+                        <div className={Style.midScTdiv}><span className={Style.midScText}>날짜</span> &nbsp; {togetherDTO.startDate}~{togetherDTO.endDate}</div>
                     </div>
                     :
                     custom.length > 0 &&
@@ -230,32 +237,52 @@ const TogetherView = () => {
                             </div>
 
                             <div className={Style.togetherSchedule}>
-                                {subDTO.map((item,index) => (
+                                {sortedSubDTO.map((item,index) => (
                                     <button className={
                                         `${Style.subDay} ${array === index ? 
                                                                     Style.selecDay 
                                                                     :
                                                                     ''}`}
                                     onClick={()=>ndayIndex(index)}>
-                                        DAY {item.nday+1}
+                                        DAY {item.nday}
                                     </button>
                                 ))}
                                 {clickAdress !== null && array !== null &&
                                 <div className={Style.scheduleContext}>
                                     <p>{clickAdress}</p>
                                     <br/>
-                                    <p>{subDTO[array].context}</p>
+                                    <p>{sortedSubDTO[array].context}</p>
                                 </div>}
                             </div>
                         </div>
                     </div>
-
+                    {/* 오른쪽 정보 */}
                     <div className={Style.togetherChatDiv}>
-                        <div className={Style.togetherChat}>
-                            
-                        </div>
-                        <div className={Style.togetherTo}>
 
+                            <div className={Style.togetherChatInner}>
+                                <div className={Style.chatProfile}>
+                                    <div className={Style.chatProfileImg}></div>
+                                    <div className={Style.inin}>
+                                        <div className={Style.chatProfileName}>이름</div>
+                                        <div className={Style.chatProfileInfo}>성별.국적</div>
+                                    </div>
+                                    <div className={Style.chatText}>프로필 사진을 클릭해보세요!</div>
+                                </div>
+                                    <div className={Style.hrhr}></div>
+                            </div>
+                            
+                            <div className={Style.togetherChatInner2}>
+                                <div className={Style.chatGoDiv}>
+                                    <button className={Style.chatGo}>채팅하기</button>
+                                </div>
+                            </div>
+                        <div className={Style.togetherTo}>
+                            <p>함께하는 동행</p>
+                            <div className={Style.toGother}>
+                                <div className={Style.toGotherImg}></div> 
+                                <div className={Style.toGotherInfo}>
+                                    <span>이름</span>|<span>성별</span>|<span>국적</span></div>
+                            </div>
                         </div>
                         {/* {togetherSeq}
                         {togetherDTO.title}

@@ -1,3 +1,11 @@
+@keyframes fadeImg {
+    from {opacity: 0;}
+    to {opacity: 0.6;}
+}
+@keyframes scaleImg {
+    from {scale: 0.2;}
+    to {scale: 1;}
+}
 .main {
     width: 1200px;
     margin: 0 auto;
@@ -26,10 +34,94 @@
     border-radius: 7px;
 }
 
+.inPlace::-webkit-scrollbar {
+    width:10px;
+}
+.inPlace::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.inPlace::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 10px;
+}
+
+/* //////////////////////////// */
+/* //////////임지 모달////////// */
+.bgImg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.6;
+    z-index: 1;
+    animation: fadeImg 0.7s;
+    animation-fill-mode: forwards;
+}
+.onImg {
+    width: 50%;
+    position: absolute;
+    box-sizing: border-box;
+    transform: translate(-50%, 0%); 
+    z-index: 2;
+    transform-origin: 0 25%;
+    animation: scaleImg 0.7s;
+    transition: 0.7s;
+    user-select: none;
+    border-radius: 10px;
+}
+/* //////////////////////////// */
+/* ////////////////////모달////////// */
+.bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.6;
+    z-index: 1;
+}
+.onModal {
+    padding: 15px;
+    border-radius: 5%;
+    width: 600px;
+    height: 600px;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 40%; 
+    padding: 20px 10px;
+    box-sizing: border-box;
+    transform: translate(-50%, 0%); 
+    z-index: 2;
+}
+.inPlace {
+    border-radius: 5%;
+    width: 580px;
+    height: 560px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.cusTitle {
+    text-align: center;
+    font-size: 30px;
+    margin: 50px 0;
+}
+.cusAddress {
+    width: 80%;
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    color: gray;
+    background-color: aliceblue;
+    margin: 0 auto;
+}
 /* //////////////////////////// */
 .mapSection {
-    margin: 2.5%;
-    width: 95%;
+    margin: 0 1% -20px 1%;
+    width: 98%;
     height: 280px;
     border-radius: 20px;
     overflow: hidden;
@@ -39,6 +131,11 @@
     overflow: auto;
     overflow-x: hidden;
     max-height: 650px;
+    z-index: -2;
+}
+.hr {
+    height: 0;
+    border-top: 1px solid gray;
 }
 .title {
     font-size: 35px;
@@ -74,6 +171,9 @@
 .whatDaySection {
     padding: 30px 10px;
     margin: 30px 0;
+}
+.plannerText{
+    padding:0 15px;
 }
 .placeContext {
     color: gray;
@@ -139,6 +239,55 @@
     height: 155px;
     border-radius: 15px;
 }
+.imageDiv1 {
+    width: 50%;
+    height: 250px;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.imageDiv1 img{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.7s;
+    z-index: -2;
+}
+.imageDiv2 {
+    width: 70%;
+    height: 250px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+.imageDiv2 img{
+    display: inline-block;
+    margin: 0 0.5%;
+    width: 49%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.7s;
+}
+.imageDiv3 {
+    width: 90%;
+    height: 250px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+.imageDiv3 img{
+    margin: 0 0.5%;
+    display: inline-block;
+    width: 32.3%;
+    height:  100%;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.7s;
+}
 @media (max-width: 1199px) {
     .main {
         width: 100%;
@@ -153,8 +302,20 @@
         color: gray;
         font-size: 17px;
     }
+    .imageDiv1,.imageDiv2,.imageDiv3 {
+        height: 200px;
+    }
+    .onImg {
+        width: 70%;
+    }
 }
 @media (max-width: 754px) {
+    .onModal {
+        width: 95%;
+    }
+    .inPlace {
+        width: 100%;
+    }
     .leftPlace {
         width:100%;
     }
@@ -180,5 +341,20 @@
         font-size: 20px;
         text-align: center;
         margin: 10px 20px 20px 0;
+    }
+    .imageDiv1 {
+        width: 70%;
+        height: 150px;
+    }
+    .imageDiv2 {
+        width: 85%;
+        height: 140px;
+    }
+    .imageDiv3 {
+        width: 100%;
+        height: 110px;
+    }
+    .onImg {
+        width: 90%;
     }
 }
