@@ -43,6 +43,7 @@
 }
 .midScTdiv{
     margin: auto;
+    width: 300px;
 }
 .midScText{
     color: gray;

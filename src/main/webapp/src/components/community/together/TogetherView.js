@@ -178,9 +178,9 @@ const TogetherView = () => {
                     :
                     custom.length > 0 &&
                     <div className={Style.midSc}>
-                        <div className={Style.midScTdiv}><div className={Style.midScText}>지역</div> &nbsp; {custom[0].placeName}</div>
-                        <div className={Style.midScTdiv}><div className={Style.midScText}>모집인원</div> &nbsp; {togetherDTO.tnum}</div>
-                        <div className={Style.midScTdiv}><div className={Style.midScText}>날짜</div> &nbsp; {togetherDTO.startDate}~{togetherDTO.endDate}</div>
+                        <div className={Style.midScTdiv}><span className={Style.midScText}>지역</span> &nbsp; {custom[0].placeName}</div>
+                        <div className={Style.midScTdiv}><span className={Style.midScText}>모집인원</span> &nbsp; {togetherDTO.tnum}</div>
+                        <div className={Style.midScTdiv}><span className={Style.midScText}>날짜</span> &nbsp; {togetherDTO.startDate}~{togetherDTO.endDate}</div>
                     </div>
                 } 
                 <div className={Style.contextDiv}>
@@ -270,7 +270,7 @@ const TogetherView = () => {
                                 </div>
                                     <div className={Style.hrhr}></div>
                             </div>
-                            
+
                             <div className={Style.togetherChatInner2}>
                                 <div className={Style.chatGoDiv}>
                                     <button className={Style.chatGo}>채팅하기</button>

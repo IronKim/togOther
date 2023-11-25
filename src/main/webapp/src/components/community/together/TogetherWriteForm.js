@@ -25,6 +25,11 @@ const PlaceWriteForm = () => {
     const [togetherDTO, setTogetherDTO] = useState({
         togetherSeq:'',
         userSeq: user.userSeq,
+        useremail: user.email,
+        userid: user.id,
+        userName: user.name,
+        userGender: user.gender,
+        userProfileImage: user.profileImage,
         code:1,
         title: '',      //제목
         startDate: nowDay,  //시작날짜
@@ -34,7 +39,10 @@ const PlaceWriteForm = () => {
     });
     const [subDTO,setSubDTO] = useState([])
     
-    const{togetherSeq,userSeq,title,startDate,endDate,context,tnum} = togetherDTO
+    const{togetherSeq,
+          userSeq,useremail,userid,userName,userGender,userProfileImage,
+          title,startDate,endDate,context,tnum} 
+        = togetherDTO
 
     const [contextDiv, setContextDiv] = useState('')
     const [writedateCardFormDiv, setWritedateCardFormDiv] = useState('')
