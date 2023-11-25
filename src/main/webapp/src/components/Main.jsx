@@ -24,6 +24,7 @@ import { LoadScript } from '@react-google-maps/api';
 import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
+import UserRecovery from '../pages/UserRecovery';
 
 const libraries = ["places"];
 
@@ -60,6 +61,7 @@ const Main = ({ showNavbar }) => {
                                 <Mypage />
                             </UserRoute>
                         }/>
+                        <Route path='ID&PasswordRecovery' element={<UserRecovery />} />
                     </Route>
                     <Route path='info'>
                         <Route path='place/:placeSeq' element={ <PlacePage />} />

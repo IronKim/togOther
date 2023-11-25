@@ -35,4 +35,6 @@ public interface UserService {
 
 	public ResponseEntity<String> updatePhone(int userSeq, String updatedPhone);
 
+	public ResponseEntity<String> withdrawalUser(int userSeq);
+
 }

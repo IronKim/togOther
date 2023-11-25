@@ -22,4 +22,6 @@ export const updatePassword = (userSeq, password, updatePassword) => apiClient.p
 
 export const updatePhone = (userSeq, updatePhone) => apiClient.put(`api/user/updatePhone/${userSeq}`, {updatePhone});
 
+export const withdrawalUser = (userSeq) => apiClient.delete(`api/user/withdrawalUser/${userSeq}`);
+
 

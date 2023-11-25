@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../../css/MyPage.module.css';
 import { useUserStore } from '../../stores/mainStore';
-import { smsCertificationRequest, updatePassword, updatePhone, updateProfileText } from '../../api/UserApiService';
+import { smsCertificationRequest, updatePassword, updatePhone, updateProfileText, withdrawalUser } from '../../api/UserApiService';
 
 import { RiSave3Fill } from "react-icons/ri";
 import { GiCancel } from "react-icons/gi";
@@ -10,11 +10,15 @@ import { FaUserCheck } from "react-icons/fa";
 import { FaUserTimes } from "react-icons/fa";
 
 import Swal from 'sweetalert2'; // SweetAlert2 추가
+import { useNavigate } from 'react-router-dom';
+import { wind } from 'fontawesome';
 
 
 const MypageWrite = ({onErrorImg}) => {
 
     const { user } = useUserStore();
+
+    const navigate = useNavigate();
 
     const [isEditing, setEditing] = useState(false);
     const [editedProfileText, setEditedProfileText] = useState(user.profileText);
@@ -244,6 +248,42 @@ const MypageWrite = ({onErrorImg}) => {
           });
     };
 
+    // 회원 탈퇴
+    const withdrawal = () => {
+        Swal.fire({
+            title: '회원 탈퇴',
+            text: '정말 탈퇴하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '탈퇴',
+            cancelButtonText: '취소',
+            allowOutsideClick: false,
+            }).then((result) => {
+            if (result.isConfirmed) {
+
+                withdrawalUser(user.userSeq)
+                .then((response) => {
+                    Swal.fire({
+                        title: '회원 탈퇴',
+                        text: '탈퇴가 완료되었습니다.',
+                        icon: 'success',
+                        timer: 1000,
+                        showConfirmButton: false,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    localStorage.removeItem('accessToken');
+                    localStorage.removeItem('refreshToken');
+                    navigate('/');
+                    window.location.reload();
+                });          
+            }
+        });
+    };
+
     return (
         <div>
                 <p className={styles.tagName}>계정관리</p>
@@ -339,7 +379,7 @@ const MypageWrite = ({onErrorImg}) => {
                                     <button>여행취향 변경</button>
                                     <button>음식취향 변경</button>
                                     <button>mbti 테스트</button>
-                                    <button>회원탈퇴</button>
+                                    <button onClick={withdrawal}>회원탈퇴</button>
                                 </li>
                             </ul>
                         </div>

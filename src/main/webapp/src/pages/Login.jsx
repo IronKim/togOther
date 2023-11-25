@@ -123,6 +123,11 @@ const Login = () => {
     navigate('/user/write');
   };
 
+  const handleRecovery = () => {
+    navigate('/user/ID&PasswordRecovery');
+  };
+
+
   return (
     <div className={styles.container}>
       <div style={{ position: 'relative', maxWidth: 1200 }}>
@@ -142,7 +147,7 @@ const Login = () => {
             </div>
             <div className={styles.inputError}>{passwordError || 'ㅤ'}</div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1em' }}>
-              <span className={styles.LoginBoxText} >아이디 / 비밀번호 찾기</span>
+              <span className={styles.LoginBoxText} onClick={handleRecovery} >아이디 / 비밀번호 찾기</span>
               <span className={styles.LoginBoxText} onClick={handleSignUp}>회원가입</span>
             </div>
             <button className={styles.loginBtn} type="submit" onClick={onsubmit}>

@@ -484,6 +484,28 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	@Override
+	public ResponseEntity<String> withdrawalUser(int userSeq) {
+		
+		try {
+			
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			userRepository.deleteById(userSeq);
+			
+			String responseMessage = "성공적으로 삭제하였습니다.";
+			return ResponseEntity.ok(responseMessage);
+			
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "삭제 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+	
 
 	// 나이가 14세 이상인지 확인하는 함수
 	private boolean isAbove14(LocalDate birthdate) {

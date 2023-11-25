@@ -109,5 +109,11 @@ public class UserController {
 		String updatedPhone = requestBody.get("updatePhone");
 		return userService.updatePhone(userSeq, updatedPhone);
 	}
+	
+	// 회원 탈퇴
+	@DeleteMapping(path = "withdrawalUser/{userSeq}")
+	public ResponseEntity<String> withdrawalUser(@PathVariable int userSeq) {
+		return userService.withdrawalUser(userSeq);
+	}
 
 }
