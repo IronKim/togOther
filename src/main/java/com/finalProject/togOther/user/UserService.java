@@ -29,4 +29,6 @@ public interface UserService {
 
 	public ResponseEntity<String> logoutUser(String refreshToken);
 
+	public ResponseEntity<String> updateProfileText(int userSeq, String updatedProfileText);
+
 }

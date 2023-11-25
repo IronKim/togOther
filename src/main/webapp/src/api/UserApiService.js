@@ -16,5 +16,6 @@ export const smsCertificationRequest = (userPhone) => apiClient.get(`api/user/sm
 
 export const getUserByEmail = (userEmail) => apiClient.get(`api/user/getUserByEmail/${userEmail}`);
 
+export const updateProfileText = (userSeq, profileText) => apiClient.put(`api/user/updateProfileText/${userSeq}`, {profileText});
 
 

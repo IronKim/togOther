@@ -50,7 +50,7 @@ const Main = ({ showNavbar }) => {
             <BrowserRouter>
                 <HeaderComponent />
                 <Routes>
-
+        
                     <Route path='/' element= { <Home />} />
                     <Route path='user'>
                         <Route path='login' element ={ user.name === '' ? <Login /> : <Navigate to={'/'}></Navigate>} />

@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.LoginDTO;
@@ -84,6 +86,13 @@ public class UserController {
 	@GetMapping(path = "getTokenByRefreshToken")
 	public ResponseEntity<Void> getTokenByRefreshToken(@RequestHeader("Refresh-Token") String refreshToken) {
 		return userService.getTokenByRefreshToken(refreshToken);
+	}
+	
+	// 소개글 수정
+	@PutMapping(path = "updateProfileText/{userSeq}")
+	public ResponseEntity<String> updateProfileText(@PathVariable int userSeq, @RequestBody Map<String, String> profileText) {
+		String updatedProfileText = (profileText.get("profileText"));
+		return userService.updateProfileText(userSeq, updatedProfileText);
 	}
 
 }

@@ -23,6 +23,7 @@ import com.finalProject.togOther.dto.LoginDTO;
 import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
+import com.finalProject.togOther.dto.UserDTO;
 import com.finalProject.togOther.repository.RefreshTokenRepository;
 import com.finalProject.togOther.repository.UserRepository;
 import com.finalProject.togOther.security.TokenProvider;
@@ -391,6 +392,34 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	}
+	
+	@Override
+	public ResponseEntity<String> updateProfileText(int userSeq, String updatedProfileText) {
+		
+		try {
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			UserDTO userDTO = UserDTO.toDTO(user);
+			
+			userDTO.setProfileText(updatedProfileText);
+			
+			userRepository.save(User.toEntity(userDTO));
+			
+			String responseMessage = "성공적으로 수정하였습니다.";
+			return ResponseEntity.ok(responseMessage);
+			
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "수정 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+			
+		}
+		
+	}
+	
 
 	// 나이가 14세 이상인지 확인하는 함수
 	private boolean isAbove14(LocalDate birthdate) {

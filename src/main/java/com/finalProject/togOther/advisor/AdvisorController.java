@@ -53,8 +53,8 @@ public class AdvisorController {
 
 	// 아이디에 맞는 유저 불러오기
 	@GetMapping(path = "getUser/{id}")
-	public ResponseEntity<UserDTO> getUserById(@PathVariable String id) {
-		return advisorService.getUserById(id);
+	public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
+		return advisorService.getUserByEmail(email);
 	}
 
 	// 도시 추가
