@@ -9,12 +9,14 @@ import Togother from './Togother';
 import TogoItemList from './TogoItemList';
 import xBut from '../../../assets/image/xBut.png';
 import arrow from '../../../assets/image/arrow.png'
-import { GoogleMap, LoadScript, Autocomplete, GroundOverlay } from '@react-google-maps/api';
+import { GoogleMap, Autocomplete} from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
-
-const libraries = ["places"];
+import sweet from 'sweetalert2';
+import { useUserStore } from '../../../stores/mainStore';
 
 const Form = () => {
+    const {user} = useUserStore();
+
     const today = new Date();
     const year = today.getFullYear();
     const month = (today.getMonth() + 1).toString().padStart(2, '0');
@@ -24,6 +26,10 @@ const Form = () => {
     const navigate = useNavigate()
 
     const toSeq = useRef(0);
+//로그인 안되어 있으면 로그인 창으로
+useEffect(()=>{
+    if(!user.name) navigate(`/user/login`);
+},[])
 //나중에 plannerDTO로 들어갈것들
     const [publicPaln,setPublicPlan] = useState(true)
     //날짜
@@ -55,7 +61,7 @@ const Form = () => {
     //동행리스트
     const [toList,setToList] = useState(0)
     const onToList = (seq) => {
-        setToList(seq)
+        setToList(seq) 
     }
     //플래너 업로드 
     const uploadPlanner = () => {
@@ -67,14 +73,32 @@ const Form = () => {
             else if(subDTO.findIndex(item2 => item2.toNum === item.seq) === -1) delTogo.push(item.seq)
         })
 
-        if(delTogo.length > 0) {
-            if(window.confirm(delTogo.length + 
-                '건의 작성 되지않은 동행이 있습니다. 삭제하고 저장하시겠습니까?')) {
+        if(subDTO.length < 1) {
+            sweet.fire({
+                title: "내용을 작성해주세요.",
+                icon: "warning"
+            })
+        } else if(delTogo.length > 0) {
+            sweet.fire({
+                title: delTogo.length + "건의 작성이 완료 되지 않은 동행이 있습니다.",
+                text: "삭제하시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "예",
+                cancelButtonText: "아니요"
+              }).then((result) => {
+                if (result.isConfirmed) {
                     Promise.all(delTogo.map(item => onToDelete(item)))
-                }else return;
-        }
-
-        let title = `인호의 ${plannerTitle.length > 0 ? //이름 나중에 유저 세션 이름으로
+                    sweet.fire({
+                        title: "삭제가 완료되었습니다.",
+                        icon: "success"
+                    })
+                } 
+              });
+        } else {
+        let title = `${user.name} ${plannerTitle.length > 0 ?
             city.find(item => item.citySeq === plannerTitle[0]).cityName : ''}${
             plannerTitle.length > 1 ? ` 외 ${plannerTitle.length - 1}곳` : ''} 여행 플래너`;
 
@@ -82,7 +106,15 @@ const Form = () => {
         if(plannerTitle.length > 0 ) citySeq = plannerTitle[0];
 
         const planner = {title: title,startDate: startDate,citySeq : citySeq,
-        endDate: endDate,publicPlan : publicPaln ? 0 : 1,hit : 0,likeCnt : 0}
+            userSeq: user.userSeq,
+            useremail: user.email,
+            userid: user.id,
+            userName: user.name,
+            userGender: user.gender,
+            userProfileImage: user.profileImage,
+            endDate: endDate,
+            publicPlan : publicPaln ? 0 : 1,
+            hit : 0,likeCnt : 0}
 
         addPlanner(planner)
         .then(res => {
@@ -120,8 +152,15 @@ const Form = () => {
                 subDTO.filter(item => item.toNum === togo.seq).slice().sort((a, b) => a.nDay - b.nDay)
                 [subDTO.filter(item => item.toNum === togo.seq).length-1].nDay - 1);
 
-                const togoItem = {tnum : togo.tNum,title : togo.title,context : togo.context, startDate: toStartDate,
-                                endDate: toEndDate}
+                const togoItem = {tnum : togo.tNum,title : togo.title,context : togo.context, 
+                    userSeq: user.userSeq,
+                    useremail: user.email,
+                    userid: user.id,
+                    userName: user.name,
+                    userGender: user.gender,
+                    userProfileImage: user.profileImage,
+                    startDate: toStartDate,
+                    endDate: toEndDate}
                 addTogether(togoItem)
                 .then(tores => 
                     subDTO.filter(item2 => item2.toNum === togo.seq).map(item => {
@@ -178,11 +217,17 @@ const Form = () => {
                     .catch(e => console.log(e))
                 })
             })
-            ////
-            alert('등록 완료')
-            navigate(`/community`)
+            //// 
+            window.scrollTo(0, 0);
+            sweet.fire({
+                title: "등록이 완료되었습니다.",
+                icon: "success"
+            }).then(() => {
+                navigate(`/community`);
+            });
         })
         .catch(e => console.log(e))
+        }
     }
     //이미지 업로드
     const [imageDTO, setImageDTO] = useState([]);
@@ -190,8 +235,13 @@ const Form = () => {
     const onImage = (e,nDay) => {
         const files = e.target.files;        
         let image = ''
-        if(files.length > 3) alert('3개 이하로 선택해주세요')
-        else {
+        console.log(files.length)
+        if(files.length > 3) {
+            sweet.fire({
+                title: "3개 이하로 선택해주세요.",
+                icon: "warning"
+            })
+        } else {
             if(imageDTO.findIndex(item => item.nDay === nDay) === -1) {//이미지 파일 올린적 없을때
                 for (let i = 0; i < files.length; i++) {
                     image += URL.createObjectURL(files[i]);
@@ -204,9 +254,11 @@ const Form = () => {
                     image += URL.createObjectURL(files[i]);
                     if(i !== files.length-1) image += ',';
                 }
-                const selectedImages = imageDTO.filter(item => item.nDay !== nDay)
-                selectedImages.push({nDay: nDay, image: image})
-                setImageDTO(selectedImages);
+                if(files.length > 0) {
+                    const selectedImages = imageDTO.filter(item => item.nDay !== nDay)
+                    selectedImages.push({nDay: nDay, image: image})
+                    setImageDTO(selectedImages);
+                }
             }
         }
     };
@@ -388,14 +440,14 @@ const Form = () => {
     return (
         <div>
             <section className={styles.mainSection}>
-            <button onClick={() =>alert(JSON.stringify(dDay))}>nDay 확인</button>
+            {/* <button onClick={() =>alert(JSON.stringify(dDay))}>nDay 확인</button>
             <button onClick={() =>alert(JSON.stringify(subDTO))}>sub json 확인</button>
             <button onClick={() =>alert(JSON.stringify(textDTO))}>text json확인</button>
             <button onClick={() =>alert(JSON.stringify(togoDTO))}>동행 json 확인</button>
-            <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button>
+            <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button> */}
             <section className={styles.topSection}>
             {/* 제목 */}
-            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}인호의 {plannerTitle.length > 0 && 
+            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}{user.name} {plannerTitle.length > 0 && 
             city.find(item => item.citySeq === plannerTitle[0]).cityName}
             {plannerTitle.length > 1 && ' 외 ' + (plannerTitle.length-1) + '곳 '}여행 플래너</div> 
             {/* 달력 */}
@@ -409,7 +461,11 @@ const Form = () => {
             {new Date(endDate).getMonth()+1}월 {new Date(endDate).getDate()}일</p></div>
             <div style={{clear:'both'}}></div>
             {toList === 0 ? <button className={styles.buttons} style={{float:'right'}} onClick={togoDTO.length < 8 ? () => addTo() : () => 
-            alert('생성 가능 개수를 초과하였습니다')}>동행 추가</button> : <button style={{float:'right'}} className={styles.buttons}
+                sweet.fire({
+                    title: "생성 가능 개수를 초과하였습니다.",
+                    icon: "warning"
+                })
+            }>동행 추가</button> : <button style={{float:'right'}} className={styles.buttons}
             onClick={()=>onToList(0)}>동행 목록</button>}
             <div style={{clear:'both'}}></div>
             {/* 공개 비공개 토글 */}

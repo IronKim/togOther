@@ -38,10 +38,11 @@ const WhatDay = (props) => {
             }
             {
                 subItem.map(sub => <div>
-                    <div className={styles.subItem} 
+                    <div className={`${styles.subItem} scrolls`} 
+                        id={sub.subSeq}
                         style={{borderColor: subHover === sub.subSeq ? '#1F5FAB' : 'lightGray'}}
                         onMouseOver={() => onMouseOn(sub.subSeq)} onMouseOut={() => onMouseOff()}
-                        onClick={() => onAdd(sub.placeSw,sub.placeSw === 0 ? sub.placeSeq : sub.plCustomSeq)}
+                        onClick={() => onAdd(sub.placeSw,sub.placeSw === 0 ? sub.placeSeq : sub.plCustomSeq,sub.subSeq)}
                     >
                     <div className={styles.leftPlace}>
                     <div className={styles.times}>{sub.startTime}시 - {sub.endTime}시</div>

@@ -30,11 +30,7 @@ const View = () => {
     const [img, setImg] = useState(false)
     const [link,setLink] = useState('')
     const [mouse,setMouse] = useState({x:0,y:0})
-    const onAdd = (sw,seq) => {
-        setAdd(true)
-        setImg(false)
-        setModal({sw,seq})
-    }
+
     const onImg = (e,li) => {
         setAdd(false)
         setImg(true)
@@ -62,9 +58,23 @@ const View = () => {
         } else {
             console.error('Geolocation is not supported by this browser.');
         }
+        const listSec = document.getElementById('listSection')
+
+        listSec.addEventListener('scroll', handleScroll);
+
+        return () => {
+            listSec.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 ////////////////
     const [subHover,setSubHover] = useState(-1)
+    const onAdd = (sw,seq,subSeq) => {
+        if(subSeq === subHover) {
+            setAdd(true)
+            setImg(false)
+            setModal({sw,seq})
+        }
+    }
 
     const onMouseOn = (seq) => {
         const xy = subItem.find(item => item.subSeq === seq)
@@ -85,6 +95,18 @@ const View = () => {
 
         setSubHover(seq)
     }
+//////////////스크롤 매커니즘////////////////
+const handleScroll = () => {
+    const sub = document.querySelectorAll('.scrolls');
+
+    sub.forEach(item => {
+        const sc = item.getBoundingClientRect().top;
+        if(250 < sc && sc < 600) {
+            onMouseOn(parseInt(item.id))
+        }
+    });
+};
+////////////////////////////////////////////
     const onMouseOff = () => {
         setSubHover(-1)
     }
@@ -125,6 +147,16 @@ const View = () => {
         week===4 ? '목' : week===5 ? '금' : week===6 ? '토' : ''})`;
     }
     //***************************
+
+    useEffect(()=>{
+        const listSec = document.getElementById('listSection')
+        
+        listSec.addEventListener('scroll', handleScroll);
+    
+        return () => {
+            listSec.removeEventListener('scroll', handleScroll);
+        };
+    },[planner,subItem,custom])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -212,7 +244,7 @@ const View = () => {
                 }
                 </GoogleMap>
             </section>
-            <section className={styles.listSection}>
+            <section className={styles.listSection} id='listSection'>
                     {
                         whatDay.map(item => 
                             <WhatDay key={item} getToday={getToday} nDay={item} 
