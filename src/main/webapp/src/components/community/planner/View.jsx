@@ -2,9 +2,12 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPlannerView } from '../../../api/PlannerApiService';
 import { getPlace,getCustomPlace } from '../../../api/PlaceApiService';
+import { getUserByEmail } from '../../../api/UserApiService';
 import { GoogleMap,Marker } from '@react-google-maps/api';
 
 import styles from '../../../css/plannerView.module.css'
+import plannerImg from '../../../assets/image/planner.png'
+import profileImg from '../../../assets/image/profile_thumb.png'
 import WhatDay from './WhatDay';
 import Modal from './Modal';
 import ImgModal from './ImgModal';
@@ -113,6 +116,7 @@ const handleScroll = () => {
 
     const { plannerSeq } = useParams();
     const [planner,setPlanner] = useState()
+    const [userDTO,setUserDTO] = useState();
     const [plannerImage,setPlannerImage] = useState([])
     const [plannerText,setPlannerText] = useState([])
     const [subItem,setSubItem] = useState([])
@@ -146,6 +150,23 @@ const handleScroll = () => {
         return `${month}월 ${day}일 (${week===0 ? '일' : week===1 ? '월' : week===2 ? '화' : week===3 ? '수' :
         week===4 ? '목' : week===5 ? '금' : week===6 ? '토' : ''})`;
     }
+    const getAge = (bDay) => {
+        const today = new Date();
+        const birthDate = new Date(bDay);
+      
+        console.log(birthDate.getFullYear())
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        
+      
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+
+
+        const decade = Math.floor(age / 10) * 10;
+        return `${decade}대`;
+    }
     //***************************
 
     useEffect(()=>{
@@ -162,6 +183,8 @@ const handleScroll = () => {
         const fetchData = async () => {
           try {
             const res = await getPlannerView(plannerSeq);
+            const us = await getUserByEmail(res.data.planner.useremail)
+            setUserDTO(us.data)
             setPlanner(res.data.planner);
             setPlannerImage(res.data.plannerImage);
             setPlannerText(res.data.plannerText);
@@ -202,11 +225,28 @@ const handleScroll = () => {
                 img && <ImgModal onClose={onClose} link={link} mouse={mouse}/>
             }
             <div className={styles.title}>{planner && planner.title}</div>
-            <div className={styles.timeDate}>{planner && 
-                <div>{planner.startDate.split('-')[1]}/{planner.startDate.split('-')[2]}&nbsp;&nbsp;-&nbsp;&nbsp;
+            {planner && 
+            <div className={styles.userProfile}>
+                <img src={planner.userProfileImage}></img>
+                <div className={styles.profiles}>
+                    <div className={styles.proTop}>
+                        {planner.userName}
+                    </div>
+                    <div className={styles.proBot}>
+                        {planner.userGender === 'M' ? '남성' : '여성'} | {getAge(userDTO.birthday)} | {userDTO.national}
+                    </div>
+                </div>
+            </div>
+            }
+            <div style={{clear:'left'}}/>
+            <div className={styles.timeDate}>
+                {planner && 
+                <div> <img src={plannerImg}/>&nbsp;&nbsp;{planner.startDate.split('-')[1]}/
+                {planner.startDate.split('-')[2]}&nbsp;&nbsp;-&nbsp;&nbsp;
                     {planner.endDate.split('-')[1]}/{planner.endDate.split('-')[2]}
                 </div> }
             </div>
+                
             <section className={styles.mapSection}>
                 <GoogleMap
                     mapContainerStyle={containerStyle}

@@ -138,18 +138,63 @@
     border-top: 1px solid gray;
 }
 .title {
+    float: left;
     font-size: 35px;
     padding: 10px;
+    max-width: 60%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .timeDate {
-    float: right;
-    border-radius: 15px;
-    border: 3px solid lightgray;
+    float: left;
     padding: 5px 10px;
-    color: darkgray;
+    color: gray;
     font-size: 25px;
     text-align: center;
     margin: 0 20px 20px 0;
+}
+.timeDate div img {
+    vertical-align: bottom;
+    width: 30px;
+}
+.userProfile {
+    float: right;
+    margin-top: 10px;
+    margin-right: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 280px;
+    height: 90px;
+    padding: 5px;
+}
+.userProfile img {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 15px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.profiles {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(100% - 80px);
+}
+.proTop {
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    border-bottom: 2px solid whitesmoke;
+    height: 40px;
+}
+.proBot {
+    width: 100%;
+    height: 39px;
+    padding: 15px 0;
+    font-size: 13px;
+    color:darkgray;
+    text-align: center;
 }
 .nDay {
     border-radius: 30px;
@@ -333,6 +378,7 @@
     }
     .title {
         margin-top: 20px;
+        max-width: 100%;
         font-size: 25px;
         text-align: center;
     }
@@ -341,6 +387,10 @@
         font-size: 20px;
         text-align: center;
         margin: 10px 20px 20px 0;
+    }
+    .timeDate div img {
+        vertical-align: bottom;
+        width: 25px;
     }
     .imageDiv1 {
         width: 70%;
@@ -356,5 +406,16 @@
     }
     .onImg {
         width: 90%;
+    }
+    .userProfile {
+        margin-top: 25px;
+        width: 40%;
+        height: 90px;
+    }
+}
+@media (max-width: 500px) {
+    .userProfile {
+        margin: 5px 2%;
+        width: 96%;
     }
 }
