@@ -20,7 +20,9 @@ export const getPackageByCitySeq = (citySeq) => apiClient.get(`/api/advisor/getP
 
 export const addPackage = (tourPackage) => apiClient.put(`/api/advisor/addPackage`, tourPackage); 
 
-export const updatePackage = (tourPackage) => apiClient.put(`/api/advisor/updatePackage`, tourPackage); 
+export const updatePackage = (tpSeq, tourPackage) => apiClient.put(`/api/advisor/updatePackage${tpSeq}`, tourPackage); 
+
+export const getPackageDetailByTpSeq = (tqSeq) => apiClient.get(`/api/advisor/getPackageDetailByTpSeq/${tqSeq}`);
 
 export const addPackageDetail = (tourPackageDetail) => apiClient.put(`/api/advisor/addPackageDetail`, tourPackageDetail); 
 

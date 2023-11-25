@@ -5,7 +5,7 @@ import styles from '../../css/advisor.module.css';
 import noImage from '../../assets/image/no_image.png';
 import { addPlace, updatePlace } from '../../api/AdvisorApiService';
 
-const AdvisorPlaceForm = ({selectedPlace,onInputPlace,getPlaceList, onTagChange, onErrorImg}) => {
+const AdvisorPlaceForm = ({selectedPlace, onInputPlace, getPlaceList, onTagChange, onErrorImg}) => {
     
     const {placeSeq, citySeq, code, name,address,longitude,latitude,image,subImage1,subImage2,context1,context2,context3,likeCnt,tag} = selectedPlace;
 

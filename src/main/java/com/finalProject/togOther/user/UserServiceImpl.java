@@ -44,14 +44,14 @@ public class UserServiceImpl implements UserService {
 	@Value("${iamport.api.secret}")
 	private String apiSecret;
 	
-	@Value("${sms.APIKey}")
-	private String APIKey;
-	
-	@Value("${sms.secretKey}")
-	private String secretKey;
-	
-	@Value("${sms.fromNumber}")
-	private String fromNumber;
+//	@Value("${sms.APIKey}")
+//	private String APIKey;
+//	
+//	@Value("${sms.secretKey}")
+//	private String secretKey;
+//	
+//	@Value("${sms.fromNumber}")
+//	private String fromNumber;
 
 	private UserRepository userRepository;
 	
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 	
 	private TokenProvider tokenProvider;
 	
-	private DefaultMessageService messageService;
+//	private DefaultMessageService messageService;
 
 
 	public UserServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository,
@@ -104,40 +104,46 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ResponseEntity<String> smsCertificationRequest(String userPhone) {
-		
-		try {
-			
-			boolean result = isUserExistsByPhone(userPhone).getBody();
-			
-			// 해당 핸드폰으로 가입되어있지 않을땐 ssodto를 넘겨주고 가입이 되어 있으면 서버에러를 띄워줌
-			if (result) {
-				return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
-			}
-			
-			if(messageService == null)
-				messageService = NurigoApp.INSTANCE.initialize(APIKey, secretKey, "https://api.coolsms.co.kr");
-			
-			Message message = new Message();
-			
-			String code = randomRange(6);
-						
-	        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-	        message.setFrom(fromNumber);
-	        message.setTo(userPhone);
-	        message.setText("[togOther] 문자 본인인증 서비스 : 인증번호는 " + "[" + code + "]" + " 입니다.");
-
-	        SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
-       
-	        return ResponseEntity.ok(code);
-	        
-		} catch (Exception e) {
-			
-			String errorMessage = "인증번호 발송중 오류가 발생했습니다.";
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
-			
-		}
-
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
+//	@Override
+//	public ResponseEntity<String> smsCertificationRequest(String userPhone) {
+//		
+//		try {
+//			
+//			boolean result = isUserExistsByPhone(userPhone).getBody();
+//			
+//			// 해당 핸드폰으로 가입되어있지 않을땐 ssodto를 넘겨주고 가입이 되어 있으면 서버에러를 띄워줌
+//			if (result) {
+//				return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+//			}
+//			
+//			if(messageService == null)
+//				messageService = NurigoApp.INSTANCE.initialize(APIKey, secretKey, "https://api.coolsms.co.kr");
+//			
+//			Message message = new Message();
+//			
+//			String code = randomRange(6);
+//						
+//	        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+//	        message.setFrom(fromNumber);
+//	        message.setTo(userPhone);
+//	        message.setText("[togOther] 문자 본인인증 서비스 : 인증번호는 " + "[" + code + "]" + " 입니다.");
+//
+//	        SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
+//       
+//	        return ResponseEntity.ok(code);
+//	        
+//		} catch (Exception e) {
+//			
+//			String errorMessage = "인증번호 발송중 오류가 발생했습니다.";
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+//			
+//		}
+//
+//	}
 
 	// 사용자의 삭제 서비스
 	@Override

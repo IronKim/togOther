@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AdvisorCityList = ({selectedCountry, cityList, selectCity,selectedCity}) => {
+const AdvisorCityList = ({selectedCountry, cityList, selectCity}) => {
 
     return (
         <div>

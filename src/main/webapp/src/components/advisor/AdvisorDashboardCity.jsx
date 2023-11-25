@@ -255,7 +255,7 @@ const AdvisorDashboardCity = () => {
                     }
                     
                     <AdvisorCityList selectedCountry={selectedCountry} cityList={cityList.filter(item => item.countryName === selectedCountry.countryName)} selectCity={selectCity}
-                         selectedCity={selectedCity}  /> 
+                        selectedCity={selectedCity} /> 
                 </div>
                 {
                     selectedCity.citySeq !== '' ? <AdvisorCityForm selectedCity={selectedCity} onInputCity={onInputCity} getCityList={getCityList} 
