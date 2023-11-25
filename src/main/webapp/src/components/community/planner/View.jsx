@@ -30,11 +30,7 @@ const View = () => {
     const [img, setImg] = useState(false)
     const [link,setLink] = useState('')
     const [mouse,setMouse] = useState({x:0,y:0})
-    const onAdd = (sw,seq) => {
-        setAdd(true)
-        setImg(false)
-        setModal({sw,seq})
-    }
+
     const onImg = (e,li) => {
         setAdd(false)
         setImg(true)
@@ -72,6 +68,13 @@ const View = () => {
     }, []);
 ////////////////
     const [subHover,setSubHover] = useState(-1)
+    const onAdd = (sw,seq,subSeq) => {
+        if(subSeq === subHover) {
+            setAdd(true)
+            setImg(false)
+            setModal({sw,seq})
+        }
+    }
 
     const onMouseOn = (seq) => {
         const xy = subItem.find(item => item.subSeq === seq)
@@ -98,7 +101,7 @@ const handleScroll = () => {
 
     sub.forEach(item => {
         const sc = item.getBoundingClientRect().top;
-        if(300 < sc && sc < 550) {
+        if(250 < sc && sc < 600) {
             onMouseOn(parseInt(item.id))
         }
     });
