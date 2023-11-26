@@ -22,6 +22,10 @@ export const updatePassword = (userSeq, password, updatePassword) => apiClient.p
 
 export const updatePhone = (userSeq, updatePhone) => apiClient.put(`api/user/updatePhone/${userSeq}`, {updatePhone});
 
+export const updateLikingTrip = (userSeq, tripLiking) => apiClient.put(`api/user/updateLikingTrip/${userSeq}`, {tripLiking});
+
+export const updateLikingFood = (userSeq, foodLiking) => apiClient.put(`api/user/updateLikingFood/${userSeq}`, {foodLiking});
+
 export const withdrawalUser = (userSeq) => apiClient.delete(`api/user/withdrawalUser/${userSeq}`);
 
 

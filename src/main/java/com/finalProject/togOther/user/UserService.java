@@ -34,7 +34,12 @@ public interface UserService {
 	public ResponseEntity<String> updatePassword(int userSeq, String pwd, String updatedpwd);
 
 	public ResponseEntity<String> updatePhone(int userSeq, String updatedPhone);
+	
+	public ResponseEntity<String> updateLikingTrip(int userSeq, String updatedTripLiking);
+	
+	public ResponseEntity<String> updateLikingFood(int userSeq, String updatedFoodLiking);
 
 	public ResponseEntity<String> withdrawalUser(int userSeq);
+
 
 }

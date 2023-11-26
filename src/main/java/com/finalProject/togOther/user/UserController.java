@@ -110,6 +110,20 @@ public class UserController {
 		return userService.updatePhone(userSeq, updatedPhone);
 	}
 	
+	// 여행취향 수정
+	@PutMapping(path = "updateLikingTrip/{userSeq}")
+	public ResponseEntity<String> updateLikingTrip(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
+		String updatedTripLiking = requestBody.get("tripLiking");
+		return userService.updateLikingTrip(userSeq, updatedTripLiking);
+	}
+	
+	// 음식취향 수정
+	@PutMapping(path = "updateLikingFood/{userSeq}")
+	public ResponseEntity<String> updateLikingFood(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
+		String updatedFoodLiking = requestBody.get("foodLiking");
+		return userService.updateLikingFood(userSeq, updatedFoodLiking);
+	}
+	
 	// 회원 탈퇴
 	@DeleteMapping(path = "withdrawalUser/{userSeq}")
 	public ResponseEntity<String> withdrawalUser(@PathVariable int userSeq) {

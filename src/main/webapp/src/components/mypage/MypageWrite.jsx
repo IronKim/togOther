@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../../css/MyPage.module.css';
 import { useUserStore } from '../../stores/mainStore';
-import { smsCertificationRequest, updatePassword, updatePhone, updateProfileText, withdrawalUser } from '../../api/UserApiService';
+import { smsCertificationRequest, updateLikingFood, updateLikingTrip, updatePassword, updatePhone, updateProfileText, withdrawalUser } from '../../api/UserApiService';
 
 import { RiSave3Fill } from "react-icons/ri";
 import { GiCancel } from "react-icons/gi";
@@ -11,8 +11,6 @@ import { FaUserTimes } from "react-icons/fa";
 
 import Swal from 'sweetalert2'; // SweetAlert2 추가
 import { useNavigate } from 'react-router-dom';
-import { wind } from 'fontawesome';
-
 
 const MypageWrite = ({onErrorImg}) => {
 
@@ -22,6 +20,8 @@ const MypageWrite = ({onErrorImg}) => {
 
     const [isEditing, setEditing] = useState(false);
     const [editedProfileText, setEditedProfileText] = useState(user.profileText);
+    let likingFood = user.likingFood; // 음식 취향
+    let likingTrip = user.likingTrip; // 여행 취향
 
     const [year, month, day] = user.birthday.split('-');
 
@@ -48,7 +48,11 @@ const MypageWrite = ({onErrorImg}) => {
             user.profileText = editedProfileText;
         })
         .catch((err) => {
-            console.log(err);
+            Swal.fire({
+                title: '소개글 변경 실패',
+                text: err.response.data,
+                icon: 'error',
+            });
         });
 
         
@@ -116,8 +120,6 @@ const MypageWrite = ({onErrorImg}) => {
     
         if (formValues) {
             Swal.fire('비밀번호가 변경되었습니다.', '', 'success');
-        } else {
-            Swal.fire('비밀번호 변경이 취소되었습니다.', '', 'info');
         }
     };
 
@@ -272,7 +274,11 @@ const MypageWrite = ({onErrorImg}) => {
                     });
                 })
                 .catch((error) => {
-                    console.log(error);
+                    Swal.fire({
+                        title: '회원 탈퇴 실패',
+                        text: error.response.data,
+                        icon: 'error',
+                    });
                 })
                 .finally(() => {
                     localStorage.removeItem('accessToken');
@@ -282,6 +288,190 @@ const MypageWrite = ({onErrorImg}) => {
                 });          
             }
         });
+    };
+
+    const likingFoodChange = () => {
+        Swal.fire({
+            title: '음식 취향 변경',
+            html:
+                `
+                <div>
+                    <div>
+                        <p class='tagP'>(다중선택가능)</p>
+                    </div>
+        
+                    <p>여행은 술과 함께 즐겨요🍷&nbsp;<input type='checkbox' value='펍' ${likingFood?.includes('펍') ? 'checked' : ''} /></p>
+                    <p>달달한 디저트를 즐겨 먹어요🥐&nbsp;<input type='checkbox' value='디저트' ${likingFood?.includes('디저트') ? 'checked' : ''} /></p>
+                    <p>한식없이는 못 살아요~🍚&nbsp;<input type='checkbox'  value='한식' ${likingFood?.includes('한식') ? 'checked' : ''} /></p>
+                    <p>분위기 좋게 양식?🍝&nbsp;<input type='checkbox' value='양식' ${likingFood?.includes('양식') ? 'checked' : ''} /></p>
+                    <p>니하오?중식!&nbsp;🥮<input type='checkbox' value='중식'  ${likingFood?.includes('중식') ? 'checked' : ''} /></p>
+                    <p>초밥 등 일식은 어때?&nbsp;🍣<input type='checkbox'  value='일식' ${likingFood?.includes('일식') ? 'checked' : ''} /></p>
+                    <p>현지에서는 로컬음식과 함께!🌮&nbsp;<input type='checkbox'  value='로컬' ${likingFood?.includes('로컬') ? 'checked' : ''} /></p>
+                    <p>저는 비건입니다~🥬&nbsp;<input type='checkbox' value='비건' ${likingFood?.includes('비건') ? 'checked' : ''} /> </p>
+                    <p>저는 육식공룡이에요!🍖&nbsp;<input type='checkbox'  value='육류' ${likingFood?.includes('육류') ? 'checked' : ''} /></p>
+                    <p>바닷속의 맛! 해산물 마니아! &nbsp;🦪<input type='checkbox' value='해산물' ${likingFood?.includes('해산물') ? 'checked' : ''} /></p>
+                    <p>후루룩~! 면을 좋아해요~🍜&nbsp;<input type='checkbox' value='면류' ${likingFood?.includes('면류') ? 'checked' : ''} /></p>
+                    <p>한국사람은 밥심!&nbsp;🥘<input type='checkbox'  value='밥류' ${likingFood?.includes('밥류') ? 'checked' : ''} /></p>
+                    <p>국이 없으면 수저를 들지않아요!🍲&nbsp;<input type='checkbox'  value='국류' ${likingFood?.includes('국류') ? 'checked' : ''} /></p>
+                    <p>무엇이든 상관 없이 잘 먹지요~😋&nbsp;<input type='checkbox' value='기타'${likingFood?.includes('기타') ? 'checked' : ''} /></p>
+                </div>`,
+            showCancelButton: true,
+            confirmButtonText: '변경',
+            cancelButtonText: '취소',
+            allowOutsideClick: false,
+            didOpen: (modalElement) => {
+                
+                const allPTags = modalElement.querySelectorAll('p');
+                const allcheckbox = modalElement.querySelectorAll('input[type="checkbox"]');
+                
+
+                allcheckbox.forEach((checkbox) => {
+                    checkbox.style.transform = 'scale(1.5)';
+
+                    checkbox.addEventListener('change', () => {
+                        
+                        const updatedFood = updateCheckboxValue(likingFood, checkbox.value);
+
+                        likingFood = updatedFood;
+
+                    });
+                });
+
+                if (window.innerWidth <= 1199) {
+                    // 화면 폭이 1199px 이하인 경우에만 적용되는 스타일 설정
+                    allPTags.forEach((pTag) => {
+                        pTag.style.fontSize = '21px';
+                    });
+                }else {
+                    allPTags.forEach((pTag) => {
+                        pTag.style.fontSize = '30px';
+                        pTag.style.marginTop = '2px';
+                        
+                      });
+                }
+
+                modalElement.querySelector('.tagP').style.fontSize = '40px';
+              },
+            }).then((result) => {
+            if (result.isConfirmed) {
+                user.likingFood = likingFood;
+                
+                updateLikingFood(user.userSeq, likingFood)
+                .then((response) => {
+                    Swal.fire({
+                        title: '음식 취향 변경 성공',
+                        icon: 'success',
+                        showConfirmButton: false,
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        title: '음식 취향 변경 실패',
+                        text: error.response.data,
+                        icon: 'error',
+                    });
+                });
+            }else {
+                likingFood = user.likingFood;
+            }
+        });
+    }
+
+    const likingTripChange = () => {
+        Swal.fire({
+            title: '여행 취향 변경',
+            html:
+                `          
+                <div>
+                    <div>
+                        <p class='tagP'>(다중선택가능)</p>
+                    </div>
+        
+                    <p>자연에서 느끼는 힐링~🌱&nbsp;<input type='checkbox' value='자연' ${likingTrip?.includes('자연') ? 'checked' : ''} /></p>
+                    <p>각지의 문화를 느껴요&nbsp;🧑‍🤝‍🧑&nbsp;<input type='checkbox' value='문화' ${likingTrip?.includes('문화') ? 'checked' : ''} /></p>
+                    <p>여행은 무조건 푹 쉬어야지요😴&nbsp;<input type='checkbox'  value='휴양' ${likingTrip?.includes('휴양') ? 'checked' : ''} /></p>
+                    <p>미술,전시를 즐기는 문화인🖼️&nbsp;<input type='checkbox' value='전시' ${likingTrip?.includes('전시') ? 'checked' : ''} /></p>
+                    <p>쇼핑하며 플렉스!&nbsp;🎁<input type='checkbox' value='쇼핑'  ${likingTrip?.includes('쇼핑') ? 'checked' : ''} /></p>
+                    <p>핫플만 찾아 다니는 인싸!🎉<input type='checkbox'  value='핫플' ${likingTrip?.includes('핫플') ? 'checked' : ''} /></p>
+                    <p>액티비티 좋아하시나요..?🥽&nbsp;<input type='checkbox'  value='활동' ${likingTrip?.includes('활동') ? 'checked' : ''} /></p>
+                    <p>신나는 놀이기구를 타볼까요?🎪&nbsp;<input type='checkbox' value='테마' ${likingTrip?.includes('테마') ? 'checked' : ''} /> </p>
+                </div>`,
+            showCancelButton: true,
+            confirmButtonText: '변경',
+            cancelButtonText: '취소',
+            allowOutsideClick: false,
+            didOpen: (modalElement) => {
+                
+                const allPTags = modalElement.querySelectorAll('p');
+                const allcheckbox = modalElement.querySelectorAll('input[type="checkbox"]');
+                
+
+                allcheckbox.forEach((checkbox) => {
+                    checkbox.style.transform = 'scale(1.5)';
+
+                    checkbox.addEventListener('change', () => {
+                        
+                        const updatedTrip = updateCheckboxValue(likingTrip, checkbox.value);
+
+                        likingTrip = updatedTrip;
+
+                    });
+                });
+
+                if (window.innerWidth <= 1199) {
+                    // 화면 폭이 1199px 이하인 경우에만 적용되는 스타일 설정
+                    allPTags.forEach((pTag) => {
+                        pTag.style.fontSize = '21px';
+                    });
+                }else {
+                    allPTags.forEach((pTag) => {
+                        pTag.style.fontSize = '30px';
+                        pTag.style.marginTop = '2px';
+                        
+                      });
+                }
+
+                modalElement.querySelector('.tagP').style.fontSize = '40px';
+              },
+            }).then((result) => {
+            if (result.isConfirmed) {
+                user.likingTrip = likingTrip;
+                
+                updateLikingTrip(user.userSeq, likingTrip)
+                .then((response) => {
+                    Swal.fire({
+                        title: '여행 취향 변경 성공',
+                        icon: 'success',
+                        showConfirmButton: false,
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        title: '여행 취향 변경 실패',
+                        text: error.response.data,
+                        icon: 'error',
+                    });
+                });
+            }else {
+                likingTrip = user.likingTrip;
+            }
+        });
+    }
+
+    // 중복된 값을 처리하고 업데이트
+    const updateCheckboxValue = (existingValues, value) => {
+        const values = existingValues ? existingValues.split(',') : [];
+
+        // 중복 값이 이미 있는지 확인
+        if (values.includes(value)) {
+            // 이미 있는 경우 해당 값 제거
+            const updatedValues = values.filter((v) => v !== value);
+            return updatedValues.join(',');
+        } else {
+            // 중복되지 않는 경우 추가
+            const updatedValues = [...values, value];
+            return updatedValues.join(',');
+        }
     };
 
     return (
@@ -375,9 +565,9 @@ const MypageWrite = ({onErrorImg}) => {
                             <ul>
                                 <li>
                                     <button onClick={passwordChange}>비밀번호 변경</button>
-                                    <button onClick={phoneChange}>휴대폰번호 변경</button>
-                                    <button>여행취향 변경</button>
-                                    <button>음식취향 변경</button>
+                                    <button onClick={phoneChange}>{user.phone === '' || user.phone === null ? '휴대폰 인증하기' : '휴대폰번호 변경'}</button>
+                                    <button onClick={likingTripChange}>여행취향 변경</button>
+                                    <button onClick={likingFoodChange}>음식취향 변경</button>
                                     <button>mbti 테스트</button>
                                     <button onClick={withdrawal}>회원탈퇴</button>
                                 </li>
