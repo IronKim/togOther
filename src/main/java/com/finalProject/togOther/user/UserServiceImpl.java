@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -28,13 +30,16 @@ import com.finalProject.togOther.repository.RefreshTokenRepository;
 import com.finalProject.togOther.repository.UserRepository;
 import com.finalProject.togOther.security.TokenProvider;
 
+import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 
+@Slf4j
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -63,14 +68,17 @@ public class UserServiceImpl implements UserService {
 	private TokenProvider tokenProvider;
 	
 	private DefaultMessageService messageService;
+	
+	private JavaMailSender javaMailSender;
 
 
 	public UserServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository,
-			PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
+			PasswordEncoder passwordEncoder, TokenProvider tokenProvider, JavaMailSender javaMailSender) {
 		this.userRepository = userRepository;
 		this.refreshTokenRepository = refreshTokenRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.tokenProvider = tokenProvider;
+		this.javaMailSender = javaMailSender;
 	}
 
 	// 사용자 추가 서비스
@@ -496,6 +504,36 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public ResponseEntity<String> recoveryPassword(int userSeq,String updatedpwd) {
+		
+		try {
+			
+			if(updatedpwd.length() < 4 ||updatedpwd.length() > 20) {
+				throw new Exception();
+			}
+			
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			UserDTO userDTO = UserDTO.toDTO(user);
+			
+			userDTO.setPwd(passwordEncoder.encode(updatedpwd));
+			
+			userRepository.save(User.toEntity(userDTO));
+			
+			String responseMessage = "성공적으로 수정하였습니다.";
+			return ResponseEntity.ok(responseMessage);
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "수정 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+		
+	}
+	
+	@Override
 	public ResponseEntity<String> updatePhone(int userSeq, String updatedPhone) {
 
 		try {
@@ -588,6 +626,70 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	}
+	
+	
+	@Override
+	public ResponseEntity<Map<String,String>> sendEmail(String email) {
+		
+		MimeMessage message = javaMailSender.createMimeMessage();
+
+	    try{
+	    	
+	    	 Optional<User> userOptional = userRepository.findByEmail(email);
+	    	 
+	    	 userOptional.orElseThrow();
+	    	 
+	    	 String seq = String.valueOf(userOptional.get().getUserSeq());
+	    	
+	    	 MimeMessageHelper messageHelper = new MimeMessageHelper(message, false, "UTF-8");
+	    	 
+	    	 String code = randomRange(6);
+	    	 
+	         // 1. 메일 수신자 설정
+	         
+	         messageHelper.setTo(email);
+
+	         // 2. 메일 제목 설정
+	         messageHelper.setSubject("[togOther] 인증코드 발급");
+
+	         // 3. 메일 내용 설정
+	         // HTML 적용됨
+	         String content = "<!DOCTYPE html>\r\n"
+	         		+ "\r\n"
+	         		+ "<body>\r\n"
+	         		+ "<div style=\"margin:100px;\">\r\n"
+	         		+ "    <h1> 안녕하세요.</h1>\r\n"
+	         		+ "    <h1> 여행일정 관리 및 동행 모집 플랫폼 togOther 입니다.</h1>\r\n"
+	         		+ "    <br>\r\n"
+	         		+ "    <p> 아래 코드를 인증번호입력 창으로 돌아가 입력해주세요.</p>\r\n"
+	         		+ "    <br>\r\n"
+	         		+ "\r\n"
+	         		+ "    <div align=\"center\" style=\"border:1px solid black; font-family:verdana;\">\r\n"
+	         		+ "        <h3 style=\"color:blue\">  인증 코드 입니다. </h3>\r\n"
+	         		+ "        <p style=\"font-size:130%\">"+code+"</p>\r\n"
+	         		+ "    </div>\r\n"
+	         		+ "    <br/>\r\n"
+	         		+ "</div>\r\n"
+	         		+ "\r\n"
+	         		+ "</body>\r\n"
+	         		+ "</html>";
+	         messageHelper.setText(content,true);
+
+	         // 4. 메일 전송
+	         javaMailSender.send(message);
+	         
+	         Map<String,String> map = new HashMap<String, String>();
+	         
+	         map.put("code",code);
+	         map.put("userSeq", seq);
+	         
+	         return ResponseEntity.ok(map);
+	    } catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	    	
+	    }
+	}
+	
 	
 	@Override
 	public ResponseEntity<String> withdrawalUser(int userSeq) {

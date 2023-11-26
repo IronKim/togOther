@@ -22,6 +22,8 @@ export const updateProfileText = (userSeq, profileText) => apiClient.put(`api/us
 
 export const updatePassword = (userSeq, password, updatePassword) => apiClient.put(`api/user/updatePassword/${userSeq}`, {password, updatePassword});
 
+export const recoveryPassword = (userSeq, updatePassword) => apiClient.put(`api/user/recoveryPassword/${userSeq}`, { updatePassword});
+
 export const updatePhone = (userSeq, updatePhone) => apiClient.put(`api/user/updatePhone/${userSeq}`, {updatePhone});
 
 export const updateLikingTrip = (userSeq, tripLiking) => apiClient.put(`api/user/updateLikingTrip/${userSeq}`, {tripLiking});
@@ -33,5 +35,7 @@ export const withdrawalUser = (userSeq) => apiClient.delete(`api/user/withdrawal
 export const isUserExistsByPhone = (phone) => apiClient.post(`api/user/isUserExistsByPhone`, {phone});
 
 export const getUserByPhone = (phone) => apiClient.get(`api/user/getUserByPhone/${phone}`);
+
+export const sendEmail = (email) => apiClient.get(`api/user/sendEmail/${email}`);
 
 

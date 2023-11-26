@@ -1,5 +1,7 @@
 package com.finalProject.togOther.user;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 
 import com.finalProject.togOther.dto.LoginDTO;
@@ -34,6 +36,8 @@ public interface UserService {
 	public ResponseEntity<String> updateProfileText(int userSeq, String updatedProfileText);
 
 	public ResponseEntity<String> updatePassword(int userSeq, String pwd, String updatedpwd);
+	
+	public ResponseEntity<String> recoveryPassword(int userSeq,String updatedpwd);
 
 	public ResponseEntity<String> updatePhone(int userSeq, String updatedPhone);
 	
@@ -43,8 +47,8 @@ public interface UserService {
 
 	public ResponseEntity<String> getUserByPhone(String phone);
 	
+	public ResponseEntity<Map<String,String>> sendEmail(String email);
+	
 	public ResponseEntity<String> withdrawalUser(int userSeq);
-
-
 
 }

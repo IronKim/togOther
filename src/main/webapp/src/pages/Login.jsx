@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../css/login.module.css';
 import { useNavigate } from 'react-router-dom';
-import { getUserByPhone, isUserExistsByPhone, loginUser, smsRequest } from '../api/UserApiService';
+import { recoveryPassword, getUserByPhone, isUserExistsByPhone, loginUser, sendEmail, smsRequest } from '../api/UserApiService';
 import { useUserStore } from '../stores/mainStore';
 import Swal from 'sweetalert2'; // SweetAlert2 추가
 import loginFormImage from '../assets/image/loginFormImage.png';
@@ -278,6 +278,25 @@ const Login = () => {
             }
           });
       } else {
+        let wrongAttempts = 0; // 틀린 횟수를 저장할 변수
+        
+        const showInvalidCodeModal = () => {
+          Swal.fire({
+              icon: 'error',
+              title: '인증 오류',
+              text: '인증번호를 3번 이상 틀렸습니다. 다시 시도해주세요.',
+          });
+        };
+
+        const showLoadingodal = () => {
+          Swal.fire({
+              title: '인증번호 전송 중...',
+              allowOutsideClick: false,
+              showConfirmButton: false,
+              allowEnterKey: false,
+              });
+        };
+
         Swal.fire({
             title: '비밀번호 찾기',
             input: 'text',
@@ -296,7 +315,126 @@ const Login = () => {
               },
           }).then((emailResult) => {
             if (emailResult.isConfirmed) {
-              
+
+              showLoadingodal();
+
+              sendEmail(emailResult.value)
+              .then(res => {
+                console.log(res.data);
+
+                Swal.fire({
+                  title: '비밀번호 찾기',
+                  text: `${emailResult.value}로 인증번호가 전송되었습니다.`,
+                  input: 'text',
+                  inputLabel: '인증번호',
+                  inputPlaceholder: '인증번호를 입력하세요',
+                  showCancelButton: true,
+                  allowOutsideClick: false,
+                  inputAttributes: {
+                      pattern: '[0-9]{6}', // 여기서 [0-9]는 숫자, {6}는 6자리 숫자를 의미
+                      maxLength: 6,
+                    },
+                    inputValidator: (value) => {
+                      // 입력된 값이 서버 응답과 일치하는지 확인
+                      if (Number(value) === Number(res.data.code)) {
+                          return undefined; // 유효성 검사 통과
+                      } else {
+                          wrongAttempts++; // 틀린 횟수 증가
+                          if (wrongAttempts >= 3) {
+                              return undefined;
+                          } else {
+                              return '인증번호가 일치하지 않습니다. 남은시도 횟수: ' + (3 - wrongAttempts) + '회';
+                          }
+                      }
+                  },
+                  confirmButtonText: '확인',
+                  cancelButtonText: '취소',
+                }).then((verificationCodeResult) => {
+                  if (verificationCodeResult.isConfirmed) {
+
+                    if(Number(verificationCodeResult.value) !== Number(res.data.code)) {
+                      showInvalidCodeModal();
+                      return;
+                    } 
+
+                      Swal.fire({
+                        title: '비밀번호 찾기',
+                        html:
+                          '<input id="newPassword" class="swal2-input" placeholder="새로운 비밀번호 (4~20글자)" type="password">' +
+                          '<input id="confirmPassword" class="swal2-input" placeholder="비밀번호 확인" type="password">',
+                        showCancelButton: true,
+                        allowOutsideClick: false,
+                        confirmButtonText: '확인',
+                        cancelButtonText: '취소',
+                        preConfirm: () => {
+                          // 여기에서 입력된 값들을 가져와서 처리
+                          const newPassword = Swal.getPopup().querySelector('#newPassword').value;
+                          const confirmPassword = Swal.getPopup().querySelector('#confirmPassword').value;
+                  
+                          // 각 입력 필드의 값이 비어있는지 확인
+                          if (!newPassword || !confirmPassword) {
+                            Swal.showValidationMessage('모든 항목을 입력하세요.');
+                            return false;
+                          }
+
+                          // 새로운 비밀번호와 확인 비밀번호가 일치하지 않는지 확인
+                          if (newPassword !== confirmPassword) {
+                            Swal.showValidationMessage('비밀번호가 일치하지 않습니다.');
+                            return false;
+                          }
+
+                          // 새로운 비밀번호가 최소 4글자 이상이고 최대 20글자 이하인지 확인
+                          if (newPassword.length < 4 || newPassword.length > 20) {
+                            Swal.showValidationMessage('비밀번호는 4글자 이상 20글자 이하로 입력하세요.');
+                            return false;
+                          }
+                        },
+                      }).then((newPasswordResult) => { 
+                          // 서버에 비밀번호 변경 요청
+                          if(newPasswordResult.isConfirmed) {
+                            const newPassword = Swal.getPopup().querySelector('#newPassword').value;
+                            recoveryPassword(res.data.userSeq, newPassword)
+                            .then(res => {
+                              Swal.fire({
+                                icon: 'success',
+                                title: '비밀번호 찾기',
+                                text: '비밀번호가 변경되었습니다.',
+                                allowEnterKey: false,
+                                allowOutsideClick: false,
+                                confirmButtonText: '확인',
+                              });
+                            })
+                            .catch(e => {
+                              Swal.fire({
+                                icon: 'error',
+                                title: '서버 오류',
+                                text: '서버 오류로 인해 비밀번호 찾기를 할 수 없습니다.',
+                              });
+                            });
+                            }else  {
+                              Swal.fire({
+                                icon: 'error',
+                                title: '비밀번호 찾기',
+                                text: '비밀번호 찾기를 취소하였습니다.',
+                                allowEnterKey: false,
+                                allowOutsideClick: false,
+                                confirmButtonText: '확인',
+                              });
+                            return;
+                          }
+                      });
+                  }
+              });
+              })
+              .catch(e => {
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: '등록되지 않은 회원입니다.',
+                    });
+                
+              });;
+
             }
           });
       }

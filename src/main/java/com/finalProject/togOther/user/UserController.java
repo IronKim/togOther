@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.LoginDTO;
@@ -118,6 +117,14 @@ public class UserController {
 		return userService.updatePassword(userSeq, pwd, updatedpwd);
 	}
 	
+	// 비밀번호 수정 현재 비번 까먹었을때
+	@PutMapping(path = "recoveryPassword/{userSeq}")
+	public ResponseEntity<String> recoveryPassword(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
+		String updatedpwd = requestBody.get("updatePassword");
+		System.out.println(updatedpwd);
+		return userService.recoveryPassword(userSeq, updatedpwd);
+	}
+	
 	// 휴대전화 수정
 	@PutMapping(path = "updatePhone/{userSeq}")
 	public ResponseEntity<String> updatePhone(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
@@ -143,6 +150,12 @@ public class UserController {
 	@GetMapping(path = "getUserByPhone/{phone}")
 	public ResponseEntity<String> getUserByPhone(@PathVariable String phone) {
 		return userService.getUserByPhone(phone);
+	}
+	
+	// 인증번호 이메일로 보내기
+	@GetMapping(path = "sendEmail/{email}")
+	public ResponseEntity<Map<String,String>> sendEmail(@PathVariable String email) {
+		return userService.sendEmail(email);
 	}
 	
 	// 회원 탈퇴
