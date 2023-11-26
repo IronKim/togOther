@@ -14,6 +14,8 @@ export const certificationRequest = (requestBody) => apiClient.post('api/user/ha
 
 export const smsCertificationRequest = (userPhone) => apiClient.get(`api/user/smsCertificationRequest/${userPhone}`);
 
+export const smsRequest = (userPhone) => apiClient.get(`api/user/smsRequest/${userPhone}`);
+
 export const getUserByEmail = (userEmail) => apiClient.get(`api/user/getUserByEmail/${userEmail}`);
 
 export const updateProfileText = (userSeq, profileText) => apiClient.put(`api/user/updateProfileText/${userSeq}`, {profileText});
@@ -27,5 +29,9 @@ export const updateLikingTrip = (userSeq, tripLiking) => apiClient.put(`api/user
 export const updateLikingFood = (userSeq, foodLiking) => apiClient.put(`api/user/updateLikingFood/${userSeq}`, {foodLiking});
 
 export const withdrawalUser = (userSeq) => apiClient.delete(`api/user/withdrawalUser/${userSeq}`);
+
+export const isUserExistsByPhone = (phone) => apiClient.post(`api/user/isUserExistsByPhone`, {phone});
+
+export const getUserByPhone = (phone) => apiClient.get(`api/user/getUserByPhone/${phone}`);
 
 

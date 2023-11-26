@@ -12,6 +12,8 @@ public interface UserService {
 	public ResponseEntity<String> addUser(RegisterDTO registerDTO);
 	
 	public ResponseEntity<String> smsCertificationRequest(String userPhone);
+	
+	public ResponseEntity<String> smsRequest(String userPhone);
 
 	public ResponseEntity<String> deleteUser(String userEmail);
 
@@ -39,7 +41,10 @@ public interface UserService {
 	
 	public ResponseEntity<String> updateLikingFood(int userSeq, String updatedFoodLiking);
 
+	public ResponseEntity<String> getUserByPhone(String phone);
+	
 	public ResponseEntity<String> withdrawalUser(int userSeq);
+
 
 
 }

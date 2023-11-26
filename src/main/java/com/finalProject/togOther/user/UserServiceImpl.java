@@ -139,6 +139,44 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+	
+	// 가입되어있는 유저의 핸드폰으로 문자 요청
+	@Override
+	public ResponseEntity<String> smsRequest(String userPhone) {
+		
+		try {
+			
+			boolean result = isUserExistsByPhone(userPhone).getBody();
+			
+			// 해당 핸드폰으로 가입되어있지 않을땐 서버에러를 띄워줌
+			if (!result) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+			}
+			
+			if(messageService == null)
+				messageService = NurigoApp.INSTANCE.initialize(APIKey, secretKey, "https://api.coolsms.co.kr");
+			
+			Message message = new Message();
+			
+			String code = randomRange(6);
+						
+	        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+	        message.setFrom(fromNumber);
+	        message.setTo(userPhone);
+	        message.setText("[togOther] 문자 본인인증 서비스 : 인증번호는 " + "[" + code + "]" + " 입니다.");
+
+	        SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
+       
+	        return ResponseEntity.ok(code);
+	        
+		} catch (Exception e) {
+			
+			String errorMessage = "인증번호 발송중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+			
+		}
+
+	}
 
 	// 사용자의 삭제 서비스
 	@Override
@@ -247,7 +285,7 @@ public class UserServiceImpl implements UserService {
 			Optional<User> userOptional = userRepository.findByPhone(phone);
 
 			boolean isUserExists = userOptional.isPresent();
-
+			
 			return ResponseEntity.ok(isUserExists);
 
 		} catch (Exception e) {
@@ -532,6 +570,23 @@ public class UserServiceImpl implements UserService {
 			String errorMessage = "수정 중 오류가 발생했습니다.";
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
 		}
+	}
+	
+	@Override
+	public ResponseEntity<String> getUserByPhone(String phone) {
+		
+		try {
+			Optional<User> userOptional = userRepository.findByPhone(phone);
+			
+			User user = userOptional.orElseThrow();
+			
+			return ResponseEntity.ok(UserDTO.toDTO(user).getEmail());
+			
+		} catch (Exception e) {
+			String errorMessage = "서버에 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+		
 	}
 	
 	@Override

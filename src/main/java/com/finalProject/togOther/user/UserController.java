@@ -42,6 +42,13 @@ public class UserController {
 	public ResponseEntity<String> smsCertificationRequest(@PathVariable String userPhone) {
 		return userService.smsCertificationRequest(userPhone);
 	}
+	
+	// 휴대폰 문자 인증
+	@GetMapping(path =  "smsRequest/{userPhone}")
+	public ResponseEntity<String> smsRequest(@PathVariable String userPhone) {
+		return userService.smsRequest(userPhone);
+	}
+	
 
 	// 유저 삭제
 	@DeleteMapping(path = "deleteUser/{userEmail}")
@@ -60,6 +67,14 @@ public class UserController {
 	public ResponseEntity<SSODTO> handleCertificationRequest(@RequestBody Map<String, String> requestBody) {
 		String impUid = requestBody.get("imp_uid");
 		return userService.processCertificationRequest(impUid);
+	}
+	
+	// 휴대폰번호로 회원정보가 있는지 확인
+	@PostMapping(path = "isUserExistsByPhone")
+	public ResponseEntity<Boolean> isUserExistsByPhone(@RequestBody Map<String, String> requestBody) {
+		String phone = requestBody.get("phone");
+		System.out.println(phone);
+		return userService.isUserExistsByPhone(phone);
 	}
 	
 	
@@ -122,6 +137,12 @@ public class UserController {
 	public ResponseEntity<String> updateLikingFood(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
 		String updatedFoodLiking = requestBody.get("foodLiking");
 		return userService.updateLikingFood(userSeq, updatedFoodLiking);
+	}
+	
+	// 전화번호로 아이디 가져오기
+	@GetMapping(path = "getUserByPhone/{phone}")
+	public ResponseEntity<String> getUserByPhone(@PathVariable String phone) {
+		return userService.getUserByPhone(phone);
 	}
 	
 	// 회원 탈퇴
