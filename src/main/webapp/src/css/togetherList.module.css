@@ -47,11 +47,13 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     overflow: hidden;
+    
 }
 .dateTop{
     height: 25%;
     padding-left: 3%;
     /* border: 1px solid red; */
+    background-color: rgb(247, 247, 247);
 }
 .date{
     /* border: 1px solid red; */
@@ -118,29 +120,38 @@
     text-align: center;
 }
 .togetherFoot{
-    height: 80%;
+    height: 75%;
+    font-size: 20px;
+    /* border: 1px solid blue; */
 }
 .imgDiv{
-    width: 200px;
-    height: 40%;
+    width: 50%;
+    height: 70%;
     float: right;
-    /* border-radius: 10px; */
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    padding: 5px;
+    margin-top: 5px;
+}
+.together:hover .imgDiv{
+    padding: 0;
+    transition: 1s;
 }
 .placeImg{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 }
 .title{
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     width: 100%;
-    height: 20%;
+    height: 15%;
     line-height:30px;
-    padding-left: 3%;
+    padding: 4% 0 0 3%;
 }
 .title p{
     white-space: nowrap;
@@ -149,9 +160,9 @@
     font-weight: bold;
 }
 .context{
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     width: 100%;
-    height: 60%;
+    height: 57%;
     padding-left: 3%;
     line-height:30px;
 
@@ -163,13 +174,12 @@
     text-overflow: ellipsis;
 }
 .placeInfo{
-    padding-left: 3%;
-    line-height:30px;
-    border: 1px solid blue;
+    line-height:80px;
     width: 100%;
     height: 20%;
     color: #54a1ff;
-    border-radius: 0 0 5px 5px ;
+    text-align: center;
+    font-size: 30px;
 }
 
 .lastSection {
@@ -187,5 +197,65 @@
     .together{
         width: 100%;
         height: 200px;
+    }
+    .placeInfo{
+        font-size: 20px;
+        line-height: 15px;
+    }
+    .date{
+        width: 50%;
+        float: right;
+        height: 100%;
+        line-height: 55px;
+    }
+    .userSeq{
+        width: 50%;
+        height: 100%;
+    }
+    .userid{
+        font-size: 25px;
+    }
+    .imgDiv{
+        height: 95%;
+    }
+}
+@media (max-width: 780px){
+    .listForminner{
+        width: 100%;
+        margin: auto;
+    }
+    .together{
+        width: 95%;
+        height: 200px;
+    }
+    .date{
+        width: 50%;
+        float: right;
+        height: 100%;
+        line-height: 55px;
+    }
+    .userSeq{
+        width: 50%;
+        height: 100%;
+    }
+    .tnuminfo{
+        width: 30%;
+        height: 100%;
+        float: right;
+        margin-right: 3%;
+        line-height:30px;
+        font-size: 15px;
+    }
+    .userid{
+        font-size: 15px;
+    }
+    .userGender{
+        font-size: 15px;
+    }
+    .togetherFoot{
+        font-size: 15px;
+    }
+    .placeInfo{
+        line-height: 35px;
     }
 }

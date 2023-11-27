@@ -7,7 +7,7 @@ import { addCustomPlace } from '../../../api/PlaceApiService';
 import PlaceSelect from './TogetherPlaceSelect';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../../stores/mainStore';
 
 
@@ -197,6 +197,20 @@ const PlaceWriteForm = () => {
     const resetSubDTO = (index) => {
         setSubDTO(subDTO.filter((item, i) => i !== index));
     }
+    
+    //뷰에서 수정하러 가져옴
+//     const location = useLocation()
+//     const together = location.state?.togetherDTO;
+//     const sub = location.state?.subDTO;
+//     const custom = location.state?.custom;
+
+//     useEffect(() => {
+//         console.log(together, sub, custom)
+//         setTogetherDTO(together)
+//         if(sub){
+//             setSubDTO(sub)
+//         }
+//   }, [together, sub, custom])
 
     return (
         <>
@@ -237,12 +251,10 @@ const PlaceWriteForm = () => {
                             <p>{item.nday}DAY</p></div>
                             <div className={Style.writedateCard_foot}>
                             {
-                            item.place !== null &&
-                                <p>{item.place.name}</p>
+                            item.place?.name && <p>{item.place.name}</p>
                             }
                             {
-                            item.customDTO !== null &&
-                                <p>{item.customDTO.placeName}</p>
+                            item.customDTO?.placeName &&<p>{item.customDTO.placeName}</p>
                             }
                             <br/><p>{item.context}</p>
                             </div>

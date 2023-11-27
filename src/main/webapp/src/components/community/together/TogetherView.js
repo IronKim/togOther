@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 
 import Style from '../../../css/togetherView.module.css'
 import loadingImg from '../../../assets/image/loading.png'
+import userDefaultProfile from '../../../assets/image/userDefaultProfile.png'
+import TogetherWriteForm from './TogetherWriteForm';
 
 import { getTogetherSeq } from '../../../api/TogetherApiService';
 import { getPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import { getCityList } from '../../../api/CityApiService';
 
 import { GoogleMap,Marker } from '@react-google-maps/api';
-// import { useUserStore } from '../../../stores/mainStore';
+import { getUserByEmail } from '../../../api/UserApiService';
+import { useUserStore } from '../../../stores/mainStore';
 
 const containerStyle = {
     width: '100%',
@@ -27,12 +30,13 @@ const containerStyle = {
   ];
 
 const TogetherView = () => {
-    // const { user } = useUserStore();
+    const { user } = useUserStore();
     const { togetherSeq } = useParams()
     const [custom,setCustom] = useState([])
     const [place, setPlace] = useState([])
     const [loading, setLoading] = useState(true);
 
+    
     //시티 소환
     const [city, setCity] = useState([])
     const [cityFind, setCityFind] = useState([])
@@ -93,6 +97,16 @@ const TogetherView = () => {
         })
     },[togetherSeq, city])
 
+    //유저 소환
+    const [userList, setUserList] = useState([])
+    useEffect(() => {
+        getUserByEmail(togetherDTO.useremail)
+            .then(res => {
+                setUserList(res.data)
+            })
+            .catch(e => console.log(e))
+        },[togetherDTO.useremail])
+
     //sub를 nday를 기준으로 정렬
     const sortedSubDTO = [...subDTO].sort((a, b) => a.nday - b.nday)
 
@@ -127,8 +141,11 @@ const TogetherView = () => {
 
     }, [array, custom]);
 
-    
-    
+    const navigate = useNavigate()
+
+    const onChange = (togetherDTO,subDTO,custom) => {
+        navigate('/community/together/write', { state: { togetherDTO,subDTO,custom } })
+    }
 
     return (
         <div className={Style.viewForm}>
@@ -167,7 +184,16 @@ const TogetherView = () => {
                         </GoogleMap>)
                     }
                 </div>
-                <div className={Style.midTitle}>{togetherDTO.title}</div>
+                <div className={Style.midTitle}>
+                    {togetherDTO.title}
+                </div>
+                {togetherDTO.userSeq === user.userSeq &&
+                    <div>
+                         {/* onClick={()=>onDelete(togetherDTO)} */}
+                        <button className={Style.listDelete}>삭 제</button>
+                        <button className={Style.listChange} onClick={()=>onChange(togetherDTO,subDTO,custom)}>수 정</button>
+                    </div>
+                }
                 {
                 place !== null && place.length > 0 ?
                     <div className={Style.midSc}>
@@ -189,7 +215,9 @@ const TogetherView = () => {
                         {/* 동행리스트 카드 */}
                         <div className={Style.togetherList}>
                             <div className={Style.togetherMap}>
-                                <div className={Style.togetherListUser}>유저정보</div>
+                                <div className={Style.togetherListUser}>
+                                   {togetherDTO.userid}님의 동행 일정
+                                </div>
                                 {clickLat === null && place !== null && place.length > 0 &&
                                 (<GoogleMap
                                     mapContainerStyle={containerStyle}
@@ -261,12 +289,25 @@ const TogetherView = () => {
 
                             <div className={Style.togetherChatInner}>
                                 <div className={Style.chatProfile}>
-                                    <div className={Style.chatProfileImg}></div>
+                                    {userList.profileImage !== ''  ?
+                                        <div className={Style.chatProfileImg}>
+                                            <img src={userList.profileImage} className={Style.userImg} />
+                                        </div>
+                                        :
+                                        <div className={Style.chatProfileImg}>
+                                            <img src={userDefaultProfile} className={Style.userImg} />
+                                        </div>
+                                    }
+                                    
                                     <div className={Style.inin}>
-                                        <div className={Style.chatProfileName}>이름</div>
-                                        <div className={Style.chatProfileInfo}>성별.국적</div>
+                                        <div className={Style.chatProfileName}>{togetherDTO.userid}</div>
+                                        <div className={Style.chatProfileInfo}>{togetherDTO.userGender === 'M' ? '남자' : '여자'}</div>
                                     </div>
-                                    <div className={Style.chatText}>프로필 사진을 클릭해보세요!</div>
+                                    {userList.likingFood && userList.likingTrip &&
+                                    <div className={Style.chatText}>
+                                        <p><span>{userList.likingFood}</span>의 음식 취향을 가진</p>
+                                        <p><span>{userList.likingTrip}</span>를 좋아하는 여행자예요</p>
+                                    </div>}
                                 </div>
                                     <div className={Style.hrhr}></div>
                             </div>
@@ -279,26 +320,27 @@ const TogetherView = () => {
                         <div className={Style.togetherTo}>
                             <p>함께하는 동행</p>
                             <div className={Style.toGother}>
-                                <div className={Style.toGotherImg}></div> 
-                                <div className={Style.toGotherInfo}>
-                                    <span>이름</span>|<span>성별</span>|<span>국적</span></div>
+                                <div className={Style.toGotherMaster}>
+                                    {togetherDTO.userProfileImage !== ''  ?
+                                        <div className={Style.toGotherImg}>
+                                            <img src={userList.profileImage} className={Style.userImg} />
+                                        </div>
+                                        :
+                                        <div className={Style.toGotherImg}>
+                                            <img src={userDefaultProfile} className={Style.userImg}/>
+                                        </div>
+                                    }
+                                    <div className={Style.toGotherInfo}>
+                                        <span>{userList.id}</span>|<span>{userList.gender === 'M' ? '남자' : '여자'}</span>
+                                    </div>
+                                </div>
+                                <div className={Style.togotherList}>
+                                    <div className={Style.togetherListOne}>동행을 신청해보세요.</div>
+                                </div>
                             </div>
                         </div>
-                        {/* {togetherSeq}
-                        {togetherDTO.title}
-                        {subDTO.map(item => (
-                            <div>{item.context}{item.plCustomSeq}</div>
-                        ))} 
-                        
-                        {custom.map(item => (
-                            <div>//{item.placeName}</div>
-                        ))}  */}
-
-                            {/* <button onClick={()=> console.log(user)}></button> */}
                     </div>
-                </div>
-
-
+                </div>               
                 
             </div>
             <div style={{clear:'both'}}/>

@@ -12,7 +12,7 @@ import { GoogleMap,Marker } from '@react-google-maps/api';
 const containerStyle = {
   width: '100%',
   height: '100%',
-  margin: 'auto'
+  // margin: 'auto'
 };
 
 const myStyles = [
@@ -192,7 +192,6 @@ useEffect(() => {
                       <div className={Style.title}><p>{item.title}</p></div>
                       <div className={Style.context}><p>{item.context}</p></div>
                       <div className={Style.placeInfo}> 
-                          {/* <div className={Style.user}>유저정보 {item.userSeq}</div> */}
                           {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
                       </div>
                   </div>)}
@@ -223,12 +222,11 @@ useEffect(() => {
                       </GoogleMap>
                         }
                         </div>
-                        {loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
                     </div>
                     <div className={Style.title}><p>{item.title}</p></div>
                     <div className={Style.context}><p>{item.context}</p></div>
                     <div className={Style.placeInfo}>
-                        {/* <div className={Style.user}>유저정보</div> */}
+                    {loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
                     </div>
                   </div>)}
                   

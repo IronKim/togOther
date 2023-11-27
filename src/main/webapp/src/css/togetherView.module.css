@@ -31,13 +31,34 @@
     margin: auto;
     line-height:100px;
 }
+.listChange{
+    border: none;
+    float: right;
+    height: 45px;
+    width: 80px;
+    margin-right: 15%;
+    margin-top: -45px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.listDelete{
+    border: none;
+    float: right;
+    height: 45px;
+    width: 80px;
+    margin-right: 6%;
+    margin-top: -45px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
 .midSc{
     width: 90%;
     height: 100px;
     margin: auto;
     margin-top: 30px;
     border-radius: 10px;
-    background-color: #e3eefc;
+    /* background-color: #e3eefc; */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     font-size: 20px;
     line-height:33px;
 }
@@ -87,6 +108,7 @@
     text-align: center;
     position: absolute;
     opacity: 0.9;
+    font-size: 20px;
     z-index: 500;
 }
 .togetherSchedule{
@@ -130,7 +152,7 @@
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     border-radius:10px 10px 0 0 ;
     width: 100%;
-    height: 20%;
+    height: 30%;
     margin: auto;
     margin-top: 10%;
 }
@@ -157,18 +179,27 @@
     /* border: 1px solid red; */
 }
 .chatText{
-    /* border: 1px solid red; */
     position:absolute; 
-    bottom:0px;
+    bottom:3px;
+}
+.chatText span{
+    color: #1F5FAB;
+    font-size: 19px;
+    line-height: 20px;
 }
 .chatProfileImg{
     position: absolute;
-    border: 1px solid red;
+    border: 2px solid rgba(0, 0, 0, 0.2);
     width: 110px;
     height: 110px;
     border-radius: 70px;
     top: 40%;
     margin-top: -50px;
+    overflow: hidden;
+}
+.userImg{
+    width: 100%;
+    height: 100%;
 }
 .inin{
     /* border: 1px solid red; */
@@ -212,30 +243,54 @@
     padding-top: 20px;
 }
 .toGother{
-    /* border: 1px solid rebeccapurple; */
+    border-radius: 10px;
     width: 90%;
-    height: 15%;
+    height: 83%;
     margin: auto;
     margin-top: 5px;
+    overflow: hidden;
+}
+.toGotherMaster{
+    width: 100%;
+    height: 20%;
 }
 .toGotherImg{
-    border: 1px solid rebeccapurple;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     width: 52px;
     height: 52px;
     float: left;
+    margin-top: 3px;
+    margin-left: 3px;
     border-radius: 70px;
     text-align: center;
+    overflow: hidden;
 }
 .toGotherInfo{
-    /* border: 1px solid rebeccapurple; */
-    width: 80%;
+    width: 70%;
     float: right;
     font-size: 20px;
-    margin-top: 15px;
+    margin-top: 19px;
 }
 .toGotherInfo span{
     margin: 0 30px 0 30px;
 }
+.togotherList{
+    height: 80%;
+    background-color: whitesmoke;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+/* .togotherList::-webkit-scrollbar {
+    width:5px;
+}
+.togotherList::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.togotherList::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #194E8C;
+    cursor: pointer;
+} */
 /*  */
 @media (max-width: 1199px){
     .viewInner{
@@ -266,10 +321,22 @@
     .toGotherInfo span{
         margin: 0 10px 0 10px;
     }
+    .listChange{
+        margin-right: 17%;
+    }
+    .listDelete{
+        margin-right: 6%;
+    }
 }
 @media (max-width:900px){
     .togetherList{
         width: 80%;
+    }
+    .listChange{
+        margin-right: 19%;
+    }
+    .listDelete{
+        margin-right: 6%;
     }
 }
 @media (max-width:810px){
@@ -310,22 +377,57 @@
         margin-left: 20px;
     }
     .toGother{
-        height: 90%;
-        width: 80%;
+        height: 80%;
         float: right;
-        margin-top: 15px;
+        margin-right: 7px;
+        margin-top: 7px;
+    }
+    .toGotherMaster{
+        height: 100%;
+        background-color: white;
     }
     .toGotherInfo{
         width:85%;
+        color: gray;
+        line-height: 30px;
+    }
+    .togetherListOne{
+        display: none;
+    }
+    .listChange{
+        margin-right: 20%;
+        width: 70px;
+        height: 40px;
+        margin-top: -45px;
+    }
+    .listDelete{
+        margin-right: 6%;
+        width: 70px;
+        height: 40px;
+        margin-top: -45px;
     }
 }
 @media (max-width:810px){
     .toGother{
-        width:75%;
+        width:70%;
     }
     .toGotherInfo{
         width:75%;
         margin-top: 20px;
+    }
+}
+@media (max-width:660px){
+    .listChange{
+        margin-right: 2%;
+        width: 50px;
+        height: 30px;
+        margin-top: -2px;
+    }
+    .listDelete{
+        margin-right: 6%;
+        width: 50px;
+        height: 30px;
+        margin-top: -2px;
     }
 }
 @media (max-width:530px){
