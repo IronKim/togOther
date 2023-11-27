@@ -13,8 +13,8 @@ const Mypage = () => {
 
     return (
         <div className={styles.main}>
-            <MypageSidebar />
-            <MypageMain />
+            <MypageSidebar onErrorImg={onErrorImg} />
+            <MypageMain onErrorImg={onErrorImg} />
             <div style={{clear:'both'}}></div>
         </div>
     );

@@ -10,8 +10,6 @@ import com.finalProject.togOther.domain.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-	public Optional<User> findById(String id);
-
 	public void deleteById(String id);
 
 	public void deleteByEmail(String email);

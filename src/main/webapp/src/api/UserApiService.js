@@ -14,7 +14,28 @@ export const certificationRequest = (requestBody) => apiClient.post('api/user/ha
 
 export const smsCertificationRequest = (userPhone) => apiClient.get(`api/user/smsCertificationRequest/${userPhone}`);
 
+export const smsRequest = (userPhone) => apiClient.get(`api/user/smsRequest/${userPhone}`);
+
 export const getUserByEmail = (userEmail) => apiClient.get(`api/user/getUserByEmail/${userEmail}`);
 
+export const updateProfileText = (userSeq, profileText) => apiClient.put(`api/user/updateProfileText/${userSeq}`, {profileText});
+
+export const updatePassword = (userSeq, password, updatePassword) => apiClient.put(`api/user/updatePassword/${userSeq}`, {password, updatePassword});
+
+export const recoveryPassword = (userSeq, updatePassword) => apiClient.put(`api/user/recoveryPassword/${userSeq}`, { updatePassword});
+
+export const updatePhone = (userSeq, updatePhone) => apiClient.put(`api/user/updatePhone/${userSeq}`, {updatePhone});
+
+export const updateLikingTrip = (userSeq, tripLiking) => apiClient.put(`api/user/updateLikingTrip/${userSeq}`, {tripLiking});
+
+export const updateLikingFood = (userSeq, foodLiking) => apiClient.put(`api/user/updateLikingFood/${userSeq}`, {foodLiking});
+
+export const withdrawalUser = (userSeq) => apiClient.delete(`api/user/withdrawalUser/${userSeq}`);
+
+export const isUserExistsByPhone = (phone) => apiClient.post(`api/user/isUserExistsByPhone`, {phone});
+
+export const getUserByPhone = (phone) => apiClient.get(`api/user/getUserByPhone/${phone}`);
+
+export const sendEmail = (email) => apiClient.get(`api/user/sendEmail/${email}`);
 
 

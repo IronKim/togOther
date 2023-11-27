@@ -133,10 +133,10 @@ public class AdvisorServiceImpl implements AdvisorService {
 
 	// 유저 조회 아이디
 	@Override
-	public ResponseEntity<UserDTO> getUserById(String id) {
+	public ResponseEntity<UserDTO> getUserByEmail(String email) {
 
 		try {
-			Optional<User> userOptional = userRepository.findById(id);
+			Optional<User> userOptional = userRepository.findByEmail(email);
 
 			User user = userOptional.orElseThrow();
 
