@@ -30,6 +30,8 @@ export const updateLikingTrip = (userSeq, tripLiking) => apiClient.put(`api/user
 
 export const updateLikingFood = (userSeq, foodLiking) => apiClient.put(`api/user/updateLikingFood/${userSeq}`, {foodLiking});
 
+export const updateLikingPlace = (userSeq, placeSeq) => apiClient.put(`api/user/updateLikingPlace/${userSeq}/${placeSeq}`);
+
 export const withdrawalUser = (userSeq) => apiClient.delete(`api/user/withdrawalUser/${userSeq}`);
 
 export const isUserExistsByPhone = (phone) => apiClient.post(`api/user/isUserExistsByPhone`, {phone});

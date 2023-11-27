@@ -1,20 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { getPlaceBySeq } from '../../api/PlaceApiService';
 import PlaceMap from './PlaceMap';
+import LikePlaceInfo from './LikePlaceInfo';
+import { useUserStore } from '../../stores/mainStore';
 
 const PlaceInfo = ({ placeSeq }) => {
+  
   const [selectedPlace, setSelectedPlace] = useState(null);
   const selectedPlaceSeq = placeSeq; // 원하는 placeSeq 값으로 설정
+
+  const { user, getUserByToken } = useUserStore();
+  const [userPlaceLike, setUserPlaceLike] = useState(user.likingPlace);
+
+  const [likeCnt, setLickCnt] = useState();
 
   useEffect(() => {
     getPlaceBySeq(selectedPlaceSeq)
       .then(response => {
         setSelectedPlace(response.data);
+        setLickCnt(response.data.likeCnt);
       })
       .catch(error => {
         console.error('Error fetching place details: ', error);
       });
   }, [selectedPlaceSeq]);
+
+  // like
+  useEffect(() => {
+    setUserPlaceLike(user.likingPlace);
+  },[user])
+
+  const onCntChange = (cnt) => {
+    setLickCnt(likeCnt + cnt);
+  }
 
   // minWidth: '640px',
   return (
@@ -24,7 +42,12 @@ const PlaceInfo = ({ placeSeq }) => {
           <p className="fs-1" style={{ width: '100%', textAlign: 'center', margin: '30px auto' , fontSize: '3em'  }}>
             {selectedPlace.name}
           </p>
-
+          <LikePlaceInfo selectedPlace={selectedPlaceSeq} 
+                         isTrue={userPlaceLike.includes(selectedPlace.placeSeq)}
+                         userPlaceLike={userPlaceLike} setUserPlaceLike={setUserPlaceLike}
+                         onCntChange = {onCntChange}
+                        />
+          <span style={{position:'relative', left:'10px', fontSize:'25px', bottom:'6px'}}>{likeCnt}</span>
           <img
             src={selectedPlace.image}
             className="rounded mx-auto d-block"

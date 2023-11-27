@@ -7,6 +7,8 @@ import { getCityBySeq } from '../../api/CityApiService';
 import { getPlaceListByCitySeq } from '../../api/PlaceApiService';
 import WeatherIcon from '../../constants/WeatherIcon';
 import weatherData from '../../constants/WeatherData';
+import Like from './Like';
+import { useUserStore } from '../../stores/mainStore';
 
 const CityPage = () => { 
     const { citySeq } = useParams();
@@ -19,6 +21,14 @@ const CityPage = () => {
     const [selectedCity, setSelectedCity] = useState(''); 
     const [cityWeather, setCityWeather] = useState(null); // 날씨 정보를 저장할 상태
 
+    const { user, getUserByToken } = useUserStore();
+    const [userPlaceLike, setUserPlaceLike] = useState(user.likingPlace);
+
+
+    useEffect(() => {
+        setUserPlaceLike(user.likingPlace);
+    },[user])
+    
     useEffect(() => {
 
         getCityBySeq(citySeq)
@@ -35,7 +45,7 @@ const CityPage = () => {
                 setFilteredPlaceData(res.data.filter(item => item.code === (activeButton === 'TouristSpot' ? 1 : 0)));
             })
             .catch(e => console.log(e));
-    }, [citySeq, activeButton]);
+    }, [citySeq]);
 
     const handleButtonClick = (buttonName) => {
         setActiveButton(buttonName);
@@ -114,16 +124,16 @@ const CityPage = () => {
             </div>
                 {
                 filteredPlaceData.map((item, index) => (
-                                <div key={index} className={styles.list1} onClick={() => onToPlacePage(item.placeSeq)}>
-                                    <div className={styles.imgDiv}>
-                                        <img src={item.image} style={{borderRadius:16, userSelecter: 'none'}} alt={item.name} />
-
-                                    </div>
-                                    <div className={styles.textDiv}>
-                                        <div className={styles.textName}>{item.name}</div>
-                                        <div className={styles.textDiv1}>{item.context1}</div>
-                                    </div>
-                                </div>
+                        <div key={index} className={styles.list1} onClick={() => onToPlacePage(item.placeSeq)}>
+                            <div className={styles.imgDiv}>
+                                <img src={item.image} style={{borderRadius:16, userSelecter: 'none'}} alt={item.name} />
+                                <Like placeSeq={item.placeSeq} isTrue={userPlaceLike.includes(item.placeSeq)} userPlaceLike={userPlaceLike} setUserPlaceLike={setUserPlaceLike}/>
+                            </div>
+                            <div className={styles.textDiv}>
+                                <div className={styles.textName}>{item.name}</div>
+                                <div className={styles.textDiv1}>{item.context1}</div>
+                            </div>
+                        </div>
                     ))
                 }
             </div>
