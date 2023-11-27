@@ -1,0 +1,20 @@
+.react-calendar__tile--active {
+    background: white !important;
+}
+.react-calendar__tile--active abbr {
+    background: #f87171 !important;
+    color: white !important;
+    padding: 5px 5px;
+    font-size: 12px;
+    border-radius: 50% !important;
+}
+.react-calendar__tile--now {
+    background: white !important;
+}
+.react-calendar__tile--now abbr{
+    background: yellowgreen;
+    padding: 5px 5px;
+    font-size: 12px;
+    border-radius: 50% !important;
+}
+  

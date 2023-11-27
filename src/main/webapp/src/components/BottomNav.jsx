@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import './FontAwesome';
 import style from '../css/BottomNav.module.css';
@@ -7,29 +7,34 @@ import style from '../css/BottomNav.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const BottomNav = ({ showNavbar }) => {
+  const location = useLocation();
+
     const [activeNav, setActiveNav] = useState(2);
 
+    const navigate = useNavigate();
+    const currentPath = window.location.pathname;
+
+    const isActive = (path) => currentPath === path;
+
     return (
-      <nav className={`${style.wrapper} ${showNavbar ? style.show : style.hide}`}>
-            <Link to="/community" className={style.nav_link} onClick={() => setActiveNav(1)}>
-              <div>
-                <FontAwesomeIcon icon="users" className={activeNav === 1 ? style.active : style.nav_item} />
-              </div>
-            </Link>
-
-            <Link to="/" className={style.nav_link} onClick={() => setActiveNav(2)}>
-              <div>
-                <FontAwesomeIcon icon="home" className={activeNav === 2 ? style.active : style.nav_item} />
-              </div>
-            </Link>
-
-            <Link to="/travel" className={style.nav_link} onClick={() => setActiveNav(3)}>
-              <div>
-                <FontAwesomeIcon icon="info" className={activeNav === 3 ? style.active : style.nav_item} />
-              </div>
+      <nav className={style.wrapper}>
+        <Link to="/community" className={style.nav_link} onClick={() => navigate('/community')}>
+          <div>
+            <FontAwesomeIcon icon="users" className={isActive('/community') ? style.active : style.nav_item} />
+          </div>
+        </Link>
+        <Link to="/" className={style.nav_link} onClick={() => navigate('/')}>
+          <div>
+            <FontAwesomeIcon icon="home" className={isActive('/') ? style.active : style.nav_item} />
+          </div>
+        </Link>
+        <Link to="/info/cityList" className={style.nav_link} onClick={() => navigate('/info/cityList')}>
+                <div>
+                    <FontAwesomeIcon icon="info" className={location.pathname.includes('/info') ? style.active : style.nav_item} />
+                </div>
             </Link>
       </nav>
-    );
+  );
 };
 
 export default BottomNav;

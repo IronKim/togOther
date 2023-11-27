@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../components/mypage/MyPage.module.css';
+import styles from '../css/MyPage.module.css';
 import MypageMain from '../components/mypage/MypageMain';
 import MypageSidebar from '../components/mypage/MypageSidebar';
 

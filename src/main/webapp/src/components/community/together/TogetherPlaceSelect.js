@@ -1,19 +1,17 @@
 import React,{useEffect,useState,useCallback,useRef} from 'react';
-import Style from '../../css/together.module.css'
-import { getCity } from '../../api/AdvisorApiService';
-import { getPlaceList } from '../../api/PlaceApiService';
-import { GoogleMap, LoadScript, Autocomplete } from '@react-google-maps/api';
+import Style from '../../../css/together.module.css'
+import { getCityList } from '../../../api/CityApiService';
+import { getPlaceList } from '../../../api/PlaceApiService';
+import backBut from '../../../assets/image/backBut.png'
 
-const libraries = ["places"];
 const containerStyle = {
     width: '90%',
     height: '335px',
     margin: 'auto'
 };
-
 const center = {
-  lat: -3.745,
-  lng: -38.523,
+  lat: 37.5538,
+  lng: 126.987
 };
 
 const PlaceSelect = (props) => {
@@ -30,13 +28,13 @@ const PlaceSelect = (props) => {
 
     //있는 장소에서 선택시
     const [subDTO,setSubDTO] = useState({
-        nDay: null,
-        id: 1,
-        startTime: 0,
-        endTime: 0,
-        context: '',
-        place: null,
-        customDTO: null,
+        nday: null,
+        code : 1,
+        startTime : 0,
+        endTime : 0,
+        context : '',
+        place : null,
+        customDTO: null
     })
     //지도에서 선택시
     const [map, setMap] = useState(null);
@@ -76,20 +74,20 @@ const PlaceSelect = (props) => {
     //city목록 가져오기
     const [city, setCity] = useState([])
     useEffect(()=> {
-        getCity()
+        getCityList()
         .then(res => {
             setCity(res.data)
         })
         .catch(e => console.log(e))
     },[])
-    //날짜 선택시 nDay 잡기
+    //날짜 선택시 nday 잡기
     // useEffect(()=> {
-    //     setSubDTO({...subDTO,nDay : (new Date(selDate) - new Date(startDate))/(1000 * 60 * 60 * 24)+1})
+    //     setSubDTO({...subDTO,nday : (new Date(selDate) - new Date(startDate))/(1000 * 60 * 60 * 24)+1})
     // },[selDate])
     useEffect(() => {
         setSubDTO(prevSubDTO => ({
             ...prevSubDTO,
-            nDay: (new Date(selDate) - new Date(startDate)) / (1000 * 60 * 60 * 24) + 1,
+            nday: (new Date(selDate) - new Date(startDate)) / (1000 * 60 * 60 * 24) + 1,
         }));
     }, [selDate, startDate]);
 
@@ -153,7 +151,7 @@ const PlaceSelect = (props) => {
         e.preventDefault();
     
         if (save) {
-            if(!isNaN(subDTO.nDay)){
+            if(!isNaN(subDTO.nday)){
                     if(subDTO.place || subDTO.customDTO){
                         onClose();
                         onSubDTO(subDTO);
@@ -169,7 +167,7 @@ const PlaceSelect = (props) => {
         }
         
     }
-
+    
 
     //커스텀
     const [startCustom, setStartCustom] = useState(false)
@@ -195,18 +193,18 @@ const PlaceSelect = (props) => {
   
       if (autocomplete !== null) {
         const placeResult = autocomplete.getPlace();
-        setCustomDTO({
-          placeName: placeResult.name || '',
-          address: placeResult.formatted_address || '',
-          latitude: placeResult.geometry.location.lat(),
-          longitude: placeResult.geometry.location.lng(),
-        });
-  
-        if (map && placeResult.geometry) {
-          // 이전 마커를 제거
-          if (markerRef.current) {
-            markerRef.current.setMap(null);
-          }
+            setCustomDTO({
+            placeName: placeResult.name || '',
+            address: placeResult.formatted_address || '',
+            latitude: placeResult.geometry.location.lat(),
+            longitude: placeResult.geometry.location.lng(),
+            });
+    
+            if (map && placeResult.geometry) {
+            // 이전 마커를 제거
+            if (markerRef.current) {
+                markerRef.current.setMap(null);
+            }
   
           // 새로운 마커 생성
           const newMarker = new window.google.maps.Marker({
@@ -231,6 +229,26 @@ const PlaceSelect = (props) => {
             setSubDTO(selectedItem);
         }
     }, [selectedItem]);
+
+    //현재위치
+    const [myPoint, setMyPoint] = useState(null);
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setMyPoint({ lat: latitude, lng: longitude });
+                },
+                (error) => {
+                    console.error('못가져와:', error);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    }, []);
+
     return (
         <>
         <div className={Style.bg} onClick={onClose}></div>
@@ -244,9 +262,9 @@ const PlaceSelect = (props) => {
                     <input type='date'className={`${Style.inputday} ${Style.input}`} name='endDate' min={startDate} max={endDate} 
                     value={selDate === startDate ? 0 : selDate}
                     onChange={(e) => setSelDate(e.target.value)}/> 
-                    
                 </div>
                 <div className={Style.timeDiv}>
+                    <p>시간 설정</p>
                     {
                         opTime.filter(item => item >= subDTO.startTime).map(item => <div key={item} 
                             className={Style.timeItem}  style={{backgroundColor: sel ? 'whitesmoke' : (item === subDTO.startTime ? 'darkgray' : 
@@ -260,19 +278,21 @@ const PlaceSelect = (props) => {
                 {/* <div style={{clear:'right'}}></div> */}
                     <button className={Style.addButtons} onClick={onSearchSelect} style={{float:'right',margin:'30px 10px'}}>
                     장소 {subDTO.place === null ? '추가' : '수정'}</button>
+                {/* <div style={{clear:'both'}}></div> */}
+                    {!isNaN(subDTO.nday)  && 
+                            <div style={{fontSize:'22px',fontWeight:'bold',float:'left',marginTop:'30px',marginLeft:'40px'}}>
+                                Day {subDTO.nday}</div>
+                        }
                 <div style={{clear:'both'}}></div>
-                    {!isNaN(subDTO.nDay)  && <div style={{fontSize:'22px',fontWeight:'bold',float:'left'}}>
-                        Day {subDTO.nDay}</div>}
-                    {/* <div style={{clear:'both'}}></div> */}
                 <div style={{minHeight:'70px'}}>
-                {/* <button onClick={()=>console.log(subDTO.place, subDTO.customDTO)}>ㅎㅎ</button> */}
                 {subDTO.place !== null && 
                     (
-                        <div className={Style.placeCard}>
+                    <div className={Style.placeCard}>
                         {subDTO.place.name}
                         <img src={subDTO.place.image}  className={Style.placeImg} />
                         <br/><br/>
                         <p className={Style.placeContextP}>{subDTO.place.context1}</p>
+                        
                     </div>
                     )
                 }
@@ -285,13 +305,16 @@ const PlaceSelect = (props) => {
                     )
                 }
                 </div>
-                <p style={{fontSize:'17px',fontWeight:'bold',marginBottom: '5px'}}>내용</p>
-                    <textarea rows="10" cols="43" value={subDTO.context} className={`${Style.placeContext} ${Style.textarea}`}
-                    onChange={(e) => setSubDTO({...subDTO,context : e.target.value})}/>
-
-                    <button className={Style.xBut} onClick={(e) =>onSchedule(e)}>
-                        등록
-                    </button>
+                <div className={Style.placeSearchCon}>
+                    <p style={{fontSize:'17px',fontWeight:'bold',marginBottom: '5px'}}>내용</p>
+                        <textarea rows="10" cols="43" value={subDTO.context} className={Style.placeContext}
+                        onChange={(e) => setSubDTO({...subDTO,context : e.target.value})}/>
+                    <div className={Style.onScheduleDiv}>
+                        <button className={Style.onSchedule} onClick={(e) =>onSchedule(e)}>
+                            등록
+                        </button>
+                    </div>
+                </div>
             </div>
             
             )
@@ -307,10 +330,11 @@ const PlaceSelect = (props) => {
                         {/* 지도 */}
                             <GoogleMap
                             mapContainerStyle={containerStyle}
-                            center={center}
+                            center={myPoint || center}
                             zoom={16}
                             onLoad={(map) => setMap(map)}
                             className={Style.containerStyle}
+                            options={{disableDefaultUI: true}}
                             >
                             </GoogleMap>
                             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
@@ -335,22 +359,32 @@ const PlaceSelect = (props) => {
                             <br />
                             <td>{customDTO.address}</td>
                         </div>
-                            <button className={Style.onCustomB} onClick={onCustomB} >뒤로</button>
+                        <img className={Style.xBut} style={{float:'left' , marginBottom:'20px'}} 
+                                onClick={onCustomB}  src={backBut}/> 
+                            {/* <button className={Style.onCustomB} onClick={onCustomB} >뒤로</button> */}
                     </div>)
                  : (
                     <>
-                        <div>
+                        <div className={Style.searchCityDiv}>
                             <input
-                                size={36}
-                                className={`${Style.searchCity} ${Style.input}`}
+                                className={Style.searchCity}
                                 type='text'
                                 name='search'
                                 value={searchCity}
                                 onChange={(e) => setSearchCity(e.target.value)}
                                 placeholder='검색을 원하는 도시이름'
                             />
+                            {searchCity === '' && (
+                                (
+                                <div>
+                                <div className={Style.customGoDiv}>
+                                    <button className={Style.makeButtons} onClick={onCustom}>도시 만들기</button>
+                                </div>
+                                </div>
+                                    )
+                            )}
                         </div>
-                        <br></br>
+                        
                         <div className={Style.placeCardForm}>
                             {searchCity !== '' &&
                                 searchPlace.map((place) => (
@@ -365,25 +399,17 @@ const PlaceSelect = (props) => {
                                         <img src={place.image} />
                                     </div>
                                 ))}
-                            {/* 커스텀으로 간다 */}
                         </div>
-                            {searchCity === '' && (
-                                <div>
+                        <img className={Style.xBut} style={{float:'left' , marginBottom:'20px'}} 
+                                onClick={onSearch}  src={backBut}/> 
+                        {/* <div className={Style.backDiv}>
                                     <button className={Style.back} onClick={onSearch}>뒤로</button>
-                                    <button className={Style.makeButtons} onClick={onCustom}>도시 만들기</button>
-                                </div>
-                            )}
+                        </div> */}
                     </>
                 )}
             </div> 
             )
         }
-        <div style={{opacity:0}}>
-            <LoadScript
-                    googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
-                    libraries={libraries}
-            />
-        </div>
         {/* <div className="map"
                              style={{ width: "500px", height: "500px" }}
                              ref={mapRef}

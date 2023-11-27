@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from '../../components/mypage/MyPage.module.css';
 import myPhoto from '../../assets/image/myphoto.png';
+import styles from '../../css/MyPage.module.css';
 
 const MypageSidebar = () => {
     return (

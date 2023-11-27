@@ -13,10 +13,19 @@ import Write from '../pages/Write';
 import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
+import TogetherList from './community/together/TogetherList';
+import Community from '../pages/Community';
 import useUserStore from '../stores/userStore';
 import { getTokenByRefreshToken, getUserByAccessToken } from '../api/UserApiService';
 import BottomNav from './BottomNav';
 import Mypage from '../pages/Mypage';
+import View from './community/planner/View';
+
+import { LoadScript } from '@react-google-maps/api';
+import PackageDetails from './package/PackageDetails';
+import PackgeReservation from './package/PackgeReservation';
+
+const libraries = ["places"];
 
 const Main = ({ showNavbar }) => {
     
@@ -119,8 +128,18 @@ const Main = ({ showNavbar }) => {
                         <Route path='cityList' element={ <CityMain />} />
                         <Route path='city/:citySeq' element={ <City />}/>
                     </Route>
-                    <Route path='planner' element= { <Planner />} />
-                    <Route path='place' element= { <Together/> } />
+                    <Route path='community'>
+                        <Route path='' element={ <Community/>}/>
+                        <Route path='planner'>
+                            <Route path='write' element= { <Planner />} />
+                            <Route path='view/:plannerSeq' element={ <View/>} />
+                        </Route>
+                        <Route path='togetherWrite' element= { <Together/> } />
+                    </Route>
+                    <Route path='package'>
+                        <Route path='details' element= { <PackageDetails/> } />
+                        <Route path='reservation' element={ <PackgeReservation /> } />
+                    </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
 
@@ -137,6 +156,10 @@ const Main = ({ showNavbar }) => {
                     </Routes>
 
             </BrowserRouter>
+            <LoadScript
+                googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
+                libraries={libraries}
+            />
         </div>
     );
 };

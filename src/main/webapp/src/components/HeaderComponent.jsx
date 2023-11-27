@@ -68,7 +68,7 @@ const HeaderComponent = () => {
                 </div>
                 <nav className={styles.nav}>
                   <ul>
-                    <li>
+                    <li className={ styles.navli }>
                       <NavLink
                         to='/'
                         style={location.pathname === '/' ? { color: '#2E8DFF' } : {}}
@@ -78,10 +78,10 @@ const HeaderComponent = () => {
                         홈
                       </NavLink>
                     </li>
-                    <li>
+                    <li className={ styles.navli }>
                       <NavLink
                         to='/info/cityList'
-                        style={location.pathname === '/info/cityList' ? { color: '#2E8DFF' } : {}}
+                        style={location.pathname.includes('/info') ? { color: '#2E8DFF' } : {}}
                         activeClassName={styles.activeLink}
                         className={styles.activeL}
                       >
@@ -89,10 +89,10 @@ const HeaderComponent = () => {
                       </NavLink>
                     </li>
 
-                    <li>
+                    <li className={ styles.navli }>
                       <NavLink
-                        to='/travel'
-                        style={location.pathname === '/travel' ? { color: '#2E8DFF' } : {}}
+                        to='/community'
+                        style={location.pathname === '/community' ? { color: '#2E8DFF' } : {}}
                         activeClassName={styles.activeLink}
                         className={styles.activeL}
                       >

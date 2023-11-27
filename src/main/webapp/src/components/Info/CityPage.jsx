@@ -37,9 +37,6 @@ const CityPage = () => {
 
     useEffect(() => {
 
-        console.log("asdsd")
-        console.log(user.likingTrip.split(','))
-
         getCityBySeq(citySeq)
             .then(res => {
                 setCity(res.data);
@@ -55,7 +52,14 @@ const CityPage = () => {
                     shuffleArray(res.data.filter(item => item.code === (activeButton === 'TouristSpot' ? 1 : 0))).slice());
             })
             .catch(e => console.log(e));
-    }, [citySeq, activeButton]);
+    }, []);
+
+    useEffect(() => {
+
+        setFilteredPlaceData(
+            shuffleArray(placeData.filter(item => item.code === (activeButton === 'TouristSpot' ? 1 : 0))).slice());
+  
+    }, [activeButton]);
 
     const changeButtonClick = (buttonName) => {
         setActiveButton(buttonName);
@@ -94,7 +98,6 @@ const CityPage = () => {
     //날씨 정보를 받아오는 함수
     const updateWeatherData = (weatherData) => {
         setCityWeather(weatherData);
-
     };
 
     const updateRecommend = (selectedRecommend) => {
@@ -293,11 +296,13 @@ const CityPage = () => {
 
     
     return (
-        <>
-            {user && user.mbti}
-            <img src={city.cityImage} className={ styles.citypage }/>
+
+        <div style={{userSelect:'none'}}>
+            <div className={ styles.mainImgDiv }>
+                <img src={city.cityImage} className={ styles.citypage }/>
+                <div className={ styles.cityName }>{city.cityName}</div>
+            </div>
             <div className={styles.main}>
-            <div className={ styles.cityName }>{city.cityName}</div>
             {/* ----------------검색---------------- */}
             {/* <div className={ styles.inputBox }>
                 <input className={ styles.input } type= 'text' placeholder='Search...'/>
@@ -371,7 +376,7 @@ const CityPage = () => {
                     ))
                 }
             </div>
-        </>
+        </div>
     );
 };
 

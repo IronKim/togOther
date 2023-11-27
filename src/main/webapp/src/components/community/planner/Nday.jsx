@@ -2,12 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import AddPlaceForm from './AddPlaceForm';
 import styles from '../../../css/planner.module.css'
 import upload from '../../../assets/image/imageUploadBut.png'
-import addPlaceBut from '../../../assets/image/addPlaceBut.png'
 import updateBut from '../../../assets/image/updateBut.png'
 import togoBut from '../../../assets/image/togoBut.png'
+import note from '../../../assets/image/note.png'
+import calendarAdd from '../../../assets/image/calendarAdd.png'
+import textAdd from '../../../assets/image/textAdd.png'
 
 const Nday = (props) => {
-    const {nDay,tabNum,onTab,subDTO,setSubDTO,textDTO,setTextDTO,sDay,toNum,imageDTO,onImage,deleteImg,xBut} = props
+    const {nDay,tabNum,onTab,subDTO,setSubDTO,textDTO,setTextDTO,
+        sDay,toNum,imageDTO,onImage,deleteImg,xBut,GoogleMap,Autocomplete} = props
     
     const id = useRef(1);
     const [firstTime,setFirstTime] = useState(0)
@@ -216,21 +219,24 @@ const onSub = (subData) => {
             </section>}
             {/* 이미지 영역 */}
             {
-                add && <AddPlaceForm onClose={onClose} firstTime={firstTime} lastTime={24} onSub={onSub} nDay={nDay}/>
+                add && <AddPlaceForm onClose={onClose} firstTime={firstTime} lastTime={24} onSub={onSub} nDay={nDay}
+                GoogleMap={GoogleMap} Autocomplete={Autocomplete}/>
             }
             {
-                gap && <AddPlaceForm onClose={onClose} firstTime={gs} lastTime={ge}  onSub={onSub} nDay={nDay}/>
+                gap && <AddPlaceForm onClose={onClose} firstTime={gs} lastTime={ge}  onSub={onSub} nDay={nDay}
+                GoogleMap={GoogleMap} Autocomplete={Autocomplete}/>
             }
             {
                 up && <AddPlaceForm onClose={onClose} upDTO={upDTO} firstTime={gs} lastTime={ge}  onSub={onSub} 
-                nDay={nDay} updateItem={updateItem}/>
+                nDay={nDay} updateItem={updateItem}
+                GoogleMap={GoogleMap} Autocomplete={Autocomplete}/>
             }
             <div style={{clear:'both'}}></div>
             <div style={{zIndex: -1,borderBottom: '1.5px solid lightgray',marginTop:'10px',marginBottom:'5px'}}/>
             {//첫 영역 텍스트박스(들)
                 textDTO.filter(nd=> nd.nDay === nDay).filter(item => item.order === 0).map( //첫번째글은 항상 상단 고정
-                    item2 => <div><textarea className={styles.nDayText} rows='1' 
-                    style={{height: item2.height + 'px'}} id={item2.id} name='text'
+                    item2 => <div><textarea className={styles.nDayText} rows='1'
+                    style={{height: item2.height + 'px',backgroundImage:`url(${note})`}} id={item2.id} name='text'
                     onInput={(e) => {
                         e.target.style.height = '';
                         e.target.style.height = e.target.scrollHeight + 3 + 'px';
@@ -247,7 +253,7 @@ const onSub = (subData) => {
                     <div key={index}>
                 {
                     index === 0 && ( item.startTime > 0 && 
-                        <div onClick={() => onGap(0,item.startTime)} className={styles.gapPlus}>+</div>) 
+                        <div onClick={() => onGap(0,item.startTime)} className={styles.gapPlus}><img src={calendarAdd}></img></div>) 
                         //뒷요소와 한시간이상 차이가 나면 사이에 추가버튼 추가
                     }
                     <div className={styles.placeItem}>
@@ -268,7 +274,7 @@ const onSub = (subData) => {
                     textDTO.filter(nd=> nd.nDay === nDay).filter(item2 => (item2.order >= item.endTime) && 
                     (item2.order  <= subDTO.filter(nd=> nd.nDay === nDay)[index + 1].startTime)).map( //사이에 들어가는 텍스트박스 중간
                     item3 => <div><textarea className={styles.nDayText} rows='1' 
-                    style={{height: item3.height + 'px'}} id={item3.id} name='text'
+                    style={{height: item3.height + 'px',backgroundImage:`url(${note})`}} id={item3.id} name='text'
                     onInput={(e) => {
                         e.target.style.height = '';
                         e.target.style.height = e.target.scrollHeight + 3 + 'px';
@@ -280,7 +286,7 @@ const onSub = (subData) => {
                     ) 
                     : textDTO.filter(nd=> nd.nDay === nDay).filter(item2 => item2.order  >= item.endTime).map( //사이에 들어가는 텍스트박스 맨끝
                     item3 => <div><textarea className={styles.nDayText} rows='1' 
-                    style={{height: item3.height + 'px'}} id={item3.id} name='text'
+                    style={{height: item3.height + 'px',backgroundImage:`url(${note})`}} id={item3.id} name='text'
                     onInput={(e) => {
                         e.target.style.height = '';
                         e.target.style.height = e.target.scrollHeight + 3 + 'px';
@@ -302,14 +308,14 @@ const onSub = (subData) => {
                             }])
                             id.current++
                         }}
-                        className={styles.textPlus}> + </div>)
+                        className={styles.textPlus}><img src={textAdd}></img></div>)
                         //뒷요소와 앞요소 사이에 텍스트박스가 텍스트추가버튼
                 }
                 {
                     index + 1 < subDTO.filter(nd=> nd.nDay === nDay).length && ( 
                         subDTO.filter(nd=> nd.nDay === nDay)[index + 1].startTime-item.endTime >= 1 && 
                         <div onClick={() => onGap(item.endTime,subDTO.filter(nd=> nd.nDay === nDay)[index + 1].startTime)}
-                        className={styles.gapPlus}> + </div>) 
+                        className={styles.gapPlus}><img src={calendarAdd}></img></div>) 
                         //뒷요소와 한시간이상 차이가 나면 사이에 추가버튼 추가
                 }
                 {
@@ -320,14 +326,14 @@ const onSub = (subData) => {
                             }])
                             id.current++
                         }}
-                        className={styles.textPlus}> + </div>)
+                        className={styles.textPlus}><img src={textAdd}></img></div>)
                         //뒷요소와 앞요소 사이에 텍스트박스가 텍스트추가버튼
                 }
                 </div>
             ))
         }
         <div style={{zIndex: -1,borderBottom: '1.5px solid lightgray',marginBottom:'10px'}}/>
-        {firstTime < 24 && <img onClick={onAdd} src={addPlaceBut} className={styles.addPlaceBut} tabIndex="-1"/>}
+        {firstTime < 24 && <button className={styles.buttons} onClick={onAdd}>일정 추가</button>}
         </div>
         </div>
         </div>

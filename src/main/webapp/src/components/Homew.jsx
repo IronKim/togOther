@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCity } from '../api/AdvisorApiService';
+import { getCityList } from '../api/CityApiService';
 import AdvisorCityList from './advisor/AdvisorCityList';
 
 import home from '../css/Homew.module.css';
@@ -37,8 +37,8 @@ const Homew = () => {
         setSelectedCity(city);
     };
 
-    const getCityList = () => {
-        getCity()
+    const getCity = () => {
+        getCityList()
             .then(res => {
                 setCityList(res.data);
             })
@@ -68,7 +68,7 @@ const Homew = () => {
 
     // 컴포넌트가 처음으로 렌더링될 때 도시 정보를 가져옴
     useEffect(() => {
-        getCityList();
+        getCity();
     }, []);
 
     // 도시 리스트를 불러오면 나라 리스트도 다시 불러오는 함수

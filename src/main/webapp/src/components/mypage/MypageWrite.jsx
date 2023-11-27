@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from '../../components/mypage/MyPage.module.css';
 import myPhoto from '../../assets/image/myphoto.png';
+import styles from '../../css/MyPage.module.css';
+
 
 const MypageWrite = () => {
     return (
@@ -8,7 +9,7 @@ const MypageWrite = () => {
             <p>여기가 계정 정보</p>
                 <div className={ styles.writeForm }>
                     <div className={ styles.photo_mbti }>
-                        <div className={ styles.photo }><img src={ myPhoto} style={{ width: '95px', height : '95px' }} /></div>
+                        <div className={ styles.photo }><img src={ myPhoto } style={{ width: '95px', height : '95px' }} /></div>
                             <div className={ styles.mbti }>
                                 <span>내 mbti</span><span>ENFP</span>
 

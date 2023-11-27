@@ -41,4 +41,21 @@ public class PlaceReviewServiceImpl implements PlaceReviewService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<String> addPlaceReview(PlaceReviewDTO placeReviewDTO) {
+		PlaceReview placeReview = PlaceReview.toEntity(placeReviewDTO);
+		
+		try {
+			placeReviewRepository.save(placeReview);
+			
+			String responseMessage = "리뷰가 추가되었습니다.";
+
+			return ResponseEntity.ok(responseMessage);
+		}catch (Exception e) {
+			String errorMessage = "리뷰 등록중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+		
+	}
+
 }
