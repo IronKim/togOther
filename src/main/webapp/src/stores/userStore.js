@@ -20,7 +20,7 @@ const initialUser = {
     coin: '',
     dupLogin: '',
     cityList: '',
-    cityFix: '',
+    likingPlace: '',
     certification: '',
     authority: ''
   };

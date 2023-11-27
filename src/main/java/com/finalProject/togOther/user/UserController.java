@@ -158,6 +158,12 @@ public class UserController {
 		return userService.sendEmail(email);
 	}
 	
+	// 좋아요 장소 수정
+	@PutMapping(path = "updateLikingPlace/{userSeq}/{placeSeq}")
+	public ResponseEntity<?> updateLikingPlace(@PathVariable int userSeq, @PathVariable int placeSeq) {
+		return userService.updateLikingPlace(userSeq, placeSeq);
+	}
+	
 	// 회원 탈퇴
 	@DeleteMapping(path = "withdrawalUser/{userSeq}")
 	public ResponseEntity<String> withdrawalUser(@PathVariable int userSeq) {

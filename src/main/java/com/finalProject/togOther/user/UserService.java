@@ -49,6 +49,8 @@ public interface UserService {
 	
 	public ResponseEntity<Map<String,String>> sendEmail(String email);
 	
+	public ResponseEntity<?> updateLikingPlace(int userSeq, int placeSeq);
+	
 	public ResponseEntity<String> withdrawalUser(int userSeq);
 
 }
