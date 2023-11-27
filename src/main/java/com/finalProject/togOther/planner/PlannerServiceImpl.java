@@ -126,7 +126,7 @@ public class PlannerServiceImpl implements PlannerService {
 			
 			
 			List<Planner> plannerList = 
-				plannerRepository.findAllByTitleContainingAndPublicPlanOrderByLogTimeDesc(pageable,search,0);
+				plannerRepository.findAllByTitleContainingAndPublicPlanOrderByPlannerSeqDesc(pageable,search,0);
 
 			List<PlannerDTO> plannerDTOList = new ArrayList<PlannerDTO>();
 
@@ -223,6 +223,24 @@ public class PlannerServiceImpl implements PlannerService {
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
+	@Override
+	public ResponseEntity<String> deletePlanner(int seq) {
+		try {
+			plannerRepository.deleteById(seq);
+			plannerTextRepository.deleteByPlMainSeq(seq);
+			plannerImageRepository.deleteByPlMainSeq(seq);
+
+			// 사용자가 성공적으로 삭제되었을 때
+			String responseMessage = "플래너가 삭제되었습니다.";
+			return ResponseEntity.ok(responseMessage);
+		} catch (Exception e) {
+
+			// 사용자 삭제 중 에러가 발생했을 때
+			String errorMessage = "플래너 삭제 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
 		}
 	}
 }

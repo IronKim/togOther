@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { addPlanner,addSubItem,addPlannerText,addPlannerImage,uploadPlannerImage } from '../../../api/PlannerApiService';
+import { addPlanner,addSubItem,addPlannerText,addPlannerImage,uploadPlannerImage,getPlannerView, deletePlanner } from '../../../api/PlannerApiService';
 import { getCityList } from '../../../api/CityApiService';
-import { addCustomPlace } from '../../../api/PlaceApiService';
+import { addCustomPlace,getPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import { addTogether } from '../../../api/TogetherApiService';
 import Nday from './Nday';
 import styles from '../../../css/planner.module.css'
@@ -9,13 +9,16 @@ import Togother from './Togother';
 import TogoItemList from './TogoItemList';
 import xBut from '../../../assets/image/xBut.png';
 import arrow from '../../../assets/image/arrow.png'
+import backBut from '../../../assets/image/backBut.png'
 import { GoogleMap, Autocomplete} from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
 import sweet from 'sweetalert2';
 import { useUserStore } from '../../../stores/mainStore';
 
-const Form = () => {
+const Form = (props) => {
     const {user} = useUserStore();
+
+    const {up,plannerSeq} = props
 
     const today = new Date();
     const year = today.getFullYear();
@@ -32,6 +35,7 @@ useEffect(()=>{
 },[])
 //나중에 plannerDTO로 들어갈것들
     const [publicPaln,setPublicPlan] = useState(true)
+    const [logTime,setLogTime] = useState()
     //날짜
     const [startDate,setStartDay] = useState(nowDay)
     const [endDate,setEndDay] = useState(nowDay)
@@ -50,7 +54,57 @@ useEffect(()=>{
 
     //플래너 이름 자동 생성 매커니즘
     const [plannerTitle,setPlannerTitle] = useState([])
+//수정 매커니즘
+useEffect(()=>{
+    if(up) {
+        const fetchData = async () => {
+            try {
+                const res = await getPlannerView(plannerSeq);
+                setPublicPlan(res.data.planner.publicPlan === 0 ? true : false)
+                setStartDay(res.data.planner.startDate)
+                setEndDay(res.data.planner.endDate)
+                setLogTime(res.data.planner.logTime)
+                let txtDTO = [];
+                let imgDTO = [];
+                let sDTO = [];
+        
+            await Promise.all(
+                res.data.plannerText.map(async (plTxt) => {
+                    txtDTO.push({"id":plTxt.id,"nDay":plTxt.nday,"order":plTxt.orders,
+                    "context":plTxt.context,"height":23})
+                })
+            );
+            await Promise.all(
+                res.data.plannerImage.map(async (plImg) => {
+                    imgDTO.push({"nDay":plImg.nday,"image":plImg.image})
+                })
+            );
+            await Promise.all(
+                res.data.subItem.map(async (sub) => {
+                    if(sub.placeSw === 0) {
+                        const res2 = await getPlace(sub.placeSeq); 
+                        sDTO.push({"nDay":sub.nday,"endTime":sub.endTime,"startTime":sub.startTime,
+                        "place":res2.data,"customDTO":null,"context":sub.context})
+                    }
+                    if(sub.placeSw === 1) {
+                        const res2 = await getCustomPlace(sub.plCustomSeq);
+                        sDTO.push({"nDay":sub.nday,"endTime":sub.endTime,"startTime":sub.startTime,
+                        "place":null,"customDTO":res2.data})
+                    }
+                })
+            );
 
+            setTextDTO(txtDTO)
+            setImageDTO(imgDTO)
+            setSubDTO([...sDTO])
+            } catch (error) {
+              console.error("Error during data fetching:", error);
+            }
+          };
+        
+          fetchData();
+    }
+},[])
     useEffect(()=>{
         const getPlaces = subDTO.filter(item => item.place !== null).slice().sort((a, b) => a.nDay - b.nDay).map(item2 => item2.place.citySeq)
 
@@ -65,6 +119,10 @@ useEffect(()=>{
     }
     //플래너 업로드 
     const uploadPlanner = () => {
+        const fetchData = async () => {
+            await deletePlanner(plannerSeq)
+        }
+
         const delTogo = [];
 
         togoDTO.map(item => {
@@ -98,6 +156,31 @@ useEffect(()=>{
                 } 
               });
         } else {
+        if(!publicPaln && togoDTO.length > 0) {
+            window.scrollTo(0, 0);
+            sweet.fire({
+                title: "비공개여도 동행은 그대로 등록됩니다",
+                text: "진행하시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "예",
+                cancelButtonText: "아니요"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    if(up) fetchData() 
+                    upload()
+                } 
+              });
+        } else {
+            if(up) fetchData() 
+            upload()
+        }
+    }
+}
+    
+    const upload = () => {
         let title = `${user.name} ${plannerTitle.length > 0 ?
             city.find(item => item.citySeq === plannerTitle[0]).cityName : ''}${
             plannerTitle.length > 1 ? ` 외 ${plannerTitle.length - 1}곳` : ''} 여행 플래너`;
@@ -115,7 +198,7 @@ useEffect(()=>{
             endDate: endDate,
             publicPlan : publicPaln ? 0 : 1,
             hit : 0,likeCnt : 0}
-
+            
         addPlanner(planner)
         .then(res => {
             console.log(res.data)
@@ -198,7 +281,7 @@ useEffect(()=>{
             imageDTO.map(item => {
                 const formData = new FormData();
                 const images = item.image.split(',')
-                Promise.all(images.map((item2, index2) => {
+                Promise.all(images.filter(imgs => !imgs.includes('bitcamp-edu-bucket-97')).map((item2, index2) => {
                     return fetch(item2)
                     .then(response => response.blob())
                     .then(blob => {
@@ -207,6 +290,7 @@ useEffect(()=>{
                     });
                 }))
                 .then(() => {
+                    if(images.filter(imgs => !imgs.includes('bitcamp-edu-bucket-97')).length > 0) {
                     uploadPlannerImage(formData)
                     .then(res2 => {
                         const plannerImage = {plMainSeq: res.data, nday: item.nDay, image : res2.data} 
@@ -215,19 +299,25 @@ useEffect(()=>{
                         .catch(e => console.log(e))
                     })
                     .catch(e => console.log(e))
+                    } else {
+                        const plannerImage = {plMainSeq: res.data, nday: item.nDay, 
+                            image : images.filter(imgs => imgs.includes('bitcamp-edu-bucket-97')).join(',')} 
+                        addPlannerImage(plannerImage)
+                        .then(res3 => console.log(res3))
+                        .catch(e => console.log(e))
+                    }
                 })
             })
             //// 
             window.scrollTo(0, 0);
             sweet.fire({
-                title: "등록이 완료되었습니다.",
+                title: up ? "수정이 완료되었습니다." : "등록이 완료되었습니다.",
                 icon: "success"
             }).then(() => {
                 navigate(`/community`);
             });
         })
         .catch(e => console.log(e))
-        }
     }
     //이미지 업로드
     const [imageDTO, setImageDTO] = useState([]);
@@ -437,14 +527,21 @@ useEffect(()=>{
         };
       }, []);
 
+      const back = () => {
+        window.scrollTo(0, 0);
+        navigate(-1);
+    }
+
     return (
         <div>
             <section className={styles.mainSection}>
-            {/* <button onClick={() =>alert(JSON.stringify(dDay))}>nDay 확인</button>
+            <button onClick={() =>alert(JSON.stringify(dDay))}>nDay 확인</button>
             <button onClick={() =>alert(JSON.stringify(subDTO))}>sub json 확인</button>
             <button onClick={() =>alert(JSON.stringify(textDTO))}>text json확인</button>
             <button onClick={() =>alert(JSON.stringify(togoDTO))}>동행 json 확인</button>
-            <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button> */}
+            <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button>
+            
+            <img className={styles.backBut} src={backBut} onClick={() => back()}/>
             <section className={styles.topSection}>
             {/* 제목 */}
             <div className={styles.plannerTitle}>{/* 세션 유저이름*/}{user.name} {plannerTitle.length > 0 && 
@@ -512,7 +609,9 @@ useEffect(()=>{
                 </section>
                 <div style={{clear:'both'}}></div>
                 <section className={styles.bottomSection}>
-                    <button className={styles.buttons} style={{float:'right',margin:'30px 10px'}} onClick={()=>uploadPlanner()}>저장</button>
+                    <button className={styles.buttons} style={{float:'right',margin:'30px 10px'}} onClick={()=>uploadPlanner()}>
+                        {up ? '수정' : '저장'}
+                    </button>
                 </section>
             </section>
         </div>

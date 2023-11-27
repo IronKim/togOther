@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,5 +78,11 @@ public class PlannerController {
 	@GetMapping(path = "getPlannerView/{plannerSeq}")
 	public ResponseEntity<Map<String, Object>> getPlanner(@PathVariable int plannerSeq) {
 		return plannerService.getPlannerView(plannerSeq);
+	}
+	
+	// 플래너 삭제
+	@DeleteMapping(path = "deletePlanner/{seq}")
+	public ResponseEntity<String> deletePlanner(@PathVariable int seq) {
+		return plannerService.deletePlanner(seq);
 	}
 }

@@ -1,10 +1,16 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
-import { getPlannerView } from '../../../api/PlannerApiService';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getPlannerView, deletePlanner } from '../../../api/PlannerApiService';
 import { getPlace,getCustomPlace } from '../../../api/PlaceApiService';
+import { getUserByEmail } from '../../../api/UserApiService';
 import { GoogleMap,Marker } from '@react-google-maps/api';
+import { useUserStore } from '../../../stores/mainStore';
+import sweet from 'sweetalert2';
 
 import styles from '../../../css/plannerView.module.css'
+import plannerImg from '../../../assets/image/planner.png'
+import profileImg from '../../../assets/image/profile_thumb.png'
+import backBut from '../../../assets/image/backBut.png'
 import WhatDay from './WhatDay';
 import Modal from './Modal';
 import ImgModal from './ImgModal';
@@ -25,11 +31,15 @@ const containerStyle = {
 //   ];
 
 const View = () => {
+    const {user} = useUserStore();
+
     const [modal,setModal] = useState({sw: -1 ,seq: -1})
     const [add, setAdd] = useState(false)
     const [img, setImg] = useState(false)
     const [link,setLink] = useState('')
     const [mouse,setMouse] = useState({x:0,y:0})
+
+    const navigate = useNavigate()
 
     const onImg = (e,li) => {
         setAdd(false)
@@ -113,6 +123,7 @@ const handleScroll = () => {
 
     const { plannerSeq } = useParams();
     const [planner,setPlanner] = useState()
+    const [userDTO,setUserDTO] = useState();
     const [plannerImage,setPlannerImage] = useState([])
     const [plannerText,setPlannerText] = useState([])
     const [subItem,setSubItem] = useState([])
@@ -146,6 +157,22 @@ const handleScroll = () => {
         return `${month}월 ${day}일 (${week===0 ? '일' : week===1 ? '월' : week===2 ? '화' : week===3 ? '수' :
         week===4 ? '목' : week===5 ? '금' : week===6 ? '토' : ''})`;
     }
+    const getAge = (bDay) => {
+        const today = new Date();
+        const birthDate = new Date(bDay);
+      
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        
+      
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+
+
+        const decade = Math.floor(age / 10) * 10;
+        return `${decade}대`;
+    }
     //***************************
 
     useEffect(()=>{
@@ -162,6 +189,8 @@ const handleScroll = () => {
         const fetchData = async () => {
           try {
             const res = await getPlannerView(plannerSeq);
+            const us = await getUserByEmail(res.data.planner.useremail)
+            setUserDTO(us.data)
             setPlanner(res.data.planner);
             setPlannerImage(res.data.plannerImage);
             setPlannerText(res.data.plannerText);
@@ -193,6 +222,41 @@ const handleScroll = () => {
         fetchData();
       }, []);
 
+      const back = () => {
+          window.scrollTo(0, 0);
+          navigate(-1);
+      }
+
+      const deletePlan = () => {
+        sweet.fire({
+            title: "정말 삭제하시겠습니까?",
+            text: "동행은 그대로 유지됩니다",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "예",
+            cancelButtonText: "아니요"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deletePlanner(planner.plannerSeq)
+                .then(res => {
+                    window.scrollTo(0, 0);
+                    sweet.fire({
+                        title: "삭제되었습니다",
+                        icon: "success"
+                    }).then(
+                        navigate(`/community`)
+                    )
+                })
+            } 
+        });
+        }
+
+        const updatePlan = () => {
+            window.scrollTo(0, 0);
+            navigate(`/community/planner/update/${plannerSeq}`)
+        }
     return (
         <div className={styles.main}>
             {
@@ -201,12 +265,36 @@ const handleScroll = () => {
             {
                 img && <ImgModal onClose={onClose} link={link} mouse={mouse}/>
             }
+            <div className={styles.topButtons}><img src={backBut} onClick={() => back()}/>
+                {planner && planner.userSeq === user.userSeq && <span>
+                    <button style={{backgroundColor:'tomato'}} onClick={()=>deletePlan()}>삭제</button>
+                    <button onClick={()=>updatePlan()}>수정</button>
+                </span>}
+            </div>
+            <div style={{clear:'both'}}/>
             <div className={styles.title}>{planner && planner.title}</div>
-            <div className={styles.timeDate}>{planner && 
-                <div>{planner.startDate.split('-')[1]}/{planner.startDate.split('-')[2]}&nbsp;&nbsp;-&nbsp;&nbsp;
+            {planner && 
+            <div className={styles.userProfile}>
+                <img src={planner.userProfileImage && planner.userProfileImage !== '' ? planner.userProfileImage : profileImg}></img>
+                <div className={styles.profiles}>
+                    <div className={styles.proTop}>
+                        {planner.userName}
+                    </div>
+                    <div className={styles.proBot}>
+                        {planner.userGender === 'M' ? '남성' : '여성'} | {getAge(userDTO.birthday)} | {userDTO.national}
+                    </div>
+                </div>
+            </div>
+            }
+            <div style={{clear:'left'}}/>
+            <div className={styles.timeDate}>
+                {planner && 
+                <div> <img src={plannerImg}/>&nbsp;&nbsp;{planner.startDate.split('-')[1]}/
+                {planner.startDate.split('-')[2]}&nbsp;&nbsp;-&nbsp;&nbsp;
                     {planner.endDate.split('-')[1]}/{planner.endDate.split('-')[2]}
                 </div> }
             </div>
+                
             <section className={styles.mapSection}>
                 <GoogleMap
                     mapContainerStyle={containerStyle}

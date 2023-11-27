@@ -28,4 +28,6 @@ public interface PlannerService {
 
 	public ResponseEntity<Map<String, Object>> getPlannerView(int plannerSeq);
 
+	public ResponseEntity<String> deletePlanner(int seq);
+
 }
