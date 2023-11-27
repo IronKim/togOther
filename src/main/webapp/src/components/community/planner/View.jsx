@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
-import { getPlannerView } from '../../../api/PlannerApiService';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getPlannerView, deletePlanner } from '../../../api/PlannerApiService';
 import { getPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import { getUserByEmail } from '../../../api/UserApiService';
 import { GoogleMap,Marker } from '@react-google-maps/api';
+import { useUserStore } from '../../../stores/mainStore';
+import sweet from 'sweetalert2';
 
 import styles from '../../../css/plannerView.module.css'
 import plannerImg from '../../../assets/image/planner.png'
 import profileImg from '../../../assets/image/profile_thumb.png'
+import backBut from '../../../assets/image/backBut.png'
 import WhatDay from './WhatDay';
 import Modal from './Modal';
 import ImgModal from './ImgModal';
@@ -28,11 +31,15 @@ const containerStyle = {
 //   ];
 
 const View = () => {
+    const {user} = useUserStore();
+
     const [modal,setModal] = useState({sw: -1 ,seq: -1})
     const [add, setAdd] = useState(false)
     const [img, setImg] = useState(false)
     const [link,setLink] = useState('')
     const [mouse,setMouse] = useState({x:0,y:0})
+
+    const navigate = useNavigate()
 
     const onImg = (e,li) => {
         setAdd(false)
@@ -154,7 +161,6 @@ const handleScroll = () => {
         const today = new Date();
         const birthDate = new Date(bDay);
       
-        console.log(birthDate.getFullYear())
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
         
@@ -216,6 +222,41 @@ const handleScroll = () => {
         fetchData();
       }, []);
 
+      const back = () => {
+          window.scrollTo(0, 0);
+          navigate(-1);
+      }
+
+      const deletePlan = () => {
+        sweet.fire({
+            title: "정말 삭제하시겠습니까?",
+            text: "동행은 그대로 유지됩니다",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "예",
+            cancelButtonText: "아니요"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deletePlanner(planner.plannerSeq)
+                .then(res => {
+                    window.scrollTo(0, 0);
+                    sweet.fire({
+                        title: "삭제되었습니다",
+                        icon: "success"
+                    }).then(
+                        navigate(`/community`)
+                    )
+                })
+            } 
+        });
+        }
+
+        const updatePlan = () => {
+            window.scrollTo(0, 0);
+            navigate(`/community/planner/update/${plannerSeq}`)
+        }
     return (
         <div className={styles.main}>
             {
@@ -224,10 +265,17 @@ const handleScroll = () => {
             {
                 img && <ImgModal onClose={onClose} link={link} mouse={mouse}/>
             }
+            <div className={styles.topButtons}><img src={backBut} onClick={() => back()}/>
+                {planner && planner.userSeq === user.userSeq && <span>
+                    <button style={{backgroundColor:'tomato'}} onClick={()=>deletePlan()}>삭제</button>
+                    <button onClick={()=>updatePlan()}>수정</button>
+                </span>}
+            </div>
+            <div style={{clear:'both'}}/>
             <div className={styles.title}>{planner && planner.title}</div>
             {planner && 
             <div className={styles.userProfile}>
-                <img src={planner.userProfileImage}></img>
+                <img src={planner.userProfileImage && planner.userProfileImage !== '' ? planner.userProfileImage : profileImg}></img>
                 <div className={styles.profiles}>
                     <div className={styles.proTop}>
                         {planner.userName}
