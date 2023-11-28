@@ -3,7 +3,7 @@ import Start from './Start';
 import Content from './Content';
 import Result from './Result';
 
-const MbtiMain = ({prevPage,onSubmitWrite,onMbti,inputUserData}) => {
+const MbtiMain = ({prevPage,onSubmitWrite,onMbti,inputUserData,updateMbti,theEndMbti}) => {
     const[status,setStatus] = useState(0)
 
     const[ie,setIe] = useState([0,0])
@@ -79,7 +79,8 @@ const MbtiMain = ({prevPage,onSubmitWrite,onMbti,inputUserData}) => {
         <div>
             {status === 0 && <Start nextStatus={nextStatus} inputUserData={inputUserData}/>}
             {status === 1 && <Content nextStatus={nextStatus} updateType={updateType} minusType={minusType}/>}
-            {status === 2 && <Result ie={ie} sn={sn} tf={tf} jp={jp} onMbti={onMbti}/>}
+            {status === 2 && <Result ie={ie} sn={sn} tf={tf} jp={jp} onMbti={onMbti} 
+                updateMbti={updateMbti} userSeq={inputUserData.userSeq} theEndMbti={theEndMbti}/>}
             <button onClick={prevPage}>이전</button>&nbsp;
             <button onClick={onSubmitWrite}>완료</button>&nbsp;
         </div>

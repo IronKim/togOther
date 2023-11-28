@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../../css/MyPage.module.css';
 import { useUserStore } from '../../stores/mainStore';
-import { smsCertificationRequest, updateLikingFood, updateLikingTrip, updatePassword, updatePhone, updateProfileText, withdrawalUser } from '../../api/UserApiService';
+import { smsCertificationRequest, updateLikingFood, updateLikingTrip, 
+    updatePassword, updatePhone, updateProfileText, withdrawalUser, updateMbti } from '../../api/UserApiService';
 
 import { RiSave3Fill } from "react-icons/ri";
 import { GiCancel } from "react-icons/gi";
@@ -11,19 +12,29 @@ import { FaUserTimes } from "react-icons/fa";
 
 import Swal from 'sweetalert2'; // SweetAlert2 추가
 import { useNavigate } from 'react-router-dom';
+import MyMbti from './MyMbti';
 
 const MypageWrite = ({onErrorImg}) => {
 
-    const { user } = useUserStore();
+    const { user,updateMbti } = useUserStore();
 
     const navigate = useNavigate();
 
+    const [onMbti,setOnMbti] = useState(false);
     const [isEditing, setEditing] = useState(false);
     const [editedProfileText, setEditedProfileText] = useState(user.profileText);
     let likingFood = user.likingFood; // 음식 취향
     let likingTrip = user.likingTrip; // 여행 취향
 
     const [year, month, day] = user.birthday.split('-');
+
+    const mbtiClose = () => {
+        setOnMbti(false)
+    }
+
+    const theEndMbti = (mbti) => {
+        updateMbti(mbti)
+    }
 
     const handleToggleEdit = () => {
         setEditing(!isEditing);
@@ -476,13 +487,17 @@ const MypageWrite = ({onErrorImg}) => {
 
     return (
         <div>
-                <p className={styles.tagName}>계정관리</p>
+            {
+                onMbti && <MyMbti inputUserData={user} mbtiClose={mbtiClose} updateMbti={updateMbti} theEndMbti={theEndMbti}/>
+            }
+                <p className={styles.tagName}>계정설정</p>
                 <hr className={styles.hr} />
                 <div className={ styles.writeForm }>
                     <div style={{display: 'flex', flexDirection: 'column', height: '13em'}}>
                         <div className={ styles.photo_mbti }>
                             <div className={ styles.photo }>
-                                <img src={ user.profileImage === null ? '' : user.profileImage.toString()} style={{ width: '95px', height : '95px' }} onError={onErrorImg} />
+                                <img src={ user.profileImage === null ? '' : user.profileImage.toString()} 
+                                    style={{ width: '95px', height : '95px',objectFit:'cover',borderRadius:'50%' }} onError={onErrorImg} />
                             </div>
                             <p className={ styles.nameInput } style={{fontSize: '30px', width : '100%', height : '45px', textAlign: 'center' }} >{user.name}</p>
                             <div className={ styles.mbti }>
@@ -568,7 +583,7 @@ const MypageWrite = ({onErrorImg}) => {
                                     <button onClick={phoneChange}>{user.phone === '' || user.phone === null ? '휴대폰 인증하기' : '휴대폰번호 변경'}</button>
                                     <button onClick={likingTripChange}>여행취향 변경</button>
                                     <button onClick={likingFoodChange}>음식취향 변경</button>
-                                    <button>mbti 테스트</button>
+                                    <button onClick={() => setOnMbti(true)}>mbti 테스트</button>
                                     <button onClick={withdrawal}>회원탈퇴</button>
                                 </li>
                             </ul>

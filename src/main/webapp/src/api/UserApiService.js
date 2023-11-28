@@ -26,6 +26,8 @@ export const recoveryPassword = (userSeq, updatePassword) => apiClient.put(`api/
 
 export const updatePhone = (userSeq, updatePhone) => apiClient.put(`api/user/updatePhone/${userSeq}`, {updatePhone});
 
+export const updateMbti = (userSeq, mbti) => apiClient.put(`api/user/updateMbti/${userSeq}`, mbti);
+
 export const updateLikingTrip = (userSeq, tripLiking) => apiClient.put(`api/user/updateLikingTrip/${userSeq}`, {tripLiking});
 
 export const updateLikingFood = (userSeq, foodLiking) => apiClient.put(`api/user/updateLikingFood/${userSeq}`, {foodLiking});
