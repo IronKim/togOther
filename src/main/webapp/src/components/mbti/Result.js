@@ -18,6 +18,7 @@ const Result = (props) => {
         else mb += 'P'
 
         if(userSeq !== undefined) {
+            console.log(userSeq)
             updateMbti(userSeq,{mbti : mb})
             theEndMbti(mb)
         } else {

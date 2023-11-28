@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from '../../css/MyPage.module.css';
 import { useUserStore } from '../../stores/mainStore';
 import { smsCertificationRequest, updateLikingFood, updateLikingTrip, 
-    updatePassword, updatePhone, updateProfileText, withdrawalUser, updateMbti } from '../../api/UserApiService';
+    updatePassword, updatePhone, updateProfileText, withdrawalUser, updateMbtiApi } from '../../api/UserApiService';
 
 import { RiSave3Fill } from "react-icons/ri";
 import { GiCancel } from "react-icons/gi";
@@ -488,7 +488,7 @@ const MypageWrite = ({onErrorImg}) => {
     return (
         <div>
             {
-                onMbti && <MyMbti inputUserData={user} mbtiClose={mbtiClose} updateMbti={updateMbti} theEndMbti={theEndMbti}/>
+                onMbti && <MyMbti inputUserData={user} mbtiClose={mbtiClose} updateMbti={updateMbtiApi} theEndMbti={theEndMbti}/>
             }
                 <p className={styles.tagName}>계정설정</p>
                 <hr className={styles.hr} />
