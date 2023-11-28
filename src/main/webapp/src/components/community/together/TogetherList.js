@@ -182,7 +182,7 @@ useEffect(() => {
                       </div>
                     </div>
                   </div>
-                {searchSub !== undefined &&
+                {searchSub !== undefined && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq) &&
 
                   (<div className={Style.togetherFoot}>
                       <div className={Style.imgDiv}>

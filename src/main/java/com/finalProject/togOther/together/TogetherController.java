@@ -80,10 +80,16 @@ public class TogetherController {
 		return togetherService.getTogetherSeq(togetherSeq);
 	}
 
+
 	//동행 삭제
 	@DeleteMapping(path = "deleteTogether/{togetherSeq}")
 	public ResponseEntity<String> deleteTogether(@PathVariable int togetherSeq) {
 	    return togetherService.deleteTogether(togetherSeq);
+	}
+	//togetherSeq에 해당하는 togetherDTO 불러오기
+	@GetMapping(path="getAllTogether")
+	public ResponseEntity<List<TogetherDTO>> getAllTogether(){
+		return togetherService.getAllTogether();
 	}
 		
 	

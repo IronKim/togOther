@@ -14,3 +14,4 @@ export const deleteTogether = (togetherSeq) => apiClient.delete(`api/together/de
 //
 export const getMyTogether = (n) => apiClient.post('api/together/getMyTogetherList', n);
 export const totMyTogether = (n) => apiClient.post('api/together/totMyTogether', n);
+

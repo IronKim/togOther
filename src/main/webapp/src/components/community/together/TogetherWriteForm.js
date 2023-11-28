@@ -239,7 +239,7 @@ const PlaceWriteForm = () => {
     
     return (
         <>
-        {/* <button onClick={()=>{console.log(JSON.stringify(subDTO))}}></button> */}
+        <button onClick={()=>{console.log(JSON.stringify(subDTO))}}>s</button>
         <div className={Style.writeForm}>
         <div className={Style.writeFormInner}>
             <div>

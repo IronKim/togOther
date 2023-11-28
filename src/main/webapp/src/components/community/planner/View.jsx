@@ -32,7 +32,7 @@ const containerStyle = {
 //     },
 //   ];
 
-const View = () => {
+const View = ({seqAd}) => {
     const {user} = useUserStore();
 
     const [modal,setModal] = useState({sw: -1 ,seq: -1})
@@ -207,7 +207,7 @@ const handleScroll = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const res = await getPlannerView(plannerSeq);
+            const res = await getPlannerView(seqAd === undefined ? plannerSeq : seqAd);
             const us = await getUserByEmail(res.data.planner.useremail)
             setUserDTO(us.data)
             setPlanner(res.data.planner);
@@ -216,7 +216,7 @@ const handleScroll = () => {
             setSubItem(res.data.subItem);
       
             if(res.data.planner.publicPlan === 1) {
-                if(res.data.planner.userSeq !== user.userSeq) {
+                if(res.data.planner.userSeq !== user.userSeq && user.authority !== 'roll_admin') {
                     window.scrollTo(0, 0);
                     navigate(`/community`)
                     sweet.fire({
@@ -295,7 +295,8 @@ const handleScroll = () => {
             {
                 img && <ImgModal onClose={onClose} link={link} mouse={mouse}/>
             }
-            <div className={styles.topButtons}><img src={backBut} onClick={() => back()}/>
+            <div className={styles.topButtons}>
+                {seqAd === undefined && <img src={backBut} onClick={() => back()}/>}
                 {planner && planner.userSeq === user.userSeq && <span>
                     <button style={{backgroundColor:'tomato'}} onClick={()=>deletePlan()}>삭제</button>
                     <button onClick={()=>updatePlan()}>수정</button>

@@ -29,7 +29,7 @@ const containerStyle = {
     },
   ];
 
-const TogetherView = () => {
+const TogetherView = ({seqAd}) => {
     const { user } = useUserStore();
     const { togetherSeq } = useParams()
     const [custom,setCustom] = useState([])
@@ -52,7 +52,7 @@ const TogetherView = () => {
     const [togetherDTO, setTogetherDTO] = useState([])
     const [subDTO, setSubDTO] = useState([])
     useEffect(()=> {
-        getTogetherSeq(togetherSeq)
+        getTogetherSeq(seqAd === undefined ? togetherSeq : seqAd)
         .then(res => {
             setTogetherDTO(res.data.together)
             setSubDTO(res.data.subItem)

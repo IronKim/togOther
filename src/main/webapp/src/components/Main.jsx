@@ -71,7 +71,7 @@ const Main = ({ showNavbar }) => {
                     <Route path='community'>
                         <Route path='' element={ <Community/>}/>
                         <Route path='planner'>
-                            <Route path='write' element= { <Planner />} />
+                            <Route path='write' element= { <UserRoute><Planner /></UserRoute>} />
                             <Route path='update/:plannerSeq' element= { <Planner up={true}/>} />
                             <Route path='view/:plannerSeq' element={ <View/>} />
                         </Route>

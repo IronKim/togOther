@@ -16,3 +16,7 @@ export const addPlace = (place) => apiClient.post('/api/advisor/addPlace', place
 export const getPlaceByCitySeq = (citySeq) => apiClient.get(`/api/advisor/getPlaceByCitySeq/${citySeq}`);
 
 export const updatePlace = (placeSeq, place) => apiClient.put(`/api/advisor/updatePlace/${placeSeq}`, place);
+
+export const getAllPlanner = () => apiClient.get('/api/planner/getAllPlanner');
+
+export const getAllTogether = () => apiClient.get(`api/together/getAllTogether`)

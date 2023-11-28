@@ -35,4 +35,6 @@ public interface PlannerService {
 	public ResponseEntity<Integer> totMyPlanner(int userSeq);
 
 	public ResponseEntity<String> updatePublicPlan(int plannerSeq, int plan);
+
+	public ResponseEntity<List<PlannerDTO>> getAllPlanner();
 }

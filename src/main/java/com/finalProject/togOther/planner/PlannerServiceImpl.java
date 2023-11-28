@@ -284,6 +284,27 @@ public class PlannerServiceImpl implements PlannerService {
 				return ResponseEntity.ok(-1);
 			}
 		}
+		//플래너 전체 개수 불러오기
+		@Override
+		public ResponseEntity<List<PlannerDTO>> getAllPlanner() {
+			try {
+				List<Planner> plannerList = plannerRepository.findAll();
+				
+				List<PlannerDTO> plannerDTOList = new ArrayList<PlannerDTO>();
+
+				for (Planner planner : plannerList) {
+
+					PlannerDTO plannerDTO = PlannerDTO.toDTO(planner);
+
+					plannerDTOList.add(plannerDTO);
+				}
+
+				return ResponseEntity.ok(plannerDTOList);
+
+			} catch (Exception e) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			}
+		}
 		//공개여부 수정
 		@Override
 		public ResponseEntity<String> updatePublicPlan(int plannerSeq, int plan) {
