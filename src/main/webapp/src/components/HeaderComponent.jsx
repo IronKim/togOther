@@ -114,7 +114,7 @@ const HeaderComponent = () => {
                     <li className={ styles.navli }>
                       <NavLink
                         to='/community'
-                        style={location.pathname === '/community' ? { color: '#2E8DFF' } : {}}
+                        style={location.pathname.includes('/community') ? { color: '#2E8DFF' } : {}}
                         activeClassName={styles.activeLink}
                         className={styles.activeL}
                       >

@@ -1,0 +1,384 @@
+.package_main{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.package_title {
+
+    padding: 40px 10px 30px 10px;
+    font-size: 30px;
+}
+.tap {
+    border: 1px solid black;
+    display: flex;
+    width: 100%; 
+    max-width: 1200px; 
+    height: 35px;
+    margin-left: auto; 
+    margin-right: auto; 
+}
+.tap p {
+    border : 1px solid red;
+    width :80px;
+    height : 35px;
+    padding : 10px;
+}
+.img {
+    border: 1px solid black;
+    width: 100%;
+    max-width: 1200px; 
+    height: 350px;
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top: 50px;
+}
+.details_scheduler {
+    width: 100%; 
+    max-width: 1200px;
+    height: 600px;
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top: 40px;
+}
+.details {
+    float: left;
+    border: 1px solid blue;
+    width: 800px;
+    height: 580px;
+}
+.scheduler {
+    float: right;
+    border : 1px solid red;
+    width : 349px;
+    height : 580px;
+    margin-left: auto;
+    margin-right: auto; 
+}
+.calendar {
+    width: 349px;
+    height: 283px;
+    vertical-align: top;
+}
+.selected_day {
+    text-align: left;
+    border : 1px solid yellow;
+    width : 349px;
+    max-height: 283px;
+    font-size: 20px;
+    padding : 10px 5px 0 0;
+}
+.text {
+    height : 85px;
+}
+.text div {
+    padding-top: 5px;
+    border : 1px solid black;
+}
+.price {
+    padding-top: 5px;
+    width : 150px;
+    height : 30px;
+}
+.arrow_div {
+    width: 130px;
+    height: 30px;
+    padding: 5px 0; 
+    margin-left: 215px;
+    margin-top: -26px;
+    display: flex;
+    align-items: center;
+  }
+  .arrow {
+    width: 130px;
+    height : 30px;
+    padding : 5px 5px;
+    display: flex;
+  }
+  .arrow div {
+    margin: -6px 10px;
+  } 
+  .reservation {
+
+    width : 349px;
+    height : 110px;
+  }
+  .reservation button {
+    width : 90%;
+    height : 80px;
+    margin: 5%;
+  }
+  .prTag {
+    height: 130px;
+    border: 1px solid yellow;
+  }
+  .context {
+    border: 1px solid yellow;
+    height: 450px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+  /*---------------main_page------------*/
+  .main_page {
+    width: 100%; 
+    max-width: 1200px;
+    min-height : 580px;
+    margin: 0 auto;
+}
+.payment_main {
+    border : 1px solid blue;
+    width : 349px;
+    height : 463px;
+    float: right;
+    border-radius: 10px !important;
+}
+._ {
+    width : 730px;
+    margin-top : 5px;
+    padding-top : 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgb(233,233,233);
+}
+.main_reservation {
+    display: inline-block;
+    width : 730px;
+    height : 580px;
+}
+.information {
+    width : 730px;
+    height : 500px;
+}
+.reserv_information {
+    display: flex;
+    flex-direction: column;
+}
+.name_start {
+    display : flex;
+    box-sizing: border-box;
+    padding : 6px 14px;
+    border-radius: 10px !important;
+    margin : 10px;
+}
+.name_start input {
+    background-color: whitesmoke;
+    padding : 6px 14px;
+    border : none;
+    width : 33%;
+    margin-left : 3px;
+    border-radius: 10px !important;
+}
+.name_start textarea{
+    background-color: whitesmoke;
+    padding : 6px 14px;
+    border : none;
+    resize: none;
+    width : 100%;
+    height: 80px;
+    border-radius: 10px !important;
+}
+.name_start label {
+    padding: 15px 5px;
+    font-weight: bold;
+}
+
+.gender_select {
+    display: flex;
+    border : none;
+    background-color: whitesmoke;
+    border-radius: 10px !important;
+    width : 230px;
+    height : 45px; 
+}
+.select_month_day {
+    display: inline-block;
+    background-color: whitesmoke;
+    width : 100px;
+    height : 45px;
+    border-radius: 10px !important;
+    border : 1px solid rgb(248, 248, 248);
+    margin-left : 10px;
+}
+.country {
+    display: flex;
+    background-color: whitesmoke;
+    width : 230px;
+    height : 45px;
+    border-radius: 10px !important;
+    border : 1px solid rgb(248, 248, 248);
+    margin-bottom: 30px;
+}
+.phone {
+    background-color: whitesmoke;
+    width : 450px;
+    height : 45px;
+    border-radius: 10px !important;
+    border : none; 
+}
+.email {
+    display : flex;
+    box-sizing: border-box;
+    padding : 6px 14px;
+    width : 300px;
+}
+.email input {
+    background-color: whitesmoke;
+    padding : 6px 14px;
+    border : none;
+    width : 280px;
+    border-radius: 10px !important;
+}
+.div_img {
+    display: flex;
+    border : 1px solid blue;
+    width : 345px;
+    height : 100px;
+}
+.select_info {
+    border : 1px solid red;
+    width : 345px;
+    height : 108px;
+}
+.select_info p {
+    border : 1px solid blue;
+    width : 345px;
+    height : 35px;
+}
+.select_ab {
+    display: flex;
+}
+.select_a {
+    border : 1px solid red;
+    width : 180px;
+    display: flex;
+}
+.select_b {
+    border : 1px solid red;
+    width : 100px;
+    display: flex;    
+    margin-left : 65px;
+}
+.payment {
+    width : 345px;
+    height : 210px;
+    display: inline-block;
+    vertical-align: top;
+}
+.card {
+    width : 230px;
+    height : 50px;
+    margin-left : 55px; 
+}
+.payment_how {
+    display: flex;
+    margin-top : 20px;
+    width : 345px;
+    height : 50px;
+    justify-content: space-around;
+}
+.payment_end {
+    display: flex;
+    height : 50px;
+    margin-left : 75px;
+    margin-top : 15px;
+}
+.row_day {
+    float: right;
+}
+.row_div input{
+    height: 45px;
+}
+.payment_real_end {
+    display: none;
+}
+
+@media (max-width: 1199px) {
+  .scheduler {
+      text-align: center;
+      width: 100%;
+      max-width: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .calendar {
+        display: inline-block;
+    }
+    .selected_day {
+        display: inline-block;
+    }
+    .main_page {
+        width : 100%;
+    }
+    .payment_main {
+        float: none;
+        margin: 0 auto;
+        width : 80%;
+    }
+    .information {
+        width : 100%;
+        flex-wrap: wrap;
+    }
+    .main_reservation {
+        width : 100%;
+        padding-top : 20px;
+    }
+    .select_month_day {
+        width : 20%;
+    }
+    .row_div {
+        width: 100%;
+    }
+    .row_div input{
+        width: 40%
+    }
+    .row_day {
+        width: 40%;
+    }
+    .payment {
+        border : 1px solid blue;
+        display: inline-block;
+        margin: 0 auto;
+    }
+    .payment_start {
+        display: inline-block;
+    }
+    .payment_main {
+        height: auto;
+        min-height : 260px;
+        display: inline-block;
+    }
+}
+@media (max-width: 754px) {
+    .name_start {
+        flex-direction: column;
+    }
+    .name_start input{
+        height: 40px;     
+        width: 50%;  
+    }
+    .row_div input{
+        width: 70%
+    }
+    .row_day {
+        margin-top: 30px;
+        float: none;
+        width: 100%;
+    }
+    .payment_main {
+        width : 100%;
+        height : 410px;
+    }
+    .payment {
+        width : 100%;
+        height : 410px;
+    }
+    .payment_end button {
+        display: none;
+    }
+    .payment_real_end {
+        display: block;
+    }
+    .payment_real_end button{
+        width : 80%;
+        height : 80px;
+        margin-left : 35px;
+    } 
+} 

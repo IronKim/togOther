@@ -96,7 +96,7 @@ useEffect(()=>{
 
             setTextDTO(txtDTO)
             setImageDTO(imgDTO)
-            setSubDTO([...sDTO])
+            setSubDTO([...sDTO.slice().sort((a, b) => a.endTime - b.endTime).sort((a, b) => a.nDay - b.nDay)])
             } catch (error) {
               console.error("Error during data fetching:", error);
             }
@@ -314,7 +314,8 @@ useEffect(()=>{
                 title: up ? "수정이 완료되었습니다." : "등록이 완료되었습니다.",
                 icon: "success"
             }).then(() => {
-                navigate(`/community`);
+                if(up) navigate(-1);
+                else navigate(`/community`);
             });
         })
         .catch(e => console.log(e))
@@ -544,7 +545,9 @@ useEffect(()=>{
             <img className={styles.backBut} src={backBut} onClick={() => back()}/>
             <section className={styles.topSection}>
             {/* 제목 */}
-            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}{user.name} {plannerTitle.length > 0 && 
+            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}{user.name} {
+            plannerTitle.length > 0 && 
+            city.find(item => item.citySeq === plannerTitle[0]) &&
             city.find(item => item.citySeq === plannerTitle[0]).cityName}
             {plannerTitle.length > 1 && ' 외 ' + (plannerTitle.length-1) + '곳 '}여행 플래너</div> 
             {/* 달력 */}

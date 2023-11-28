@@ -24,7 +24,10 @@ public interface TogetherService {
 	public ResponseEntity<Map<String, Object>> getTogetherSeq(int togetherSeq);
 
 	public ResponseEntity<String> deleteTogether(int togetherSeq);
+	
+	public ResponseEntity<List<TogetherDTO>> getMyTogetherList(int n, int userSeq);
 
+	public ResponseEntity<Integer> totMyTogether(int userSeq);
 
 
 

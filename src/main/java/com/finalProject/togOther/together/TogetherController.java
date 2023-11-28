@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.CustomPlaceDTO;
+import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.SubItemDTO;
 import com.finalProject.togOther.dto.TogetherDTO;
 
@@ -46,7 +47,20 @@ public class TogetherController {
 		String search = requestBody.get("search");
 		return togetherService.totTogether(search);
 	}
-		
+	// 개인 리스트 불러오기
+	@PostMapping(path = "getMyTogetherList")
+	public ResponseEntity<List<TogetherDTO>> getMyTogetherList(@RequestBody Map<String, Integer> requestBody) {
+		int n = requestBody.get("n");
+		int userSeq = requestBody.get("userSeq");
+		return togetherService.getMyTogetherList(n,userSeq);
+	}
+	
+	// 개인 토탈 불러오기
+	@PostMapping(path = "totMyTogether")
+	public ResponseEntity<Integer> totMyTogether(@RequestBody Map<String, Integer> requestBody) {
+		int userSeq = requestBody.get("userSeq");
+		return togetherService.totMyTogether(userSeq);
+	}
 	
 	//서브아이템 리스트 불러오기
 	@GetMapping(path="getSubItemList")

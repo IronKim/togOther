@@ -183,6 +183,43 @@ public class TogetherServiceImpl implements TogetherService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
+	//개인!!!!!!!!! 플래너 리스트 20개 + 20개 + 20개... 으로 불러오기
+	@Override
+	public ResponseEntity<List<TogetherDTO>> getMyTogetherList(int n,int userSeq) {
+		try {
+			Pageable pageable = PageRequest.of(0, n);
+			
+			
+			List<Together> togetherList = 
+				togetherRepository.findAllByUserSeqOrderByTogetherSeqDesc(pageable, userSeq);
+
+			List<TogetherDTO> togetherDTOList = new ArrayList<TogetherDTO>();
+
+			for (Together together : togetherList) {
+
+				TogetherDTO togetherDTO = TogetherDTO.toDTO(together);
+
+				togetherDTOList.add(togetherDTO);
+			}
+
+			return ResponseEntity.ok(togetherDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+//개인!!!!!!!!! 플래너 리스트 전체 개수 불러오기
+	@Override
+	public ResponseEntity<Integer> totMyTogether(int userSeq) {
+		try {
+			int total = (int) togetherRepository.countByUserSeq(userSeq);
+			
+			return ResponseEntity.ok(total);
+			
+		} catch (Exception e) {
+			return ResponseEntity.ok(-1);
+		}
+	}
 
 	@Override
 	public ResponseEntity<String> deleteTogether(int togetherSeq) {

@@ -10,7 +10,7 @@ const AdvisorUserDetail = ({selectedUser}) => {
     }
   
 
-    const {userSeq, email, name, age, gender, national, cityFix, cityList, likingFood, likingTrip, mbti, profileImage, profileText} = selectedUser;
+    const {userSeq, email, name, age, gender, national, likingPlace, cityList, likingFood, likingTrip, mbti, profileImage, profileText} = selectedUser;
 
     return (
         <div className={styles.userDetail} style={{display: 'flex', justifyContent: 'center'}}>
@@ -23,7 +23,7 @@ const AdvisorUserDetail = ({selectedUser}) => {
                     <tr><td>번호</td><td>{userSeq}</td><td>이메일</td><td>{email}</td></tr>
                     <tr><td>이름</td><td>{name}</td><td>나이</td><td>{age}</td></tr>
                     <tr><td>성별</td><td>{gender === 'M' ? '남자' : '여자'}</td><td>국적</td><td>{national}</td></tr>
-                    <tr><td>즐겨찾는 도시</td><td>{cityFix}</td><td>최근 방문 도시</td><td>{cityList}</td></tr>
+                    <tr><td>즐겨찾는 도시</td><td>{likingPlace}</td><td>최근 방문 도시</td><td>{cityList}</td></tr>
                     <tr><td>음식 취향</td><td>{likingFood}</td><td>여행 취향</td><td>{likingTrip}</td></tr>
                     <tr><td>MBTI</td><td>{mbti}</td></tr>
                 </tbody>

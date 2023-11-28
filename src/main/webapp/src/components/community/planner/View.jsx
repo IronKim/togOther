@@ -5,6 +5,8 @@ import { getPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import { getUserByEmail } from '../../../api/UserApiService';
 import { GoogleMap,Marker } from '@react-google-maps/api';
 import { useUserStore } from '../../../stores/mainStore';
+import { FaUserCheck } from "react-icons/fa";
+import { FaUserTimes } from "react-icons/fa";
 import sweet from 'sweetalert2';
 
 import styles from '../../../css/plannerView.module.css'
@@ -51,6 +53,23 @@ const View = () => {
         setAdd(false)
         setImg(false)
     }
+//구글맵 오류방지
+const [scriptLoaded, setScriptLoaded] = useState(false);
+
+useEffect(() => {
+  if (window.google) {
+    setScriptLoaded(true);
+  } else {
+    const script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo&callback=initMap';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+    script.onload = () => {
+      setScriptLoaded(true);
+    };
+  }
+}, []);
 //지도
     const [map, setMap] = useState(null);
 
@@ -196,6 +215,17 @@ const handleScroll = () => {
             setPlannerText(res.data.plannerText);
             setSubItem(res.data.subItem);
       
+            if(res.data.planner.publicPlan === 1) {
+                if(res.data.planner.userSeq !== user.userSeq) {
+                    window.scrollTo(0, 0);
+                    navigate(`/community`)
+                    sweet.fire({
+                        title: "접근 권한이 없습니다",
+                        icon: "warning"
+                    })
+                }
+            }
+
             let placeDTO = [];
             let customDTO = [];
       
@@ -278,10 +308,11 @@ const handleScroll = () => {
                 <img src={planner.userProfileImage && planner.userProfileImage !== '' ? planner.userProfileImage : profileImg}></img>
                 <div className={styles.profiles}>
                     <div className={styles.proTop}>
-                        {planner.userName}
+                        {userDTO.certification === 0 ? <FaUserTimes style={{color: 'red'}} />  : 
+                        <FaUserCheck style={{color: 'blue'}} />}&nbsp;{userDTO.name}
                     </div>
                     <div className={styles.proBot}>
-                        {planner.userGender === 'M' ? '남성' : '여성'} | {getAge(userDTO.birthday)} | {userDTO.national}
+                        {userDTO.gender === 'M' ? '남성' : '여성'} | {getAge(userDTO.birthday)} | {userDTO.national}
                     </div>
                 </div>
             </div>
@@ -296,6 +327,7 @@ const handleScroll = () => {
             </div>
                 
             <section className={styles.mapSection}>
+                {scriptLoaded &&
                 <GoogleMap
                     mapContainerStyle={containerStyle}
                     center={map && {
@@ -331,6 +363,7 @@ const handleScroll = () => {
                 />
                 }
                 </GoogleMap>
+            }
             </section>
             <section className={styles.listSection} id='listSection'>
                     {

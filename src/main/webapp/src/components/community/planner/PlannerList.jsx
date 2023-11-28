@@ -77,8 +77,10 @@ const PlannerList = (props) => {
             .then(res => {
                     setPlanner(res.data)
                     setScrollLoading(false)
-                    getImages({n : res.data[0].plannerSeq})
-                    .then(res2 => setImages(res2.data))
+                    if(res.data.length > 0) {
+                        getImages({n : res.data[0].plannerSeq})
+                        .then(res2 => setImages(res2.data))
+                    }
                 }
             )
             .catch(e => console.log(e))
