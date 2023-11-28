@@ -172,6 +172,12 @@ public class UserController {
 		return userService.updateLikingPlace(userSeq, placeSeq);
 	}
 	
+	@PutMapping(path = "updatecityList/{userSeq}")
+	public ResponseEntity<?> updatecityList(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody){
+		String cityName = requestBody.get("cityName");
+		return userService.updatecityList(userSeq, cityName);
+	}
+	
 	// 회원 탈퇴
 	@DeleteMapping(path = "withdrawalUser/{userSeq}")
 	public ResponseEntity<String> withdrawalUser(@PathVariable int userSeq) {

@@ -42,6 +42,18 @@ const useStore = create((set) => ({
       console.error('Failed to update mbti:', error);
     }
   },
+  updateCityList: async (cityList) => {
+    try {
+      set((state) => ({
+        user: {
+          ...state.user,
+          cityList: cityList,
+        },
+      }));
+    } catch (error) {
+      console.error('Failed to update cityList:', error);
+    }
+  },
   getUserByToken: async () => {
     const accessToken = localStorage.getItem('accessToken');
 

@@ -21,12 +21,9 @@ public class TourPackageServiceImpl implements TourPackageService {
 
 	@Override
 	public ResponseEntity<?> addTourPackage(TourPackageDTO tourPackageDTO) {
-
 		try {
-
 			
 		} catch (Exception e) {
-		
 		}
 
 		return null;

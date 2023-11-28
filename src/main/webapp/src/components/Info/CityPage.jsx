@@ -9,6 +9,7 @@ import WeatherIcon from '../../constants/WeatherIcon';
 import weatherData from '../../constants/WeatherData';
 import Like from './Like';
 import { useUserStore } from '../../stores/mainStore';
+import { updatecityList } from '../../api/UserApiService';
 
 const CityPage = () => { 
     const { citySeq } = useParams();
@@ -23,7 +24,7 @@ const CityPage = () => {
     const [selectedRecommend, setSelectedRecommend] = useState('random');
     const [drop, setDrop] = useState(false);
 
-    const {user} = useUserStore();
+    const {user, updateCityList} = useUserStore();
 
     function shuffleArray(array) {
         let shuffledArray = array.slice();
@@ -50,6 +51,12 @@ const CityPage = () => {
                 setCity(res.data);
                 console.log(res);
                 setSelectedCity(res.data.cityName); // 선택된 도시 정보 업데이트
+
+                if(user.userSeq !== null && user.userSeq !== '' && user !== null) {
+                    updatecityList(user.userSeq, res.data.cityName)
+                    .then(res => user.cityList = res.data)
+                    .catch(e => console.log(e));
+                }
             })
             .catch(e => console.log(e));
 

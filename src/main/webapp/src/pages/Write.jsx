@@ -17,6 +17,7 @@ import Agree from '../components/userWriteForm/Agree';
 import { getUserByEmail } from '../api/UserApiService';
 import { uploadPlannerImage } from '../api/PlannerApiService';
 import WriteFormComplete from '../components/userWriteForm/WriteFormComplete';
+import MBTIWrite from '../components/userWriteForm/MBTIWrite';
 
 
 const Write = () => {
@@ -177,15 +178,15 @@ const Write = () => {
                     page === 4 && <Detail2Write onInput={onInput} inputUserData={inputUserData} prevPage={prevPage} nextPage={nextPage} styles={styles} />
                 }
                 {
-                    page === 5 && <MbtiMain onInput={onInput} onMbti={onMbti} prevPage={prevPage} nextPage={nextPage} onSubmitWrite={onSubmitWrite} styles={styles} inputUserData={inputUserData} />
+                    page === 5 && <MBTIWrite onInput={onInput} inputUserData={inputUserData} nextPage={nextPage} styles={styles} onMbti={onMbti} onSubmitWrite={onSubmitWrite} />
                 } 
                 {
                     page === 6 && <WriteFormComplete createUesr={createUesr} styles={styles}/>
                 }
                 
             </div>
-            <button onClick={prevPage}>이전</button>
-            <button onClick={nextPage}>다음</button>
+            {/* <button onClick={prevPage}>이전</button>
+            <button onClick={nextPage}>다음</button> */}
         </div>
     );
 };

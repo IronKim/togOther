@@ -81,8 +81,6 @@ const MbtiMain = ({prevPage,onSubmitWrite,onMbti,inputUserData,updateMbti,theEnd
             {status === 1 && <Content nextStatus={nextStatus} updateType={updateType} minusType={minusType}/>}
             {status === 2 && <Result ie={ie} sn={sn} tf={tf} jp={jp} onMbti={onMbti} 
                 updateMbti={updateMbti} userSeq={inputUserData.userSeq} theEndMbti={theEndMbti}/>}
-            <button onClick={prevPage}>이전</button>&nbsp;
-            <button onClick={onSubmitWrite}>완료</button>&nbsp;
         </div>
     );
 };

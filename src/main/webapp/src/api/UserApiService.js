@@ -42,4 +42,6 @@ export const getUserByPhone = (phone) => apiClient.get(`api/user/getUserByPhone/
 
 export const sendEmail = (email) => apiClient.get(`api/user/sendEmail/${email}`);
 
+export const updatecityList = (userSeq, cityName) => apiClient.put(`api/user/updatecityList/${userSeq}`, {cityName});
+
 
