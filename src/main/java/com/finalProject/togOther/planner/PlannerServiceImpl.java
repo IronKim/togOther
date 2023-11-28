@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,11 +17,13 @@ import com.finalProject.togOther.domain.Planner;
 import com.finalProject.togOther.domain.PlannerImage;
 import com.finalProject.togOther.domain.PlannerText;
 import com.finalProject.togOther.domain.SubItem;
+import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.CityDTO;
 import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.PlannerImageDTO;
 import com.finalProject.togOther.dto.PlannerTextDTO;
 import com.finalProject.togOther.dto.SubItemDTO;
+import com.finalProject.togOther.dto.UserDTO;
 import com.finalProject.togOther.repository.PlannerImageRepository;
 import com.finalProject.togOther.repository.PlannerRepository;
 import com.finalProject.togOther.repository.PlannerTextRepository;
@@ -126,7 +129,7 @@ public class PlannerServiceImpl implements PlannerService {
 			
 			
 			List<Planner> plannerList = 
-				plannerRepository.findAllByTitleContainingAndPublicPlanOrderByLogTimeDesc(pageable,search,0);
+				plannerRepository.findAllByTitleContainingAndPublicPlanOrderByPlannerSeqDesc(pageable,search,0);
 
 			List<PlannerDTO> plannerDTOList = new ArrayList<PlannerDTO>();
 
@@ -225,4 +228,85 @@ public class PlannerServiceImpl implements PlannerService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
+
+	@Override
+	public ResponseEntity<String> deletePlanner(int seq) {
+		try {
+			plannerRepository.deleteById(seq);
+			plannerTextRepository.deleteByPlMainSeq(seq);
+			plannerImageRepository.deleteByPlMainSeq(seq);
+
+			// 사용자가 성공적으로 삭제되었을 때
+			String responseMessage = "플래너가 삭제되었습니다.";
+			return ResponseEntity.ok(responseMessage);
+		} catch (Exception e) {
+
+			// 사용자 삭제 중 에러가 발생했을 때
+			String errorMessage = "플래너 삭제 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+	
+	//개인!!!!!!!!! 플래너 리스트 20개 + 20개 + 20개... 으로 불러오기
+		@Override
+		public ResponseEntity<List<PlannerDTO>> getMyPlanner(int n,int userSeq) {
+			try {
+				Pageable pageable = PageRequest.of(0, n);
+				
+				
+				List<Planner> plannerList = 
+					plannerRepository.findAllByUserSeqOrderByPlannerSeqDesc(pageable,userSeq);
+
+				List<PlannerDTO> plannerDTOList = new ArrayList<PlannerDTO>();
+
+				for (Planner planner : plannerList) {
+
+					PlannerDTO plannerDTO = PlannerDTO.toDTO(planner);
+
+					plannerDTOList.add(plannerDTO);
+				}
+
+				return ResponseEntity.ok(plannerDTOList);
+
+			} catch (Exception e) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			}
+		}
+	//개인!!!!!!!!! 플래너 리스트 전체 개수 불러오기
+		@Override
+		public ResponseEntity<Integer> totMyPlanner(int userSeq) {
+			try {
+				int total = (int) plannerRepository.countByUserSeq(userSeq);
+				
+				return ResponseEntity.ok(total);
+				
+			} catch (Exception e) {
+				return ResponseEntity.ok(-1);
+			}
+		}
+		//공개여부 수정
+		@Override
+		public ResponseEntity<String> updatePublicPlan(int plannerSeq, int plan) {
+			
+			try {
+				
+				Optional<Planner> optionalPlanner = plannerRepository.findById(plannerSeq);
+				
+				Planner planner = optionalPlanner.orElseThrow();
+				
+				PlannerDTO plannerDTO = PlannerDTO.toDTO(planner);
+				
+				plannerDTO.setPublicPlan((byte)plan);
+				
+				plannerRepository.save(Planner.toEntity(plannerDTO));
+				
+				String responseMessage = "성공적으로 수정하였습니다.";
+				return ResponseEntity.ok(responseMessage);
+				
+			} catch (Exception e) {
+				
+				String errorMessage = "수정 중 오류가 발생했습니다.";
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+			}
+		}
 }

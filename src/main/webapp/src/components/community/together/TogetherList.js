@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Style from '../../../css/togetherList.module.css'
 
 import loadingImg from '../../../assets/image/loading.png'
+import userDefaultProfile from '../../../assets/image/userDefaultProfile.png'
 
 import { getTogetherList, getSubItemList, getCustomList, totTogether } from '../../../api/TogetherApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
@@ -11,7 +12,7 @@ import { GoogleMap,Marker } from '@react-google-maps/api';
 const containerStyle = {
   width: '100%',
   height: '100%',
-  margin: 'auto'
+  // margin: 'auto'
 };
 
 const myStyles = [
@@ -156,10 +157,30 @@ useEffect(() => {
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
               
               return (
-             <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
+                <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
                   <div className={Style.dateTop}>
-                    <div className={Style.date}>{item.startDate}~{item.endDate}</div>
-                    <div className={Style.user}>모집인원 {item.tnum}</div>
+                    <div className={Style.date}>
+                      {item.startDate}~{item.endDate}
+                    </div>
+                    <div className={Style.userSeq}>
+                      {item.userProfileImage !== ''  ?
+                          <div className={Style.userImg}>
+                            <img src={item.userProfileImage} className={Style.userImg} alt="User Profile" />
+                          </div>
+                          :
+                          <div className={Style.userImg}>
+                            <img src={userDefaultProfile} className={Style.userImg} alt="Default Profile"/>
+                          </div>
+                      }
+                      <div className={Style.userinfo}>
+                        <p className={Style.userid}>{item.userid}</p>
+                        <p className={Style.userGender}>{item.userGender === 'M' ? '남성' : '여성'}</p>
+                      </div>
+                      <div className={Style.tnuminfo}>
+                        <p>모집인원</p> 
+                        <p className={Style.tnum}>{item.tnum}명</p>
+                      </div>
+                    </div>
                   </div>
                 {searchSub !== undefined &&
 
@@ -170,8 +191,8 @@ useEffect(() => {
                       </div>
                       <div className={Style.title}><p>{item.title}</p></div>
                       <div className={Style.context}><p>{item.context}</p></div>
-                      <div className={Style.placeInfo}> {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
-                          <div className={Style.user}>유저정보 {item.userSeq}</div>
+                      <div className={Style.placeInfo}> 
+                          {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
                       </div>
                   </div>)}
 
@@ -180,11 +201,6 @@ useEffect(() => {
                   (<div className={Style.togetherFoot}>
                     <div className={Style.imgDiv}>
                         <div className={Style.placeImg}>
-                        {/* <button onClick={()=>{console.log(JSON.stringify(customDTO))}}></button>
-                        <button onClick={()=>{console.log(JSON.stringify(searchSub_Cus))}}></button> */}
-                        {/* {console.log(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq)) || customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName} */}
-                        {/* {searchSub_Cus.plCustomSeq} */}
-                        {/* {customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus?.plCustomSeq)?.placeName}   */}
                         {/* 여기에 지도 넣을거야 */}
                         {loading &&
                         <GoogleMap
@@ -204,13 +220,13 @@ useEffect(() => {
                           
                         />
                       </GoogleMap>
-                    }
+                        }
                         </div>
                     </div>
                     <div className={Style.title}><p>{item.title}</p></div>
                     <div className={Style.context}><p>{item.context}</p></div>
-                    <div className={Style.placeInfo}>{loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
-                        <div className={Style.user}>유저정보</div>
+                    <div className={Style.placeInfo}>
+                    {loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
                     </div>
                   </div>)}
                   

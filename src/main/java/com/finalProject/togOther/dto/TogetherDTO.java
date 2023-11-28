@@ -19,6 +19,11 @@ import lombok.Setter;
 public class TogetherDTO {
 	private int togetherSeq;
 	private int userSeq;
+	private String useremail;
+	private String userid;
+	private String userName;
+	private String userGender;
+	private String userProfileImage;
 	private byte code;
 	private String title;
 	private LocalDate startDate;
@@ -30,7 +35,12 @@ public class TogetherDTO {
 		
 		return TogetherDTO.builder()
 						  .togetherSeq(together.getTogetherSeq())
-					      .userSeq(together.getUserSeq())
+						  .userSeq(together.getUserSeq())
+						  .useremail(together.getUseremail())
+						  .userid(together.getUserid())
+					      .userName(together.getUserName())
+					      .userGender(together.getUserGender())
+					      .userProfileImage(together.getUserProfileImage())
 					      .code(together.getCode())
 					      .title(together.getTitle())
 					      .startDate(together.getStartDate())

@@ -28,6 +28,12 @@ public class Planner {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int plannerSeq;
 	private int citySeq;
+	private int userSeq;
+    private String useremail;
+    private String userid;
+    private String userName;
+    private String userGender;
+    private String userProfileImage;
 	private String title;
 	private String startDate;
 	private String endDate;
@@ -44,6 +50,12 @@ public class Planner {
 		return Planner.builder()
 					  .plannerSeq(plannerDTO.getPlannerSeq())
 					  .citySeq(plannerDTO.getCitySeq())
+					  .userSeq(plannerDTO.getUserSeq())
+	                  .useremail(plannerDTO.getUseremail())
+	                  .userid(plannerDTO.getUserid())
+	                  .userName(plannerDTO.getUserName())
+	                  .userGender(plannerDTO.getUserGender())
+	                  .userProfileImage(plannerDTO.getUserProfileImage())
 					  .title(plannerDTO.getTitle())
 					  .startDate(plannerDTO.getStartDate())
 					  .endDate(plannerDTO.getEndDate())

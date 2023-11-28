@@ -30,6 +30,18 @@ const useStore = create((set) => ({
   loading: true, // 추가: 초기 로딩 상태
   setLoading: (loading) => set({ loading }), // 추가: 로딩 상태 업데이트 함수
   setUser: (user) => set({ user, loading: false }), // 사용자 정보를 가져오면 로딩 상태를 false로 설정
+  updateMbti: async (mbti) => {
+    try {
+      set((state) => ({
+        user: {
+          ...state.user,
+          mbti: mbti,
+        },
+      }));
+    } catch (error) {
+      console.error('Failed to update mbti:', error);
+    }
+  },
   getUserByToken: async () => {
     const accessToken = localStorage.getItem('accessToken');
 

@@ -21,6 +21,8 @@ import Mypage from '../pages/Mypage';
 import View from './community/planner/View';
 
 import { LoadScript } from '@react-google-maps/api';
+import PackageDetails from './package/PackageDetails';
+import PackgeReservation from './package/PackgeReservation';
 import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
@@ -70,6 +72,7 @@ const Main = ({ showNavbar }) => {
                         <Route path='' element={ <Community/>}/>
                         <Route path='planner'>
                             <Route path='write' element= { <Planner />} />
+                            <Route path='update/:plannerSeq' element= { <Planner up={true}/>} />
                             <Route path='view/:plannerSeq' element={ <View/>} />
                         </Route>
                         <Route path='together'>
@@ -77,6 +80,10 @@ const Main = ({ showNavbar }) => {
                             <Route path='write' element= {  <UserRoute><Together/></UserRoute>} />
                             <Route path='view/:togetherSeq' element= { <TogetherView/>} />
                         </Route>
+                    </Route>
+                    <Route path='package'>
+                        <Route path='details' element= { <PackageDetails/> } />
+                        <Route path='reservation' element={ <PackgeReservation /> } />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
