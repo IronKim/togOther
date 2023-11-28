@@ -8,23 +8,27 @@ const PackgeReservation = () => {
                 <div className={ styles.payment_div }>
                     <p style={{  fontSize : '23px', margin : '10px'}}>결제하기</p>
                 </div>
-                <div className={styles.left_div}>
-                    <div className={ styles.div_img }>
-                        <img sytle={{ width : '80px', heght : '80px' }} />
-                        <p>어쩌구저쩌구 로마가 웅앵웅</p>
-                        <span>대충 11월 27일 출발 / 옵션 0개</span>
-                    </div>
+                
+                <div className={ styles.payment_start}>
+                    <div className={styles.left_div}>
+                        <div className={ styles.div_img }>
+                            <img sytle={{ width : '80px', heght : '80px' }} />
+                            <p>어쩌구저쩌구 로마가 웅앵웅</p>
+                            <span>대충 11월 27일 출발 / 옵션 0개</span>
+                        </div>
 
-                        <div className={ styles.select_info }>
-                            <p>선택된 상품</p>
-                            <p>기본 구성 상품</p>
-                                <div className={ styles.select_ab }>
-                                    <div className={ styles.select_a }><p>총 대충 100,000원</p></div>
-                                    <div className={ styles.select_b }><p>총 ?개</p></div>
-                                </div>
+                            <div className={ styles.select_info }>
+                                <p>선택된 상품</p>
+                                <p>기본 구성 상품</p>
+                                    <div className={ styles.select_ab }>
+                                        <div className={ styles.select_a }><p>총 대충 100,000원</p></div>
+                                        <div className={ styles.select_b }><p>총 ?개</p></div>
+                                    </div>
+                            </div>
                         </div>
                     </div>
-                        <div className={ styles.payment }>
+
+                    <div className={ styles.payment }>
                         <h5>결제 방식 필수</h5>
                             <div><button className={ styles.card }>신용/체크카드 결제</button></div>
 

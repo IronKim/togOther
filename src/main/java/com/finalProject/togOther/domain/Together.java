@@ -24,6 +24,11 @@ public class Together {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int togetherSeq;
 	private int userSeq;
+	private String useremail;
+	private String userid;
+	private String userName;
+	private String userGender;
+	private String userProfileImage;
 	private byte code;
 	private String title;
 	private LocalDate startDate;
@@ -35,6 +40,11 @@ public class Together {
 		return Together.builder()
 					   .togetherSeq(togetherDTO.getTogetherSeq())
 					   .userSeq(togetherDTO.getUserSeq())
+					   .useremail(togetherDTO.getUseremail())
+					   .userid(togetherDTO.getUserid())
+				       .userName(togetherDTO.getUserName())
+				       .userGender(togetherDTO.getUserGender())
+				       .userProfileImage(togetherDTO.getUserProfileImage())
 					   .code(togetherDTO.getCode())
 					   .title(togetherDTO.getTitle())
 					   .startDate(togetherDTO.getStartDate())

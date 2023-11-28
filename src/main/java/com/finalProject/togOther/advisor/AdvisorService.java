@@ -18,7 +18,7 @@ public interface AdvisorService {
 
 	public ResponseEntity<List<UserDTO>> getUserByColumn(String column, String value);
 
-	public ResponseEntity<UserDTO> getUserById(String id);
+	public ResponseEntity<UserDTO> getUserByEmail(String email);
 
 	public ResponseEntity<String> addCity(CityDTO cityDTO);
 

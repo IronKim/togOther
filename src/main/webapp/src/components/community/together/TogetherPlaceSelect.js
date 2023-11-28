@@ -147,6 +147,9 @@ const PlaceSelect = (props) => {
         })
         onSearch()
     }
+    const [calenderDiv, setCalenderDiv] = useState('')
+    const [timeNullDiv, setTimeNullDiv] = useState('')
+    const [subPDiv, setSubPDiv] = useState('')
     const onSchedule = (e) =>{
         e.preventDefault();
     
@@ -157,13 +160,18 @@ const PlaceSelect = (props) => {
                         onSubDTO(subDTO);
 
                 }else{
-                    alert('장소를 선택해 주세요')
+                    setSubPDiv('장소를 선택해 주세요')
+                    setCalenderDiv('')
+                    // alert('장소를 선택해 주세요')
                 }
             }else{
-                alert('날짜를 지정해주세요')
+                setCalenderDiv('날짜를 지정해주세요')
+                setTimeNullDiv('')
+                // alert('날짜를 지정해주세요')
             }
         } else{
-            alert('시간을 지정해 주세요')
+            setTimeNullDiv('시간을 지정해 주세요')
+            // alert('시간을 지정해 주세요')
         }
         
     }
@@ -245,7 +253,7 @@ const PlaceSelect = (props) => {
                 }
             );
         } else {
-            console.error('Geolocation is not supported by this browser.');
+            console.error('못가져와');
         }
     }, []);
 
@@ -262,6 +270,7 @@ const PlaceSelect = (props) => {
                     <input type='date'className={`${Style.inputday} ${Style.input}`} name='endDate' min={startDate} max={endDate} 
                     value={selDate === startDate ? 0 : selDate}
                     onChange={(e) => setSelDate(e.target.value)}/> 
+                
                 </div>
                 <div className={Style.timeDiv}>
                     <p>시간 설정</p>
@@ -274,6 +283,7 @@ const PlaceSelect = (props) => {
                         >{item.toString().padStart(2, '0')}:00</div>)
                     }
                 </div>
+                
                 </div>
                 {/* <div style={{clear:'right'}}></div> */}
                     <button className={Style.addButtons} onClick={onSearchSelect} style={{float:'right',margin:'30px 10px'}}>
@@ -305,6 +315,9 @@ const PlaceSelect = (props) => {
                     )
                 }
                 </div>
+                <div className={Style.calenderDiv}>{calenderDiv}</div> 
+                <div className={Style.subPDiv}>{subPDiv}</div>
+                <div className={Style.timeNullDiv}>{timeNullDiv}</div> 
                 <div className={Style.placeSearchCon}>
                     <p style={{fontSize:'17px',fontWeight:'bold',marginBottom: '5px'}}>내용</p>
                         <textarea rows="10" cols="43" value={subDTO.context} className={Style.placeContext}

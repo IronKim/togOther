@@ -1,11 +1,16 @@
 package com.finalProject.togOther.domain;
 
+import java.util.List;
+
 import com.finalProject.togOther.dto.PlaceDTO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,8 +56,7 @@ public class Place {
 	private int likeCnt;
 	//태그 
 	private String tag;
-	
-	
+		
 	public static Place toEntity(PlaceDTO placeDTO) {
 		return Place.builder()
 					.placeSeq(placeDTO.getPlaceSeq())

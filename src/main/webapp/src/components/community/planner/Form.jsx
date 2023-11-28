@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { addPlanner,addSubItem,addPlannerText,addPlannerImage,uploadPlannerImage } from '../../../api/PlannerApiService';
+import { addPlanner,addSubItem,addPlannerText,addPlannerImage,uploadPlannerImage,getPlannerView, deletePlanner } from '../../../api/PlannerApiService';
 import { getCityList } from '../../../api/CityApiService';
-import { addCustomPlace } from '../../../api/PlaceApiService';
+import { addCustomPlace,getPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import { addTogether } from '../../../api/TogetherApiService';
 import Nday from './Nday';
 import styles from '../../../css/planner.module.css'
@@ -9,12 +9,17 @@ import Togother from './Togother';
 import TogoItemList from './TogoItemList';
 import xBut from '../../../assets/image/xBut.png';
 import arrow from '../../../assets/image/arrow.png'
-import { GoogleMap, LoadScript, Autocomplete, GroundOverlay } from '@react-google-maps/api';
+import backBut from '../../../assets/image/backBut.png'
+import { GoogleMap, Autocomplete} from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
+import sweet from 'sweetalert2';
+import { useUserStore } from '../../../stores/mainStore';
 
-const libraries = ["places"];
+const Form = (props) => {
+    const {user} = useUserStore();
 
-const Form = () => {
+    const {up,plannerSeq} = props
+
     const today = new Date();
     const year = today.getFullYear();
     const month = (today.getMonth() + 1).toString().padStart(2, '0');
@@ -24,8 +29,13 @@ const Form = () => {
     const navigate = useNavigate()
 
     const toSeq = useRef(0);
+//로그인 안되어 있으면 로그인 창으로
+useEffect(()=>{
+    if(!user.name) navigate(`/user/login`);
+},[])
 //나중에 plannerDTO로 들어갈것들
     const [publicPaln,setPublicPlan] = useState(true)
+    const [logTime,setLogTime] = useState()
     //날짜
     const [startDate,setStartDay] = useState(nowDay)
     const [endDate,setEndDay] = useState(nowDay)
@@ -44,7 +54,57 @@ const Form = () => {
 
     //플래너 이름 자동 생성 매커니즘
     const [plannerTitle,setPlannerTitle] = useState([])
+//수정 매커니즘
+useEffect(()=>{
+    if(up) {
+        const fetchData = async () => {
+            try {
+                const res = await getPlannerView(plannerSeq);
+                setPublicPlan(res.data.planner.publicPlan === 0 ? true : false)
+                setStartDay(res.data.planner.startDate)
+                setEndDay(res.data.planner.endDate)
+                setLogTime(res.data.planner.logTime)
+                let txtDTO = [];
+                let imgDTO = [];
+                let sDTO = [];
+        
+            await Promise.all(
+                res.data.plannerText.map(async (plTxt) => {
+                    txtDTO.push({"id":plTxt.id,"nDay":plTxt.nday,"order":plTxt.orders,
+                    "context":plTxt.context,"height":23})
+                })
+            );
+            await Promise.all(
+                res.data.plannerImage.map(async (plImg) => {
+                    imgDTO.push({"nDay":plImg.nday,"image":plImg.image})
+                })
+            );
+            await Promise.all(
+                res.data.subItem.map(async (sub) => {
+                    if(sub.placeSw === 0) {
+                        const res2 = await getPlace(sub.placeSeq); 
+                        sDTO.push({"nDay":sub.nday,"endTime":sub.endTime,"startTime":sub.startTime,
+                        "place":res2.data,"customDTO":null,"context":sub.context})
+                    }
+                    if(sub.placeSw === 1) {
+                        const res2 = await getCustomPlace(sub.plCustomSeq);
+                        sDTO.push({"nDay":sub.nday,"endTime":sub.endTime,"startTime":sub.startTime,
+                        "place":null,"customDTO":res2.data})
+                    }
+                })
+            );
 
+            setTextDTO(txtDTO)
+            setImageDTO(imgDTO)
+            setSubDTO([...sDTO.slice().sort((a, b) => a.endTime - b.endTime).sort((a, b) => a.nDay - b.nDay)])
+            } catch (error) {
+              console.error("Error during data fetching:", error);
+            }
+          };
+        
+          fetchData();
+    }
+},[])
     useEffect(()=>{
         const getPlaces = subDTO.filter(item => item.place !== null).slice().sort((a, b) => a.nDay - b.nDay).map(item2 => item2.place.citySeq)
 
@@ -55,10 +115,14 @@ const Form = () => {
     //동행리스트
     const [toList,setToList] = useState(0)
     const onToList = (seq) => {
-        setToList(seq)
+        setToList(seq) 
     }
     //플래너 업로드 
     const uploadPlanner = () => {
+        const fetchData = async () => {
+            await deletePlanner(plannerSeq)
+        }
+
         const delTogo = [];
 
         togoDTO.map(item => {
@@ -67,14 +131,57 @@ const Form = () => {
             else if(subDTO.findIndex(item2 => item2.toNum === item.seq) === -1) delTogo.push(item.seq)
         })
 
-        if(delTogo.length > 0) {
-            if(window.confirm(delTogo.length + 
-                '건의 작성 되지않은 동행이 있습니다. 삭제하고 저장하시겠습니까?')) {
+        if(subDTO.length < 1) {
+            sweet.fire({
+                title: "내용을 작성해주세요.",
+                icon: "warning"
+            })
+        } else if(delTogo.length > 0) {
+            sweet.fire({
+                title: delTogo.length + "건의 작성이 완료 되지 않은 동행이 있습니다.",
+                text: "삭제하시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "예",
+                cancelButtonText: "아니요"
+              }).then((result) => {
+                if (result.isConfirmed) {
                     Promise.all(delTogo.map(item => onToDelete(item)))
-                }else return;
+                    sweet.fire({
+                        title: "삭제가 완료되었습니다.",
+                        icon: "success"
+                    })
+                } 
+              });
+        } else {
+        if(!publicPaln && togoDTO.length > 0) {
+            window.scrollTo(0, 0);
+            sweet.fire({
+                title: "비공개여도 동행은 그대로 등록됩니다",
+                text: "진행하시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "예",
+                cancelButtonText: "아니요"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    if(up) fetchData() 
+                    upload()
+                } 
+              });
+        } else {
+            if(up) fetchData() 
+            upload()
         }
-
-        let title = `인호의 ${plannerTitle.length > 0 ? //이름 나중에 유저 세션 이름으로
+    }
+}
+    
+    const upload = () => {
+        let title = `${user.name} ${plannerTitle.length > 0 ?
             city.find(item => item.citySeq === plannerTitle[0]).cityName : ''}${
             plannerTitle.length > 1 ? ` 외 ${plannerTitle.length - 1}곳` : ''} 여행 플래너`;
 
@@ -82,8 +189,16 @@ const Form = () => {
         if(plannerTitle.length > 0 ) citySeq = plannerTitle[0];
 
         const planner = {title: title,startDate: startDate,citySeq : citySeq,
-        endDate: endDate,publicPlan : publicPaln ? 0 : 1,hit : 0,likeCnt : 0}
-
+            userSeq: user.userSeq,
+            useremail: user.email,
+            userid: user.id,
+            userName: user.name,
+            userGender: user.gender,
+            userProfileImage: user.profileImage,
+            endDate: endDate,
+            publicPlan : publicPaln ? 0 : 1,
+            hit : 0,likeCnt : 0}
+            
         addPlanner(planner)
         .then(res => {
             console.log(res.data)
@@ -120,8 +235,15 @@ const Form = () => {
                 subDTO.filter(item => item.toNum === togo.seq).slice().sort((a, b) => a.nDay - b.nDay)
                 [subDTO.filter(item => item.toNum === togo.seq).length-1].nDay - 1);
 
-                const togoItem = {tnum : togo.tNum,title : togo.title,context : togo.context, startDate: toStartDate,
-                                endDate: toEndDate}
+                const togoItem = {tnum : togo.tNum,title : togo.title,context : togo.context, 
+                    userSeq: user.userSeq,
+                    useremail: user.email,
+                    userid: user.id,
+                    userName: user.name,
+                    userGender: user.gender,
+                    userProfileImage: user.profileImage,
+                    startDate: toStartDate,
+                    endDate: toEndDate}
                 addTogether(togoItem)
                 .then(tores => 
                     subDTO.filter(item2 => item2.toNum === togo.seq).map(item => {
@@ -159,7 +281,7 @@ const Form = () => {
             imageDTO.map(item => {
                 const formData = new FormData();
                 const images = item.image.split(',')
-                Promise.all(images.map((item2, index2) => {
+                Promise.all(images.filter(imgs => !imgs.includes('bitcamp-edu-bucket-97')).map((item2, index2) => {
                     return fetch(item2)
                     .then(response => response.blob())
                     .then(blob => {
@@ -168,6 +290,7 @@ const Form = () => {
                     });
                 }))
                 .then(() => {
+                    if(images.filter(imgs => !imgs.includes('bitcamp-edu-bucket-97')).length > 0) {
                     uploadPlannerImage(formData)
                     .then(res2 => {
                         const plannerImage = {plMainSeq: res.data, nday: item.nDay, image : res2.data} 
@@ -176,11 +299,24 @@ const Form = () => {
                         .catch(e => console.log(e))
                     })
                     .catch(e => console.log(e))
+                    } else {
+                        const plannerImage = {plMainSeq: res.data, nday: item.nDay, 
+                            image : images.filter(imgs => imgs.includes('bitcamp-edu-bucket-97')).join(',')} 
+                        addPlannerImage(plannerImage)
+                        .then(res3 => console.log(res3))
+                        .catch(e => console.log(e))
+                    }
                 })
             })
-            ////
-            alert('등록 완료')
-            navigate(`/community`)
+            //// 
+            window.scrollTo(0, 0);
+            sweet.fire({
+                title: up ? "수정이 완료되었습니다." : "등록이 완료되었습니다.",
+                icon: "success"
+            }).then(() => {
+                if(up) navigate(-1);
+                else navigate(`/community`);
+            });
         })
         .catch(e => console.log(e))
     }
@@ -190,8 +326,13 @@ const Form = () => {
     const onImage = (e,nDay) => {
         const files = e.target.files;        
         let image = ''
-        if(files.length > 5) alert('5개 이하로 선택해')
-        else {
+        console.log(files.length)
+        if(files.length > 3) {
+            sweet.fire({
+                title: "3개 이하로 선택해주세요.",
+                icon: "warning"
+            })
+        } else {
             if(imageDTO.findIndex(item => item.nDay === nDay) === -1) {//이미지 파일 올린적 없을때
                 for (let i = 0; i < files.length; i++) {
                     image += URL.createObjectURL(files[i]);
@@ -204,9 +345,11 @@ const Form = () => {
                     image += URL.createObjectURL(files[i]);
                     if(i !== files.length-1) image += ',';
                 }
-                const selectedImages = imageDTO.filter(item => item.nDay !== nDay)
-                selectedImages.push({nDay: nDay, image: image})
-                setImageDTO(selectedImages);
+                if(files.length > 0) {
+                    const selectedImages = imageDTO.filter(item => item.nDay !== nDay)
+                    selectedImages.push({nDay: nDay, image: image})
+                    setImageDTO(selectedImages);
+                }
             }
         }
     };
@@ -385,6 +528,11 @@ const Form = () => {
         };
       }, []);
 
+      const back = () => {
+        window.scrollTo(0, 0);
+        navigate(-1);
+    }
+
     return (
         <div>
             <section className={styles.mainSection}>
@@ -393,9 +541,13 @@ const Form = () => {
             <button onClick={() =>alert(JSON.stringify(textDTO))}>text json확인</button>
             <button onClick={() =>alert(JSON.stringify(togoDTO))}>동행 json 확인</button>
             <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button>
+            
+            <img className={styles.backBut} src={backBut} onClick={() => back()}/>
             <section className={styles.topSection}>
             {/* 제목 */}
-            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}인호의 {plannerTitle.length > 0 && 
+            <div className={styles.plannerTitle}>{/* 세션 유저이름*/}{user.name} {
+            plannerTitle.length > 0 && 
+            city.find(item => item.citySeq === plannerTitle[0]) &&
             city.find(item => item.citySeq === plannerTitle[0]).cityName}
             {plannerTitle.length > 1 && ' 외 ' + (plannerTitle.length-1) + '곳 '}여행 플래너</div> 
             {/* 달력 */}
@@ -409,7 +561,11 @@ const Form = () => {
             {new Date(endDate).getMonth()+1}월 {new Date(endDate).getDate()}일</p></div>
             <div style={{clear:'both'}}></div>
             {toList === 0 ? <button className={styles.buttons} style={{float:'right'}} onClick={togoDTO.length < 8 ? () => addTo() : () => 
-            alert('생성 가능 개수를 초과하였습니다')}>동행 추가</button> : <button style={{float:'right'}} className={styles.buttons}
+                sweet.fire({
+                    title: "생성 가능 개수를 초과하였습니다.",
+                    icon: "warning"
+                })
+            }>동행 추가</button> : <button style={{float:'right'}} className={styles.buttons}
             onClick={()=>onToList(0)}>동행 목록</button>}
             <div style={{clear:'both'}}></div>
             {/* 공개 비공개 토글 */}
@@ -445,7 +601,7 @@ const Form = () => {
                                 <Nday nDay={item} tabNum={tabNum} onTab={onTab} subDTO={subDTO} toNum={toNum}
                                 setSubDTO={setSubDTO} textDTO={textDTO} setTextDTO={setTextDTO} sDay={startDate}
                                 imageDTO={imageDTO} onImage={onImage} deleteImg={deleteImg}  xBut={xBut}
-                                GoogleMap={GoogleMap} Autocomplete={Autocomplete} />
+                                GoogleMap={GoogleMap} Autocomplete={Autocomplete} plannerTitle={plannerTitle}/>
                                 {dDay.length !== 0 && index !== dDay.length - 1 && (
                                     <div className={styles.nDayDiv}><img  src={arrow}/></div>)}
                                 </div>
@@ -456,7 +612,9 @@ const Form = () => {
                 </section>
                 <div style={{clear:'both'}}></div>
                 <section className={styles.bottomSection}>
-                    <button className={styles.buttons} style={{float:'right',margin:'30px 10px'}} onClick={()=>uploadPlanner()}>저장</button>
+                    <button className={styles.buttons} style={{float:'right',margin:'30px 10px'}} onClick={()=>uploadPlanner()}>
+                        {up ? '수정' : '저장'}
+                    </button>
                 </section>
             </section>
         </div>

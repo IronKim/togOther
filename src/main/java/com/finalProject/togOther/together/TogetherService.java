@@ -1,6 +1,7 @@
 package com.finalProject.togOther.together;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
@@ -19,6 +20,10 @@ public interface TogetherService {
 	public ResponseEntity<List<CustomPlaceDTO>> getCustomList();
 
 	public ResponseEntity<Integer> totTogether(String search);
+
+	public ResponseEntity<Map<String, Object>> getTogetherSeq(int togetherSeq);
+
+
 
 
 }

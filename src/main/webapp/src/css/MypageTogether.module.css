@@ -1,0 +1,34 @@
+.tagName{
+    padding-top: 20px;
+    font-size: 30px;
+}
+.hr {
+    width: 91.3%;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    color: 'lightgray';
+}
+.loadingSection {
+    height: 700px;
+    padding: 50px;
+    text-align: center;
+}
+.loadingSection img{
+    width: 50px;
+    height: 50px;
+    animation: roll 2s infinite linear;
+}
+.loadingSection p{
+    margin-top: 30px;
+    font-size: 20px;
+    color: darkgray;
+    animation: ppp 5s;
+}
+.lastSection {
+    padding: 150px 0;
+    height: 350px;
+    text-align: center;
+    font-size: 25px;
+    color: darkgray;
+    transition: 1s;
+}

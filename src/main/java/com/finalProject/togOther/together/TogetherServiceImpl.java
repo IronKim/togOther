@@ -1,7 +1,10 @@
 package com.finalProject.togOther.together;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -152,5 +155,34 @@ public class TogetherServiceImpl implements TogetherService {
 			return ResponseEntity.ok(-1);
 		}
 	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> getTogetherSeq(int togetherSeq) {
+		try {
+			
+			Map<String, Object> togethers = new HashMap<String, Object>();
+			
+			Together together = togetherRepository.findOneByTogetherSeq(togetherSeq);
+			TogetherDTO togetherDTO = TogetherDTO.toDTO(together);
+			
+			List<SubItem> subItemList = subItemRepository.findByToMainSeq(togetherSeq);
+			List<SubItemDTO> subItemDTOList = new ArrayList<SubItemDTO>();
+			
+			for (SubItem subItem : subItemList) {
+				
+				SubItemDTO subItemDTO = SubItemDTO.toDTO(subItem);
+				
+				subItemDTOList.add(subItemDTO);
+			}
+			
+			togethers.put("together", togetherDTO);
+			togethers.put("subItem", subItemDTOList);
+			
+			return ResponseEntity.ok(togethers);
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
 
 }

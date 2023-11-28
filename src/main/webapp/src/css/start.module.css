@@ -25,8 +25,8 @@
 .roll {animation: roll 1.5s;}
 
 .noteDiv {
-    width: calc(35% - 2px);
-    height: 440px;
+    width: calc(600px - 2px);
+    height: 490px;
     margin: 0 auto;
     text-align: center;
     border-left: 3px solid darkgray;
@@ -46,21 +46,23 @@
     vertical-align: top;
 }
 .calender{
-    width:25%;
+    width:135px;
     margin: 20px auto;
-    padding: 10px 0 10px 0; 
+    transition: 1.8s ease-in-out;
+    padding: 45px 0 17px 0; 
+    border-radius: 10px;
 }
 .day{
     text-align: center;
-    font-size: 2.4vw;
+    font-size: 32px;
     font-weight: bold;
 }
 .title {
-    width: 40%;
+    width: 225px;
     margin: 70px auto;
-    padding: 10%;
+    padding: 40px 20px 40px 10px;
     color:black;
-    font-size: 1.5vw;
+    font-size: 19px;
     font-weight: bold;
     animation: rollT 6s linear infinite;
     background-repeat: no-repeat;
@@ -68,13 +70,18 @@
 .start {
     background: none;
     border: 0;
-    width: 5%;
+    width: 140px;
     margin: 40px auto;
-    padding: 12%;
+    padding: 32px;
     background-repeat: no-repeat;
     cursor: pointer;
 }
 .start:hover {
     transform-origin: 50% -250%;
     animation: startIn 4s infinite;
+}
+@media (max-width: 754px) {
+    .noteDiv {
+        width: 85%;
+    }
 }

@@ -259,6 +259,8 @@
 .payment {
     width : 345px;
     height : 210px;
+    display: inline-block;
+    vertical-align: top;
 }
 .card {
     width : 230px;
@@ -331,16 +333,16 @@
         width: 40%;
     }
     .payment {
-        vertical-align: top;
+        border : 1px solid blue;
         display: inline-block;
         margin: 0 auto;
+    }
+    .payment_start {
+        display: inline-block;
     }
     .payment_main {
         height: auto;
         min-height : 260px;
-        margin-left : 3px;
-    }
-    .left_div {
         display: inline-block;
     }
 }
@@ -377,6 +379,6 @@
     .payment_real_end button{
         width : 80%;
         height : 80px;
-        margin-left : 45px;
+        margin-left : 35px;
     } 
 } 

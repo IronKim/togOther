@@ -7,10 +7,13 @@ import { addCustomPlace } from '../../../api/PlaceApiService';
 import PlaceSelect from './TogetherPlaceSelect';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../../stores/mainStore';
 
 
 const PlaceWriteForm = () => {
+
+    const {user} = useUserStore();
     
     //오늘 날짜 구하는
     const today = new Date();
@@ -21,7 +24,12 @@ const PlaceWriteForm = () => {
     //저장한다이
     const [togetherDTO, setTogetherDTO] = useState({
         togetherSeq:'',
-        userSeq:'',
+        userSeq: user.userSeq,
+        useremail: user.email,
+        userid: user.id,
+        userName: user.name,
+        userGender: user.gender,
+        userProfileImage: user.profileImage,
         code:1,
         title: '',      //제목
         startDate: nowDay,  //시작날짜
@@ -31,20 +39,36 @@ const PlaceWriteForm = () => {
     });
     const [subDTO,setSubDTO] = useState([])
     
-    const{togetherSeq,userSeq,title,startDate,endDate,context,tnum} = togetherDTO
+    const{togetherSeq,
+          userSeq,useremail,userid,userName,userGender,userProfileImage,
+          title,startDate,endDate,context,tnum} 
+        = togetherDTO
 
+    const [contextDiv, setContextDiv] = useState('')
+    const [writedateCardFormDiv, setWritedateCardFormDiv] = useState('')
+    const [titleDiv, setTitleDiv] = useState('')
     const navigate = useNavigate()
     const togetherSave = (e) => {
         e.preventDefault()
 
         var sw = 1
         if(!title){
-            alert('제목 입력')
+            setTitleDiv('제목을 입력하세요')
             sw=0
+        }else{
+            setTitleDiv('')
         }
         if(!context){
-            alert('내용 입력')
+            setContextDiv('내용을 입력하세요')
             sw=0
+        }else{
+            setContextDiv('')
+        }
+        if(subDTO === null || subDTO.length === 0){
+            setWritedateCardFormDiv('일정을 추가하세요')
+            sw=0
+        }else{
+            setWritedateCardFormDiv('')
         }
         if(sw === 1){
             addTogether(togetherDTO)
@@ -53,7 +77,7 @@ const PlaceWriteForm = () => {
                     subDTO.map(item => {
                         if(item.place !== null){
                             const subItem = {toMainSeq:res.data,
-                                             nday: item.nDay, code : item.code,
+                                             nday: item.nday, code : item.code,
                                              startTime : item.startTime, 
                                              endTime : item.endTime, 
                                              context : item.context,
@@ -68,7 +92,7 @@ const PlaceWriteForm = () => {
                             addCustomPlace(item.customDTO)
                             .then(res2 => {
                                 const subItem = {toMainSeq: res.data, 
-                                                 nday: item.nDay, code : item.code,
+                                                 nday: item.nday, code : item.code,
                                                  startTime : item.startTime, 
                                                  endTime : item.endTime, 
                                                  context : item.context,
@@ -94,7 +118,8 @@ const PlaceWriteForm = () => {
         setSubDTO((prevSubDTO) => {
             const updatedSubDTO = prevSubDTO.filter((prevItem) => prevItem !== selectedItem);
             return [...updatedSubDTO, item];
-        });
+        })
+        
     }
 
     useEffect(()=> {
@@ -172,6 +197,20 @@ const PlaceWriteForm = () => {
     const resetSubDTO = (index) => {
         setSubDTO(subDTO.filter((item, i) => i !== index));
     }
+    
+    //뷰에서 수정하러 가져옴
+//     const location = useLocation()
+//     const together = location.state?.togetherDTO;
+//     const sub = location.state?.subDTO;
+//     const custom = location.state?.custom;
+
+//     useEffect(() => {
+//         console.log(together, sub, custom)
+//         setTogetherDTO(together)
+//         if(sub){
+//             setSubDTO(sub)
+//         }
+//   }, [together, sub, custom])
 
     return (
         <>
@@ -185,7 +224,7 @@ const PlaceWriteForm = () => {
                        value={title} 
                        onChange={onInput}
                        size="50" placeholder="ex) 12월 3박4일 제주 바다 보러갈 동행 3명 구해요"/>
-            </div>        
+            </div><div className={Style.titleDiv}>{titleDiv}</div>        
             <div>
                 시작 날짜<input type='date' name='startDate' 
                                 min={nowDay} value={startDate} 
@@ -203,7 +242,7 @@ const PlaceWriteForm = () => {
 
             {/* 선택? 검색한? 하루하루치의 정보 */}
             <div className={Style.writedateForm}>
-                <div className={Style.writedateCardForm}>
+                <div className={Style.writedateCardForm} name="writedateCardForm">
                     {subDTO.map((item, index) => (
                         <div className={Style.writedateCard} key={index}>
                             <div className={Style.writedateCard_top}>
@@ -212,12 +251,10 @@ const PlaceWriteForm = () => {
                             <p>{item.nday}DAY</p></div>
                             <div className={Style.writedateCard_foot}>
                             {
-                            item.place !== null &&
-                                <p>{item.place.name}</p>
+                            item.place?.name && <p>{item.place.name}</p>
                             }
                             {
-                            item.customDTO !== null &&
-                                <p>{item.customDTO.placeName}</p>
+                            item.customDTO?.placeName &&<p>{item.customDTO.placeName}</p>
                             }
                             <br/><p>{item.context}</p>
                             </div>
@@ -228,6 +265,7 @@ const PlaceWriteForm = () => {
                     </div>
                 </div>
             </div>
+            <div className={Style.writedateCardFormDiv}>{writedateCardFormDiv}</div>
             <div>
                 <textarea className={`${Style.context} ${Style.textarea}`} name="context"  value={context} onChange={onInput} rows="10" cols="50"
                     placeholder="1. 현재 동행이 있나요? 
@@ -240,6 +278,7 @@ const PlaceWriteForm = () => {
                     
                     (1000자 이내) "/>
             </div>
+            <div className={Style.contextDiv}>{contextDiv}</div>
             <div className={Style.savebutton}>
                 <div className={Style.save} onClick={togetherSave}>저장</div>
                 &nbsp;
