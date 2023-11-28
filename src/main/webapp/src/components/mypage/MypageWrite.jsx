@@ -500,11 +500,13 @@ const MypageWrite = ({onErrorImg}) => {
                                     style={{ width: '95px', height : '95px',objectFit:'cover',borderRadius:'50%' }} onError={onErrorImg} />
                             </div>
                             <p className={ styles.nameInput } style={{fontSize: '30px', width : '100%', height : '45px', textAlign: 'center' }} >{user.name}</p>
+                            {user &&
                             <div className={ styles.mbti }>
                                 {
                                     user.mbti === '' || user.mbti === null ? <span>MBTI가 없습니다.</span> : <span>{user.mbti}</span>
                                 }
-                            </div> {/* styles.mbti */}
+                            </div>
+                            } {/* styles.mbti */}
                         </div>
                     </div>
 
