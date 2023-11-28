@@ -43,7 +43,7 @@ const PlaceInfo = ({ placeSeq }) => {
             {selectedPlace.name}
           </p>
           <LikePlaceInfo selectedPlace={selectedPlaceSeq} 
-                         isTrue={userPlaceLike.includes(selectedPlace.placeSeq)}
+                         isTrue={user.likingPlace === null ? false: userPlaceLike.includes(selectedPlace.placeSeq)}
                          userPlaceLike={userPlaceLike} setUserPlaceLike={setUserPlaceLike}
                          onCntChange = {onCntChange}
                         />

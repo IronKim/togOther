@@ -127,7 +127,7 @@ const CityPage = () => {
                         <div key={index} className={styles.list1} onClick={() => onToPlacePage(item.placeSeq)}>
                             <div className={styles.imgDiv}>
                                 <img src={item.image} style={{borderRadius:16, userSelecter: 'none'}} alt={item.name} />
-                                <Like placeSeq={item.placeSeq} isTrue={userPlaceLike.includes(item.placeSeq)} userPlaceLike={userPlaceLike} setUserPlaceLike={setUserPlaceLike}/>
+                                {user.name === "" ?  '' : <Like placeSeq={item.placeSeq} isTrue={user.likingPlace === null ?  false: userPlaceLike.includes(item.placeSeq)} userPlaceLike={userPlaceLike} setUserPlaceLike={setUserPlaceLike}/>} 
                             </div>
                             <div className={styles.textDiv}>
                                 <div className={styles.textName}>{item.name}</div>

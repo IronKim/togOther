@@ -1,5 +1,7 @@
 package com.finalProject.togOther.domain;
 
+import java.time.LocalDate;
+
 import com.finalProject.togOther.dto.TourPackageDTO;
 
 import jakarta.persistence.CascadeType;
@@ -26,14 +28,8 @@ public class TourPackage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int tpSeq;
-	
 	// 도시 시퀀스
 	private int citySeq;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "tpd_seq")
-	private TourPackageDetail tourPackageDetail;
-	
 	// 투어 패키지 제목
 	private String tpTitle;
 	// 투어 패키지 섬네일
@@ -41,16 +37,28 @@ public class TourPackage {
 	private String tpThumbnail;
 	// 투어패키지 가격
 	private String tpPrice;
-	
+	// 투어 패키지 이미지
+	@Column(columnDefinition = "TEXT")
+	private String tpImages;
+	// 투어 패키지 내용
+	private String tpcontext;
+	// 판매시작 날짜
+	private LocalDate tpsaleStart;
+	// 판매종료 날짜
+	private LocalDate tpsaleEnd;
+
 	public static TourPackage toEntity(TourPackageDTO tourpackageDTO) {
-			return TourPackage.builder()
-							  .tpSeq(tourpackageDTO.getTpSeq())
-							  .citySeq(tourpackageDTO.getCitySeq())
-							  .tourPackageDetail(tourpackageDTO.getTourPackageDetail())
-							  .tpTitle(tourpackageDTO.getTpTitle())
-							  .tpThumbnail(tourpackageDTO.getTpThumbnail())
-							  .tpPrice(tourpackageDTO.getTpPrice())
-							  .build();
+		return TourPackage.builder()
+						  .tpSeq(tourpackageDTO.getTpSeq())
+						  .citySeq(tourpackageDTO.getCitySeq())
+						  .tpTitle(tourpackageDTO.getTpTitle())
+						  .tpThumbnail(tourpackageDTO.getTpThumbnail())
+						  .tpPrice(tourpackageDTO.getTpPrice())
+						  .tpImages(tourpackageDTO.getTpImages())
+						  .tpcontext(tourpackageDTO.getTpcontext())
+						  .tpsaleStart(tourpackageDTO.getTpsaleStart())
+						  .tpsaleEnd(tourpackageDTO.getTpsaleEnd())
+						  .build();
 	}
 
 }

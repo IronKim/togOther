@@ -3,6 +3,7 @@ import React from 'react';
 import {ADVISORTAG} from '../../constants/ADVISORTAG';
 import AdvisorDashboardCity from './AdvisorDashboardCity';
 import AdvisorDashboardUser from './AdvisorDashboardUser';
+import AdvisorDashboardPackage from './AdvisorDashboardPackage';
 
 const Dashboard = ({styles, currentTag}) => {
   
@@ -15,6 +16,10 @@ const Dashboard = ({styles, currentTag}) => {
 
       {
         currentTag === ADVISORTAG.LOCATION && <AdvisorDashboardCity /> 
+      }
+
+      {
+        currentTag === ADVISORTAG.PACKAGE && <AdvisorDashboardPackage />
       }
     </div>
   );

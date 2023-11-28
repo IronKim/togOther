@@ -16,3 +16,9 @@ export const addPlace = (place) => apiClient.post('/api/advisor/addPlace', place
 export const getPlaceByCitySeq = (citySeq) => apiClient.get(`/api/advisor/getPlaceByCitySeq/${citySeq}`);
 
 export const updatePlace = (placeSeq, place) => apiClient.put(`/api/advisor/updatePlace/${placeSeq}`, place);
+
+export const addPackage = (packageData) => apiClient.post('/api/advisor/addTourPackage', packageData);
+
+export const getPackageByCitySeq = (citySeq) => apiClient.get(`/api/advisor/getTourPackageByCitySeq/${citySeq}`);
+
+export const updatePackage = (tpSeq, packageData) => apiClient.put(`/api/advisor/updateTourPackage/${tpSeq}`, packageData);
