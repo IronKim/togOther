@@ -77,6 +77,12 @@ public class TogetherController {
 	public ResponseEntity<Map<String, Object>> getTogetherSeq(@PathVariable int togetherSeq){
 		return togetherService.getTogetherSeq(togetherSeq);
 	}
+	
+	//togetherSeq에 해당하는 togetherDTO 불러오기
+	@GetMapping(path="getAllTogether")
+	public ResponseEntity<List<TogetherDTO>> getAllTogether(){
+		return togetherService.getAllTogether();
+	}
 		
 	
 }

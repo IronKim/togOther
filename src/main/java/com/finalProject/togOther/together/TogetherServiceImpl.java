@@ -221,4 +221,23 @@ public class TogetherServiceImpl implements TogetherService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<List<TogetherDTO>> getAllTogether() {
+		try {		
+			List<Together> togetherList = togetherRepository.findAll();
+
+			List<TogetherDTO> togetherDTOList = new ArrayList<TogetherDTO>();
+			
+			for (Together together : togetherList) {
+				TogetherDTO togetherDTO = TogetherDTO.toDTO(together);
+				
+				togetherDTOList.add(togetherDTO);
+			}
+			return ResponseEntity.ok(togetherDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
 }

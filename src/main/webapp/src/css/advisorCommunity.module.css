@@ -1,0 +1,110 @@
+.onModal::-webkit-scrollbar {
+    width:10px;
+}
+.onModal::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.onModal::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 10px;
+}
+.plannerList::-webkit-scrollbar {
+    width:7px;
+}
+.plannerList::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin-bottom: 10px;
+}
+.plannerList::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 7px;
+}
+/* ///////////플래너 부분///////////// */
+.plannerSection {
+    display: inline-block;
+    width: 50%;
+    padding: 20px;
+}
+.plannerTop{
+    display: flex;
+    width: 100%;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    border-bottom: 2px solid black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.plannerTop input{
+    width: 30%;
+}
+.plannerList {
+    width: 100%;
+    height: 500px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    border-top: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.plannerItem {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+.title {
+    text-align: center;
+    width: 40%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+.userInfo {
+    text-align: center;
+    width: 30%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+/* ////////////////////모달////////// */
+.bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.6;
+    z-index: 1;
+}
+.onModal {
+    padding: 15px;
+    border-radius: 20px;
+    width: 1200px;
+    height: 800px;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 5%; 
+    padding: 10px 0;
+    box-sizing: border-box;
+    transform: translate(-50%, 0%); 
+    z-index: 2;
+    overflow: auto;
+    overflow-x: hidden;
+}
+/* //////////////////////////// */
+@media (max-width: 1199px) {
+    .onModal {
+        width: 100%;
+    }
+}

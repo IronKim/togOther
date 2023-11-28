@@ -27,6 +27,8 @@ public interface TogetherService {
 
 	public ResponseEntity<Integer> totMyTogether(int userSeq);
 
+	public ResponseEntity<List<TogetherDTO>> getAllTogether();
+
 
 
 

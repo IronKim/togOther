@@ -29,10 +29,6 @@ const Form = (props) => {
     const navigate = useNavigate()
 
     const toSeq = useRef(0);
-//로그인 안되어 있으면 로그인 창으로
-useEffect(()=>{
-    if(!user.name) navigate(`/user/login`);
-},[])
 //나중에 plannerDTO로 들어갈것들
     const [publicPaln,setPublicPlan] = useState(true)
     const [logTime,setLogTime] = useState()
@@ -536,11 +532,11 @@ useEffect(()=>{
     return (
         <div>
             <section className={styles.mainSection}>
-            <button onClick={() =>alert(JSON.stringify(dDay))}>nDay 확인</button>
+            {/* <button onClick={() =>alert(JSON.stringify(dDay))}>nDay 확인</button>
             <button onClick={() =>alert(JSON.stringify(subDTO))}>sub json 확인</button>
             <button onClick={() =>alert(JSON.stringify(textDTO))}>text json확인</button>
             <button onClick={() =>alert(JSON.stringify(togoDTO))}>동행 json 확인</button>
-            <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button>
+            <button onClick={() =>alert(JSON.stringify(imageDTO))}>image json 확인</button> */}
             
             <img className={styles.backBut} src={backBut} onClick={() => back()}/>
             <section className={styles.topSection}>
