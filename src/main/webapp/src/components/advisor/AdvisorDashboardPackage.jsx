@@ -228,7 +228,7 @@ const AdvisorDashboardPackage = () => {
                 selectedCity.citySeq !== '' && selectedCity.citySeq !== '0' ? <AdvisorPackageList selectedCity={selectedCity} packageList={packageList} selectPackage={selectPackage}/> : null
             }
             {
-                selectPackage.tpSeq !== '' ? <AdvisorPackageForm selectedPackage={selectedPackage} onInputPackage={onInputPackage}
+                selectedPackage.tpSeq !== '' ? <AdvisorPackageForm selectedPackage={selectedPackage} onInputPackage={onInputPackage}
                     onErrorImg={onErrorImg} getPackageList={getPackageList} isValidDate={isValidDate}  /> : null
             }
 
