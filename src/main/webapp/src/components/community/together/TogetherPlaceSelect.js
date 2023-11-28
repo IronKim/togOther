@@ -43,7 +43,7 @@ const PlaceSelect = (props) => {
       address: '',
       latitude: null,
       longitude: null,
-    });
+    })
     
     // search화면으로
     const onSearch = () => {
@@ -295,7 +295,7 @@ const PlaceSelect = (props) => {
                         }
                 <div style={{clear:'both'}}></div>
                 <div style={{minHeight:'70px'}}>
-                {subDTO.place !== null && 
+                {subDTO.place && 
                     (
                     <div className={Style.placeCard}>
                         {subDTO.place.name}
@@ -307,7 +307,7 @@ const PlaceSelect = (props) => {
                     )
                 }
                 {
-                    subDTO.customDTO !== null &&
+                    subDTO.customDTO &&
                     (
                         <div className={Style.placeCard}>
                         {subDTO.customDTO.placeName}

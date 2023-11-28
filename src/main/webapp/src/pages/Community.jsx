@@ -6,10 +6,10 @@ import CommunitySearch from '../components/community/CommunitySearch';
 
 import planner from '../assets/image/planner.png'
 import people from '../assets/image/people.png'
-import { useNavigate } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 
 const Community = () => {
-    const[toggle,setToggle] = useState(true)
+    const [toggle, setToggle] = useState(true)
 
     const[search,setSearch] = useState('')
 

@@ -9,3 +9,5 @@ export const getSubItemList = () => apiClient.get('api/together/getSubItemList')
 export const getCustomList = () => apiClient.get('api/together/getCustomList')
 
 export const getTogetherSeq = (togetherSeq) => apiClient.get(`api/together/getTogetherSeq/${togetherSeq}`)
+
+export const deleteTogether = (togetherSeq) => apiClient.delete(`api/together/deleteTogether/${togetherSeq}`)

@@ -186,13 +186,13 @@ useEffect(() => {
 
                   (<div className={Style.togetherFoot}>
                       <div className={Style.imgDiv}>
-                          <img src={ loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).image} 
+                      <img src={loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.image} 
                           className={Style.placeImg} alt="Place Image" />
                       </div>
                       <div className={Style.title}><p>{item.title}</p></div>
                       <div className={Style.context}><p>{item.context}</p></div>
                       <div className={Style.placeInfo}> 
-                          {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
+                      {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.name}
                       </div>
                   </div>)}
 

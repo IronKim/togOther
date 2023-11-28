@@ -23,6 +23,8 @@ public interface TogetherService {
 
 	public ResponseEntity<Map<String, Object>> getTogetherSeq(int togetherSeq);
 
+	public ResponseEntity<String> deleteTogether(int togetherSeq);
+
 
 
 
