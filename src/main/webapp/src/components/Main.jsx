@@ -84,9 +84,9 @@ const Main = ({ showNavbar }) => {
                         </Route>
                     </Route>
                     <Route path='package'>
-                        <Route path='List/:searchData' element={ <PackageLists />} />
                         <Route path='' element={ <PackageMain />} />
-                        <Route path='details' element= { <PackageDetails/> } />
+                        <Route path='List/:searchData' element={ <PackageLists />} />
+                        <Route path='details/:tpSeq' element= { <PackageDetails/> } />
                         <Route path='reservation' element={ <PackgeReservation /> } />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}

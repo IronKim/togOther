@@ -3,35 +3,22 @@
     max-width: 1200px;
     margin: 0 auto;
 }
-.package_title {
 
-    padding: 40px 10px 30px 10px;
-    font-size: 30px;
-}
-.tap {
-    border: 1px solid black;
-    display: flex;
-    width: 100%; 
-    max-width: 1200px; 
-    height: 35px;
-    margin-left: auto; 
-    margin-right: auto; 
-}
-.tap p {
-    border : 1px solid red;
-    width :80px;
-    height : 35px;
-    padding : 10px;
-}
-.img {
-    border: 1px solid black;
+.Thumbnail {
     width: 100%;
     max-width: 1200px; 
-    height: 350px;
+    height: 400px;
     margin-left: auto; 
     margin-right: auto; 
-    margin-top: 50px;
+    margin-top: auto;
+    object-fit: cover;
 }
+
+.package_title {
+    padding: 60px 10px 30px 10px;
+    font-size:40px;
+}
+
 .details_scheduler {
     width: 100%; 
     max-width: 1200px;

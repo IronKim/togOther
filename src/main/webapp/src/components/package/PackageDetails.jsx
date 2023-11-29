@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import moment, { months } from 'moment';
 import styles from '../../css/PackagePage.module.css';
@@ -8,6 +8,8 @@ import '../../calendar.css';
 import { useQuery } from 'react-query';
 import minus from '../../assets/image/minus.png';
 import plus from '../../assets/image/plus.png';
+import { getTourPackageByTpSeq } from '../../api/PackageApiService';
+import { useParams } from 'react-router-dom';
 
 
 const initialState = 1
@@ -33,37 +35,47 @@ const PackageDetails = () => {
 
     const [mark, setMark] = useState([]);
 
-    const { data } = useQuery(
-      ['logDate', months],
-      async () => {
-        const result = await axios.get(
-          `/api/healthLogs?health_log_type=DIET`
-        );
-        console.log(result.data)
-        return result.data;
-      },
+    const [pack, setPack] = useState({});
 
-      {
-        onSuccess: (data: any) => {
-          setMark(data);
-        },
-      }
-    );
+    const {tpSeq} = useParams()
+
+    useEffect(() => {
+        console.log(tpSeq);
+
+        getTourPackageByTpSeq(tpSeq)
+        .then(res => {
+            console.log(res.data)
+            setPack(res.data)
+        })
+        .catch(e => console.log(e));
+    },[tpSeq])
+
+    // const { data } = useQuery(
+    //   ['logDate', months],
+    //   async () => {
+    //     const result = await axios.get(
+    //       `/api/healthLogs?health_log_type=DIET`
+    //     );
+    //     console.log(result.data)
+    //     return result.data;
+    //   },
+
+    //   {
+    //     onSuccess: (data: any) => {
+    //       setMark(data);
+    //     },
+    //   }
+    // );
 
     return (
         <div className={ styles.package_main }>
-            <div className={ styles.tap }>
-                <div><div><p>상품소개</p></div></div>
-                <div><div><p>유의사항</p></div></div>
-                <div><div><p>문의하기</p></div></div>
-                <div><div><p>여행후기</p></div></div>
-            </div>
-        
-            <div className={ styles.img }>    
-                <img src='' />
+
+            <div>    
+                <img className={ styles.Thumbnail } src={pack.tpThumbnail} /> 
             </div>
 
-            <p className={styles.package_title}>[도시이름] 미라클 몽공, 홉스골 7박 8알 몽골의 알프스 홉스골 호수, 미니사막, 어쩌구까지!</p>
+            <p className={styles.package_title}>{pack.tpTitle}</p>
+            <p style={{textAlign:'right', fontSize:'30px'}}>{pack.tpPrice}원</p>
             <div className={ styles.details_scheduler }>
                 <div className={ styles.scheduler }>
                     
@@ -106,7 +118,7 @@ const PackageDetails = () => {
                                 <div className={ styles.text }>
                                     <div><p>기본 구성 상품</p></div>
                                     <div><p>선택한 날짜</p></div>
-                                    <div className={ styles.price }><p>대충 100,000원</p>
+                                    <div className={ styles.price }><p>{pack.tpPrice}</p>
                                         <div className={ styles.arrow_div }>
                                             <div className={ styles.arrow }>
                                                 <div><img onClick={ () => count > 1 && dispatch({ type : 'DECREMENT' })} style={{ width:'20px', height : '20px' }} src={ minus } /></div>
