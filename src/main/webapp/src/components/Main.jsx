@@ -24,7 +24,7 @@ import { LoadScript } from '@react-google-maps/api';
 import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
-import PackageList from '../pages/PackageList';
+import PackageLists from './package/PackageLists';
 
 const libraries = ["places"];
 
@@ -80,7 +80,7 @@ const Main = ({ showNavbar }) => {
                         </Route>
                     </Route>
                     <Route path='package'>
-                        <Route path='List' element={ <PackageList />} />
+                        <Route path='List/:searchData' element={ <PackageLists />} />
 
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
