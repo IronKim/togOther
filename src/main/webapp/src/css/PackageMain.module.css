@@ -2,17 +2,34 @@
   width: 1200px;
   margin: 0 auto;
 }
-/* 스크롤 */
-.countryIn::-webkit-scrollbar {
-  width:7px;
-  height: 7px;
+/* ////////////////////////////// */
+.search {
+  margin-top: 162px;
+  margin-left: 15px;
+  position: absolute;
+  width:24px;
+  height:24px;
 }
-.countryIn::-webkit-scrollbar-track {
-  background-color: transparate;
+.searchBg {
+  width: 100%;
+  height: 350px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  margin-bottom: 100px;
+  text-align: center;
 }
-.countryIn::-webkit-scrollbar-thumb {
-  background-color: lightgray;
-  border-radius: 7px;
+.searchBox{
+  border: 0;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px 14px 20px 52px;
+  font-size: 24px;
+  width:600px;
+  height: 70px;
+  margin: 140px auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 /* ////////////////////////////// */
 .countrySection {
@@ -20,9 +37,9 @@
   margin: 0 auto;
 }
 .countryIn {
+  padding: 1px 10px;
   white-space: nowrap; 
-  overflow: auto;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 .countryItem {
   display: inline-block;
@@ -30,10 +47,80 @@
   width: 250px;
   height: 250px;
   border-radius: 10px;
+  background: linear-gradient(rgb(81, 81, 81) 0%, rgba(81, 81, 81, 0) 49.33%);
   background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.countryItem:hover{
+  width: 300px;
+}
+.countryItem h1{
+  margin: 10px;
+  color: white;
+  font-size: 30px;
+  transition: 0.3s;
+}
+.countryItem p{
+  margin-left: 20px;
+  color: white;
+  font-size: 20px;
+}
+.countryItem p font{
+  color: #abd1ff;
+  font-weight:'bold';
+  font-size: 22px;
+  transition: 0.3s;
+}
+.countryItem:hover p font{
+  color: #2E8DFF;
+}
+.leftButton {
+  width: 50px;
+  position: absolute;
+  margin-left: -25px;
+  margin-top: 110px;
+  cursor: pointer;
+}
+.rightButton {
+  width: 50px;
+  position: absolute;
+  margin-left: 1060px;
+  margin-top: 110px;
+  cursor: pointer;
 }
 @media (max-width: 1199px) {
   .main{
     width: 100%;
+  }
+  .rightButton {
+    margin-left: 80%;
+  }
+  .leftButton {
+    margin-left: -4%;
+  }
+  .searchBg {
+    height: 225px;
+  }
+  .searchBox{
+    width: 97%;
+  }
+}
+@media (max-width: 500px) {
+  .countryItem {
+    width: 175px;
+    height: 175px;
+  }
+  .countryItem:hover{
+    width: 210px;
+  }
+  .rightButton {
+    width: 45px;
+    margin-top: 80px;
+  }
+  .leftButton {
+    width: 45px;
+    margin-top: 80px;
   }
 }

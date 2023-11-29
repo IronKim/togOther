@@ -27,6 +27,7 @@ import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
 import PackageList from '../pages/PackageList';
+import PackageMain from './package/PackageMain';
 
 const libraries = ["places"];
 
@@ -83,9 +84,9 @@ const Main = ({ showNavbar }) => {
                         </Route>
                     </Route>
                     <Route path='package'>
+                        <Route path='' element={ <PackageMain />} />
                         <Route path='details' element= { <PackageDetails/> } />
                         <Route path='reservation' element={ <PackgeReservation /> } />
-                        <Route path='List' element={ <PackageList />} />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
