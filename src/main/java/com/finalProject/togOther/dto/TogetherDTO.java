@@ -1,5 +1,6 @@
 package com.finalProject.togOther.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import com.finalProject.togOther.domain.Together;
@@ -30,6 +31,7 @@ public class TogetherDTO {
 	private LocalDate endDate;
 	private String context;
 	private int tnum;
+	private Timestamp logTime;
 	
 	public static TogetherDTO toDTO(Together together) {
 		
@@ -47,6 +49,7 @@ public class TogetherDTO {
 					      .endDate(together.getEndDate())
 					      .context(together.getContext())
 					      .tnum(together.getTnum())
+					      .logTime(together.getLogTime())
 					      .build();
 	}
 

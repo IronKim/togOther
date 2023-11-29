@@ -24,7 +24,7 @@ const CityPage = () => {
     const [selectedRecommend, setSelectedRecommend] = useState('random');
     const [drop, setDrop] = useState(false);
 
-    const {user, updateCityList} = useUserStore();
+    const {user} = useUserStore();
 
     function shuffleArray(array) {
         let shuffledArray = array.slice();

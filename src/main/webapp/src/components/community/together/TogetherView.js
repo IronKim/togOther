@@ -6,7 +6,7 @@ import loadingImg from '../../../assets/image/loading.png'
 import userDefaultProfile from '../../../assets/image/userDefaultProfile.png'
 import TogetherWriteForm from './TogetherWriteForm';
 
-import { getTogetherSeq } from '../../../api/TogetherApiService';
+import { getTogetherSeq,deleteTogether } from '../../../api/TogetherApiService';
 import { getPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import { getCityList } from '../../../api/CityApiService';
 
@@ -29,7 +29,7 @@ const containerStyle = {
     },
   ];
 
-const TogetherView = () => {
+const TogetherView = ({seqAd}) => {
     const { user } = useUserStore();
     const { togetherSeq } = useParams()
     const [custom,setCustom] = useState([])
@@ -52,7 +52,7 @@ const TogetherView = () => {
     const [togetherDTO, setTogetherDTO] = useState([])
     const [subDTO, setSubDTO] = useState([])
     useEffect(()=> {
-        getTogetherSeq(togetherSeq)
+        getTogetherSeq(seqAd === undefined ? togetherSeq : seqAd)
         .then(res => {
             setTogetherDTO(res.data.together)
             setSubDTO(res.data.subItem)
@@ -143,8 +143,26 @@ const TogetherView = () => {
 
     const navigate = useNavigate()
 
-    const onChange = (togetherDTO,subDTO,custom) => {
-        navigate('/community/together/write', { state: { togetherDTO,subDTO,custom } })
+    const onChange = (togetherDTO,subDTO,custom,place) => {
+        deleteTogether(togetherSeq)
+        .then(res=>{
+            navigate('/community/together/write', { state: { togetherDTO,subDTO,custom,place} })
+        })
+        .catch(e => console.log(e))
+        //console.log(custom,place)
+    }
+    
+    const goDelete = async  () => {
+        const gogo = window.confirm("동행을 삭제하시겠습니까?")
+        if (gogo) {
+            try {
+                await deleteTogether(togetherSeq)
+                alert("삭제가 완료되었습니다")
+                navigate('/community/')
+            } catch (error) {
+                console.error("동행 삭제 중 오류:", error)
+            }
+        }
     }
 
     return (
@@ -190,8 +208,8 @@ const TogetherView = () => {
                 {togetherDTO.userSeq === user.userSeq &&
                     <div>
                          {/* onClick={()=>onDelete(togetherDTO)} */}
-                        <button className={Style.listDelete}>삭 제</button>
-                        <button className={Style.listChange} onClick={()=>onChange(togetherDTO,subDTO,custom)}>수 정</button>
+                        <button className={Style.listDelete} onClick={()=>goDelete()}>삭 제</button>
+                        <button className={Style.listChange} onClick={()=>onChange(togetherDTO,subDTO,custom,place)}>수 정</button>
                     </div>
                 }
                 {

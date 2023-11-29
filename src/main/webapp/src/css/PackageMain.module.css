@@ -1,0 +1,39 @@
+.main {
+  width: 1200px;
+  margin: 0 auto;
+}
+/* 스크롤 */
+.countryIn::-webkit-scrollbar {
+  width:7px;
+  height: 7px;
+}
+.countryIn::-webkit-scrollbar-track {
+  background-color: transparate;
+}
+.countryIn::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+  border-radius: 7px;
+}
+/* ////////////////////////////// */
+.countrySection {
+  width: 90%;
+  margin: 0 auto;
+}
+.countryIn {
+  white-space: nowrap; 
+  overflow: auto;
+  overflow-y: hidden;
+}
+.countryItem {
+  display: inline-block;
+  margin: 10px;
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+  background-size: cover;
+}
+@media (max-width: 1199px) {
+  .main{
+    width: 100%;
+  }
+}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {ADVISORTAG} from '../../constants/ADVISORTAG';
 import AdvisorDashboardCity from './AdvisorDashboardCity';
 import AdvisorDashboardUser from './AdvisorDashboardUser';
+import AdvisorDashboardCommunity from './AdvisorDashboardCommunity';
 import AdvisorDashboardPackage from './AdvisorDashboardPackage';
 import { getPlace } from '../../api/AdvisorApiService';
 
@@ -29,9 +30,11 @@ const Dashboard = ({styles, currentTag}) => {
       {
         currentTag === ADVISORTAG.LOCATION && <AdvisorDashboardCity /> 
       }
-
       {
         currentTag === ADVISORTAG.PACKAGE && <AdvisorDashboardPackage />
+      }
+      {
+        currentTag === ADVISORTAG.COMMUNITY && <AdvisorDashboardCommunity /> 
       }
     </div>
   );

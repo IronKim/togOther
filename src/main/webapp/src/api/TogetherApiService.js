@@ -10,6 +10,8 @@ export const getCustomList = () => apiClient.get('api/together/getCustomList')
 
 export const getTogetherSeq = (togetherSeq) => apiClient.get(`api/together/getTogetherSeq/${togetherSeq}`)
 
+export const deleteTogether = (togetherSeq) => apiClient.delete(`api/together/deleteTogether/${togetherSeq}`)
 //
 export const getMyTogether = (n) => apiClient.post('api/together/getMyTogetherList', n);
 export const totMyTogether = (n) => apiClient.post('api/together/totMyTogether', n);
+

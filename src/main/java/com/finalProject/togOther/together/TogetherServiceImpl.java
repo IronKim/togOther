@@ -66,16 +66,6 @@ public class TogetherServiceImpl implements TogetherService {
 			
 			return ResponseEntity.ok(-1);
 			
-//=======
-//
-//			int togetherSeq = together.getTogetherSeq();
-//
-//			return ResponseEntity.ok(togetherSeq);
-//
-//		} catch (Exception e) {
-//
-//			return ResponseEntity.ok(-1);
-//>>>>>>> b366596aeacfc7203d0d74ef7be37c4df0f26726
 		}
 		
 	}
@@ -218,6 +208,41 @@ public class TogetherServiceImpl implements TogetherService {
 			
 		} catch (Exception e) {
 			return ResponseEntity.ok(-1);
+		}
+	}
+
+	@Override
+	public ResponseEntity<String> deleteTogether(int togetherSeq) {
+		try {
+			togetherRepository.deleteById(togetherSeq);
+
+			// 사용자가 성공적으로 삭제되었을 때
+			String responseMessage = "동행이 삭제되었습니다.";
+			return ResponseEntity.ok(responseMessage);
+		} catch (Exception e) {
+
+			// 사용자 삭제 중 에러가 발생했을 때
+			String errorMessage = "플래너 삭제 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+
+
+	public ResponseEntity<List<TogetherDTO>> getAllTogether() {
+		try {		
+			List<Together> togetherList = togetherRepository.findAll();
+
+			List<TogetherDTO> togetherDTOList = new ArrayList<TogetherDTO>();
+			
+			for (Together together : togetherList) {
+				TogetherDTO togetherDTO = TogetherDTO.toDTO(together);
+				
+				togetherDTOList.add(togetherDTO);
+			}
+			return ResponseEntity.ok(togetherDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
 

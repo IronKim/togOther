@@ -3,7 +3,7 @@ import Style from '../../../css/together.module.css'
 
 import { addTogether } from '../../../api/TogetherApiService';
 import { addSubItem} from '../../../api/PlannerApiService';
-import { addCustomPlace } from '../../../api/PlaceApiService';
+import { addCustomPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import PlaceSelect from './TogetherPlaceSelect';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 
@@ -37,12 +37,12 @@ const PlaceWriteForm = () => {
         context: '',    //내용
         tnum: 2,       //모집인원   
     });
-    const [subDTO,setSubDTO] = useState([])
+    const [subDTO, setSubDTO] = useState([])
     
     const{togetherSeq,
           userSeq,useremail,userid,userName,userGender,userProfileImage,
           title,startDate,endDate,context,tnum} 
-        = togetherDTO
+        = togetherDTO 
 
     const [contextDiv, setContextDiv] = useState('')
     const [writedateCardFormDiv, setWritedateCardFormDiv] = useState('')
@@ -75,19 +75,21 @@ const PlaceWriteForm = () => {
                  .then(res => {
                     // subDTO 저장
                     subDTO.map(item => {
-                        if(item.place !== null){
+                        if(item.place !== null ){
                             const subItem = {toMainSeq:res.data,
                                              nday: item.nday, code : item.code,
                                              startTime : item.startTime, 
                                              endTime : item.endTime, 
                                              context : item.context,
                                              placeSw: 0, 
-                                             placeSeq: item.place.placeSeq}
+                                             placeSeq: item.place ? item.place.placeSeq : null}
                                 addSubItem(subItem)
                                 .then(res2 => console.log(res2))
                                 .catch(e => console.log(e))
                         }
+                    })
                         //customDTO에 저장
+                        subDTO.map(item => {
                         if(item.customDTO !== null){
                             addCustomPlace(item.customDTO)
                             .then(res2 => {
@@ -99,7 +101,8 @@ const PlaceWriteForm = () => {
                                                  placeSw: 1, plCustomSeq : res2.data}
                                 addSubItem(subItem)
                                 .then(res3 => console.log(res3))
-                                .catch(e => console.log(e));
+                                .catch(e => console.log(e))
+
                             })
                         .catch(e => console.log(e))
                         }
@@ -185,36 +188,58 @@ const PlaceWriteForm = () => {
         setSubDTO([])
     }
 
-    const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(null)
 
     const updateSubDTO = (index) => {
         
-        const selectedItem = subDTO[index];
-        setSelectedItem(selectedItem);
+        const selectedItem = subDTO[index]
+        setSelectedItem(selectedItem)
 
-        onAdd();
+        onAdd()
     }
     const resetSubDTO = (index) => {
-        setSubDTO(subDTO.filter((item, i) => i !== index));
+        setSubDTO(subDTO.filter((item, i) => i !== index))
     }
     
     //뷰에서 수정하러 가져옴
-//     const location = useLocation()
-//     const together = location.state?.togetherDTO;
-//     const sub = location.state?.subDTO;
-//     const custom = location.state?.custom;
+    const location = useLocation()
+    const [update,setUpdate] = useState(false)
 
-//     useEffect(() => {
-//         console.log(together, sub, custom)
-//         setTogetherDTO(together)
-//         if(sub){
-//             setSubDTO(sub)
-//         }
-//   }, [together, sub, custom])
-
+    useEffect(() => {
+        const together = location.state?.togetherDTO;
+        const sub = location.state?.subDTO;
+        const place = location.state?.place;
+        const custom = location.state?.custom;
+    
+        if (together) {
+            setTogetherDTO(together);
+        }
+    
+        if (sub && place && custom) {
+            setSubDTO((prevSubDTO) => {
+                const newSubDTO = sub.map((subItem, index) => ({
+                    subSeq: subItem.subSeq,
+                    plMainSeq: subItem.plMainSeq,
+                    toMainSeq: subItem.toMainSeq,
+                    nday: subItem.nday,
+                    code: subItem.code,
+                    startTime: subItem.startTime,
+                    endTime: subItem.endTime,
+                    context: subItem.context,
+                    ...(place.find(placeItem => placeItem.placeSeq === subItem.placeSeq) ? { place: place.find(placeItem => placeItem.placeSeq === subItem.placeSeq) } : {}),
+                    ...(custom.find(customItem => customItem.plCustomSeq === subItem.plCustomSeq) ? { customDTO: custom.find(customItem => customItem.plCustomSeq === subItem.plCustomSeq) } : {})
+                }));
+                console.log("newSubDTO:", newSubDTO);
+                return newSubDTO;
+            });
+            setUpdate(true)
+        }
+    }, [location.state]);
+    console.log("subDTOnewSubDTO:", subDTO);
+    
     return (
         <>
-        {/* <button onClick={()=>{console.log(JSON.stringify(subDTO))}}></button> */}
+        <button onClick={()=>{console.log(JSON.stringify(subDTO))}}>s</button>
         <div className={Style.writeForm}>
         <div className={Style.writeFormInner}>
             <div>
@@ -249,12 +274,13 @@ const PlaceWriteForm = () => {
                             <button className={Style.resetSubDTO} onClick={() => resetSubDTO(index)}>삭제</button>
                             <button className={Style.updateSubDTO} onClick={() => updateSubDTO(index)}>수정</button>
                             <p>{item.nday}DAY</p></div>
+
                             <div className={Style.writedateCard_foot}>
                             {
-                            item.place?.name && <p>{item.place.name}</p>
+                            item.place !== null && item.place !== undefined && <p>{item.place.name}</p>
                             }
                             {
-                            item.customDTO?.placeName &&<p>{item.customDTO.placeName}</p>
+                            item.customDTO !== null && item.customDTO !== undefined && <p>{item.customDTO.placeName}</p>
                             }
                             <br/><p>{item.context}</p>
                             </div>
@@ -280,7 +306,7 @@ const PlaceWriteForm = () => {
             </div>
             <div className={Style.contextDiv}>{contextDiv}</div>
             <div className={Style.savebutton}>
-                <div className={Style.save} onClick={togetherSave}>저장</div>
+                <div className={Style.save} onClick={togetherSave}>{!update ? '저장' : '수정'}</div>
                 &nbsp;
                 <div className={Style.reset} onClick={onReset}>다시쓰기</div>
             </div>

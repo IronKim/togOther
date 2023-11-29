@@ -96,6 +96,12 @@ public class PlannerController {
 		return plannerService.getPlannerView(plannerSeq);
 	}
 	
+	//seq로 데이터 불러오기
+	@GetMapping(path = "getAllPlanner")
+	public ResponseEntity<List<PlannerDTO>> getAllPlanner() {
+		return plannerService.getAllPlanner();
+	}
+	
 	// 플래너 삭제
 	@DeleteMapping(path = "deletePlanner/{seq}")
 	public ResponseEntity<String> deletePlanner(@PathVariable int seq) {
