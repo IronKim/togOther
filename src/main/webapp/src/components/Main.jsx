@@ -24,6 +24,7 @@ import { LoadScript } from '@react-google-maps/api';
 import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
+import PackageList from '../pages/PackageList';
 
 const libraries = ["places"];
 
@@ -77,6 +78,10 @@ const Main = ({ showNavbar }) => {
                             <Route path='write' element= {  <UserRoute><Together/></UserRoute>} />
                             <Route path='view/:togetherSeq' element= { <TogetherView/>} />
                         </Route>
+                    </Route>
+                    <Route path='package'>
+                        <Route path='List' element={ <PackageList />} />
+
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>

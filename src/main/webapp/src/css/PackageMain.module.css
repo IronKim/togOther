@@ -1,0 +1,188 @@
+.arraymain{
+  margin-left: 35px;
+  display: inline-block;
+  flex-direction: column;
+  user-select: none;
+  width: 1200px;
+}
+.card{
+  overflow: hidden;
+  max-width:100%;
+  width: 284px;
+  height: 17em;
+  margin: 0.5em;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 20px;
+}
+.cardbody{
+  width: 100%;
+  height: 40%; 
+}
+.cardimgDiv{
+  max-width: 100%;
+  height: 11em;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.cardimg{
+  width: 284px;
+  height: 11em;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+}
+.cardText{
+  position: absolute;
+  left: 71%;
+  bottom: 1%;
+}
+/* 호버 시 이미지 확대 */
+.card:hover .cardimg {
+  transform: scale(1.1); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+
+.card:hover .imgtext{
+  color: #D1D5D6;
+  background-color: rgba( 0, 0, 0, 0.7 );
+}
+
+.Sidebartotal {
+  margin-top: 0.8vw;
+  margin-left: 4vw;
+  user-select: none;
+  width: 13vw;
+}
+
+.Sidebarlabel{
+  margin-bottom: 2vw; 
+  margin-left: 2vw;
+  font-size: 2vw;
+}
+/* -----------------------햄버거----------------------- */
+.hamburger{
+  user-select: none;
+  border: none;
+  background-color: white;
+}
+/* 미디어 쿼리 추가 */
+@media (max-width: 1199px) {
+
+.arraymain{
+  margin-left: 13%;
+}
+
+.card{
+  width: 35vw;
+  height: 13.5em;
+  margin: 0.5em;
+}
+
+.cardimg{
+  width: 100%;
+  height: 100%;
+  border-radius : 15px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+.cardimgDiv{
+  max-width: 100%;
+  height: 9em;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.cardText{
+  width: 74px;
+}
+
+/* -----------------------햄버거----------------------- */
+.hamburger{
+  display: block;
+  border: none;
+  background-color: #dedede;
+}
+.hamburgerIcon1 {
+  user-select: none;
+  display: block;
+  position: absolute;
+  text-align: center;
+  font-size: 30px;
+  width: 40px;
+  height: 120px;
+  cursor: pointer;
+  border-radius : 0 10px 10px 0;
+  box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
+  left: 100%;
+}
+.Sidebartotal {
+  position: fixed;
+  display: block;
+  left: -94%;
+  width: 90%;
+  z-index: 10;
+  background-color: #dedede; /* 사이드바 배경색 설정 */
+  opacity: 0.95;
+  transition: all 300ms;
+  padding: 20px 20px 20px 20px;
+  box-sizing: border-box;
+  border-radius : 15px;
+}
+.open{
+  left: 0 !important;
+}
+
+@media (max-width: 391px) { 
+  .arraymain{
+      display: inline-block;
+      margin-left: 90px;
+  }
+  .card{
+      width: 8em;
+      height: 27vw;
+      left: -10%;
+  }
+  .cardimgDiv{
+      height: 4em;
+  }
+  .cardTitle{
+      position: relative;
+      bottom: 13px;
+      right: 10px;
+      font-size: 10px;
+      margin-bottom: auto;
+  }
+  .cardText{
+      font-size: 8px;
+      width: 40px; 
+      left: 63%;
+  }
+
+  /* -----------------------햄버거----------------------- */
+  .hamburger{
+  display: block;
+  border: none;
+  background-color: #dedede;
+  }
+  .hamburgerIcon1 {
+  user-select: none;
+  display: block;
+  position: absolute;
+  text-align: center;
+  font-size: 26px;
+  width: 40px;
+  height: 105px;
+  cursor: pointer;
+  border-radius : 0 10px 10px 0;
+  box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
+  left: 100%;
+  }
+
+  .open{
+  left: -16px !important;
+  }
+}
+
+}

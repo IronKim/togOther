@@ -1,8 +1,10 @@
 package com.finalProject.togOther.tourPackage;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,19 +20,14 @@ public class TourPackageController {
 		this.tourpackageService = tourPackageService;
 	}
 	
-	@PostMapping(path ="addTourPackage")
-	public ResponseEntity<?> addTourPackage() {
-		TourPackageDTO tourPackageDTO = null;
-		return tourpackageService.addTourPackage(tourPackageDTO);
-	}
-	
 	@GetMapping(path ="getTourPackageList")
 	public ResponseEntity<?> getTourPackageList() {
 		return tourpackageService.getTourPackageList();
 	}
 	
-	@GetMapping(path ="getTourPackageContext")
-	public ResponseEntity<?> getTourPackageContext() {
-		return tourpackageService.getTourPackageContext();
+	// citySeq값에 따른 장소 불러오기
+	@GetMapping(path = "getTourPackageByCitySeq/{citySeq}")
+	public ResponseEntity<List<TourPackageDTO>> getTourPackageByCitySeq(@PathVariable int citySeq) {
+		return tourpackageService.getTourPackageByCitySeq(citySeq);
 	}
 }
