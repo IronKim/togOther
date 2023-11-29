@@ -5,11 +5,11 @@
     max-width: 1200px;
     margin: 0 auto;
 }
-
 /*----------- MyPageWirte ----------*/
 
 .tagName{
-    font-size: 40px;
+    padding-top: 20px;
+    font-size: 30px;
 }
 
 .hr {
@@ -62,7 +62,7 @@
     margin : 10px 0 0 0;
     width : 80%;
     height : 80px;
-
+    resize: none;
 }
 .inputdiv {
     margin : 0 auto;
@@ -102,10 +102,9 @@
 /*----------- MyPageSidebar ----------*/
 .sidebar {
     float: right;
-    border-radius : 5px;
-    border: 1px solid red;
+    border-radius : 10px;
     background-color: white;
-    width: 300px;
+    width: 280px;
     height: 700px;
     padding : 20px 0;
     box-shadow: rgba(0, 0, 0, 0.16) 0 0 4px;
@@ -114,27 +113,28 @@
 .sidebar button {
     display: inline-block;
     border : 0;
-    height : 70px;
-    border-radius : 5px;
-    background-color: whitesmoke;
-    width: 95%;
-    margin: 10px 2.5%;
+    height : 90px;
+    border-top: 1.5px solid whitesmoke;
+    background-color: white;
+    width: 90%;
+    margin: 3px 5%;
 }
 .profile {
-    border : 1px solid black;
     width : 100%;
     height : 70px;
 }
 .profileImg {
-    width: 35%;
+    margin-left: 20px;
+    width: 70px;
     height: 70px;
+    border-radius: 50%;
     object-fit: cover;
-    border : 1px solid blue;
-    float:red;
 }
 .myProfile {
+    padding-top: 24px;
+    padding-left: 20px;
+    font-size: 20px;
     float: right;
-    border : 1px solid red;
     width : 65%;
     height : 70px;
 }
@@ -143,11 +143,38 @@
     width: 100%;
     text-align: center;
 }
+.buttons img{
+    width: 25px;
+    vertical-align: middle;
+}
 
 .btn:hover {
     cursor: pointer;
 }
-
+/* ---------mbti-------------- */
+.bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.6;
+    z-index: 1;
+}
+.onModal{
+    padding: 15px;
+    border-radius: 5%;
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    left: 50%;
+    top: 40%; 
+    padding: 20px 10px;
+    box-sizing: border-box;
+    transform: translate(-50%, 0%); 
+    z-index: 2;
+}
 /*--------------media-------------*/
 @media (max-width: 1199px) {
     .main {
@@ -168,15 +195,17 @@
         flex-direction: column;
     }
     .change button {
-        width : 100%;
+        width : 90%;
     }
     .textdiv {
         width : 100%;
     }
     .sidebar {
         float: none;
-        width: 100%;
-        height: 24%;
+        width: 98%;
+        margin: 1%;
+        height: 23%;
+        padding: 10px 0;
     }
     .sidebar button {
         width: 30%;
@@ -190,12 +219,18 @@
         height : 100px;
     }
     .myProfile {
-        width: calc(100% - 100px);
+        width: calc(100% - 130px);
         height: 100px;
+        padding-top: 34px;
+        padding-left: 30px;
+        font-size: 25px;
     }
 }
 
 @media (max-width: 754px) { 
+    .onModal {
+        width: 100%;
+    }
     .main {
         width : 100%;
     }

@@ -11,7 +11,7 @@ const AdvisorPackageList = ({selectedCity, packageList, selectPackage}) => {
             }
             {
                 <button className='btn btn-success m-1' onClick={() => selectPackage({
-                    tpSeq: '',
+                    tpSeq: '0',
                     citySeq: selectedCity.citySeq,
                     tpTitle: '',
                     tpThumbnail: '',

@@ -53,4 +53,8 @@ public interface UserService {
 	
 	public ResponseEntity<String> withdrawalUser(int userSeq);
 
+	public ResponseEntity<String> updateMbti(int userSeq, String mbti);
+
+	public ResponseEntity<?> updatecityList(int userSeq, String cityName);
+
 }

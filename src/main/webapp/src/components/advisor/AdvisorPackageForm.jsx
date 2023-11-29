@@ -104,7 +104,7 @@ const AdvisorPackageForm = ({selectedPackage,onInputPackage,getPackageList, onEr
                 <div className="d-flex justify-content-evenly" >
                     <button className="btn btn-success " type='button' onClick={imageAdd}>이미지 추가</button>
                     <button className="btn btn-success " type='button' onClick={textAdd}>설명 추가</button>
-                    <button className="btn btn-success " type='button' onClick={tpSeq === '' ? create : update}>{tpSeq === '' ? '등록': '수정'}</button>
+                    <button className="btn btn-success " type='button' onClick={tpSeq === '0' ? create : update}>{tpSeq === '0' ? '등록': '수정'}</button>
                 </div>
 
                 <div className='form-floating mb-3'>

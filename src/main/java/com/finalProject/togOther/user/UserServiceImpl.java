@@ -2,9 +2,12 @@ package com.finalProject.togOther.user;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
@@ -554,7 +557,30 @@ public class UserServiceImpl implements UserService {
 			
 			userDTO.setPhone(updatedPhone);
 			
-			userDTO.setCertification((byte) 1);
+			userRepository.save(User.toEntity(userDTO));
+			
+			String responseMessage = "성공적으로 수정하였습니다.";
+			return ResponseEntity.ok(responseMessage);
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "수정 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<String> updateMbti(int userSeq, String mbti) {
+		
+		try {
+			
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			UserDTO userDTO = UserDTO.toDTO(user);
+			
+			userDTO.setMBTI(mbti);
 			
 			userRepository.save(User.toEntity(userDTO));
 			
@@ -759,6 +785,31 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
+	@Override
+	public ResponseEntity<?> updatecityList(int userSeq, String cityName) {
+		
+		try {
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			UserDTO userDTO = UserDTO.toDTO(user);
+						
+			String updatedCityList = updateCityList(userDTO.getCityList(), cityName);
+						
+			userDTO.setCityList(updatedCityList);
+			
+			userRepository.save(User.toEntity(userDTO));
+			
+			System.out.println(updatedCityList);
+			
+			return ResponseEntity.ok(updatedCityList);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정 중 오류가 발생했습니다.");
+		}
+	}
+	
 	
 	@Override
 	public ResponseEntity<String> withdrawalUser(int userSeq) {
@@ -801,5 +852,27 @@ public class UserServiceImpl implements UserService {
              numStr+=ran;
          }
          return numStr;
+    }
+    
+    private String updateCityList(String currentCityList, String newCityName) {
+        List<String> cityList = new ArrayList<>();
+
+        if (currentCityList != null) {
+            // LinkedHashSet을 사용하여 순서를 보장
+            Set<String> citySet = new LinkedHashSet<>(Arrays.asList(currentCityList.split(",")));
+            cityList.addAll(citySet);
+        }
+
+        // 새로운 도시 이름이 비어있지 않고, 중복된 도시가 없으면 추가
+        if (newCityName != null && !newCityName.isEmpty() && !cityList.contains(newCityName)) {
+            cityList.add(newCityName);
+        }
+        
+        // 최대 3개의 도시만 유지
+        while (cityList.size() > 3) {
+            cityList.remove(0);
+        }
+
+        return String.join(",", cityList);
     }
 }

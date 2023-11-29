@@ -21,10 +21,13 @@ import Mypage from '../pages/Mypage';
 import View from './community/planner/View';
 
 import { LoadScript } from '@react-google-maps/api';
+import PackageDetails from './package/PackageDetails';
+import PackgeReservation from './package/PackgeReservation';
 import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
 import PackageLists from './package/PackageLists';
+import PackageMain from './package/PackageMain';
 
 const libraries = ["places"];
 
@@ -70,7 +73,8 @@ const Main = ({ showNavbar }) => {
                     <Route path='community'>
                         <Route path='' element={ <Community/>}/>
                         <Route path='planner'>
-                            <Route path='write' element= { <Planner />} />
+                            <Route path='write' element= { <UserRoute><Planner /></UserRoute>} />
+                            <Route path='update/:plannerSeq' element= { <Planner up={true}/>} />
                             <Route path='view/:plannerSeq' element={ <View/>} />
                         </Route>
                         <Route path='together'>
@@ -81,7 +85,9 @@ const Main = ({ showNavbar }) => {
                     </Route>
                     <Route path='package'>
                         <Route path='List/:searchData' element={ <PackageLists />} />
-
+                        <Route path='' element={ <PackageMain />} />
+                        <Route path='details' element= { <PackageDetails/> } />
+                        <Route path='reservation' element={ <PackgeReservation /> } />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>

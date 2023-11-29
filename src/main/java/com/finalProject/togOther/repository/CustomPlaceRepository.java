@@ -6,4 +6,6 @@ import com.finalProject.togOther.domain.CustomPlace;
 
 public interface CustomPlaceRepository extends JpaRepository<CustomPlace, Integer> {
 
+	public void deleteByPlCustomSeq(int togetherSeq);
+
 }

@@ -132,6 +132,14 @@ public class UserController {
 		return userService.updatePhone(userSeq, updatedPhone);
 	}
 	
+	// MBTI 수정
+	@PutMapping(path = "updateMbti/{userSeq}")
+	public ResponseEntity<String> updateMbti(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
+		String mbti= requestBody.get("mbti");
+		System.out.println(mbti);
+		return userService.updateMbti(userSeq, mbti);
+	}
+	
 	// 여행취향 수정
 	@PutMapping(path = "updateLikingTrip/{userSeq}")
 	public ResponseEntity<String> updateLikingTrip(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody) {
@@ -162,6 +170,12 @@ public class UserController {
 	@PutMapping(path = "updateLikingPlace/{userSeq}/{placeSeq}")
 	public ResponseEntity<?> updateLikingPlace(@PathVariable int userSeq, @PathVariable int placeSeq) {
 		return userService.updateLikingPlace(userSeq, placeSeq);
+	}
+	
+	@PutMapping(path = "updatecityList/{userSeq}")
+	public ResponseEntity<?> updatecityList(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody){
+		String cityName = requestBody.get("cityName");
+		return userService.updatecityList(userSeq, cityName);
 	}
 	
 	// 회원 탈퇴

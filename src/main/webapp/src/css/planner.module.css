@@ -609,6 +609,12 @@
     color: white;
     border: 0;
 }
+.backBut {
+    width: 25px;
+    height: 25px;
+    margin:10px;
+    cursor: pointer;
+}
 /**********************************************/
 /******************미디어쿼리****************/
 @media (max-width: 1199px) {
@@ -656,6 +662,7 @@
     .plannerTitle {
         width: 100%;
         padding: 5%;
+        padding-top: 0;
         text-align: center;
         font-size: 25px;
     }

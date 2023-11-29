@@ -5,14 +5,19 @@ import { getTourPackageList,getTourPackageByCitySeq } from '../../api/PackageApi
 import Card from 'react-bootstrap/Card';
 
 import PackageStyle from '../../css/PackageList.module.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import packBg from '../../assets/image/packageBackground.png'
+import searchs from '../../assets/image/search.png'
 
 const PackageLists = () => {
 
+    const {searchData} = useParams()
     //도시 리스트
     const [cityList, setCityList] = useState([])
     const [cityListHavingPackage, setCityListHavingPackage] = useState([])
     const [packageList, setPackageList] = useState([])
+
+    const [search,setSearch] = useState('')
 
     const getCityList = () => {
         getCity()
@@ -57,11 +62,25 @@ const PackageLists = () => {
     const onToCityPage = (citySeq) => {
         navigate(`/packageDetail/${citySeq}`)
     }
+
+    const onSearch = (e) => {
+    if (e.key === 'Enter') {
+        navigate(`/package/list/${search}`)
+        }
+    }
     return (
         <>
+        <div style={{backgroundImage:`url(${packBg})`}} className={PackageStyle.searchBg}>
+            <img src={searchs} className={PackageStyle.search}/>
+            <input type='search'className={PackageStyle.searchBox} value={search} 
+            onChange={(e)=>setSearch(e.target.value)} placeholder='어디로 떠나시나요?' onKeyDown={(e)=>onSearch(e)}/>
+        </div>
             <div className={PackageStyle.arraymain}> 
                 {
-                packageList.map((item) => (
+                packageList.filter(pack => {
+                    const citys = cityList.filter(ci => ci.countryName === searchData || ci.cityName === searchData).map(ci2 => ci2.citySeq);
+                    return citys.includes(pack.citySeq);
+                }).map((item) => (
                     <Card className={PackageStyle.card} key={item.cityName} onClick={()=>onToCityPage(item.citySeq)}>
                         <div className={PackageStyle.cardimgDiv}>
                             <Card.Img className={PackageStyle.cardimg} src={item.tpThumbnail} />
