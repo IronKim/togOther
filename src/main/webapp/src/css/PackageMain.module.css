@@ -47,14 +47,14 @@
     width: 250px;
     height: 250px;
     border-radius: 10px;
-    background: linear-gradient(rgb(81, 81, 81) 0%, rgba(81, 81, 81, 0) 49.33%);
     background-size: cover;
     background-position: center;
     cursor: pointer;
     transition: 0.3s;
   }
   .countryItem:hover{
-    width: 300px;
+    width: 280px;
+    margin: 10px 0px;
   }
   .countryItem h1{
     margin: 10px;
@@ -113,7 +113,8 @@
       height: 175px;
     }
     .countryItem:hover{
-      width: 210px;
+      width: 200px;
+      margin: 10px 0px;
     }
     .rightButton {
       width: 45px;
