@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.finalProject.togOther.domain.City;
 import com.finalProject.togOther.domain.Place;
+import com.finalProject.togOther.domain.TourPackage;
 import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.CityDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
+import com.finalProject.togOther.dto.TourPackageDTO;
 import com.finalProject.togOther.dto.UserDTO;
 import com.finalProject.togOther.repository.CityRepository;
 import com.finalProject.togOther.repository.PlaceRepository;
+import com.finalProject.togOther.repository.TourPackageRepository;
 import com.finalProject.togOther.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -29,12 +32,15 @@ public class AdvisorServiceImpl implements AdvisorService {
 	private PlaceRepository placeRepository;
 
 	private UserRepository userRepository;
+	
+	private TourPackageRepository tourPackageRepository;
 
 	public AdvisorServiceImpl(CityRepository cityRepository, PlaceRepository placeRepository,
-			UserRepository userRepository) {
+			UserRepository userRepository, TourPackageRepository tourPackageRepository) {
 		this.cityRepository = cityRepository;
 		this.placeRepository = placeRepository;
 		this.userRepository = userRepository;
+		this.tourPackageRepository = tourPackageRepository;
 	}
 
 	// 유저 수정 (전체 정보)
@@ -372,6 +378,65 @@ public class AdvisorServiceImpl implements AdvisorService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 
+	}
+	
+	@Override
+	public ResponseEntity<String> addTourPackage(TourPackageDTO tourPackageDTO) {
+		
+		try {
+			TourPackage tourPackage = TourPackage.toEntity(tourPackageDTO);
+			tourPackageRepository.save(tourPackage);
+
+			String responseMessage = "패키지가 추가되었습니다.";
+
+			return ResponseEntity.ok(responseMessage);
+
+		} catch (Exception e) {
+
+			// 도시 추가 중 에러가 발생했을 때
+			String errorMessage = "패키지 추가 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+	
+	// 패키지 수정 (전체 정보)
+	@Override
+	public ResponseEntity<TourPackageDTO> updateTourPackage(int tpSeq, TourPackageDTO tourPackageDTO) {
+
+		try {
+			Optional<TourPackage> tOptional = tourPackageRepository.findById(tpSeq);
+
+			tOptional.orElseThrow();
+
+			TourPackage updatedTourPackage = tourPackageRepository.save(TourPackage.toEntity(tourPackageDTO));
+
+			return ResponseEntity.ok(TourPackageDTO.toDTO(updatedTourPackage));
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<List<TourPackageDTO>> getTourPackageByCitySeq(int citySeq) {
+		
+		try {
+			List<TourPackage> packageList = tourPackageRepository.findByCitySeq(citySeq);
+
+			List<TourPackageDTO> packageDTOList = new ArrayList<TourPackageDTO>();
+
+			for (TourPackage package1 : packageList) {
+
+				TourPackageDTO packageDTO = TourPackageDTO.toDTO(package1);
+
+				packageDTOList.add(packageDTO);
+			}
+
+			return ResponseEntity.ok(packageDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
 	}
 
 }

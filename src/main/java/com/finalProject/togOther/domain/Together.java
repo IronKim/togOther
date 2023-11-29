@@ -1,9 +1,13 @@
 package com.finalProject.togOther.domain;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.finalProject.togOther.dto.TogetherDTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,6 +39,9 @@ public class Together {
 	private LocalDate endDate;
 	private String context;
 	private int tnum;
+	@Column(nullable = false)
+	@CreationTimestamp
+	private Timestamp logTime;
 	
 	public static Together toEntity(TogetherDTO togetherDTO) {
 		return Together.builder()
@@ -51,6 +58,7 @@ public class Together {
 					   .endDate(togetherDTO.getEndDate())
 					   .context(togetherDTO.getContext())
 					   .tnum(togetherDTO.getTnum())
+					   .logTime(togetherDTO.getLogTime())
 					   .build();
 	}
 

@@ -312,9 +312,7 @@ const PlaceClick = (pl,cu) =>{
                                 <img className={styles.xBut} style={{float:'left' , marginBottom:'20px'}} 
                                 onClick={onSearch}  src={backBut}/> 
                                 {/* 커스텀으로 간다 */}
-                                {searchCity === '' && (
-                                    <button style={{float:'right'}} className={styles.buttons} onClick={onCustom}>지도로 찾기</button>
-                                    )}
+                                <button style={{float:'right'}} className={styles.buttons} onClick={onCustom}>지도로 찾기</button>
                                 <div style={{clear:'left'}}></div>
                                 {/* 검색 */}
                                 <input size={36} type='text' style={{float:'left'}}

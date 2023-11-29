@@ -3,12 +3,15 @@ import PlannerList from '../components/community/planner/PlannerList';
 import styles from '../css/community.module.css'
 import TogetherList from '../components/community/together/TogetherList';
 import CommunitySearch from '../components/community/CommunitySearch';
+import { useUserStore } from '../stores/mainStore';
 
 import planner from '../assets/image/planner.png'
 import people from '../assets/image/people.png'
 import { useParams,useNavigate } from 'react-router-dom';
 
 const Community = () => {
+    const {user} = useUserStore();
+
     const [toggle, setToggle] = useState(true)
 
     const[search,setSearch] = useState('')
@@ -37,8 +40,10 @@ const Community = () => {
                 <button className={styles.goPl} onClick={() => navigate(`planner/write`)}><img src={planner}/>&nbsp;플래너 작성</button>
                 <button className={styles.goTo} onClick={() => navigate(`together/write`)}><img src={people}/>&nbsp;동행 작성</button>
             </div>
-            <div className={styles.openWrite} onClick={() => setOpen(!open)}
-            style={{transform: open && 'rotate(-45deg)', color: open && '#2E8DFF',backgroundColor: open && 'white'}}>+</div>
+            {   user.name !== '' &&
+                <div className={styles.openWrite} onClick={() => setOpen(!open)}
+                style={{transform: open && 'rotate(-45deg)', color: open && '#2E8DFF',backgroundColor: open && 'white'}}>+</div>
+            }
         </div>
     );
 };

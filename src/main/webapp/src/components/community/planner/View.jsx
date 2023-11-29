@@ -216,7 +216,7 @@ const handleScroll = () => {
             setSubItem(res.data.subItem);
       
             if(res.data.planner.publicPlan === 1) {
-                if(res.data.planner.userSeq !== user.userSeq && user.authority !== 'roll_admin') {
+                if(res.data.planner.userSeq !== user.userSeq && user.authority !== 'ROLE_ADMIN') {
                     window.scrollTo(0, 0);
                     navigate(`/community`)
                     sweet.fire({

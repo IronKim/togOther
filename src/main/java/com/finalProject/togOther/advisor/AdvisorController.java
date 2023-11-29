@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.CityDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
+import com.finalProject.togOther.dto.TourPackageDTO;
 import com.finalProject.togOther.dto.UserDTO;
 
 //관리자 컨트롤러
@@ -123,6 +124,24 @@ public class AdvisorController {
 	@GetMapping(path = "getPlaceByCitySeq/{citySeq}")
 	public ResponseEntity<List<PlaceDTO>> getPlaceByCitySeq(@PathVariable int citySeq) {
 		return advisorService.getPlaceByCitySeq(citySeq);
+	}
+	
+	// 패키지 추가
+	@PostMapping(path = "addTourPackage")
+	public ResponseEntity<String> addTourPackage(@RequestBody TourPackageDTO tourPackageDTO) {
+		return advisorService.addTourPackage(tourPackageDTO);
+	}
+	
+	// 장소 수정
+	@PutMapping(path = "updateTourPackage/{tpSeq}")
+	public ResponseEntity<TourPackageDTO> updateTourPackage(@PathVariable int tpSeq, @RequestBody TourPackageDTO tourPackageDTO) {
+		return advisorService.updateTourPackage(tpSeq, tourPackageDTO);
+	}
+	
+	// citySeq값에 따른 장소 불러오기
+	@GetMapping(path = "getTourPackageByCitySeq/{citySeq}")
+	public ResponseEntity<List<TourPackageDTO>> getTourPackageByCitySeq(@PathVariable int citySeq) {
+		return advisorService.getTourPackageByCitySeq(citySeq);
 	}
 
 }

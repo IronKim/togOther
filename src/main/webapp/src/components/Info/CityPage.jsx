@@ -7,6 +7,7 @@ import { getCityBySeq } from '../../api/CityApiService';
 import { getPlaceListByCitySeq } from '../../api/PlaceApiService';
 import WeatherIcon from '../../constants/WeatherIcon';
 import weatherData from '../../constants/WeatherData';
+import Like from './Like';
 import { useUserStore } from '../../stores/mainStore';
 
 const CityPage = () => { 
@@ -22,8 +23,6 @@ const CityPage = () => {
     const [selectedRecommend, setSelectedRecommend] = useState('random');
     const [drop, setDrop] = useState(false);
 
-    const {user} = useUserStore();
-
     function shuffleArray(array) {
         let shuffledArray = array.slice();
       
@@ -35,6 +34,14 @@ const CityPage = () => {
         return shuffledArray;
       }
 
+    const { user, getUserByToken } = useUserStore();
+    const [userPlaceLike, setUserPlaceLike] = useState(user.likingPlace);
+
+
+    useEffect(() => {
+        setUserPlaceLike(user.likingPlace);
+    },[user])
+    
     useEffect(() => {
 
         getCityBySeq(citySeq)
@@ -52,7 +59,7 @@ const CityPage = () => {
                     shuffleArray(res.data.filter(item => item.code === (activeButton === 'TouristSpot' ? 1 : 0))).slice());
             })
             .catch(e => console.log(e));
-    }, []);
+    }, [citySeq]);
 
     useEffect(() => {
 
@@ -363,16 +370,16 @@ const CityPage = () => {
             
                 {
                 filteredPlaceData.map((item, index) => (
-                                <div key={index} className={styles.list1} onClick={() => onToPlacePage(item.placeSeq)}>
-                                    <div className={styles.imgDiv}>
-                                        <img src={item.image} style={{borderRadius:16, userSelecter: 'none'}} alt={item.name} />
-
-                                    </div>
-                                    <div className={styles.textDiv}>
-                                        <div className={styles.textName}>{item.name}</div>
-                                        <div className={styles.textDiv1}>{item.context1}</div>
-                                    </div>
-                                </div>
+                        <div key={index} className={styles.list1} onClick={() => onToPlacePage(item.placeSeq)}>
+                            <div className={styles.imgDiv}>
+                                <img src={item.image} style={{borderRadius:16, userSelecter: 'none'}} alt={item.name} />
+                                {user.name === "" ?  '' : <Like placeSeq={item.placeSeq} isTrue={user.likingPlace === null ?  false: userPlaceLike.includes(item.placeSeq)} userPlaceLike={userPlaceLike} setUserPlaceLike={setUserPlaceLike}/>} 
+                            </div>
+                            <div className={styles.textDiv}>
+                                <div className={styles.textName}>{item.name}</div>
+                                <div className={styles.textDiv1}>{item.context1}</div>
+                            </div>
+                        </div>
                     ))
                 }
             </div>
