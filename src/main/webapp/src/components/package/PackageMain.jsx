@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getCity } from '../../api/AdvisorApiService';
 import { getTourPackageList } from '../../api/PackageApiService';
 
 import styles from '../../css/PackageMain.module.css';
 
+import Card from 'react-bootstrap/Card';
+
 import leftButImg from '../../assets/image/left.png'
 import rightButImg from '../../assets/image/right.png'
 import packBg from '../../assets/image/packageBackground.png'
+import plannerImg from '../../assets/image/planner.png'
 import searchs from '../../assets/image/search.png'
 import { useNavigate } from 'react-router-dom';
 
@@ -19,7 +22,20 @@ const PackageMain = () => {
 
     const [itemNum,setItemNum] = useState(0)
 
+    const foc = useRef();
+
     const navigate = useNavigate()
+
+    function shuffleArray(array) {
+        let shuffledArray = array.slice();
+      
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+      
+        return shuffledArray;
+      }
 
     useEffect(()=>{
         getCity()
@@ -110,15 +126,20 @@ const PackageMain = () => {
     const goList = (cName) => {
         navigate(`list/${cName}`)
       }
+    const goTop = () => {
+        window.scrollTo(0, 0);
+        foc.current.focus();
+    }
 
     return (
         <>
         <div style={{backgroundImage:`url(${packBg})`}} className={styles.searchBg}>
             <img src={searchs} className={styles.search}/>
-            <input type='search'className={styles.searchBox} value={search} 
+            <input type='search'className={styles.searchBox} value={search}  ref={foc}
             onChange={(e)=>setSearch(e.target.value)} placeholder='어디로 떠나시나요?' onKeyDown={(e)=>onSearch(e)}/>
         </div>
             <div className={styles.main}>
+            <div className={styles.pop}>인기 여행지</div>
             <section className={styles.countrySection}>
             <div className={styles.countryIn} id='countryIn'>
                 {itemNum > 0 && <img onClick={()=>leftScroll()} className={styles.leftButton} src={leftButImg}/>}
@@ -139,6 +160,31 @@ const PackageMain = () => {
                     </div>)
                 }
             </div>
+            </section>
+            <section className={styles.centerSection}>
+                <button>여행 계획 짜보기</button>
+                <button>어디 갈지 알아보기</button>
+            </section>
+            <section className={styles.packageSection}>
+                <h1 className={styles.pop}>추천 패키지</h1>
+                    {
+                        shuffleArray(packages).slice().filter((item,index) => index < 4).map(pack => 
+                            // 이빈이형 카드 리스트 파츠 쓴곳임
+                                <Card className={styles.card} key={pack.cityName}>
+                                <div className={styles.cardimgDiv}>
+                                    <Card.Img className={styles.cardimg} src={pack.tpThumbnail} />
+                                </div>
+                                <Card.Body className={styles.cardbody}>
+                                    <Card.Title className={styles.cardTitle}>{pack.tpTitle}</Card.Title>
+                                    <Card.Text className={styles.cardPrice}>
+                                            {pack.tpPrice}원
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            //
+                        )
+                    }
+                <h2 onClick={() => goTop()}>패키지 찾아보기&nbsp;&nbsp;<img src={searchs}/></h2>
             </section>
         </div>
         </>
