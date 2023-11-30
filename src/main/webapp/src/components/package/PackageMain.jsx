@@ -10,6 +10,7 @@ import leftButImg from '../../assets/image/left.png'
 import rightButImg from '../../assets/image/right.png'
 import packBg from '../../assets/image/packageBackground.png'
 import plannerImg from '../../assets/image/planner.png'
+import cityImg from '../../assets/image/city.png'
 import searchs from '../../assets/image/search.png'
 import { useNavigate } from 'react-router-dom';
 
@@ -44,7 +45,7 @@ const PackageMain = () => {
         })
         .then(
             getTourPackageList()
-            .then(res => setPackages(res.data))
+            .then(res => setPackages(shuffleArray(res.data).slice()))
         )
     },[])
 
@@ -130,6 +131,14 @@ const PackageMain = () => {
         window.scrollTo(0, 0);
         foc.current.focus();
     }
+    const goCommunity = () => {
+        window.scrollTo(0, 0);
+        navigate(`/community`)
+    }
+    const goCity = () => {
+        window.scrollTo(0, 0);
+        navigate(`/info/cityList`)
+    }
 
     return (
         <>
@@ -162,13 +171,13 @@ const PackageMain = () => {
             </div>
             </section>
             <section className={styles.centerSection}>
-                <button>여행 계획 짜보기</button>
-                <button>어디 갈지 알아보기</button>
+                <button onClick={()=>goCommunity()}><img src={plannerImg}/>&nbsp;여행 계획 짜보기</button>
+                <button onClick={()=>goCity()}><img src={cityImg}/>&nbsp;어디 갈지 알아보기</button>
             </section>
             <section className={styles.packageSection}>
                 <h1 className={styles.pop}>추천 패키지</h1>
                     {
-                        shuffleArray(packages).slice().filter((item,index) => index < 4).map(pack => 
+                        packages.filter((item,index) => index < 4).map(pack => 
                             // 이빈이형 카드 리스트 파츠 쓴곳임
                                 <Card className={styles.card} key={pack.cityName}>
                                 <div className={styles.cardimgDiv}>

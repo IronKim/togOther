@@ -107,6 +107,14 @@
     border: 0;
     border-radius: 30px;
     background-color:whitesmoke;
+    transition: 0.3s;
+  }
+  .centerSection button:hover{
+    background-color:rgb(220, 220, 220);
+  }
+  .centerSection button img{
+    width: 25px;
+    vertical-align: middle;
   }
   /* /////////////////////// */
   .packageSection {
@@ -282,5 +290,14 @@
     .countryItem p{
       margin-left: 15px;
       font-size: 18px;
+    }
+    .centerSection button{
+      font-size: 16px;
+      height: 100px;
+      margin: 0 2.5%;
+      border-radius: 20px;
+    }
+    .centerSection button img{
+      width: 20px;
     }
   }
