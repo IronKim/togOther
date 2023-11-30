@@ -59,8 +59,8 @@ const PackageLists = () => {
 
     const navigate = useNavigate()
 
-    const onToCityPage = (citySeq) => {
-        navigate(`/packageDetail/${citySeq}`)
+    const onToPackagePage = (tpSeq) => {
+        navigate(`/package/details/${tpSeq}`)
     }
 
     const onSearch = (e) => {
@@ -81,7 +81,7 @@ const PackageLists = () => {
                     const citys = cityList.filter(ci => ci.countryName === searchData || ci.cityName === searchData).map(ci2 => ci2.citySeq);
                     return citys.includes(pack.citySeq);
                 }).map((item) => (
-                    <Card className={PackageStyle.card} key={item.cityName} onClick={()=>onToCityPage(item.citySeq)}>
+                    <Card className={PackageStyle.card} key={item.cityName} onClick={()=>onToPackagePage(item.tpSeq)}>
                         <div className={PackageStyle.cardimgDiv}>
                             <Card.Img className={PackageStyle.cardimg} src={item.tpThumbnail} />
                         </div>

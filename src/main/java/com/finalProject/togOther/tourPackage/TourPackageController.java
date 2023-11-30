@@ -30,4 +30,11 @@ public class TourPackageController {
 	public ResponseEntity<List<TourPackageDTO>> getTourPackageByCitySeq(@PathVariable int citySeq) {
 		return tourpackageService.getTourPackageByCitySeq(citySeq);
 	}
+	
+	// tqSeq값에 따른 자
+	@GetMapping(path = "getTourPackageByTpSeq/{tpSeq}")
+	public ResponseEntity<?> getTourPackageByTpSeq(@PathVariable int tpSeq) {
+		System.out.println(tpSeq);
+		return tourpackageService.getTourPackageByTpSeq(tpSeq);
+	}
 }
