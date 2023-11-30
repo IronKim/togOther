@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getCity } from '../../api/AdvisorApiService';
-import { getTourPackageList,getTourPackageByCitySeq } from '../../api/PackageApiService';
+import { getTourPackageList, getTourPackageByCitySeq } from '../../api/PackageApiService';
 
 import Card from 'react-bootstrap/Card';
 
@@ -68,6 +68,7 @@ const PackageLists = () => {
         navigate(`/package/list/${search}`)
         }
     }
+    
     return (
         <>
         <div style={{backgroundImage:`url(${packBg})`}} className={PackageStyle.searchBg}>
@@ -88,7 +89,7 @@ const PackageLists = () => {
                         <Card.Body className={PackageStyle.cardbody}>
                             <Card.Title className={PackageStyle.cardTitle}>{item.tpTitle}</Card.Title>
                             <Card.Text className={PackageStyle.cardPrice}>
-                                {item.tpPrice}원
+                               {parseFloat(item.tpPrice).toLocaleString()}원
                             </Card.Text>
                         </Card.Body>
                     </Card>

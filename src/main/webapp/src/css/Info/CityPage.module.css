@@ -275,15 +275,14 @@
         margin: 50px 5%;
     }
     .cityName{
-        position: relative;
         top: 8%;
-        margin: 0 auto;
     }
 }
-@media (max-width: 754px) { 
+@media (max-width: 391px) { 
     .cityName{
-        top: 1%;
-        margin-left: 20%;
+        top: 3%;
+        left: -8%;
+        font-size: 40px;
     }
     .citypage {
         width : 100%;

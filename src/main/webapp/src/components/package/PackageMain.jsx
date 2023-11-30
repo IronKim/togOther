@@ -144,7 +144,7 @@ const PackageMain = () => {
         window.scrollTo(0, 0);
         navigate(`/info/cityList`)
     }
-
+    
     return (
         <>
         <div style={{backgroundImage:`url(${packBg})`}} className={styles.searchBg}>
@@ -191,7 +191,7 @@ const PackageMain = () => {
                                 <Card.Body className={styles.cardbody}>
                                     <Card.Title className={styles.cardTitle}>{pack.tpTitle}</Card.Title>
                                     <Card.Text className={styles.cardPrice}>
-                                            {pack.tpPrice}원
+                                    {parseFloat(pack.tpPrice).toLocaleString()}원
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
