@@ -2,6 +2,7 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    user-select: none;
 }
 
 .Thumbnail {
@@ -22,20 +23,32 @@
 .details_scheduler {
     width: 100%; 
     max-width: 1200px;
-    height: 600px;
+    min-height: 600px;
     margin-left: auto; 
     margin-right: auto; 
     margin-top: 40px;
 }
 .details {
-    float: left;
-    border: 1px solid blue;
     width: 800px;
-    height: 580px;
+    min-height: 600px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.moreButton{
+    position: relative;
+    bottom: 40px;
+    font-size: 25px;
+    color: #3498db;
+    width: 800px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-out;
+    background: linear-gradient(to top, #ffffff, rgb(214, 214, 214));
+    opacity: 0.8;
 }
 .scheduler {
     float: right;
-    border : 1px solid red;
     width : 349px;
     height : 580px;
     margin-left: auto;
@@ -47,8 +60,8 @@
     vertical-align: top;
 }
 .selected_day {
+    margin-top: 45px;
     text-align: left;
-    border : 1px solid yellow;
     width : 349px;
     max-height: 283px;
     font-size: 20px;
@@ -65,7 +78,7 @@
     width : 150px;
     height : 30px;
 }
-.arrow_div {
+.arrowdiv {
     width: 130px;
     height: 30px;
     padding: 5px 0; 
@@ -81,30 +94,28 @@
     display: flex;
   }
   .arrow div {
-    margin: -6px 10px;
+    margin: -40px 10px;
   } 
   .reservation {
-
     width : 349px;
     height : 110px;
+    margin: 0 auto;
   }
   .reservation button {
     width : 90%;
     height : 80px;
     margin: 5%;
-  }
-  .prTag {
-    height: 130px;
-    border: 1px solid yellow;
+    margin-top: 10%;
   }
   .context {
-    border: 1px solid yellow;
-    height: 450px;
+    display: flex;
+    object-fit: cover;
+    width: 800px;
     overflow: auto;
     overflow-x: hidden;
-  }
-  /*---------------main_page------------*/
-  .main_page {
+    }
+/*---------------main_page------------*/
+.main_page {
     width: 100%; 
     max-width: 1200px;
     min-height : 580px;
