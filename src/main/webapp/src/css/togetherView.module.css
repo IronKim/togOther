@@ -39,7 +39,12 @@
     margin-right: 15%;
     margin-top: -45px;
     border-radius: 5px;
+    background-color: #54a1ff;
+    color: white;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.listChange:hover{
+    text-decoration: underline;
 }
 .listDelete{
     border: none;
@@ -49,7 +54,12 @@
     margin-right: 6%;
     margin-top: -45px;
     border-radius: 5px;
+    background-color: rgb(251, 78, 78);
+    color: white;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.listDelete:hover{
+    text-decoration: underline;
 }
 .midSc{
     width: 90%;

@@ -144,16 +144,14 @@ const TogetherView = ({seqAd}) => {
     const navigate = useNavigate()
 
     const onChange = (togetherDTO,subDTO,custom,place) => {
-        deleteTogether(togetherSeq)
-        .then(res=>{
+        
             navigate('/community/together/write', { state: { togetherDTO,subDTO,custom,place} })
-        })
-        .catch(e => console.log(e))
-        //console.log(custom,place)
+        
     }
     
     const goDelete = async  () => {
         const gogo = window.confirm("동행을 삭제하시겠습니까?")
+        
         if (gogo) {
             try {
                 await deleteTogether(togetherSeq)

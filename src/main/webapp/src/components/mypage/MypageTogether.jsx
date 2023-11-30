@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMyTogether,totMyTogether,getSubItemList, getCustomList } from '../../api/TogetherApiService';
+import { getMyTogether,totMyTogether,getSubItemList, getCustomList, deleteTogether } from '../../api/TogetherApiService';
 import { useUserStore } from '../../stores/mainStore';
 import { useNavigate } from 'react-router-dom';
 import loadingImg from '../../assets/image/loading.png';
@@ -137,6 +137,8 @@ const MypageTogether = () => {
         })
         .catch(e => console.log(e))
     },[])
+
+    
     //////////////////////////
     const [scriptLoaded, setScriptLoaded] = useState(false);
     useEffect(() => {
@@ -154,6 +156,31 @@ const MypageTogether = () => {
     }
     }, []);
 
+    //뷰로 간다
+    const onTogetherView = (togetherSeq) => {
+      navigate(`../../community/together/view/${togetherSeq}`)
+  }
+    //수정/삭제
+    const myPageTogetherUp = (togetherSeq) => {
+        
+      navigate(`../../community/together/view/${togetherSeq}`)
+  
+    }
+
+    const myPageTogetherReset = async  (togetherSeq) => {
+      const gogo = window.confirm("동행을 삭제하시겠습니까?")
+      
+      if (gogo) {
+          try {
+              await deleteTogether(togetherSeq)
+              alert("삭제가 완료되었습니다")
+              navigate('/community/')
+          } catch (error) {
+              console.error("동행 삭제 중 오류:", error)
+          }
+      }
+  }
+
     return (
         <div className={styles.main}>
             <p className={styles.tagName}>내 동행</p>
@@ -164,7 +191,7 @@ const MypageTogether = () => {
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
               
               return (
-                <div className={styles.together} key={item.togetherSeq}>
+                <div className={styles.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
                   <div className={styles.dateTop}>
                     <div className={styles.date}>
                       {item.startDate}~{item.endDate}
@@ -197,7 +224,13 @@ const MypageTogether = () => {
                           className={styles.placeImg} alt="Place Image" />
                       </div>
                       <div className={styles.title}><p>{item.title}</p></div>
-                      <div className={styles.context}><p>{item.context}</p></div>
+                      <div className={styles.context}><p>{item.context}</p>
+                        <div className={styles.myPageTogetherBtnDiv}>
+                        <div className={styles.myPageTogetherBtnDiv}>
+                          <button className={styles.myPageTogetherUp} onClick={()=>myPageTogetherUp(item.togetherSeq)}>수정</button>&nbsp;
+                          <button className={styles.myPageTogetherReset}onClick={()=>myPageTogetherReset(item.togetherSeq)}>삭제</button>
+                      </div></div>
+                      </div>
                       <div className={styles.placeInfo}> 
                           {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
                       </div>
@@ -231,7 +264,12 @@ const MypageTogether = () => {
                         </div>
                     </div>
                     <div className={styles.title}><p>{item.title}</p></div>
-                    <div className={styles.context}><p>{item.context}</p></div>
+                    <div className={styles.context}><p>{item.context}</p>
+                      <div className={styles.myPageTogetherBtnDiv}>
+                          <button className={styles.myPageTogetherUp} onClick={()=>myPageTogetherUp(item.togetherSeq)}>수정</button>&nbsp;
+                          <button className={styles.myPageTogetherReset}onClick={()=>myPageTogetherReset(item.togetherSeq)}>삭제</button>
+                      </div>
+                    </div>
                     <div className={styles.placeInfo}>
                     {loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
                     </div>
