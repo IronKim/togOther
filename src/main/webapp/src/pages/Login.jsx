@@ -6,6 +6,9 @@ import { useUserStore } from '../stores/mainStore';
 import Swal from 'sweetalert2'; // SweetAlert2 추가
 import loginFormImage from '../assets/image/loginFormImage.png';
 
+import naverBtn from '../assets/image/naverBtn.png';
+
+
 const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useUserStore();
@@ -441,6 +444,17 @@ const Login = () => {
     });
   };
 
+  const naverLogin = () => {
+
+    const NAVER_CLIENT_ID = "mY_CbvEkdc92AKz3xY24";
+    const REDIRECT_URL = 'http://127.0.0.1:3000/user/naver/callback'
+    const STATE = 'false'
+    const NAVER_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${REDIRECT_URL}&state=${STATE}`
+    
+    window.location.href = NAVER_URL;
+  };
+
+
 
   return (
     <div className={styles.container}>
@@ -470,8 +484,8 @@ const Login = () => {
           </form>
           <div style={{ display: 'flex', justifyContent: 'space-around', width: '80%', marginTop: '3em' }}>
             <img src="https://img.icons8.com/ios/50/000000/google-logo.png" alt="google" />
-            <img src="https://img.icons8.com/ios/50/000000/naver.png" alt="naver" />
-            <img src="https://img.icons8.com/ios/50/000000/kakao-talk.png" alt="kakao" />
+            <img style={{width: '70px'}} onClick={naverLogin} src={naverBtn} alt="naver" />
+            <img src="https://img.icons8.com/ios/50/000000/kakao-talk.png"  alt="kakao" />
           </div>
         </div>
       </div>

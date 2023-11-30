@@ -44,4 +44,6 @@ export const sendEmail = (email) => apiClient.get(`api/user/sendEmail/${email}`)
 
 export const updatecityList = (userSeq, cityName) => apiClient.put(`api/user/updatecityList/${userSeq}`, {cityName});
 
+export const naverLoginUser = (code, state) => apiClient.get(`api/user/naverLoginUser/${code}/${state}`);
+
 

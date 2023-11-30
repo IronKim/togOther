@@ -26,6 +26,8 @@ public interface UserService {
 	public ResponseEntity<Boolean> isUserExistsByPhone(String phone);
 
 	public ResponseEntity<LoginInResponseDTO> LoginUser(LoginDTO loginDTO);
+	
+	public ResponseEntity<?> naverLoginUser(String code, String state);
 
 	public ResponseEntity<LoginInResponseDTO> getUserByAccessToken(String authorizationHeader);
 

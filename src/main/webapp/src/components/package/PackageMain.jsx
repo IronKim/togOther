@@ -35,15 +35,14 @@ const PackageMain = () => {
     useEffect(() => {
         let con = [];
 
-        if(city !== undefined) {
+        console.log(city)
             packages.map(pack => {
-                con.push(city.find(ci => ci.citySeq === pack.citySeq).countryName);
+                con.push(city.find(ci => ci.citySeq === pack.citySeq) && city.find(ci => ci.citySeq === pack.citySeq).countryName);
                 return null;
             });
         
             const cons = new Set(con);
             setCountry([...cons]);
-        }
     }, [packages]);
     
     const leftScroll = () => {
@@ -125,7 +124,7 @@ const PackageMain = () => {
                 {itemNum > 0 && <img onClick={()=>leftScroll()} className={styles.leftButton} src={leftButImg}/>}
                 {itemNum < country.length-1 &&<img onClick={()=>rightScroll()} className={styles.rightButton} src={rightButImg}/>}
                 {   
-                    country.map(item => <div className={styles.countryItem} id='countryItem' onClick={()=>goList(item)}
+                    country.map(item => city.find(ci => ci.countryName === item) && <div className={styles.countryItem} id='countryItem' onClick={()=>goList(item)}
                         style={{backgroundImage:`url(${city.find(ci => ci.countryName === item).cityImage})`}}>
                         <h1>{item}</h1>
                         <p>
