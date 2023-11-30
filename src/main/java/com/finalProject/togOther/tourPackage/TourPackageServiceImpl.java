@@ -2,6 +2,7 @@ package com.finalProject.togOther.tourPackage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,21 @@ public class TourPackageServiceImpl implements TourPackageService {
 			}
 
 			return ResponseEntity.ok(packageDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
+
+	@Override
+	public ResponseEntity<?> getTourPackageByTpSeq(int tpSeq) {
+		try {
+			Optional<TourPackage> OptionalPackage = tourPackageRepository.findById(tpSeq);
+
+			TourPackage tourPackage = OptionalPackage.orElseThrow(); 
+			
+			return ResponseEntity.ok(TourPackageDTO.toDTO(tourPackage));
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

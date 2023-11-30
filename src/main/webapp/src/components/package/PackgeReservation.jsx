@@ -1,44 +1,100 @@
-import React from 'react';
-import styles from '../../css/PackagePage.module.css';
+import React, { useEffect, useState } from 'react';
+import { getTourPackageByTpSeq } from '../../api/PackageApiService';
+import styles from '../../css/PackageReservation.module.css';
 
-const PackgeReservation = () => {
+import sweet from 'sweetalert2';
+
+import { useUserStore } from '../../stores/mainStore';
+import { useParams } from 'react-router-dom';
+
+const IMP = window.IMP || {};
+
+IMP.init('imp37267524');
+
+    const PackgeReservation = () => {
+
+    ////////////결제 api /////////////
+    function callback(response) {
+        const { success, error_msg } = response;
+
+
+        if (success) {
+            window.scrollTo(0, 0);
+            sweet.fire({
+                title: "결제 성공",
+                icon: "success"
+            }).then(() => {
+                
+            });
+        } else {
+            sweet.fire({
+                title: "결제 실패",
+                text: error_msg,
+                icon: "warning"
+            }).then(() => {
+                
+            });
+        }
+    }
+
+    function onClickPayment() {
+        const data = {
+            pg: 'html5_inicis.INIpayTest',
+            pay_method: 'card',
+            merchant_uid: `mid_${new Date()}`,
+            amount: 1000,
+            name: '아임포트 결제 데이터 분석',
+            buyer_name: name,
+            buyer_tel: tel,
+            buyer_email: email,
+          };
+        IMP.request_pay(data, callback);
+    }
+    //////////////////////////////////
+
+    const {user} = useUserStore();
+
+    const {packageSeq,info} = useParams();
+
+    const[name,setName] = useState('');
+    const[gender,setGender] = useState('');
+    const[year,setYear] = useState('');
+    const[month,setMonth] = useState('01');
+    const[date,setDate] = useState('01');
+    const[telCode,setTelCode] = useState('82');
+    const[tel,setTel] = useState('');
+    const[email,setEmail] = useState('');
+    const[wish,setWish] = useState('');
+    const[packages,setPackages] = useState({});
+
+
+
+    useEffect(()=>{
+        getTourPackageByTpSeq(packageSeq)
+        .then(res=> {
+            setPackages(res.data)
+            console.log(res)
+        })
+    },[packageSeq])
+
+    useEffect(()=>{
+        const day = new Date(user.birthday)
+
+        setName(user.name)
+        setGender(user.gender)
+        setYear(day.getFullYear())
+        setMonth(day.getMonth() + 1)
+        setDate(day.getDate())
+        setTel(user.phone)
+        setEmail(user.email)
+    },[user])
+
     return (
         <div className={ styles.main_page }>
-            <div className={ styles.payment_main }>
-                <div className={ styles.payment_div }>
-                    <p style={{  fontSize : '23px', margin : '10px'}}>결제하기</p>
+            <div className={ styles.payment_main}>
+                <div className={styles.payment_top}>
+                    <button  className={ styles.payment_button}>총 결제금액은 어쩌구얼마얼마</button>
                 </div>
-                
-                <div className={ styles.payment_start}>
-                    <div className={styles.left_div}>
-                        <div className={ styles.div_img }>
-                            <img sytle={{ width : '80px', heght : '80px' }} />
-                            <p>어쩌구저쩌구 로마가 웅앵웅</p>
-                            <span>대충 11월 27일 출발 / 옵션 0개</span>
-                        </div>
-
-                            <div className={ styles.select_info }>
-                                <p>선택된 상품</p>
-                                <p>기본 구성 상품</p>
-                                    <div className={ styles.select_ab }>
-                                        <div className={ styles.select_a }><p>총 대충 100,000원</p></div>
-                                        <div className={ styles.select_b }><p>총 ?개</p></div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={ styles.payment }>
-                        <h5>결제 방식 필수</h5>
-                            <div><button className={ styles.card }>신용/체크카드 결제</button></div>
-
-                            <div className={ styles.payment_how }>
-                                <button><img src />카카오페이</button>
-                                <button><img src />네이버페이</button>
-                                <button><img src />삼성페이</button>
-                            </div>
-                            <div className={ styles.payment_end }><button>총 어쩌구얼마어마 결제하기</button></div>
-                        </div>
             </div>
 
             <div className={ styles.main_reservation}>
@@ -50,23 +106,21 @@ const PackgeReservation = () => {
                     <div className={ styles.reserv_information}>
                         <div className={ styles.name_start }>
                         <label for='name'>예약자 이름</label>
-                            <input placeholder='이름을 입력해주세요.' name='name' />
+                            <input placeholder='이름을 입력해주세요.' name='name' value={name} onChange={(e)=>setName(e.target.value)}/>
                         <label>성별</label>
-                            <select className={ styles.gender_select }>
-                                <option value>성별</option>
-                                <option value='W'>여</option>
-                                <option value='M' selected>남</option>
+                            <select className={ styles.gender_select } value={gender} onChange={(e)=>setGender(e.target.value)}>
+                                <option value='M'>남</option>
+                                <option value='F'>여</option>
                             </select>       
                         </div>
-                        
-
                         <div className={ styles.name_start }>
                         <div className={styles.row_div}>                        
                                 <label for='year'>태어난 년도</label>
-                                <input placeholder='년도를 4자리로 입력해주세요.(ex 1995)' name='year' />
+                                <input placeholder='년도 입력 (ex 1995)' name='year' value={year} onChange={(e)=>setYear(e.target.value)}/>
                             <div className={styles.row_day}>
                             <label style={{ marginLeft: '10px' }}>월</label>
-                                <select className={ styles.select_month_day }>
+                                <select className={ styles.select_month_day } 
+                                    value={month} onChange={(e)=>setMonth(e.target.value)}>
                                     <option value='01'>01</option>
                                     <option value='02'>02</option>
                                     <option value='03'>03</option>
@@ -81,7 +135,8 @@ const PackgeReservation = () => {
                                     <option value='12'>12</option>
                                 </select>
                             <label>일</label>
-                                <select className={ styles.select_month_day }>
+                                <select className={ styles.select_month_day }
+                                    value={date} onChange={(e)=>setDate(e.target.value)}>
                                     <option value='01'>01</option>
                                     <option value='02'>02</option>
                                     <option value='03'>03</option>
@@ -110,18 +165,20 @@ const PackgeReservation = () => {
                                     <option value='26'>26</option>
                                     <option value='27'>27</option>
                                     <option value='28'>28</option>
-                                    <option value='29'>29</option>
-                                    <option value='30'>30</option>
-                                    <option value='31'>31</option>
+                                    {!(['02'].includes(month) && parseInt(year)%4 !== 0) && <option value='29'>29</option>}
+                                    {!['02'].includes(month) && <option value='30'>30</option>}
+                                    {!['02', '04', '06', '09', '11'].includes(month) && <option value='31'>31</option>}
                                 </select>
                             </div>
                         </div>
                         </div>
                         <div>
 
-                            <div className={ styles.name_start }>
+                            <div className={ styles.name_start } >
                             <label>국가</label>
-                                <select className={ styles.country }>
+                                <select className={ styles.country }
+                                    value={telCode} onChange={(e)=>setTelCode(e.target.value)}>
+                                    <option value='82' >+82 한국</option>
                                     <option value='30'>+30 그리스</option>
                                     <option value='31'>+31 네덜란드</option>
                                     <option value='47'>+47 노르웨이</option>
@@ -150,11 +207,13 @@ const PackgeReservation = () => {
                                     <option value='375'>+375 벨라투스</option>
                                 </select>
                                 <label>휴대전화 번호</label>
-                                    <input className={ styles.phone }placeholder='하이픈(-)을 빼고 입력해주세요.' />
+                                    <input className={ styles.phone } placeholder='하이픈(-)을 빼고 입력해주세요.' 
+                                        value={tel} onChange={(e)=>setTel(e.target.value)}/>
                             </div>
                             <div  className={ styles.name_start }>
                                 <label>이메일</label>
-                                    <input placeholder='이메일 주소를 입력해주세요.' style={{width:'80%'}}/>
+                                    <input placeholder='이메일 주소를 입력해주세요.' style={{width:'80%',height:'45px'}}
+                                        value={email} onChange={(e)=>setEmail(e.target.value)}/>
                             </div>
                         </div>
 
@@ -162,10 +221,11 @@ const PackgeReservation = () => {
                         </div>
 
                         <div  className={ styles.name_start }>
-                            <textarea placeholder='요청사항을 입력해주세요.' />
+                            <textarea placeholder='요청사항을 입력해주세요.' 
+                                value={wish} onChange={(e)=>setWish(e.target.value)}/>
                         </div>
-                        <div className={ styles.payment_real_end}>
-                            <button>총 결제금액은 어쩌구얼마얼마</button>
+                        <div className={ styles.payment_bottom}>
+                            <button className={ styles.payment_button}>총 결제금액은 어쩌구얼마얼마</button>
                         </div>
                     <br/>
                 </div>

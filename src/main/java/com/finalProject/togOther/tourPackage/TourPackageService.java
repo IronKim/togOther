@@ -12,5 +12,7 @@ public interface TourPackageService {
 
 	public ResponseEntity<List<TourPackageDTO>> getTourPackageByCitySeq(int citySeq);
 
+	public ResponseEntity<?> getTourPackageByTpSeq(int tpSeq);
+
 
 }

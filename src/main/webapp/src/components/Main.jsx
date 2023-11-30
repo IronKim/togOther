@@ -26,7 +26,8 @@ import PackgeReservation from './package/PackgeReservation';
 import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
-import PackageList from '../pages/PackageList';
+import PackageLists from './package/PackageLists';
+import PackageMain from './package/PackageMain';
 
 const libraries = ["places"];
 
@@ -83,9 +84,10 @@ const Main = ({ showNavbar }) => {
                         </Route>
                     </Route>
                     <Route path='package'>
-                        <Route path='details' element= { <PackageDetails/> } />
-                        <Route path='reservation' element={ <PackgeReservation /> } />
-                        <Route path='List' element={ <PackageList />} />
+                        <Route path='' element={ <PackageMain />} />
+                        <Route path='List/:searchData' element={ <PackageLists />} />
+                        <Route path='details/:tpSeq' element= { <PackageDetails/> } />
+                        <Route path='reservation/:packageSeq/:info' element={  <UserRoute><PackgeReservation/></UserRoute>} />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
