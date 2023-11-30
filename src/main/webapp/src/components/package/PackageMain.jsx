@@ -26,7 +26,7 @@ const PackageMain = () => {
     const foc = useRef();
 
     const navigate = useNavigate()
-
+//배열 랜덤 매커니즘
     function shuffleArray(array) {
         let shuffledArray = array.slice();
       
@@ -37,16 +37,21 @@ const PackageMain = () => {
       
         return shuffledArray;
       }
-
+/////////////////////
     useEffect(()=>{
-        getCity()
-        .then(res => {
-            setCity(res.data)
-        })
-        .then(
-            getTourPackageList()
-            .then(res => setPackages(shuffleArray(res.data).slice()))
-        )
+        const fetchData = async () => {
+            try {
+                const cityRes = await getCity();
+                setCity(cityRes.data);
+    
+                const packageRes = await getTourPackageList();
+                setPackages(shuffleArray(packageRes.data).slice());
+            } catch (error) {
+                console.error(error);
+            }
+        };
+    
+        fetchData();
     },[])
 
     useEffect(() => {

@@ -1,7 +1,53 @@
-import React from 'react';
-import styles from '../../css/PackagePage.module.css';
+import React, { useEffect, useState } from 'react';
+import styles from '../../css/PackageReservation.module.css';
 
-const PackgeReservation = () => {
+import sweet from 'sweetalert2';
+
+const IMP = window.IMP || {};
+
+IMP.init('imp10723600');
+
+const data = {
+  pg: 'kcp.A52CY',
+  pay_method: 'card',
+  merchant_uid: `mid_${new Date().getTime()}`,
+  amount: 1000,
+  name: '아임포트 결제 데이터 분석',
+  buyer_name: '홍길동',
+  buyer_tel: '01012341234',
+  buyer_email: 'example@example',
+  buyer_addr: '신사동 661-16',
+  buyer_postcode: '06018',
+};
+
+    const PackgeReservation = () => {
+
+    function callback(response) {
+        const { success, error_msg } = response;
+
+        if (success) {
+            window.scrollTo(0, 0);
+            sweet.fire({
+                title: "결제 성공",
+                icon: "success"
+            }).then(() => {
+                
+            });
+        } else {
+            sweet.fire({
+                title: "결제 실패",
+                text: error_msg,
+                icon: "warning"
+            }).then(() => {
+                
+            });
+        }
+    }
+
+    function onClickPayment() {
+        IMP.request_pay(data, callback);
+    }
+
     return (
         <div className={ styles.main_page }>
             <div className={ styles.payment_main }>
@@ -11,12 +57,9 @@ const PackgeReservation = () => {
                 
                 <div className={ styles.payment_start}>
                     <div className={styles.left_div}>
-                        <div className={ styles.div_img }>
                             <img sytle={{ width : '80px', heght : '80px' }} />
-                            <p>어쩌구저쩌구 로마가 웅앵웅</p>
-                            <span>대충 11월 27일 출발 / 옵션 0개</span>
-                        </div>
-
+                            <p> 어쩌구저쩌구</p>
+                            <p>대충 11월 27일 출발 / 옵션 0개</p>
                             <div className={ styles.select_info }>
                                 <p>선택된 상품</p>
                                 <p>기본 구성 상품</p>
@@ -37,7 +80,7 @@ const PackgeReservation = () => {
                                 <button><img src />네이버페이</button>
                                 <button><img src />삼성페이</button>
                             </div>
-                            <div className={ styles.payment_end }><button>총 어쩌구얼마어마 결제하기</button></div>
+                            <button className={ styles.payment_end } onClick={()=>onClickPayment()}>총 어쩌구얼마어마 결제하기</button>
                         </div>
             </div>
 
