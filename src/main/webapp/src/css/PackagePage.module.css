@@ -36,7 +36,7 @@
 }
 .moreButton{
     position: relative;
-    bottom: 40px;
+    bottom: 45px;
     font-size: 25px;
     color: #3498db;
     width: 800px;
@@ -44,7 +44,7 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease-out;
-    background: linear-gradient(to top, #ffffff, rgb(214, 214, 214));
+    background: linear-gradient(top, #ffffff, rgb(214, 214, 214));
     opacity: 0.8;
 }
 .scheduler {
@@ -289,7 +289,13 @@
 }
 
 @media (max-width: 1199px) {
-  .scheduler {
+    .details{
+        margin: 0 auto;
+    }
+    .moreButton{
+        left: 191px;
+    }
+    .scheduler {
       text-align: center;
       width: 100%;
       max-width: none;
