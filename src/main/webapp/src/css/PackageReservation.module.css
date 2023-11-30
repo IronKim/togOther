@@ -10,6 +10,7 @@
     width : 349px;
     float: right;
     border-radius: 10px;
+    padding: 10px;
 }
 ._ {
     width : 730px;
@@ -112,15 +113,54 @@
     height: 45px;
 }
 .payment_button {
+    margin: 25px 10%;
     width : 80%;
-    height : 80px;
-    margin-left : 10%;
+    height : 60px;
     border-radius: 10px;
     border: 0;
-    
+    background-color: #2E8DFF;
+    font-size: 18px;
+    color: white;
 }
 .payment_bottom {
     display: none;
+}
+.payment_info img {
+    float: left;
+    border-radius: 5px;
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+    margin: 0 15px 0 5px;
+}
+.payment_info p {
+    float: left;
+    font-size: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.payment_info h3 {
+    float: left;
+    font-size: 15px;
+    color: gray;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.payment_price {
+    padding: 0 10px;
+}
+.payment_price h1{
+    color: gray;
+    font-size: 18px;
+    margin: 10px 0;
+    float: left;
+}
+.payment_price h2{
+    margin: 10px 0;
+    font-size: 18px;
+    float: right;
 }
 @media (max-width: 1199px) {
   .scheduler {
@@ -141,8 +181,15 @@
     }
     .payment_main {
         float: none;
-        width : 100%;
+        width : 95%;
+        margin: 2.5%;
         display: inline-block;
+    }
+    .payment_bottom {
+        display: block;
+    }
+    .payment_top {
+        display: none;
     }
     .information {
         width : 100%;
@@ -167,6 +214,9 @@
     ._ {
         width : 100%;
     }
+    .hr {
+        display: none;
+    }
 }
 @media (max-width: 754px) {
     .name_start {
@@ -183,14 +233,5 @@
         margin-top: 30px;
         float: none;
         width: 100%;
-    }
-    .payment_main {
-        width : 100%;
-    }
-    .payment_bottom {
-        display: block;
-    }
-    .payment_top {
-        display: none;
     }
 } 

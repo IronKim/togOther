@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getTourPackageByTpSeq } from '../../api/PackageApiService';
 import styles from '../../css/PackageReservation.module.css';
+import thumb from '../../assets/image/package_thumb.png'
 
 import sweet from 'sweetalert2';
 
@@ -42,8 +43,8 @@ IMP.init('imp37267524');
             pg: 'html5_inicis.INIpayTest',
             pay_method: 'card',
             merchant_uid: `mid_${new Date()}`,
-            amount: 1000,
-            name: '아임포트 결제 데이터 분석',
+            amount: packageData.tpPrice,
+            name: packageData.tpTitle,
             buyer_name: name,
             buyer_tel: tel,
             buyer_email: email,
@@ -65,15 +66,14 @@ IMP.init('imp37267524');
     const[tel,setTel] = useState('');
     const[email,setEmail] = useState('');
     const[wish,setWish] = useState('');
-    const[packages,setPackages] = useState({});
+    const[packageData,setPackageData] = useState({});
 
 
 
     useEffect(()=>{
         getTourPackageByTpSeq(packageSeq)
         .then(res=> {
-            setPackages(res.data)
-            console.log(res)
+            setPackageData(res.data)
         })
     },[packageSeq])
 
@@ -92,8 +92,33 @@ IMP.init('imp37267524');
     return (
         <div className={ styles.main_page }>
             <div className={ styles.payment_main}>
+                <p style={{ fontSize : '23px', margin: '10px' }}>결제하기</p>
+                <hr/>
+                <div className={ styles.payment_info}>
+                    <img src={packageData.tpTitle && 
+                        packageData.tpThumbnail.split(',')[0] !== '' 
+                        ? packageData.tpThumbnail.split(',')[0]: thumb} alt="Package Image"/>
+                    <p>{packageData.tpTitle}</p><br/><br/>
+                    <h3>시작 날짜 받아오기</h3>
+                </div>
+                <div style={{clear:'both'}}></div>
+                <hr/>
+                <div className={styles.payment_price}>
+                    <p style={{ fontSize : '20px', margin: '10px' }}>결제금액</p>
+                    <h1>상품 가격</h1>
+                    <h2>{packageData.tpPrice}원</h2>
+                    <div style={{clear:'both'}}></div>
+                    <h1>구매 개수</h1>
+                    <h2>1개</h2>
+                    <div style={{clear:'both'}}></div>
+                    <h1>총 결제 금액</h1>
+                    <h2>{packageData.tpPrice}원</h2>
+                </div>
+                <div style={{clear:'both'}}></div>
+                <hr className={styles.hr}/>
                 <div className={styles.payment_top}>
-                    <button  className={ styles.payment_button}>총 결제금액은 어쩌구얼마얼마</button>
+                    <button  className={ styles.payment_button} 
+                    onClick={() => onClickPayment()}>총 {packageData.tpPrice}원 결제</button>
                 </div>
             </div>
 
@@ -225,7 +250,7 @@ IMP.init('imp37267524');
                                 value={wish} onChange={(e)=>setWish(e.target.value)}/>
                         </div>
                         <div className={ styles.payment_bottom}>
-                            <button className={ styles.payment_button}>총 결제금액은 어쩌구얼마얼마</button>
+                            <button className={ styles.payment_button}>총 {packageData.tpPrice}원 결제</button>
                         </div>
                     <br/>
                 </div>
