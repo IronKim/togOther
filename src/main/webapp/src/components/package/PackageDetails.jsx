@@ -129,6 +129,7 @@ const PackageDetails = () => {
                     <section className={styles.context}>여기는 어쩌구 상세정보</section>
                 </div>
             </div>
+            <div style={{clear:'both'}}/>
         </div>  
     );
 };

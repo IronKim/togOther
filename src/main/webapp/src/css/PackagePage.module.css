@@ -50,9 +50,9 @@
     float: right;
     border : 1px solid red;
     width : 349px;
-    height : 580px;
     margin-left: auto;
     margin-right: auto; 
+    padding-bottom: 50px;
 }
 .calendar {
     width: 349px;
