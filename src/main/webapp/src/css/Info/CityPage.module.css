@@ -6,6 +6,8 @@
     margin: 0 auto;
     width: 73.8em;
     text-align: center;
+    background: linear-gradient(rgb(81, 81, 81) 5%, rgba(81, 81, 81, 0) 20%);
+    border-radius: 20px;
 }
 .citypage {
     user-select: none;
@@ -21,15 +23,16 @@
     user-select: none;
     position: absolute;
     top: 17%;
-    width: 5em;
+    /* width: 5em; */
     height: 1.3em;
     line-height: 1.4em;
     text-align: center;
-    font-size: 3em; 
+    font-size: 50px; 
     border-radius: 1em;
-    color: #D1D5D6;
-    background-color: rgba( 0, 0, 0, 0.6 );
-    margin-left: 1vw;
+    color: white;
+    /* color: #D1D5D6; */
+    /* background-color: rgba( 0, 0, 0, 0.6 ); */
+    margin-left: 50px;
 }
 
 .api {
@@ -272,7 +275,9 @@
         margin: 50px 5%;
     }
     .cityName{
-        top: 1%;
+        position: relative;
+        top: 8%;
+        margin: 0 auto;
     }
 }
 @media (max-width: 754px) { 

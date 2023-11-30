@@ -39,16 +39,37 @@ const PackageDetails = () => {
 
     const {tpSeq} = useParams()
 
+    const [images, setImages] = useState([])
+
     useEffect(() => {
         console.log(tpSeq);
 
         getTourPackageByTpSeq(tpSeq)
         .then(res => {
             console.log(res.data)
+            // console.log(imagesArray)
+            // // 여기서 tpImages를 배열로 가져와서 setImages를 통해 상태 업데이트
+            // const imagesArray = [res.data.tpImages]; // tpImages가 없을 경우 빈 배열로 초기화
+            // setImages(imagesArray);
             setPack(res.data)
         })
         .catch(e => console.log(e));
     },[tpSeq])
+
+    useEffect(() => {
+        console.log(tpSeq);
+
+        getTourPackageByTpSeq(tpSeq)
+        .then(res => {
+            console.log(imagesArray)
+            // 여기서 tpImages를 배열로 가져와서 setImages를 통해 상태 업데이트
+            const imagesArray = [res.data.tpImages]; // tpImages가 없을 경우 빈 배열로 초기화
+            setImages(imagesArray);
+
+        })
+        .catch(e => console.log(e));
+    },[tpSeq])
+
 
     // const { data } = useQuery(
     //   ['logDate', months],
@@ -118,7 +139,7 @@ const PackageDetails = () => {
                                 <div className={ styles.text }>
                                     <div><p>기본 구성 상품</p></div>
                                     <div><p>선택한 날짜</p></div>
-                                    <div className={ styles.price }><p>{pack.tpPrice}</p>
+                                    <div className={ styles.price }><p>{pack.tpPrice}원</p>
                                         <div className={ styles.arrow_div }>
                                             <div className={ styles.arrow }>
                                                 <div><img onClick={ () => count > 1 && dispatch({ type : 'DECREMENT' })} style={{ width:'20px', height : '20px' }} src={ minus } /></div>
@@ -137,8 +158,11 @@ const PackageDetails = () => {
                     </div>
                 </div>
                 <div className={ styles.details }>
-                    <section className={styles.prTag}>여기는 가격이랑 태그들</section>
-                    <section className={styles.context}>여기는 어쩌구 상세정보</section>
+                    <section className={styles.prTag}></section>
+                    {
+                    images.map((image, index) => (
+                        <img key={index} className={styles.context} src={image}/>
+                    ))}
                 </div>
             </div>
         </div>  
