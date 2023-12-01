@@ -114,7 +114,7 @@ const PackageDetails = () => {
             </div>
 
             <p className={styles.package_title}>{pack.tpTitle}</p>
-            <p style={{textAlign:'right', fontSize:'30px'}}>{parseFloat(pack.tpPrice).toLocaleString()}원</p>
+            <p className={styles.package_price}>{parseFloat(pack.tpPrice).toLocaleString()}원</p>
             <div className={ styles.details_scheduler }>
                 <div className={ styles.scheduler }>
                     
@@ -149,33 +149,31 @@ const PackageDetails = () => {
                         />
                     </div>
 
-                        <div className={ styles.selected_day }>
-                            { moment(selectedDate).format('YYYY년 MM월 DD일')} 
-                            <div className={ styles.x }>
-                                <p style={{ fontSize: '15px' }}>상품 선택</p>
-                            </div>
+                    <div className={ styles.selected_day }>
+                        <div style={{marginBottom:'10px'}}>
+                            <p style={{fontSize:'30px', color:'#2E8DFF'}}>선택한 날짜</p>
+                        </div>
+                        { moment(selectedDate).format('YYYY년 MM월 DD일')} 
 
-                            <div className={ styles.y }>
-                                <div className={ styles.text }>
-                                    <div><p>기본 구성 상품</p></div>
-                                    <div><p>선택한 날짜</p></div>
-                                    <div className={ styles.price }><p>{parseFloat(pack.tpPrice).toLocaleString()}원</p>
-                                        <div className={ styles.arrowdiv }>
-                                            <div className={ styles.arrow }>
-                                                <div>
-                                                    <img onClick={ () => count > 1 && dispatch({ type : 'DECREMENT' })} style={{ zIndex:'3' ,width:'20px', height : '20px', cursor: 'pointer' }} src={ minus } /></div>
-                                                <div>{ count }</div>
-                                                <div><img onClick={ () => dispatch({ type : 'INCREMENT' })} style={{ width:'20px', height : '20px', cursor: 'pointer' }} src={ plus } /></div>
-                                            </div>
+                        <div className={ styles.y }>
+                            <div className={ styles.text }>
+                                <div style={{fontSize:'30px', color:'#2E8DFF',paddingTop:'10px'}}><p>총 금액</p></div>
+                                <div className={ styles.price }><p>{parseFloat(pack.tpPrice * (count)).toLocaleString()}원</p>
+                                    <div className={ styles.arrowdiv }>
+                                        <div className={ styles.arrow }>
+                                            <div>
+                                                <img onClick={ () => count > 1 && dispatch({ type : 'DECREMENT' })} style={{ zIndex:'3' ,width:'20px', height : '20px', cursor: 'pointer' }} src={ minus } /></div>
+                                            <div>{parseFloat(count) * 1}</div>
+                                            <div><img onClick={ () => dispatch({ type : 'INCREMENT' })} style={{ width:'20px', height : '20px', cursor: 'pointer' }} src={ plus } /></div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div className={ styles.reservation }>
-                                        <button onClick={() => onReservation()}>예약하기</button>
-                                    </div>
+                                <div className={ styles.reservation } onClick={() => onReservation()}>
+                                    <button>예약하기</button>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div className={ styles.details } style={{ maxHeight: showMore ? 'none' : '200px' }}>
@@ -184,9 +182,11 @@ const PackageDetails = () => {
                         <img key={index} className={styles.context} src={image}/>
                     ))}
                 </div>
-                <button className={styles.moreButton} onClick={toggleShowMore}>
-                    {showMore ? '접기' : '더 보기'}
-                </button>
+                <div className={styles.moreButtonDiv}>
+                    <button className={styles.moreButton} onClick={toggleShowMore}>
+                        {showMore ? '접기' : '더 보기'}
+                    </button>
+                </div>
                 
             </div>
             <div style={{clear:'both'}}/>

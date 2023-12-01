@@ -153,19 +153,19 @@
 
   /* -----------------------햄버거----------------------- */
   .hamburger{
-  display: block;
-  border: none;
-  background-color: #dedede;
+    display: block;
+    border: none;
+    background-color: #dedede;
   }
   .hamburgerIcon1 {
-  user-select: none;
-  display: block;
-  position: absolute;
-  text-align: center;
-  font-size: 26px;
-  width: 40px;
-  height: 105px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+    user-select: none;
+    display: block;
+    position: absolute;
+    text-align: center;
+    font-size: 26px;
+    width: 40px;
+    height: 105px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 }
