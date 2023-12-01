@@ -82,6 +82,5 @@
 
 .activeLinkU:hover {
   cursor: pointer;
-  text-underline-position : under;
-  text-decoration: underline;
+  color: #1E3ED1;
 }

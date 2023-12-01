@@ -13,12 +13,12 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
     const months = Array.from({length: 12}, (_, i) => (i + 1).toString().padStart(2, '0'));
 
     // 기본적으로 1일부터 31일까지 설정
-    let days = Array.from({length: 31}, (_, i) => i + 1);
+    let days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
 
     // 선택된 연도와 월에 따라 일의 범위를 동적으로 변경
     if (year && month) {
-    const lastDayOfMonth = new Date(year, month, 0).getDate();
-    days = Array.from({length: lastDayOfMonth}, (_, i) => i + 1);
+        const lastDayOfMonth = new Date(year, month, 0).getDate();
+        days = Array.from({ length: lastDayOfMonth }, (_, i) => (i + 1).toString().padStart(2, '0'));
     }
     
   // 각 입력 필드의 유효성 메시지를 관리하는 상태
@@ -53,8 +53,17 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
 
   // 이메일 형식 유효성 검사를 수행하는 함수
   const validateEmail = (email) => {
-    const emailPattern = /^[a-zA-Z0-9_]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    const emailPattern = /^[a-zA-Z0-9_]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
     return emailPattern.test(String(email));
+  };
+  const validateName = (name) => {
+    const namePattern = /^[^ㄱ-ㅎㅏ-ㅣ]{2,30}$/;
+    return namePattern.test(String(name));
+  };
+  
+  const validatePwd = (pwd) => {
+    const pwdPattern = /^.{4,20}$/;
+    return pwdPattern.test(String(pwd));
   };
 
   // 다음 단계로 넘어가는 함수
@@ -108,6 +117,24 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
           }
         } catch (error) {
         }
+    }
+
+    const name = inputUserData.name;
+    if (!name) {
+      updatedMessages['name'] = '이름을 입력해주세요';
+      isValid = false;
+    } else if (!validateName(name)) {
+      updatedMessages['name'] = '올바른 형식의 이름을 입력해주세요';
+      isValid = false;
+    }
+
+    const pwd = inputUserData.pwd;
+    if (!pwd) {
+      updatedMessages['pwd'] = '비밀번호를 입력해주세요';
+      isValid = false;
+    } else if (!validatePwd(pwd)) {
+      updatedMessages['pwd'] = '올바른 형식의 비밀번호를 입력해주세요';
+      isValid = false;
     }
 
 
@@ -196,7 +223,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
     const { name, value } = e.target;
     onInput(e);
     
-    const filteredValue = value.replace(/[~!@#$%^&*()_+={}|[\]\\';:"<>?,./]/g, ''); // 특수 문자 제거
+    const filteredValue = value.replace(/[0-9~!@#$%^&*()_+={}|[\]\\';:"<>?,./]/g, ''); // 특수 문자 제거
     if (name === 'name' && value !== filteredValue) {
       e.target.value = filteredValue; // 특수 문자가 제거된 값으로 설정
       onInput({
@@ -241,7 +268,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 maxLength={30}
                 required
             />
-            <label>이메일 입력<span > (@이외의 특수문자 제외, 30자 이내)</span></label>
+            <label>이메일 입력<span > (@ 이외의 특수문자 제외, 30자 이내)</span></label>
         </div>
 
           {validationMessages.email && <span style={{ color: 'red' }}>{validationMessages.email}</span>}
@@ -254,7 +281,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 maxLength={20}
                 required
             />
-            <label>비밀번호 입력<span > (20자 이내)</span></label>
+            <label>비밀번호 입력<span > (4~20자 이내)</span></label>
         </div>
           {validationMessages.pwd && <span style={{ color: 'red' }}>{validationMessages.pwd}</span>}
 
@@ -280,7 +307,7 @@ const Write = ({onbirthInput, onInput, inputUserData, nextPage, styles, userData
                 readOnly={userData.name !== ''}
                 required
             />
-            <label>이름 입력<span > (30자 이내)</span></label>
+            <label>이름 입력<span > (2~30자 이내)</span></label>
         </div>
           {validationMessages.name && <span style={{ color: 'red' }}>{validationMessages.name}</span>}
         

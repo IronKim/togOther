@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
 import markerImage from '../../assets/image/pngwing.png';
+
 
 const containerStyle = {
   width: '100%', // 반응형으로 변경
@@ -40,14 +41,32 @@ const PlaceMap = ({ longitude, latitude, address }) => {
   };
 
   function MyComponent() {
+    const [scriptLoaded, setScriptLoaded] = useState(false);
+useEffect(() => {
+  if (window.google) {
+    setScriptLoaded(true);
+  } else {
+    const script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo&callback=initMap';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+    script.onload = () => {
+      setScriptLoaded(true);
+    };
+  }
+}, []);
+
     return (
       <div>
-        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        {/* <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}> */}
+        {scriptLoaded &&
           <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={16} gestureHandling='none' options={mapOptions}>
             <MarkerF position={center} icon={{ markerImage, scaledSize: markerStyle }}></MarkerF>
           </GoogleMap>
-        </LoadScript>
-        <p style={{ width: '100%', textAlign: 'center', margin: '30px auto' }}>
+        }
+        {/* </LoadScript> */}
+        <p style={{ width: '100%', textAlign: 'center', margin: '30px auto'}}>
           주소: {address}
           <button onClick={openGoogleMaps} type="button" className="btn btn-link">
             지도로 이동

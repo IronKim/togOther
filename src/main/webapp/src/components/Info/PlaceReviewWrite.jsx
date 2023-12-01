@@ -1,16 +1,27 @@
-import { useState } from 'react';
+import { useState, useRef} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { useUserStore } from '../../stores/mainStore';
 import { addPlaceReview } from '../../api/PlaceReviewApiService';
 import { uploadPlannerImage } from '../../api/PlannerApiService';
-
-function PlaceReviewWrite({ placeSeq }) {
+function PlaceReviewWrite({ placeSeq,loadInitialReviews }) {
   const [show, setShow] = useState(false);
   const { user } = useUserStore();
   const [reviewContext, setReviewContext] = useState('');
   const [selectedImages, setSelectedImages] = useState('');
+
+  const handleImageCancel = (index) => {
+    const images = selectedImages.split(',');
+    images.splice(index, 1); // 선택 취소된 이미지를 배열에서 제거
+    setSelectedImages(images.join(',')); // 업데이트된 이미지를 state에 설정
+  };
+
+  const fileInputRef = useRef(null);
+
+  const handleImageUploadButtonClick = () => {
+    fileInputRef.current.click();
+  };
 
   const handleClose = () => {
     setShow(false);
@@ -18,7 +29,6 @@ function PlaceReviewWrite({ placeSeq }) {
     setReviewContext('');
     setSelectedImages('');
   };
-
   const handleShow = () => {
     if (user.userSeq === "") {
       alert('로그인 후 이용해주세요!');
@@ -26,29 +36,27 @@ function PlaceReviewWrite({ placeSeq }) {
       setShow(true);
     }
   };
-
   const handleFileUpload = (e) => {
     // 파일 업로드를 처리합니다.
-    const files = e.target.files;        
+    const files = e.target.files;
     let image = ''
     if(files.length > 3) alert('3개 이하로 선택해')
-    else {
+    else if (files.length > 0){
       for (let i = 0; i < files.length; i++) {
           image += URL.createObjectURL(files[i]);
           if(i !== files.length-1) image += ',';
       }
+      setSelectedImages(image);
+    } else {
+      setSelectedImages('')
     }
-
-    setSelectedImages(image);
   };
-
   const handleWriteReview = async () => {
     // 리뷰 내용이 비어있는지 확인합니다.
     if (reviewContext.trim() === "") {
       alert('리뷰 내용을 입력해주세요!');
       return;
     }
-  
     try {
         const formData = new FormData();
         const images = selectedImages.split(',')
@@ -65,30 +73,19 @@ function PlaceReviewWrite({ placeSeq }) {
             .then(res2 => {
               const reviewData = {
                 placeSeq: placeSeq,
-                userSeq: user.userSeq,
+                user: user,
                 context: reviewContext,
-                image: res2.data
+                image: selectedImages !== '' && res2.data
               };
-              addPlaceReview(reviewData)
+
+              console.log(reviewData);
+              addPlaceReview(reviewData);
+              window.location.reload();
+             //loadInitialReviews();
             })
             .catch(e => console.log(e))
         })
-    /*
-      // FormData 객체를 생성하고 리뷰 데이터를 추가합니다.
-      const formData = new FormData();
-      for (const key in reviewData) {
-        formData.append(key, reviewData[key]);
-      }
-  
-      // 선택된 이미지 파일을 추가합니다.
-      selectedImages.forEach((image, index) => {
-        formData.append(`image${index}`, image);
-      });
-  
-      // API를 호출하여 리뷰와 이미지를 추가합니다.
-      await formData);
-    */
-  
+
       // 리뷰 작성 성공 후 모달을 닫습니다.
       handleClose();
     } catch (error) {
@@ -96,13 +93,11 @@ function PlaceReviewWrite({ placeSeq }) {
       // 오류 처리 (예: 사용자에게 알림을 표시)
     }
   };
-
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
         리뷰 작성
       </Button>
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -125,16 +120,40 @@ function PlaceReviewWrite({ placeSeq }) {
                 onChange={(e) => setReviewContext(e.target.value)}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>사진 업로드</Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={handleFileUpload}
-                name='image'
-              />
-            </Form.Group>
+            <Form.Group className="mb-3">
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  onClick={handleImageUploadButtonClick}
+                >
+                  사진 업로드
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={handleFileUpload}
+                  name='image'
+                />
+              </Form.Group>
+        
+            <Form.Group className="mb-3">
+            <Form.Label>선택된 사진</Form.Label>
+            {selectedImages && selectedImages.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {selectedImages.split(',').map((imageUrl, index) => (
+                  <div key={index} style={{ marginBottom: '10px', marginRight: '10px', display: 'flex', flexDirection: 'column' }}>
+                    <img src={imageUrl} alt={`image_${index}`} style={{ width: '100px', height:'100px' }} />
+                    <Button variant="danger" size="sm" onClick={() => handleImageCancel(index)}>
+                      선택 취소
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -149,5 +168,4 @@ function PlaceReviewWrite({ placeSeq }) {
     </>
   );
 }
-
 export default PlaceReviewWrite;

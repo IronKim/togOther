@@ -22,7 +22,7 @@ export default [
             type: [2,2,2,2]
         },]
     },
-    /*{
+    {
         id:1,
         question:'지친 주말, 친구들이 술자리로 불러냈다',
         answer: [
@@ -103,7 +103,7 @@ export default [
             type: [1,2,2,1]
         },]
     },
-    {
+    /*{
         id:6,
         question:'바쁜 일상을 보내던 중 여행 출발이 코앞으로 다가왔다',
         answer: [

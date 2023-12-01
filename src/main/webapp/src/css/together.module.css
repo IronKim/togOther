@@ -164,6 +164,22 @@
 }
 .writedateCard_de_text:hover{
     text-decoration: underline;
+    
+}
+.contextDiv{
+    color: rgb(255, 115, 115);
+    margin: auto;
+    text-align: center;
+}
+.writedateCardFormDiv{
+    color: rgb(255, 115, 115);
+    margin: auto;
+    text-align: center;
+}
+.titleDiv{
+    color: rgb(255, 115, 115);
+    margin: auto;
+    text-align: center;
 }
 .context{
     width: 100%;
@@ -317,6 +333,21 @@
 }
 .savebutton div{
     float: left;
+}
+.calenderDiv{
+    color: rgb(255, 115, 115);
+    margin: auto;
+    text-align: center;
+}
+.timeNullDiv{
+    color: rgb(255, 115, 115);
+    margin: auto;
+    text-align: center;
+}
+.subPDiv{
+    color: rgb(255, 115, 115);
+    margin: auto;
+    text-align: center;
 }
 .save {
     text-align: center;

@@ -2,6 +2,7 @@ package com.finalProject.togOther.domain;
 
 import com.finalProject.togOther.dto.PlannerImageDTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +25,8 @@ public class PlannerImage {
 	private int plImageSeq;
 	private int plMainSeq;
 	private int nday;
+	
+	@Column(length = 500)
 	private String image;
 	
 	public static PlannerImage toEntity(PlannerImageDTO plannerImageDTO) {

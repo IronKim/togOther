@@ -17,7 +17,7 @@ const center = {
 };
 
 const AddPlaceForm = (props) => {
-    const {onClose,firstTime,lastTime,nDay,onSub,upDTO,updateItem,GoogleMap,Autocomplete} = props
+    const {onClose,firstTime,lastTime,nDay,onSub,upDTO,updateItem,GoogleMap,Autocomplete,plannerTitle} = props
     const [opTime,setOpTime] = useState([]);
     const [sel,setSel] = useState(true)
     const [save,setSave] = useState(false)
@@ -96,12 +96,15 @@ const onSearch = () => {
 const onSearchSelect = () => {//장소추가 버튼
     setSearchCount(false)
 }
-//city목록 가져오기
+//city목록 가져오기 및 검색에 city 값 넣기
 const [city, setCity] = useState([])
 useEffect(()=> {
     getCityList()
     .then(res => {
         setCity(res.data)
+        if(plannerTitle !== undefined && plannerTitle.length > 0) {
+            setSearchCity(res.data.find(item=> item.citySeq === plannerTitle[plannerTitle.length-1]).cityName)
+        }
     })
     .catch(e => console.log(e))
 },[])

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import PlaceReviewWrite from './PlaceReviewWrite';
+import PlaceReviewUpdate from './PlaceReviewUpdate';
 import PlaceReviewPhoto from './PlaceReviewPhoto';
-import { getPlaceReviewBySeq } from '../../api/PlaceReviewApiService';
+import { getPlaceReviewBySeq, deletePlaceReviewByReviewSeq} from '../../api/PlaceReviewApiService';
+import { useUserStore } from '../../stores/mainStore';
 
 const PlaceReview = ({ placeSeq }) => {
   const [selectedPlaceReview, setSelectedPlaceReview] = useState([]);
@@ -11,15 +13,43 @@ const PlaceReview = ({ placeSeq }) => {
   const [selectedImage, setSelectedImage] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [userProfiles, setUserProfiles] = useState({});
+  const { user } = useUserStore();
+  const userSeq1 = user.userSeq;
+  const handleDelete = (reviewSeq) => {
+     // 사용자에게 삭제 여부를 확인하는 메시지를 띄웁니다.
+     const shouldDelete = window.confirm("리뷰를 삭제하시겠습니까?");
+
+     if (shouldDelete) {
+       // 사용자가 확인하면 삭제 작업을 진행합니다.
+       deletePlaceReviewByReviewSeq(reviewSeq)
+         .then(() => {
+           // Update the state to remove the deleted review
+           setSelectedPlaceReview((prevReviews) =>
+             prevReviews.filter((review) => review.reviewSeq !== reviewSeq)
+           );
+         })
+         .catch((error) => {
+           console.error('리뷰 삭제 오류: ', error);
+         });
+     }
+  };
+
+ 
+const formatDateTime = (dateString) => {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+  const date = new Date(dateString);
+  return date.toLocaleDateString('ko-KR', options).replace(/. /g, '-');
+};
 
   const loadInitialReviews = () => {
     getPlaceReviewBySeq(placeSeq, 1)
       .then(response => {
         const sortedReviews = response.data.sort((a, b) => a.reviewSeq - b.reviewSeq);
-        const initialReviews = sortedReviews.slice(0, 3);
+        const initialReviews = sortedReviews.slice(0, 5);
         setSelectedPlaceReview(initialReviews);
         setPage(2);
-        if (initialReviews.length < 3) {
+        if (initialReviews.length < 5) {
           setHasMore(false);
         }
       })
@@ -32,15 +62,24 @@ const PlaceReview = ({ placeSeq }) => {
     loadInitialReviews();
   }, [placeSeq]);
 
-  const loadReviews = (currentPage) => {
-    if (!hasMore) return;
 
-    const reviewsPerPage = 3;
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+    setModalShow(true);
+  };
+
+  const handleScroll = () => {
+    if (hasMore && window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+      loadReviews(page);
+    }
+  };
+
+  const loadReviews = (currentPage) => {
+    const reviewsPerPage = 5;
 
     getPlaceReviewBySeq(placeSeq, currentPage)
       .then(response => {
         const sortedReviews = response.data.sort((a, b) => a.reviewSeq - b.reviewSeq);
-
         const startIndex = currentPage === 1 ? 0 : (currentPage - 1) * reviewsPerPage;
         const endIndex = startIndex + reviewsPerPage;
         const newReviews = sortedReviews.slice(startIndex, endIndex);
@@ -57,61 +96,80 @@ const PlaceReview = ({ placeSeq }) => {
       });
   };
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
-    setModalShow(true);
-  };
-
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
-      loadReviews(page);
-    }
-  };
-
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [page, hasMore]);
-
   return (
     <div style={{ maxWidth: '728px', minWidth: '60%', margin: '0 auto', width: '100%' }}>
       <div style={{ maxWidth: '728px', width: '100%', display: 'flex', justifyContent: 'space-between', margin: '10px auto' }}>
-        <p className="fs-3">리뷰 {selectedPlaceReview.length}</p>
+        <p className="fs-3">리뷰</p> 
+        {/* {selectedPlaceReview.length} */}
         <p style={{ margin: '0', alignSelf: 'flex-end' }}>
-          <PlaceReviewWrite placeSeq={placeSeq} />
+          <PlaceReviewWrite placeSeq={placeSeq} loadInitialReviews={loadInitialReviews}/>
         </p>
       </div>
-
       {selectedPlaceReview.map((review) => {
+        console.log(review.image)
         const imageArray = review.image.split(',');
-
+        const user = userProfiles[review.userSeq] || {};
         return (
           <div key={review.reviewSeq} style={{ maxWidth: '728px', width: '100%', display: 'block', margin: 'auto' }}>
-            <Col xs={6} md={4} style={{ display: 'flex', alignItems: 'center' }}>
-              <Image
-                src="https://media.triple.guide/triple-cms/c_limit,f_auto,h_1280,w_1280/67d63e89-7296-43d2-838c-b314fc6903b7.jpeg"
-                roundedCircle
-                style={{ width: '40px', height: '40px' }}
-              />
-              <div>
-                <div className="fw-bolder" style={{ margin: '10px auto auto 10px' }}>
-                  작성자
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Col xs={6} md={4} style={{ display: 'flex', alignItems: 'center' }}>
+                <Image
+                  src={review.user.profileImage || '프로필 이미지 기본 URL'}
+                  roundedCircle
+                  style={{ width: '40px', height: '40px' }}
+                />
+                <div style={{ flex: 1 }}>
+                  <div
+                    className="fw-bolder"
+                    style={{
+                      margin: '10px auto auto 10px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <span>{review.user.name || '알 수 없는 사용자'}</span>
+                  </div>
+                  <div style={{ margin: '10px auto auto 10px', fontSize: '13px', color: 'gray' }}>
+                    {formatDateTime(review.date)}
+                  </div>
                 </div>
-                <div style={{ margin: '10px auto auto 10px', fontSize: '13px', color: 'gray' }}>{review.date}</div>
-              </div>
-            </Col>
+              </Col>
+              {/* 리뷰 작성자와 현재 로그인한 사용자가 같으면 수정/삭제 버튼 렌더링 */}
+              {userSeq1 === review.user.userSeq && (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <PlaceReviewUpdate
+                    reviewSeq={review.reviewSeq}
+                    placeSeq={placeSeq}
+                    loadInitialReviews={loadInitialReviews}
+                  />
+                  <span
+                    style={{
+                      color: 'red',
+                      cursor: 'pointer',
+                      marginLeft: '10px',
+                    }}
+                    onClick={() => handleDelete(review.reviewSeq)}
+                  >
+                    / 삭제
+                  </span>
+                </div>
+              )}
+            </div>
 
             <div className="fs-6" style={{ width: '100%', display: 'block', margin: '10px auto', lineHeight: '1.5' }}>
               {review.context}
             </div>
-
             <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-              {imageArray.length === 1 && (
+            
+
+
+              {review.image !== 'false' && imageArray.length === 1 && (
                 <div style={{ flex: '1' }}>
                   <img
                     src={imageArray[0]}
@@ -119,7 +177,7 @@ const PlaceReview = ({ placeSeq }) => {
                     alt="..."
                     style={{
                       height: 'auto',
-                      maxHeight: '400px',
+                      maxHeight: '290px',
                       width: '100%',
                       maxWidth: '720px',
                       display: 'block',
@@ -133,58 +191,60 @@ const PlaceReview = ({ placeSeq }) => {
               )}
 
               {imageArray.length === 2 && (
-                 <>
-                 <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '7px' }}>
-                   <div style={{ marginRight: '5px' }}>
-                     <img
-                       src={imageArray[0]}
-                       className="rounded mx-auto d-block"
-                       alt="..."
-                       style={{
-                         width: '100%',
-                         maxWidth: '355px',
-                         height: 'auto',
-                         objectFit: 'cover'
-                       }}
-                       onClick={() => handleImageClick(imageArray[0])}
-                     />
-                   </div>
-                   <img
-                     src={imageArray[1]}
-                     className="rounded mx-auto d-block"
-                     alt="..."
-                     style={{
-                       width: '100%',
-                       maxWidth: '355px',
-                       height: 'auto',
-                       objectFit: 'cover'
-                     }}
-                     onClick={() => handleImageClick(imageArray[1])}
-                   />
-                 </div>
-               </>
+                <>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',width:'100%' }}>
+                    <div style={{ marginRight: '5px', flex: 1,width:'50%'}}>
+                      <img
+                        src={imageArray[0]}
+                        className="rounded mx-auto d-block"
+                        alt="..."
+                        style={{
+                          width: '100%', // 이미지의 너비를 부모 div에 맞춤
+                          height: '290px',
+                          objectFit: 'cover', // 이미지를 부모 div에 맞추고 비율 유지
+                        }}
+                        onClick={() => handleImageClick(imageArray[0])}
+                      />
+                    </div>
+                    <div style={{ flex: 1 ,width:'50%'}}>
+                      <img
+                        src={imageArray[1]}
+                        className="rounded mx-auto d-block"
+                        alt="..."
+                        style={{
+                          width: '100%', // 이미지의 너비를 부모 div에 맞춤
+                          height: '290px',
+                          objectFit: 'cover', // 이미지를 부모 div에 맞추고 비율 유지
+                        }}
+                        onClick={() => handleImageClick(imageArray[1])}
+                      />
+                    </div>
+                  </div>
+                </>
               )}
 
+
+
+
               {imageArray.length === 3 && (
-                <div style={{ width: '100%', display: 'flex', margin: 'auto', alignItems: 'center' }}>
-                  <div style={{ flex: '1' }}>
+                <div style={{ width: '100%', display: 'flex', margin: 'auto', alignItems: 'center'}}>
+                  <div style={{width:'68%',marginRight: '5px'}}>
                     <img
                       src={imageArray[0]}
                       className="rounded mx-auto d-block"
                       alt="..."
                       style={{
                         width: '100%',
-                        maxHeight: '254px',
-                        maxWidth: '470px',
-                        height: 'auto',
-                        display: 'block',
-                        margin: 'auto 5px',
-                        objectFit: 'cover'
+                        maxWidth: '486px', // 기존 0번 이미지의 max width
+                        height: '290px',
+                        maxHeight: '290px',
+                        objectFit: 'cover',
+                        marginRight: '5px',
                       }}
                       onClick={() => handleImageClick(imageArray[0])}
                     />
                   </div>
-                  <div style={{ flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{  display: 'flex', flexDirection: 'column', alignItems: 'center',width:'30%' }}>
                     <img
                       src={imageArray[1]}
                       className="rounded mx-auto d-block"
@@ -194,7 +254,7 @@ const PlaceReview = ({ placeSeq }) => {
                         maxWidth: '232px',
                         height: '143px',
                         objectFit: 'cover',
- 
+                      
                       }}
                       onClick={() => handleImageClick(imageArray[1])}
                     />
@@ -207,24 +267,27 @@ const PlaceReview = ({ placeSeq }) => {
                         maxWidth: '232px',
                         height: '143px',
                         maxHeight: '254px',
+                        objectFit: 'cover',
                         marginTop: '5px',
-                        objectFit: 'cover'
+                        marginRight: '5px',
+                        
                       }}
                       onClick={() => handleImageClick(imageArray[2])}
                     />
                   </div>
                 </div>
               )}
-            </div>
 
+
+
+
+            </div>
             <hr style={{ width: '100%', maxWidth: '700px', display: 'block', margin: '30px auto', borderWidth: '2px' }} />
           </div>
         );
       })}
-
       <PlaceReviewPhoto show={modalShow} onHide={() => setModalShow(false)} image={selectedImage} />
     </div>
   );
 };
-
 export default PlaceReview;

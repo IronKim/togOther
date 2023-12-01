@@ -12,7 +12,6 @@ const PlacePage = () => {
             <div style={{margin: '0 10px'}}>
             <PlaceInfo  placeSeq={placeSeq}/>
             <PlaceReview placeSeq={placeSeq}/>
-
             </div>
         </div>
     );

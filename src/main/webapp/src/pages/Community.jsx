@@ -4,11 +4,18 @@ import styles from '../css/community.module.css'
 import TogetherList from '../components/community/together/TogetherList';
 import CommunitySearch from '../components/community/CommunitySearch';
 
+import planner from '../assets/image/planner.png'
+import people from '../assets/image/people.png'
+import { useNavigate } from 'react-router-dom';
+
 const Community = () => {
     const[toggle,setToggle] = useState(true)
 
     const[search,setSearch] = useState('')
 
+    const navigate = useNavigate()
+
+    const[open,setOpen] = useState(false)
     const onSearch = (e) => {
         setSearch(e.target.value)
     }
@@ -26,6 +33,12 @@ const Community = () => {
             {
                 toggle ? <PlannerList search={search}/> : <TogetherList search={search}/>
             }
+            <div className={styles.goWrite} style={{right: open ? '6%' : '-160px'}}>
+                <button className={styles.goPl} onClick={() => navigate(`planner/write`)}><img src={planner}/>&nbsp;플래너 작성</button>
+                <button className={styles.goTo} onClick={() => navigate(`together/write`)}><img src={people}/>&nbsp;동행 작성</button>
+            </div>
+            <div className={styles.openWrite} onClick={() => setOpen(!open)}
+            style={{transform: open && 'rotate(-45deg)', color: open && '#2E8DFF',backgroundColor: open && 'white'}}>+</div>
         </div>
     );
 };

@@ -20,7 +20,7 @@ const BottomNav = ({ showNavbar }) => {
       <nav className={style.wrapper}>
         <Link to="/community" className={style.nav_link} onClick={() => navigate('/community')}>
           <div>
-            <FontAwesomeIcon icon="users" className={isActive('/community') ? style.active : style.nav_item} />
+            <FontAwesomeIcon icon="users" className={location.pathname.includes('/community') ? style.active : style.nav_item} />
           </div>
         </Link>
         <Link to="/" className={style.nav_link} onClick={() => navigate('/')}>

@@ -1,12 +1,16 @@
 import React from 'react';
 import styles from '../../css/MyPage.module.css';
+import { useUserStore } from '../../stores/mainStore';
 
-const MypageSidebar = () => {
+const MypageSidebar = ({onErrorImg}) => {
+
+    const { user } = useUserStore();
+
     return (
         <div className={styles.sidebarDiv}>
             <div className={ styles.sidebar }>
                 <div className={ styles.profile }>
-                    <img className={ styles.profileImg } src={ null } alt='사진' />
+                    <img className={ styles.profileImg } onError={onErrorImg} src={ user.profileImage === null ? '' : user.profileImage.toString()} alt='사진' />
                     <div className={ styles.myProfile }><text>내 아이디는 어쩌구</text></div>
                 </div> {/* profile */}
                 <div style={{clear:'both'}}></div>

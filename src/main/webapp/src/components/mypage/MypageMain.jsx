@@ -1,10 +1,10 @@
 import React from 'react';
 import MypageWrite from './MypageWrite';
 
-const MypageMain = () => {
+const MypageMain = ({onErrorImg}) => {
     return (
         <div>
-            <MypageWrite />
+            <MypageWrite onErrorImg={onErrorImg} />
         </div>
     );
 };
