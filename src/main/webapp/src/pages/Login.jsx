@@ -8,6 +8,8 @@ import loginFormImage from '../assets/image/loginFormImage.png';
 
 import naverBtn from '../assets/image/naverBtn.png';
 
+import naverLongBtn from '../assets/image/naverLongBtn.png';
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -481,12 +483,10 @@ const Login = () => {
             <button className={styles.loginBtn} type="submit" onClick={onsubmit}>
               로그인
             </button>
-          </form>
-          <div style={{ display: 'flex', justifyContent: 'space-around', width: '80%', marginTop: '3em' }}>
-            <img src="https://img.icons8.com/ios/50/000000/google-logo.png" alt="google" />
-            <img style={{width: '70px'}} onClick={naverLogin} src={naverBtn} alt="naver" />
-            <img src="https://img.icons8.com/ios/50/000000/kakao-talk.png"  alt="kakao" />
+          <div className={styles.naverLoginBtn} style={{height: '80px', marginTop: '20px', borderRadius: '60px'}}>
+                <img style={{width: '100%', height: '100%', objectFit:'cover', borderRadius: '48px' }}  onClick={naverLogin} src={naverLongBtn} alt="naver" />
           </div>
+          </form>
         </div>
       </div>
     </div>
