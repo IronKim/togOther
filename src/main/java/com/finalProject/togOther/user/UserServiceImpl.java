@@ -453,6 +453,7 @@ public class UserServiceImpl implements UserService {
 	        									     .birthday(LocalDate.parse(combinedDate))
 	        									     .phone(numericMobile)
 	        									     .gender(gender)
+	        									     .certification((byte) 1)
 	        									     .build();
 	        	addUser(registerDTO);
 	        	
