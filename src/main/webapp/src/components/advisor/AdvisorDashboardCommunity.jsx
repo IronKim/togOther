@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllPlanner,getAllTogether } from '../../api/AdvisorApiService';
 import { deletePlanner } from '../../api/PlannerApiService';
+import { deleteTogether } from '../../api/TogetherApiService';
 import styles from '../../css/advisorCommunity.module.css';
 import AdvisorDashboardModal from './AdvisorDashboardModal';
 
@@ -63,6 +64,29 @@ const AdvisorDashboardCommunity = () => {
         });
         }
 
+    const deleteTogethers = (seq) => {
+        sweet.fire({
+            title: "삭제하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "예",
+            cancelButtonText: "아니요"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteTogether(seq)
+                .then(res => {
+                    setTogether(together.filter(item=> item.togetherSeq !== seq))
+                    sweet.fire({
+                        title: "삭제되었습니다",
+                        icon: "success"
+                    })
+                })
+            } 
+        });
+    }
+
     return (
         <div>
             {
@@ -110,7 +134,7 @@ const AdvisorDashboardCommunity = () => {
                     <span className={styles.title}>{togo.title}</span>
                     <span className={styles.userInfo}>{togo.userid}({togo.userSeq})</span>
                     <button onClick={()=>onModal(1,togo.togetherSeq)} className={styles.buts}>보기</button>
-                    <button className={styles.buts}>삭제</button>
+                    <button onClick={()=>deleteTogethers(togo.togetherSeq)} className={styles.buts}>삭제</button>
                 </div>)
             }
             </div>

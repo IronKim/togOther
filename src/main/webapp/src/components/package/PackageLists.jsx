@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getCity } from '../../api/AdvisorApiService';
-import { getTourPackageList,getTourPackageByCitySeq } from '../../api/PackageApiService';
+import { getTourPackageList, getTourPackageByCitySeq } from '../../api/PackageApiService';
 
 import Card from 'react-bootstrap/Card';
 
@@ -59,8 +59,8 @@ const PackageLists = () => {
 
     const navigate = useNavigate()
 
-    const onToCityPage = (citySeq) => {
-        navigate(`/packageDetail/${citySeq}`)
+    const onToPackagePage = (tpSeq) => {
+        navigate(`/package/details/${tpSeq}`)
     }
 
     const onSearch = (e) => {
@@ -68,6 +68,7 @@ const PackageLists = () => {
         navigate(`/package/list/${search}`)
         }
     }
+    
     return (
         <>
         <div style={{backgroundImage:`url(${packBg})`}} className={PackageStyle.searchBg}>
@@ -81,14 +82,14 @@ const PackageLists = () => {
                     const citys = cityList.filter(ci => ci.countryName === searchData || ci.cityName === searchData).map(ci2 => ci2.citySeq);
                     return citys.includes(pack.citySeq);
                 }).map((item) => (
-                    <Card className={PackageStyle.card} key={item.cityName} onClick={()=>onToCityPage(item.citySeq)}>
+                    <Card className={PackageStyle.card} key={item.cityName} onClick={()=>onToPackagePage(item.tpSeq)}>
                         <div className={PackageStyle.cardimgDiv}>
                             <Card.Img className={PackageStyle.cardimg} src={item.tpThumbnail} />
                         </div>
                         <Card.Body className={PackageStyle.cardbody}>
                             <Card.Title className={PackageStyle.cardTitle}>{item.tpTitle}</Card.Title>
                             <Card.Text className={PackageStyle.cardPrice}>
-                                {item.tpPrice}원
+                               {parseFloat(item.tpPrice).toLocaleString()}원
                             </Card.Text>
                         </Card.Body>
                     </Card>

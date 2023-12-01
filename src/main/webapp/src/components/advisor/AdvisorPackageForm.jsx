@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../../css/advisor.module.css';
 import noImage from '../../assets/image/no_image.png';
 import { addPackage, updatePackage } from '../../api/AdvisorApiService';
+import sweet from 'sweetalert2';    
 
 const AdvisorPackageForm = ({selectedPackage,onInputPackage,getPackageList, onErrorImg, isValidDate}) => {
 
@@ -28,7 +29,10 @@ const AdvisorPackageForm = ({selectedPackage,onInputPackage,getPackageList, onEr
         updatePackage(tpSeq, updatedPackage)
         .then(res => {
             console.log(res.data);
-            alert('완료');
+            sweet.fire({
+                title: "완료되었습니다.",
+                icon: "success"
+            })
         })
         .catch(e => console.log(e))
         .finally(getPackageList);
@@ -45,7 +49,10 @@ const AdvisorPackageForm = ({selectedPackage,onInputPackage,getPackageList, onEr
         addPackage(updatedPackage)
         .then(res => {
             console.log(res.data);
-            alert('완료');
+            sweet.fire({
+                title: "완료되었습니다.",
+                icon: "success"
+            })
         })
         .catch(e => console.log(e))
         .finally(getPackageList);

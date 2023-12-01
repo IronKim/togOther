@@ -29,6 +29,7 @@ import TogetherView from './community/together/TogetherView';
 import PackageLists from './package/PackageLists';
 import PackageMain from './package/PackageMain';
 import NaverCallback from '../pages/NaverCallback';
+import AdvisorKakaoToken from './advisor/AdvisorKakaoToken';
 
 const libraries = ["places"];
 
@@ -57,6 +58,7 @@ const Main = ({ showNavbar }) => {
                 <Routes>
         
                     <Route path='/' element= { <Home />} />
+                    <Route path='token' element={<AdvisorKakaoToken/>}/>
                     <Route path='user'>
                         <Route path='login' element ={ user.name === '' ? <Login /> : <Navigate to={'/'}></Navigate>} />
                         <Route path='write' element ={ <Write />}/>
@@ -86,10 +88,10 @@ const Main = ({ showNavbar }) => {
                         </Route>
                     </Route>
                     <Route path='package'>
-                        <Route path='List/:searchData' element={ <PackageLists />} />
                         <Route path='' element={ <PackageMain />} />
-                        <Route path='details' element= { <PackageDetails/> } />
-                        <Route path='reservation' element={ <PackgeReservation /> } />
+                        <Route path='List/:searchData' element={ <PackageLists />} />
+                        <Route path='details/:tpSeq' element= { <PackageDetails/> } />
+                        <Route path='reservation/:packageSeq/:info' element={  <UserRoute><PackgeReservation/></UserRoute>} />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>

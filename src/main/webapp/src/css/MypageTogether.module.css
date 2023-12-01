@@ -193,6 +193,30 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.myPageTogetherBtnDiv{
+    margin-top: 25%;
+    /* border: 1px solid; */
+}
+.myPageTogetherUp{
+    border: none;
+    background-color: #54a1ff;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+}
+.myPageTogetherUp:hover{
+    text-decoration: underline;
+}
+.myPageTogetherReset{
+    border: none;
+    background-color: rgb(251, 78, 78);
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+}
+.myPageTogetherReset:hover{
+    text-decoration: underline;
+}
 .placeInfo{
     line-height:80px;
     width: 100%;
@@ -245,6 +269,17 @@
     .imgDiv{
         height: 95%;
     }
+    .myPageTogetherBtnDiv{
+        margin-top: -50px;
+        float: right;
+    }
+    
+}
+@media (max-width:1000px) {
+    .myPageTogetherBtnDiv{
+        margin-top: -45px;
+        float: right;
+    }
 }
 @media (max-width: 780px){
     .listForminner{
@@ -280,5 +315,9 @@
     }
     .placeInfo{
         line-height: 35px;
+    }
+    .myPageTogetherBtnDiv{
+        margin-top: -30px;
+        float: right;
     }
 }

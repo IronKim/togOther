@@ -13,6 +13,7 @@ import { getCityList } from '../../../api/CityApiService';
 import { GoogleMap,Marker } from '@react-google-maps/api';
 import { getUserByEmail } from '../../../api/UserApiService';
 import { useUserStore } from '../../../stores/mainStore';
+import sweet from 'sweetalert2'; 
 
 const containerStyle = {
     width: '100%',
@@ -144,25 +145,33 @@ const TogetherView = ({seqAd}) => {
     const navigate = useNavigate()
 
     const onChange = (togetherDTO,subDTO,custom,place) => {
-        deleteTogether(togetherSeq)
-        .then(res=>{
+            window.scrollTo(0, 0);
             navigate('/community/together/write', { state: { togetherDTO,subDTO,custom,place} })
-        })
-        .catch(e => console.log(e))
-        //console.log(custom,place)
+        
     }
     
     const goDelete = async  () => {
-        const gogo = window.confirm("동행을 삭제하시겠습니까?")
-        if (gogo) {
-            try {
-                await deleteTogether(togetherSeq)
-                alert("삭제가 완료되었습니다")
-                navigate('/community/')
-            } catch (error) {
-                console.error("동행 삭제 중 오류:", error)
-            }
-        }
+        sweet.fire({
+            title: "삭제하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "예",
+            cancelButtonText: "아니요"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteTogether(togetherSeq)
+                .then(res => {
+                    window.scrollTo(0,0)
+                    sweet.fire({
+                        title: "삭제되었습니다",
+                        icon: "success"
+                    })
+                    .then(navigate('/community/'))
+                })
+            } 
+        });
     }
 
     return (

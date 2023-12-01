@@ -81,6 +81,8 @@ const CityPage = () => {
         let filteredData = buttonName === 'TouristSpot' ? placeData.filter(item => item.code === 1) : 
                              buttonName === 'store' ? placeData.filter(item => item.code === 0) :
                              placeData;
+
+        filteredData.sort((a, b) => a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }));
         setFilteredPlaceData(filteredData);
 
         if(activeButton === 'TouristSpot') {
@@ -166,7 +168,8 @@ const CityPage = () => {
                     return 1; // b를 우선순위로
 
                 } else {
-                    return a.tag.localeCompare(b.tag); // 일반적인 문자열 비교
+                    //return a.tag.localeCompare(b.tag); // 일반적인 문자열 비교
+                    return a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' })
                 }
             });
         
@@ -220,8 +223,8 @@ const CityPage = () => {
                     return 1; // b를 우선순위로
 
                 } else {
-                    return a.tag.localeCompare(b.tag); // 일반적인 문자열 비교
-
+                    //return a.tag.localeCompare(b.tag); // 일반적인 문자열 비교
+                    return a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' })
                 }
             });
             setFilteredPlaceData(filteredData);
@@ -292,16 +295,19 @@ const CityPage = () => {
                     return 1; // b를 우선순위로
 
                 } else {
-                    return a.tag.localeCompare(b.tag); // 일반적인 문자열 비교
-
+                    //return a.tag.localeCompare(b.tag); // 일반적인 문자열 비교
+                    
+                    return a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' })
                 }
             });
             setFilteredPlaceData(filteredData);
         }        
 
         if(item === 'like') {
-            let filteredData = filteredPlaceData.slice().sort((a, b) => a.like - b.like)
-
+            let filteredData = filteredPlaceData.slice().sort((a, b) => 
+            b.likeCnt - a.likeCnt || a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }))
+            
+            console.log(filteredData)
             setFilteredPlaceData(filteredData)
         }
         if(item === 'comment') {

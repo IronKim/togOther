@@ -34,11 +34,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalProject.togOther.domain.NaverToken;
 import com.finalProject.togOther.domain.Place;
+import com.finalProject.togOther.domain.Planner;
 import com.finalProject.togOther.domain.RefreshToken;
 import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.LoginDTO;
 import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
+import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 import com.finalProject.togOther.dto.UserDTO;
@@ -1027,4 +1029,45 @@ public class UserServiceImpl implements UserService {
 
         return String.join(",", cityList);
     }
+
+	@Override
+	public String kakaoRefreshTokenGet() {
+		try {
+			
+			Optional<RefreshToken> rOptional = refreshTokenRepository.findByUserEmail("kakao");
+	
+			RefreshToken refreshToken = rOptional.orElseThrow();
+			
+			String token= refreshToken.getToken();
+			return token;
+			
+			
+		} catch (Exception e) {
+			return "error";
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> kakaoRefreshTokenUpdate(String token) {
+		try {
+			
+			Optional<RefreshToken> rOptional = refreshTokenRepository.findByUserEmail("kakao");
+			
+			if (rOptional.isPresent()) {
+			    RefreshToken refreshToken = rOptional.orElseThrow();
+			    refreshToken.setToken(token);
+			    refreshTokenRepository.save(refreshToken);
+			} else {
+				RefreshToken refreshToken = new RefreshToken(0, "kakao", token);
+				refreshTokenRepository.save(refreshToken);
+			}
+			
+			return ResponseEntity.ok("success");
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "failure";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
 }

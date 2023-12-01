@@ -40,7 +40,6 @@ const CityWeatherApi = ({ selectedCity, onWeatherData }) => {
 
   const getEnglishCityName = (englishCityName) => {
     return cityMapping[englishCityName] || englishCityName;
-
   };
 
   return (

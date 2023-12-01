@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.finalProject.togOther.dto.PaymentDTO;
 import com.finalProject.togOther.dto.TourPackageDTO;
 
 public interface TourPackageService {
@@ -11,6 +12,10 @@ public interface TourPackageService {
 	public ResponseEntity<?> getTourPackageList();
 
 	public ResponseEntity<List<TourPackageDTO>> getTourPackageByCitySeq(int citySeq);
+
+	public ResponseEntity<?> getTourPackageByTpSeq(int tpSeq);
+
+	public ResponseEntity<String> addPayment(PaymentDTO paymentDTO);
 
 
 }

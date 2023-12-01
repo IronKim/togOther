@@ -5,6 +5,9 @@ import Form from 'react-bootstrap/Form';
 import { useUserStore } from '../../stores/mainStore';
 import { addPlaceReview } from '../../api/PlaceReviewApiService';
 import { uploadPlannerImage } from '../../api/PlannerApiService';
+import sweet from 'sweetalert2';    
+
+
 function PlaceReviewWrite({ placeSeq }) {
   const [show, setShow] = useState(false);
   const { user } = useUserStore();
@@ -18,7 +21,10 @@ function PlaceReviewWrite({ placeSeq }) {
   };
   const handleShow = () => {
     if (user.userSeq === "") {
-      alert('로그인 후 이용해주세요!');
+      sweet.fire({
+        title: "로그인 후 이용해 주세요.",
+        icon: "warning"
+    })
     } else {
       setShow(true);
     }
@@ -27,7 +33,11 @@ function PlaceReviewWrite({ placeSeq }) {
     // 파일 업로드를 처리합니다.
     const files = e.target.files;
     let image = ''
-    if(files.length > 3) alert('3개 이하로 선택해')
+    if(files.length > 3) 
+    sweet.fire({
+      title: "3개 이하로 선택해 주세요.",
+      icon: "warning"
+  })
     else {
       for (let i = 0; i < files.length; i++) {
           image += URL.createObjectURL(files[i]);
@@ -39,7 +49,10 @@ function PlaceReviewWrite({ placeSeq }) {
   const handleWriteReview = async () => {
     // 리뷰 내용이 비어있는지 확인합니다.
     if (reviewContext.trim() === "") {
-      alert('리뷰 내용을 입력해주세요!');
+      sweet.fire({
+        title: "리뷰 내용을 입력해 주세요.",
+        icon: "warning"
+    })
       return;
     }
     try {

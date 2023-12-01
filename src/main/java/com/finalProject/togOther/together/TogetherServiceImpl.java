@@ -222,11 +222,10 @@ public class TogetherServiceImpl implements TogetherService {
 		} catch (Exception e) {
 
 			// 사용자 삭제 중 에러가 발생했을 때
-			String errorMessage = "플래너 삭제 중 오류가 발생했습니다.";
+			String errorMessage = "동행 삭제 중 오류가 발생했습니다.";
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
 		}
 	}
-
 
 	public ResponseEntity<List<TogetherDTO>> getAllTogether() {
 		try {		
@@ -245,5 +244,6 @@ public class TogetherServiceImpl implements TogetherService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
+
 
 }

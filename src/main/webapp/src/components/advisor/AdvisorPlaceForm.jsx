@@ -4,6 +4,8 @@ import React, { useEffect } from 'react';
 import styles from '../../css/advisor.module.css';
 import noImage from '../../assets/image/no_image.png';
 import { addPlace, updatePlace } from '../../api/AdvisorApiService';
+import sweet from 'sweetalert2';    
+
 
 const AdvisorPlaceForm = ({selectedPlace,onInputPlace,getPlaceList, onTagChange, onErrorImg}) => {
     
@@ -15,7 +17,10 @@ const AdvisorPlaceForm = ({selectedPlace,onInputPlace,getPlaceList, onTagChange,
         updatePlace(placeSeq, selectedPlace)
         .then(res => {
             console.log(res.data);
-            alert('완료');
+            sweet.fire({
+                title: "완료되었습니다.",
+                icon: "success"
+            })
         })
         .catch(e => console.log(e))
         .finally(getPlaceList);
@@ -26,7 +31,10 @@ const AdvisorPlaceForm = ({selectedPlace,onInputPlace,getPlaceList, onTagChange,
         addPlace(selectedPlace)
         .then(res => {
             console.log(res.data);
-            alert('완료');
+            sweet.fire({
+                title: "완료되었습니다.",
+                icon: "success"
+            })
         })
         .catch(e => console.log(e))
         .finally(getPlaceList);
