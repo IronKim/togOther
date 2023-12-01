@@ -1,12 +1,15 @@
 package com.finalProject.togOther.tourPackage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.finalProject.togOther.domain.TourPackage;
-import com.finalProject.togOther.domain.TourPackageDetail;
 import com.finalProject.togOther.dto.TourPackageDTO;
-import com.finalProject.togOther.repository.TourPackageDetailRepository;
 import com.finalProject.togOther.repository.TourPackageRepository;
 
 import jakarta.transaction.Transactional;
@@ -17,45 +20,12 @@ public class TourPackageServiceImpl implements TourPackageService {
 
 	private TourPackageRepository tourPackageRepository;
 	
-	private TourPackageDetailRepository tourPackageDetailRepository;
 
-	public TourPackageServiceImpl(TourPackageRepository tourPackageRepository, TourPackageDetailRepository tourPackageDetailRepository) {
+	public TourPackageServiceImpl(TourPackageRepository tourPackageRepository ) {
 		this.tourPackageRepository = tourPackageRepository;
-		this.tourPackageDetailRepository = tourPackageDetailRepository;
 	}
 
-	@Override
-	public ResponseEntity<?> addTourPackage(TourPackageDTO tourPackageDTO) {
 
-		try {
-
-			TourPackageDetail detail = TourPackageDetail.builder()
-	                .tpdImages("sdzdsafd")
-	                .tpdcontext("sadsadsa")
-	                .tpdsaleStart("sadsa")
-	                .tpdsaleEnd("sadsadsa")
-	                .build();
-
-	        tourPackageDetailRepository.save(detail);
-			
-			System.out.println("여긴가");
-
-			TourPackageDTO tourPackageDTO2 = TourPackageDTO.builder()
-	                .citySeq(1)
-	                .tourPackageDetail(detail)
-	                .tpTitle("title")
-	                .tpThumbnail("thumbnail")
-	                .tpPrice("price")
-	                .build();
-
-	        tourPackageRepository.save(TourPackage.toEntity(tourPackageDTO2));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-	
 	@Override
 	public ResponseEntity<?> getTourPackageList() {
 		try {
@@ -67,19 +37,40 @@ public class TourPackageServiceImpl implements TourPackageService {
 	}
 	
 	@Override
-	public ResponseEntity<?> getTourPackageContext() {
+	public ResponseEntity<List<TourPackageDTO>> getTourPackageByCitySeq(int citySeq) {
+		
 		try {
-			TourPackage tourPackage = tourPackageRepository.findById(4)
-		            .orElseThrow(() -> new RuntimeException("TourPackage not found with tpSeq: " + 4));
-			
-			// TourPackage에 연관된 TourPackageDetail 엔티티 조회
-		    TourPackageDetail tourPackageDetail = tourPackage.getTourPackageDetail();
+			List<TourPackage> packageList = tourPackageRepository.findByCitySeq(citySeq);
 
-		    // TourPackageDetail이 null이 아니면 tpdcontext 반환, null이면 예외 처리 또는 다른 처리 수행
-		    return ResponseEntity.ok(tourPackageDetail != null ? tourPackageDetail.getTpdcontext() : "TourPackageDetail not found for tpSeq: " + 4);
+			List<TourPackageDTO> packageDTOList = new ArrayList<TourPackageDTO>();
+
+			for (TourPackage package1 : packageList) {
+
+				TourPackageDTO packageDTO = TourPackageDTO.toDTO(package1);
+
+				packageDTOList.add(packageDTO);
+			}
+
+			return ResponseEntity.ok(packageDTOList);
+
 		} catch (Exception e) {
-			// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		return null;
 	}
+
+
+	@Override
+	public ResponseEntity<?> getTourPackageByTpSeq(int tpSeq) {
+		try {
+			Optional<TourPackage> OptionalPackage = tourPackageRepository.findById(tpSeq);
+
+			TourPackage tourPackage = OptionalPackage.orElseThrow(); 
+			
+			return ResponseEntity.ok(TourPackageDTO.toDTO(tourPackage));
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
 }

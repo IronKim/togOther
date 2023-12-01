@@ -21,7 +21,7 @@ const AdvisorUserInfo = ({user, selectUser, selectedUser}) => {
             <td className='fs-6'>{user.userSeq}</td>
             <td className='fs-6'> {user.email}</td>
             <td className='fs-6'>{user.name}</td>
-            <td className='fs-6'>{user.dupLogin === 0 ? '로그아웃':'로그인'}</td>
+            <td className='fs-6'>{user.certification === 0 ? '비인증':'인증'}</td>
             <td className='fs-6'>{user.coin}</td>
         </tr>
     );

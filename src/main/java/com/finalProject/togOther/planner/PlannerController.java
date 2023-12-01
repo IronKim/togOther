@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +67,21 @@ public class PlannerController {
 		return plannerService.totPlanner(search);
 	}
 	
+	// 개인 리스트 불러오기
+	@PostMapping(path = "getMyPlanner")
+	public ResponseEntity<List<PlannerDTO>> getMyPlanner(@RequestBody Map<String, Integer> requestBody) {
+		int n = requestBody.get("n");
+		int userSeq = requestBody.get("userSeq");
+		return plannerService.getMyPlanner(n,userSeq);
+	}
+	
+	// 개인 토탈 불러오기
+	@PostMapping(path = "totMyPlanner")
+	public ResponseEntity<Integer> totMyPlanner(@RequestBody Map<String, Integer> requestBody) {
+		int userSeq = requestBody.get("userSeq");
+		return plannerService.totMyPlanner(userSeq);
+	}
+	
 	//이미지 리스트 불러오기
 	// 리스트 불러오기
 	@PostMapping(path = "getImages")
@@ -77,5 +94,25 @@ public class PlannerController {
 	@GetMapping(path = "getPlannerView/{plannerSeq}")
 	public ResponseEntity<Map<String, Object>> getPlanner(@PathVariable int plannerSeq) {
 		return plannerService.getPlannerView(plannerSeq);
+	}
+	
+	//seq로 데이터 불러오기
+	@GetMapping(path = "getAllPlanner")
+	public ResponseEntity<List<PlannerDTO>> getAllPlanner() {
+		return plannerService.getAllPlanner();
+	}
+	
+	// 플래너 삭제
+	@DeleteMapping(path = "deletePlanner/{seq}")
+	public ResponseEntity<String> deletePlanner(@PathVariable int seq) {
+		return plannerService.deletePlanner(seq);
+	}
+	
+	// 플래너 공개여부 수정
+	@PutMapping(path = "updatePublicPlan/{plannerSeq}")
+	public ResponseEntity<String> updatePublicPlan(@PathVariable int plannerSeq, 
+			@RequestBody Map<String,Integer> requestBody) {
+		int plan = requestBody.get("plan");
+		return plannerService.updatePublicPlan(plannerSeq, plan);
 	}
 }

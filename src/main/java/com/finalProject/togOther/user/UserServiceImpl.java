@@ -2,10 +2,16 @@ package com.finalProject.togOther.user;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,27 +25,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.finalProject.togOther.domain.Place;
 import com.finalProject.togOther.domain.RefreshToken;
 import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.LoginDTO;
 import com.finalProject.togOther.dto.LoginInResponseDTO;
+import com.finalProject.togOther.dto.PlaceDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 import com.finalProject.togOther.dto.UserDTO;
+import com.finalProject.togOther.repository.PlaceRepository;
 import com.finalProject.togOther.repository.RefreshTokenRepository;
 import com.finalProject.togOther.repository.UserRepository;
 import com.finalProject.togOther.security.TokenProvider;
 
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 
-@Slf4j
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -61,6 +68,8 @@ public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
 	
+	private PlaceRepository placeRepository;
+	
 	private RefreshTokenRepository refreshTokenRepository;
 
 	private PasswordEncoder passwordEncoder;
@@ -73,12 +82,14 @@ public class UserServiceImpl implements UserService {
 
 
 	public UserServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository,
-			PasswordEncoder passwordEncoder, TokenProvider tokenProvider, JavaMailSender javaMailSender) {
+			PasswordEncoder passwordEncoder, TokenProvider tokenProvider, JavaMailSender javaMailSender,
+			PlaceRepository placeRepository) {
 		this.userRepository = userRepository;
 		this.refreshTokenRepository = refreshTokenRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.tokenProvider = tokenProvider;
 		this.javaMailSender = javaMailSender;
+		this.placeRepository = placeRepository;
 	}
 
 	// 사용자 추가 서비스
@@ -546,7 +557,30 @@ public class UserServiceImpl implements UserService {
 			
 			userDTO.setPhone(updatedPhone);
 			
-			userDTO.setCertification((byte) 1);
+			userRepository.save(User.toEntity(userDTO));
+			
+			String responseMessage = "성공적으로 수정하였습니다.";
+			return ResponseEntity.ok(responseMessage);
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "수정 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<String> updateMbti(int userSeq, String mbti) {
+		
+		try {
+			
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			UserDTO userDTO = UserDTO.toDTO(user);
+			
+			userDTO.setMBTI(mbti);
 			
 			userRepository.save(User.toEntity(userDTO));
 			
@@ -690,6 +724,92 @@ public class UserServiceImpl implements UserService {
 	    }
 	}
 	
+	@Override
+	public ResponseEntity<?> updateLikingPlace(int userSeq, int placeSeq) {
+		
+		try {
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			Optional<Place> optionalPlace = placeRepository.findById(placeSeq);
+ 			
+			User user = optionalUser.orElseThrow();
+			
+			Place place = optionalPlace.orElseThrow();
+			
+			PlaceDTO placeDTO = PlaceDTO.toDTO(place);
+			
+			String likingPlace = user.getLikingPlace();
+			
+			boolean result = false;
+			
+			Set<String> existingValues = new HashSet<>();
+			
+			// 기존 값에서 중복 제거
+			if(!(likingPlace == null || likingPlace == "")) {
+				existingValues = new HashSet<>(Arrays.asList(likingPlace.split(",")));
+			}
+				
+	        // 존재하는 경우 제거, 존재하지 않는 경우 추가
+	        if (existingValues.contains(String.valueOf(placeSeq))) {
+	            existingValues.remove(String.valueOf(placeSeq));
+	            result = false;
+	        } else {
+	            existingValues.add(String.valueOf(placeSeq));
+	            result = true;
+	        }
+	        
+	        // 새로운 값을 다시 문자열로 변환
+	        likingPlace = String.join(",", existingValues);
+	        
+	        UserDTO userDTO = UserDTO.toDTO(user);
+	        
+	        userDTO.setLikingPlace(likingPlace);
+	        
+	        userRepository.save(User.toEntity(userDTO));
+	        
+	        if(result) {
+	        	placeDTO.setLikeCnt(placeDTO.getLikeCnt() + 1);
+	        	placeRepository.save(Place.toEntity(placeDTO));
+	        }else {
+	        	placeDTO.setLikeCnt(placeDTO.getLikeCnt() - 1);
+	        	placeRepository.save(Place.toEntity(placeDTO));
+	        }
+	       
+	        return ResponseEntity.ok("성공적으로 수정하였습니다.");
+			
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정 중 오류가 발생했습니다.");
+		}
+		
+		
+	}
+	
+	@Override
+	public ResponseEntity<?> updatecityList(int userSeq, String cityName) {
+		
+		try {
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			UserDTO userDTO = UserDTO.toDTO(user);
+						
+			String updatedCityList = updateCityList(userDTO.getCityList(), cityName);
+						
+			userDTO.setCityList(updatedCityList);
+			
+			userRepository.save(User.toEntity(userDTO));
+			
+			System.out.println(updatedCityList);
+			
+			return ResponseEntity.ok(updatedCityList);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정 중 오류가 발생했습니다.");
+		}
+	}
+	
 	
 	@Override
 	public ResponseEntity<String> withdrawalUser(int userSeq) {
@@ -732,5 +852,27 @@ public class UserServiceImpl implements UserService {
              numStr+=ran;
          }
          return numStr;
+    }
+    
+    private String updateCityList(String currentCityList, String newCityName) {
+        List<String> cityList = new ArrayList<>();
+
+        if (currentCityList != null) {
+            // LinkedHashSet을 사용하여 순서를 보장
+            Set<String> citySet = new LinkedHashSet<>(Arrays.asList(currentCityList.split(",")));
+            cityList.addAll(citySet);
+        }
+
+        // 새로운 도시 이름이 비어있지 않고, 중복된 도시가 없으면 추가
+        if (newCityName != null && !newCityName.isEmpty() && !cityList.contains(newCityName)) {
+            cityList.add(newCityName);
+        }
+        
+        // 최대 3개의 도시만 유지
+        while (cityList.size() > 3) {
+            cityList.remove(0);
+        }
+
+        return String.join(",", cityList);
     }
 }

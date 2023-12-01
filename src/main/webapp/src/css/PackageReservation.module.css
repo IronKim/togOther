@@ -1,0 +1,237 @@
+ /*---------------main_page------------*/
+ .main_page {
+    width: 100%; 
+    max-width: 1200px;
+    min-height : 580px;
+    margin: 0 auto;
+}
+.payment_main {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width : 349px;
+    float: right;
+    border-radius: 10px;
+    padding: 10px;
+}
+._ {
+    width : 730px;
+    margin-top : 5px;
+    padding-top : 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgb(233,233,233);
+}
+.main_reservation {
+    display: inline-block;
+    width : 730px;
+    height : 580px;
+}
+.information {
+    width : 730px;
+    height : 500px;
+}
+.reserv_information {
+    display: flex;
+    flex-direction: column;
+}
+.name_start {
+    display : flex;
+    box-sizing: border-box;
+    padding : 6px 14px;
+    border-radius: 10px !important;
+    margin : 10px;
+}
+.name_start input {
+    background-color: whitesmoke;
+    padding : 6px 14px;
+    border : none;
+    width : 33%;
+    margin-left : 3px;
+    border-radius: 10px !important;
+}
+.name_start textarea{
+    background-color: whitesmoke;
+    padding : 6px 14px;
+    border : none;
+    resize: none;
+    width : 100%;
+    height: 80px;
+    border-radius: 10px !important;
+}
+.name_start label {
+    padding: 0 5px;
+    padding-top: 15px;
+    font-weight: bold;
+}
+
+.gender_select {
+    display: flex;
+    border : none;
+    background-color: whitesmoke;
+    border-radius: 10px !important;
+    width : 230px;
+    height : 45px; 
+}
+.select_month_day {
+    display: inline-block;
+    background-color: whitesmoke;
+    width : 100px;
+    height : 45px;
+    border-radius: 10px !important;
+    border : 1px solid rgb(248, 248, 248);
+    margin-left : 10px;
+}
+.country {
+    display: flex;
+    background-color: whitesmoke;
+    width : 230px;
+    height : 45px;
+    border-radius: 10px !important;
+    border : 1px solid rgb(248, 248, 248);
+    margin-bottom: 30px;
+}
+.phone {
+    background-color: whitesmoke;
+    width : 450px;
+    height : 45px;
+    border-radius: 10px !important;
+    border : none; 
+}
+.div_img {
+    display: flex;
+    width : 345px;
+    height : 100px;
+}
+.select_a {
+    text-align: center;
+}
+.select_b {
+    text-align: center;
+}
+.row_day {
+    float: right;
+}
+.row_div input{
+    height: 45px;
+}
+.payment_button {
+    margin: 25px 10%;
+    width : 80%;
+    height : 60px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #2E8DFF;
+    font-size: 18px;
+    color: white;
+}
+.payment_bottom {
+    display: none;
+}
+.payment_info img {
+    float: left;
+    border-radius: 5px;
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+    margin: 0 15px 0 5px;
+}
+.payment_info p {
+    float: left;
+    font-size: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.payment_info h3 {
+    float: left;
+    font-size: 15px;
+    color: gray;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.payment_price {
+    padding: 0 10px;
+}
+.payment_price h1{
+    color: gray;
+    font-size: 18px;
+    margin: 10px 0;
+    float: left;
+}
+.payment_price h2{
+    margin: 10px 0;
+    font-size: 18px;
+    float: right;
+}
+@media (max-width: 1199px) {
+  .scheduler {
+      text-align: center;
+      width: 100%;
+      max-width: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .calendar {
+        display: inline-block;
+    }
+    .selected_day {
+        display: inline-block;
+    }
+    .main_page {
+        width : 100%;
+    }
+    .payment_main {
+        float: none;
+        width : 95%;
+        margin: 2.5%;
+        display: inline-block;
+    }
+    .payment_bottom {
+        display: block;
+    }
+    .payment_top {
+        display: none;
+    }
+    .information {
+        width : 100%;
+        flex-wrap: wrap;
+    }
+    .main_reservation {
+        width : 100%;
+        padding-top : 20px;
+    }
+    .select_month_day {
+        width : 20%;
+    }
+    .row_div {
+        width: 100%;
+    }
+    .row_div input{
+        width: 40%
+    }
+    .row_day {
+        width: 40%;
+    }
+    ._ {
+        width : 100%;
+    }
+    .hr {
+        display: none;
+    }
+}
+@media (max-width: 754px) {
+    .name_start {
+        flex-direction: column;
+    }
+    .name_start input{
+        height: 40px;     
+        width: 50%;  
+    }
+    .row_div input{
+        width: 70%
+    }
+    .row_day {
+        margin-top: 30px;
+        float: none;
+        width: 100%;
+    }
+} 

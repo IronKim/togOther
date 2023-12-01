@@ -133,8 +133,6 @@ const onSub = (subData) => {
         });
         setTextDTO(utd.slice().sort((a, b) => a.order - b.order));//전체 생각
       };
-
-    
     //textDTO 자동 정렬 시스템
     useEffect(() => {
         if (subDTO.filter(nd=> nd.nDay === nDay).length > 0) {
@@ -237,6 +235,7 @@ const onSub = (subData) => {
                 textDTO.filter(nd=> nd.nDay === nDay).filter(item => item.order === 0).map( //첫번째글은 항상 상단 고정
                     item2 => <div><textarea className={styles.nDayText} rows='1'
                     style={{height: item2.height + 'px',backgroundImage:`url(${note})`}} id={item2.id} name='text'
+                    onClick={(e) => onText(e, item2.id)}
                     onInput={(e) => {
                         e.target.style.height = '';
                         e.target.style.height = e.target.scrollHeight + 3 + 'px';

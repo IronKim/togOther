@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.finalProject.togOther.dto.CityDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
+import com.finalProject.togOther.dto.TourPackageDTO;
 import com.finalProject.togOther.dto.UserDTO;
 
 public interface AdvisorService {
@@ -41,5 +42,11 @@ public interface AdvisorService {
 	public ResponseEntity<PlaceDTO> getPlaceBySeq(int seq);
 
 	public ResponseEntity<List<PlaceDTO>> getPlaceByCitySeq(int citySeq);
+
+	public ResponseEntity<String> addTourPackage(TourPackageDTO tourPackageDTO);
+
+	public ResponseEntity<TourPackageDTO> updateTourPackage(int tpSeq, TourPackageDTO tourPackageDTO);
+
+	public ResponseEntity<List<TourPackageDTO>> getTourPackageByCitySeq(int citySeq);
 
 }

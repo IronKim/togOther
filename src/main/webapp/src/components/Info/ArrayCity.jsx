@@ -79,7 +79,6 @@ const ArrayCity = () => {
     };
 
     const toggleSidebar = () => {
-        console.log('a')
         setIsSidebarExpanded((prev) => !prev);
     };
 
@@ -164,7 +163,7 @@ const ArrayCity = () => {
                    className={ArrayStyle.hamburger} 
                    onClick={toggleSidebar}>
             <label className={ArrayStyle.Sidebarlabel}>
-                <span className={ArrayStyle.hamburgerIcon1}>도시 선택</span>
+                <span className={ArrayStyle.hamburgerIcon1}>나라 선택</span>
             </label>
             </button>
             <Accordion  defaultActiveKey={['0']}>

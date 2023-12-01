@@ -5,7 +5,7 @@ import AdvisorUserInfo from './AdvisorUserInfo';
 import styles from '../../css/advisor.module.css'
 import AdvisorUserDetail from './AdvisorUserDetail';
 
-const AdvisorDashboardUser = () => {
+const AdvisorDashboardUser = ({placeList}) => {
 
     const [userList, setUserList] = useState([{
         userSeq: '',
@@ -14,7 +14,7 @@ const AdvisorDashboardUser = () => {
         pwd:'',
         name: '',
         age: '',
-        cityFix: '',
+        likingPlace: '',
         cityList: '',
         coin: '',
         dupLogin: '',
@@ -34,7 +34,7 @@ const AdvisorDashboardUser = () => {
         pwd:'',
         name: '',
         age: '',
-        cityFix: '',
+        likingPlace: '',
         cityList: '',
         coin: '',
         dupLogin: '',
@@ -62,7 +62,7 @@ const AdvisorDashboardUser = () => {
         pwd:'',
         name: '',
         age: '',
-        cityFix: '',
+        likingPlace: '',
         cityList: '',
         coin: '',
         dupLogin: '',
@@ -167,7 +167,7 @@ const AdvisorDashboardUser = () => {
                                         {selectedUser === item && 
                                             <tr>
                                                 <td style={{width: '20%'}} colSpan='5'>
-                                                    <AdvisorUserDetail selectedUser={selectedUser} />
+                                                    <AdvisorUserDetail selectedUser={selectedUser} placeList={placeList} />
                                                 </td>
                                             </tr>
                                         }   

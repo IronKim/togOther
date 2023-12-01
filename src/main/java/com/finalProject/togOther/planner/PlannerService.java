@@ -28,4 +28,13 @@ public interface PlannerService {
 
 	public ResponseEntity<Map<String, Object>> getPlannerView(int plannerSeq);
 
+	public ResponseEntity<String> deletePlanner(int seq);
+
+	public ResponseEntity<List<PlannerDTO>> getMyPlanner(int n, int userSeq);
+
+	public ResponseEntity<Integer> totMyPlanner(int userSeq);
+
+	public ResponseEntity<String> updatePublicPlan(int plannerSeq, int plan);
+
+	public ResponseEntity<List<PlannerDTO>> getAllPlanner();
 }

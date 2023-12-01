@@ -67,7 +67,7 @@ public class User {
 	//최근 도시
 	private String cityList;
 	//고정도시
-	private String cityFix;
+	private String likingPlace;
 	
 	private byte certification;
 	
@@ -93,7 +93,7 @@ public class User {
 				   .coin(userDTO.getCoin())
 				   .dupLogin(userDTO.getDupLogin())
 				   .cityList(userDTO.getCityList())
-				   .cityFix(userDTO.getCityFix())
+				   .likingPlace(userDTO.getLikingPlace())
 				   .certification(userDTO.getCertification())
 				   .authority(userDTO.getAuthority())
 				   .build();
