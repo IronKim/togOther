@@ -88,6 +88,7 @@ const PackageLists = () => {
                         </div>
                         <Card.Body className={PackageStyle.cardbody}>
                             <Card.Title className={PackageStyle.cardTitle}>{item.tpTitle}</Card.Title>
+                            <div style={{clear:'both'}}></div>
                             <Card.Text className={PackageStyle.cardPrice}>
                                {parseFloat(item.tpPrice).toLocaleString()}원
                             </Card.Text>
