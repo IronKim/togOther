@@ -109,7 +109,7 @@ IMP.init('imp37267524');
         setName(user.name)
         setGender(user.gender)
         setYear(day.getFullYear())
-        setMonth(day.getMonth() + 1)
+        setMonth((day.getMonth() + 1).toString().padStart(2, '0'))
         setDate(day.getDate())
         setTel(user.phone)
         setEmail(user.email)

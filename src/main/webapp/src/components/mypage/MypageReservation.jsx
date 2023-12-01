@@ -10,13 +10,12 @@ const MypageReservation = () => {
                     <div className={ styles.reservation_img_div }>
                         <img style={{ width: '120px', height : '70px;' }} src='' />
                     </div>   
-
-                    <div className={ styles.p_div}>
-                        <p>어쩌구 저쩌구 패키지 웅앵웅</p>
-                        <p>| 대충 얼마얼마 원</p>
-                        <p>| 패키지 갯수</p>
-                        <p>| 출발 일자</p>
-                    </div>
+                        <h1 className={ styles.div_h1 }>
+                            한강가서 재밌게 놀까?
+                            <h2>2023.11.12</h2>
+                        </h1>
+                        <p className={ styles.div_p }>25000원 4개 
+                        <h2>총 100000원</h2></p>
                 </div>
         </div>
     );

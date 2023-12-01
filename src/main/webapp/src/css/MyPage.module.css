@@ -191,31 +191,47 @@
     font-size: 30px;
 }
 .reservation_1 {
-    border: 1px solid black;
+    border: 1.5px solid lightgray;
     flex-direction: column;
     height: 80px;
-    width: 80%;
+    width: 95%;
+    margin: 1% 2.5%;
     border-radius: 10px;
 }
 .reservation_img_div {
-    margin: 5px;
+    margin: 4px;
     border: 1px solid red;
+    float: left;
     width: 120px;
     height: 70px;
     border-radius: 10px;
+    vertical-align: top;
 }
-.p_div {
-    display: flex;
-    margin-left: 150px;
-    align-items: flex-start; 
-}
-.p_div p {
-    display: flex;
-    margin-top: -50px;
+.div_h1 {
+    display: inline-block;
+    width: calc(100% - 270px);
     font-size: 20px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    padding: 18px 5px;
+}
+.div_h1 h2{
+    font-size: 17px;
+    color: gray;
+}
+.div_p {
+    vertical-align: text-bottom;
+    display: inline-block;
+    width: 130px;
+    font-size: 16px;
+    color: gray;
+    text-align: right;
+    padding-bottom: 15px;
+}
+.div_p h2{
+    font-size: 18px;
+    color: #2E8DFF;
 }
 
 /*--------------media-------------*/
@@ -272,9 +288,6 @@
     .hr_1 {
         width : 100%;
     }
-    .reservation_1 {
-        width : 100%;
-    }
     .p_div {
         flex-wrap: wrap;
         max-height: 3.6em; /* 두 줄로 나누기 위해 높이 제한 설정 (글자 크기에 따라 조절 필요) */
@@ -310,11 +323,6 @@
     .inputdiv input {
         width : 100%;
     }
-    .my_reservation_main {
-        border : 1px solid palegreen;
-        width : 920px;
-        height : 500px;
-    }
     .hr_1 {
         width: 91.3%;
         margin-bottom: 30px;
@@ -330,13 +338,21 @@
         width: 120px;
         height: 110px;
     }
-    .p_div {
-        margin-left: 150px;
-        height : 120px;
-    }
-    .p_div p {
-        margin-top: -100px;
+    .div_h1 {
+        display: inline-block;
+        width: calc(100% - 140px);
         font-size: 20px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding: 12px 5px;
+    }
+    .div_p {
+        display: inline-block;
+        width: calc(100% - 140px);
+        font-size: 16px;
+        color: gray;
+        text-align: right;
     }
 }
 @media (max-width: 1199px) {

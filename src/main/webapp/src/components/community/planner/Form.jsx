@@ -310,8 +310,7 @@ useEffect(()=>{
                 title: up ? "수정이 완료되었습니다." : "등록이 완료되었습니다.",
                 icon: "success"
             }).then(() => {
-                if(up) navigate(-1);
-                else navigate(`/community`);
+                navigate(`/community`);
             });
         })
         .catch(e => console.log(e))
