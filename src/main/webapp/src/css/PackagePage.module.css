@@ -20,6 +20,11 @@
     font-size:40px;
 }
 
+.package_price{
+    text-align: right;
+    font-size: 30px;
+}
+
 .details_scheduler {
     width: 100%; 
     max-width: 1200px;
@@ -29,30 +34,19 @@
     margin-top: 40px;
 }
 .details {
-    width: 800px;
+    width: 800px;/*800px */
     min-height: 600px;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
+    margin: 0 auto;
 }
-.moreButton{
-    position: relative;
-    bottom: 40px;
-    font-size: 25px;
-    color: #3498db;
-    width: 800px;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-out;
-    background: linear-gradient(to top, #ffffff, rgb(214, 214, 214));
-    opacity: 0.8;
-}
+
 .scheduler {
     float: right;
     width : 349px;
-    height : 580px;
     margin-left: auto;
     margin-right: auto; 
+    padding-bottom: 50px;
 }
 .calendar {
     width: 349px;
@@ -65,7 +59,7 @@
     width : 349px;
     max-height: 283px;
     font-size: 20px;
-    padding : 10px 5px 0 0;
+    padding : 10px 5px 0px 10px;
 }
 .text {
     height : 85px;
@@ -76,7 +70,7 @@
 .price {
     padding-top: 5px;
     width : 150px;
-    height : 30px;
+    height : 20px;
 }
 .arrowdiv {
     width: 130px;
@@ -99,13 +93,17 @@
   .reservation {
     width : 349px;
     height : 110px;
-    margin: 0 auto;
   }
   .reservation button {
     width : 90%;
     height : 80px;
-    margin: 5%;
+    margin: 3%;
     margin-top: 10%;
+    margin-left: 1%;
+    background-color: #2E8DFF;
+    color: white;
+    border: none;
+    border-radius: 25px;
   }
   .context {
     display: flex;
@@ -114,6 +112,22 @@
     overflow: auto;
     overflow-x: hidden;
   }
+  .moreButtonDiv{
+    max-width: 800px;
+    margin-left: 2.1%;
+
+  }
+  .moreButton{
+    font-size: 25px;
+    color: #3498db;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-out;
+    background: linear-gradient(top, #ffffff, rgb(214, 214, 214));
+    opacity: 0.8;
+}
   /*---------------main_page------------*/
 /*---------------main_page------------*/
 .main_page {
@@ -288,20 +302,47 @@
     display: none;
 }
 
-@media (max-width: 1199px) {
-  .scheduler {
+@media (max-width: 1201px) {
+    .package_price {
+        margin-right: 20px;
+    }
+    .details{
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    .context{
+        width: 100%;
+        margin: 0 auto;
+    }
+    .moreButtonDiv{
+        margin: 0 auto;
+        left: 0%;
+    }
+    .moreButton{
+        width: 100%;
+    }
+    .scheduler {
       text-align: center;
       width: 100%;
       max-width: none;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
+    }
+    .arrow{
+        margin-right: 15px;
     }
     .calendar {
         display: inline-block;
     }
     .selected_day {
         display: inline-block;
+        padding-left: 5vw;
+        padding-top: 0%;
+        margin-top: 1%;
     }
+    .reservation button {
+        margin: 0%;
+        margin-top: 10%;
+      }
     .main_page {
         width : 100%;
     }
@@ -345,6 +386,13 @@
     }
 }
 @media (max-width: 754px) {
+    .package_title{
+        font-size: 25px;
+    }
+    .package_price {
+        font-size: 25px;
+        margin-right: 10px;
+    }
     .name_start {
         flex-direction: column;
     }

@@ -2,13 +2,14 @@
   display: inline-block;
   flex-direction: column;
   user-select: none;
-  width:100%;
+  width: 1200px;
+  max-width:100%;
 }
 
 .card{
   overflow: hidden;
   max-width:100%;
-  width: 14.5vw;
+  width: 13.5vw;
   height: 11vw;
   margin: 0.5em;
   cursor: pointer;

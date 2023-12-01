@@ -144,6 +144,10 @@ const PackageMain = () => {
         window.scrollTo(0, 0);
         navigate(`/info/cityList`)
     }
+
+    const onPackage = (tpSeq) => {
+        navigate(`details/${tpSeq}`)
+    }
     
     return (
         <>
@@ -184,7 +188,7 @@ const PackageMain = () => {
                     {
                         packages.filter((item,index) => index < 4).map(pack => 
                             // 이빈이형 카드 리스트 파츠 쓴곳임
-                                <Card className={styles.card} key={pack.cityName}>
+                                <Card className={styles.card} key={pack.cityName} onClick={ () => onPackage(pack.tpSeq) }>
                                 <div className={styles.cardimgDiv}>
                                     <Card.Img className={styles.cardimg} src={pack.tpThumbnail} />
                                 </div>
