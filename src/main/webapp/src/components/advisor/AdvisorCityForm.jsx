@@ -1,6 +1,7 @@
 import React from 'react';
 import { addCity, updateCity } from '../../api/AdvisorApiService';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import sweet from 'sweetalert2';    
 
 import styles from '../../css/advisor.module.css';
 
@@ -12,7 +13,10 @@ const AdvisorCityForm = ({selectedCity, onInputCity, getCityList, onErrorImg}) =
         updateCity(citySeq, selectedCity)
         .then(res => {
             console.log(res)
-            alert('완료');
+            sweet.fire({
+                title: "완료되었습니다.",
+                icon: "success"
+            })
         })
         .catch(e => console.log(e))
         .finally(getCityList);
@@ -22,7 +26,10 @@ const AdvisorCityForm = ({selectedCity, onInputCity, getCityList, onErrorImg}) =
         addCity(selectedCity)
         .then(res => {
             console.log(res.data);
-            alert('완료');
+            sweet.fire({
+                title: "완료되었습니다.",
+                icon: "success"
+            })
         })
         .catch(e => console.log(e))
         .finally(getCityList);

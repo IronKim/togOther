@@ -28,6 +28,8 @@ import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
 import PackageLists from './package/PackageLists';
 import PackageMain from './package/PackageMain';
+import NaverCallback from '../pages/NaverCallback';
+import AdvisorKakaoToken from './advisor/AdvisorKakaoToken';
 
 const libraries = ["places"];
 
@@ -56,6 +58,7 @@ const Main = ({ showNavbar }) => {
                 <Routes>
         
                     <Route path='/' element= { <Home />} />
+                    <Route path='token' element={<AdvisorKakaoToken/>}/>
                     <Route path='user'>
                         <Route path='login' element ={ user.name === '' ? <Login /> : <Navigate to={'/'}></Navigate>} />
                         <Route path='write' element ={ <Write />}/>
@@ -64,6 +67,7 @@ const Main = ({ showNavbar }) => {
                                 <Mypage />
                             </UserRoute>
                         }/>
+                        <Route path='naver/callback' element = { <NaverCallback /> } />
                     </Route>
                     <Route path='info'>
                         <Route path='place/:placeSeq' element={ <PlacePage />} />

@@ -168,17 +168,25 @@ const MypageTogether = () => {
     }
 
     const myPageTogetherReset = async  (togetherSeq) => {
-      const gogo = window.confirm("동행을 삭제하시겠습니까?")
-      
-      if (gogo) {
-          try {
-              await deleteTogether(togetherSeq)
-              alert("삭제가 완료되었습니다")
-              navigate('/community/')
-          } catch (error) {
-              console.error("동행 삭제 중 오류:", error)
-          }
-      }
+      sweet.fire({
+        title: "삭제하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "예",
+        cancelButtonText: "아니요"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteTogether(togetherSeq)
+            .then(res => {
+                sweet.fire({
+                    title: "삭제되었습니다",
+                    icon: "success"
+                })
+            })
+        } 
+    });
   }
 
     return (
@@ -191,7 +199,7 @@ const MypageTogether = () => {
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
               
               return (
-                <div className={styles.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
+                <div className={styles.together} key={item.togetherSeq}>
                   <div className={styles.dateTop}>
                     <div className={styles.date}>
                       {item.startDate}~{item.endDate}
@@ -219,7 +227,7 @@ const MypageTogether = () => {
                 {searchSub !== undefined &&
 
                   (<div className={styles.togetherFoot}>
-                      <div className={styles.imgDiv}>
+                      <div className={styles.imgDiv} onClick={() => onTogetherView(item.togetherSeq)}>
                           <img src={ loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).image} 
                           className={styles.placeImg} alt="Place Image" />
                       </div>
@@ -239,7 +247,7 @@ const MypageTogether = () => {
                   {searchSub === undefined && searchSub_Cus !== undefined &&
 
                   (<div className={styles.togetherFoot}>
-                    <div className={styles.imgDiv}>
+                    <div className={styles.imgDiv} onClick={() => onTogetherView(item.togetherSeq)}>
                         <div className={styles.placeImg}>
                         {/* 여기에 지도 넣을거야 */}
                         {scriptLoaded &&

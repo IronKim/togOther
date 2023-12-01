@@ -110,6 +110,7 @@
     width: 100%;
     margin: 1% 0 1% 0;
     border: lightgrey 1px solid;
+    padding-left: 2%;
 }
 .writedateCard{
     border: lightgrey 1px solid;
@@ -186,6 +187,7 @@
     height: 400px;
     margin: 1% 0 1% 0;
     border: lightgrey 1px solid;
+    padding-left: 2%;
 }
 /* 커스텀 */
 .mapInput{
@@ -398,6 +400,7 @@
 .searchCity{
     width: 300px;
     height: 30px;
+    padding-left: 2%;
 }
 .backDiv{
     width: 100px;
@@ -433,10 +436,11 @@
         /* border: 1px solid; */
     }
     .writedateCard_de{
-        height: 50px;
+        height: 65px;
     }
     .writedateCard_de_text{
         /* border: solid 1px; */
+        line-height: 0px;
         height: 15px;
         width: 60px;
     }
@@ -459,6 +463,11 @@
         height: 300px;
     }
     
+}
+@media (max-width: 950px){
+    .writedateCard_de_text{
+        line-height: 25px;
+    }
 }
 @media (max-width: 500px){
     /* search */

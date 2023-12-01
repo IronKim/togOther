@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getTourPackageByTpSeq } from '../../api/PackageApiService';
+import { getTourPackageByTpSeq, sendMessage, addPayment } from '../../api/PackageApiService';
 import styles from '../../css/PackageReservation.module.css';
 import thumb from '../../assets/image/package_thumb.png'
 
@@ -18,23 +18,42 @@ IMP.init('imp37267524');
     function callback(response) {
         const { success, error_msg } = response;
 
-
         if (success) {
             window.scrollTo(0, 0);
-            sweet.fire({
-                title: "결제 성공",
-                icon: "success"
-            }).then(() => {
-                
-            });
+            const packageDTO = {
+                tpSeq : parseInt(packageSeq),
+                userSeq : parseInt(user.userSeq),
+                title : packageData.tpTitle,
+                price : packageData.tpPrice,
+                count : parseInt(count),
+                useDate : new Date(resDate),
+                bookerBirthday : new Date(year, month - 1, date),
+                bookerName : name,
+                bookerGender : gender,
+                bookerTel : telCode+' '+tel,
+                bookerEmail : email,
+                bookerWish : wish
+            }
+            addPayment(packageDTO)
+            .then(res => console.log(res))
+            .then(
+                sweet.fire({
+                    title: "결제 성공",
+                    icon: "success"
+                }).then(() => {
+                    sendMessage({
+                        text : `상품 ${packageData.tpTitle}\n\n출발일자 ${new Date(resDate).getFullYear()}.${new Date(resDate).getMonth() + 1
+                        }.${new Date(resDate).getDate()}\n구매자 ${name}\n가격 ${packageData.tpPrice}원 ${count}개`,
+                        link : `http://localhost:3000/package/details/${packageSeq}`
+                    })
+                })
+            )
         } else {
             sweet.fire({
                 title: "결제 실패",
                 text: error_msg,
                 icon: "warning"
-            }).then(() => {
-                
-            });
+            })
         }
     }
 
@@ -43,7 +62,7 @@ IMP.init('imp37267524');
             pg: 'html5_inicis.INIpayTest',
             pay_method: 'card',
             merchant_uid: `mid_${new Date()}`,
-            amount: packageData.tpPrice,
+            amount: packageData.tpPrice * count,
             name: packageData.tpTitle,
             buyer_name: name,
             buyer_tel: tel,
@@ -67,6 +86,8 @@ IMP.init('imp37267524');
     const[email,setEmail] = useState('');
     const[wish,setWish] = useState('');
     const[packageData,setPackageData] = useState({});
+    const[resDate,setResDate] = useState();
+    const[count,setCount] = useState();
 
 
 
@@ -76,6 +97,11 @@ IMP.init('imp37267524');
             setPackageData(res.data)
         })
     },[packageSeq])
+
+    useEffect(()=>{
+        setResDate(info.split('&')[0])
+        setCount(info.split('&')[1])
+    },[info])
 
     useEffect(()=>{
         const day = new Date(user.birthday)
@@ -99,26 +125,28 @@ IMP.init('imp37267524');
                         packageData.tpThumbnail.split(',')[0] !== '' 
                         ? packageData.tpThumbnail.split(',')[0]: thumb} alt="Package Image"/>
                     <p>{packageData.tpTitle}</p><br/><br/>
-                    <h3>시작 날짜 받아오기</h3>
+                    <h3>{new Date(resDate).getFullYear()}
+                    .{new Date(resDate).getMonth() + 1}
+                    .{new Date(resDate).getDate()} 출발</h3>
                 </div>
                 <div style={{clear:'both'}}></div>
                 <hr/>
                 <div className={styles.payment_price}>
                     <p style={{ fontSize : '20px', margin: '10px' }}>결제금액</p>
                     <h1>상품 가격</h1>
-                    <h2>{packageData.tpPrice}원</h2>
+                    <h2>{parseFloat(packageData.tpPrice).toLocaleString()}원</h2>
                     <div style={{clear:'both'}}></div>
                     <h1>구매 개수</h1>
-                    <h2>1개</h2>
+                    <h2>{count}개</h2>
                     <div style={{clear:'both'}}></div>
-                    <h1>총 결제 금액</h1>
-                    <h2>{packageData.tpPrice}원</h2>
+                    <h1 style={{color:'#1F5FAB',fontSize:'20px'}}>총 결제 금액</h1>
+                    <h2 style={{fontSize:'20px'}}>{parseFloat(packageData.tpPrice * count).toLocaleString()}원</h2>
                 </div>
                 <div style={{clear:'both'}}></div>
                 <hr className={styles.hr}/>
                 <div className={styles.payment_top}>
                     <button  className={ styles.payment_button} 
-                    onClick={() => onClickPayment()}>총 {packageData.tpPrice}원 결제</button>
+                    onClick={() => onClickPayment()}>총 {parseFloat(packageData.tpPrice * count).toLocaleString()}원 결제</button>
                 </div>
             </div>
 
@@ -203,7 +231,7 @@ IMP.init('imp37267524');
                             <label>국가</label>
                                 <select className={ styles.country }
                                     value={telCode} onChange={(e)=>setTelCode(e.target.value)}>
-                                    <option value='82' >+82 한국</option>
+                                    <option value='82'>+82 한국</option>
                                     <option value='30'>+30 그리스</option>
                                     <option value='31'>+31 네덜란드</option>
                                     <option value='47'>+47 노르웨이</option>

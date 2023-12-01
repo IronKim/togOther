@@ -85,7 +85,7 @@ const AdvisorDashboardCommunity = () => {
                 })
             } 
         });
-        }
+    }
 
     return (
         <div>
