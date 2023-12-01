@@ -14,5 +14,4 @@ import lombok.Setter;
 public class KakaoConfiguration {
 	private @Value("${kakao.id}") String id;
 	private @Value("${kakao.secret}") String secret;
-	private @Value("${kakao.refreshToken}") String refreshToken;
 }

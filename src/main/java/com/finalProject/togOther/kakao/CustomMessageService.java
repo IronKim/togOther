@@ -9,12 +9,12 @@ public class CustomMessageService {
     @Autowired
     MessageService messageService;
 
-    public void sendMessage(String token,String order) {
+    public void sendMessage(String token,String text,String link) {
         DefaultMessageDto myMsg = new DefaultMessageDto();
-        myMsg.setMobileUrl("http://localhost:8080/miniProject/order/send");
+        myMsg.setMobileUrl(link);
         myMsg.setObjType("text");
-        myMsg.setWebUrl("http://localhost:8080/miniProject/order/send");
-        myMsg.setText("어쩌구 저쩌구...");
+        myMsg.setWebUrl(link);
+        myMsg.setText(text);
   
         messageService.sendToFriendMessage(token, myMsg);
     }

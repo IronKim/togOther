@@ -20,9 +20,17 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.finalProject.togOther.user.UserService;
+
 
 @Service
 public class GetToken {
+	
+	private UserService userService;
+
+	public GetToken(UserService userService) {
+		this.userService = userService;
+	}
 	
 	public String Token(String code, String id, String secret) {
 		try{
@@ -58,38 +66,12 @@ public class GetToken {
 	        
 	        System.out.println(token);
 	        
-	        updateToken(token);
+	        userService.kakaoRefreshTokenUpdate(token);
 	        
 	        return token;
 	    } catch (Exception e) {
 	        return null;
 	    }
-	}
-	public void updateToken(String token) {
-	        try {
-	            // Resource 객체를 사용하여 클래스패스 내의 리소스를 로드합니다.
-	            Resource resource = new ClassPathResource("kakao/kakao.properties");
-
-	            // 리소스를 읽어옵니다.
-	            InputStream inputStream = resource.getInputStream();
-	            byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
-	            inputStream.close();
-
-	            // 읽어온 내용을 문자열로 변환합니다.
-	            String fileContent = new String(bytes, "UTF-8");
-	            System.out.println(fileContent);
-	            // 입력받은 문장을 업데이트된 파일 내용으로 변경합니다.
-	            fileContent = fileContent.replaceAll("kakao.refreshToken=.*", "kakao.refreshToken=" + token);
-
-	            // 파일을 업데이트합니다.
-	            BufferedWriter writer = new BufferedWriter(new FileWriter(resource.getFile()));
-	            writer.write(fileContent);
-	            writer.close();
-
-	            System.out.println("토큰이 성공적으로 업데이트되었습니다.");
-	        } catch (IOException e) {
-	            System.err.println("토큰을 업데이트하는 중 오류가 발생했습니다: " + e.getMessage());
-	        }
 	}
 	
 	public String refreshAccessToken(String refreshToken,String id,String secret) {

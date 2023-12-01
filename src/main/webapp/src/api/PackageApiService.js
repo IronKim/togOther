@@ -8,4 +8,6 @@ export const getTourPackageByTpSeq = (tpSeq) => apiClient.get(`/api/tourPackage/
 
 export const getToken = (token) => apiClient.get(`/api/kakao/token/${token}`);
 
-export const sendMessage = (mes) => apiClient.post(`/api/kakao/send`,mes);
+export const sendMessage = (message) => apiClient.post(`/api/kakao/send`,message);
+
+export const addPayment = (packageDTO) => apiClient.post(`/api/tourPackage/addPayment`,packageDTO);

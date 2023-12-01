@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.config.KakaoConfiguration;
+import com.finalProject.togOther.user.UserService;
 
 
 //플래너 컨트롤러
@@ -22,12 +23,13 @@ import com.finalProject.togOther.config.KakaoConfiguration;
 public class KakaoController {
 	private String id;
 	private String secret;
-	private String refreshToken;
 	
-	public KakaoController(KakaoConfiguration kakaoConfiguration) {
+	private UserService userService;
+	
+	public KakaoController(KakaoConfiguration kakaoConfiguration,UserService userService) {
 		id = kakaoConfiguration.getId();
 		secret = kakaoConfiguration.getSecret();
-		refreshToken = kakaoConfiguration.getRefreshToken();
+		this.userService = userService;
 	}
 			
 	@Autowired
@@ -37,9 +39,11 @@ public class KakaoController {
 	
 	@PostMapping(path = "send")
 	public void serviceStart(@RequestBody Map<String, String> requestBody) {
-		String mes = requestBody.get("mes");
+		String text = requestBody.get("text");
+		String link = requestBody.get("link");
+		String refreshToken = userService.kakaoRefreshTokenGet();
 		String token = getToken.refreshAccessToken(refreshToken, id, secret);
-		customMessageService.sendMessage(token,mes);//토큰 넣는곳
+		customMessageService.sendMessage(token,text,link);//토큰 넣는곳
 	}
 	
 	@GetMapping(path = "token/{token}")

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getTourPackageByTpSeq, sendMessage } from '../../api/PackageApiService';
+import { getTourPackageByTpSeq, sendMessage, addPayment } from '../../api/PackageApiService';
 import styles from '../../css/PackageReservation.module.css';
 import thumb from '../../assets/image/package_thumb.png'
 
@@ -20,12 +20,34 @@ IMP.init('imp37267524');
 
         if (success) {
             window.scrollTo(0, 0);
-            sweet.fire({
-                title: "결제 성공",
-                icon: "success"
-            }).then(() => {
-                
-            });
+            const packageDTO = {
+                tpSeq : parseInt(packageSeq),
+                userSeq : parseInt(user.userSeq),
+                title : packageData.tpTitle,
+                price : packageData.tpPrice,
+                count : parseInt(count),
+                useDate : new Date(resDate),
+                bookerBirthday : new Date(year, month - 1, date),
+                bookerName : name,
+                bookerGender : gender,
+                bookerTel : telCode+' '+tel,
+                bookerEmail : email,
+                bookerWish : wish
+            }
+            addPayment(packageDTO)
+            .then(res => console.log(res))
+            .then(
+                sweet.fire({
+                    title: "결제 성공",
+                    icon: "success"
+                }).then(() => {
+                    sendMessage({
+                        text : `상품 ${packageData.tpTitle}\n\n출발일자 ${new Date(resDate).getFullYear()}.${new Date(resDate).getMonth() + 1
+                        }.${new Date(resDate).getDate()}\n구매자 ${name}\n가격 ${packageData.tpPrice}원 ${count}개`,
+                        link : `http://localhost:3000/package/details/${packageSeq}`
+                    })
+                })
+            )
         } else {
             sweet.fire({
                 title: "결제 실패",
@@ -262,9 +284,6 @@ IMP.init('imp37267524');
                 </div>
             </div>
             <div style={{clear:'both'}}/>
-            <button onClick={()=>{
-                sendMessage({mes : 'sddaf'})
-            }}>메시지</button>
         </div>   
     );
 };
