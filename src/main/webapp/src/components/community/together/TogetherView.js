@@ -13,6 +13,7 @@ import { getCityList } from '../../../api/CityApiService';
 import { GoogleMap,Marker } from '@react-google-maps/api';
 import { getUserByEmail } from '../../../api/UserApiService';
 import { useUserStore } from '../../../stores/mainStore';
+import sweet from 'sweetalert2'; 
 
 const containerStyle = {
     width: '100%',
@@ -155,7 +156,11 @@ const TogetherView = ({seqAd}) => {
         if (gogo) {
             try {
                 await deleteTogether(togetherSeq)
-                alert("삭제가 완료되었습니다")
+                sweet.fire({
+                    title: "삭제가 완료되었습니다.",
+                    icon: "success"
+                })
+
                 navigate('/community/')
             } catch (error) {
                 console.error("동행 삭제 중 오류:", error)

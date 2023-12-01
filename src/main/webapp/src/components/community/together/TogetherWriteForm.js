@@ -9,6 +9,7 @@ import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../../stores/mainStore';
+import sweet from 'sweetalert2'; 
 
 
 const PlaceWriteForm = () => {
@@ -107,7 +108,10 @@ const PlaceWriteForm = () => {
                         .catch(e => console.log(e))
                         }
                     })
-                    alert('등록이 완료되었습니다.')
+                    sweet.fire({
+                        title: "등록이 완료되었습니다.",
+                        icon: "success"
+                    })
                     navigate('/community/')
                  })
                  .catch(error => console.error(error))
@@ -178,7 +182,10 @@ const PlaceWriteForm = () => {
                         .catch(e => console.log(e))
                         }
                     })
-                    alert('수정이 완료되었습니다.')
+                    sweet.fire({
+                        title: "수정이 완료되었습니다.",
+                        icon: "success"
+                    })
                     setSelectedItem(null)
                     navigate('/community/')
                  })

@@ -26,6 +26,7 @@ const PackageMain = () => {
     const foc = useRef();
 
     const navigate = useNavigate()
+
 //배열 랜덤 매커니즘
     function shuffleArray(array) {
         let shuffledArray = array.slice();
@@ -37,6 +38,7 @@ const PackageMain = () => {
       
         return shuffledArray;
       }
+      
 /////////////////////
     useEffect(()=>{
         const fetchData = async () => {
