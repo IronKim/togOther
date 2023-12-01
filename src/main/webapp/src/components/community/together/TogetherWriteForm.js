@@ -108,6 +108,7 @@ const PlaceWriteForm = () => {
                         }
                     })
                     alert('등록이 완료되었습니다.')
+                    window.scrollTo(0, 0);
                     navigate('/community/')
                  })
                  .catch(error => console.error(error))
@@ -180,6 +181,7 @@ const PlaceWriteForm = () => {
                     })
                     alert('수정이 완료되었습니다.')
                     setSelectedItem(null)
+                    window.scrollTo(0, 0);
                     navigate('/community/')
                  })
                  .catch(error => console.error(error))

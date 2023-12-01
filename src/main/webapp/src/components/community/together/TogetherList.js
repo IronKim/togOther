@@ -145,6 +145,7 @@ useEffect(() => {
     const navigate = useNavigate()
 
     const onTogetherView = (togetherSeq) => {
+      window.scrollTo(0, 0);
       navigate(`together/view/${togetherSeq}`)
   }
 
