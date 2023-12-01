@@ -119,7 +119,8 @@
   /* /////////////////////// */
   .packageSection {
     width: 100%;
-    margin: 80px 0;
+    margin: 80px 0 auto;
+    user-select: none;
   }
   .packageSection h2{
     background-color: whitesmoke;
@@ -130,10 +131,7 @@
     float: right;
     cursor: pointer;
   }
-  .packageSection h2 img{
-    width: 20px;
-    vertical-align: middle;
-  }
+
   /* 이빈이형 카드 파츠 부분 */
 
   .card{
@@ -145,27 +143,31 @@
     cursor: pointer;
     display: inline-block;
     border-radius: 20px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
   }
   .cardbody{
-    display: flex;
     width: 100%;
     height: 40%; 
   }
   .cardimgDiv{
     max-width: 100%;
-    height: 11em;
     overflow: hidden;
-    border-radius: 15px;
+    max-height: 11.5em;
   }
   .cardimg{
     width: 284px;
-    height: 11em;
+    height: 11.5em;
     object-fit: cover;
     transition: transform 0.3s ease-in-out;
     overflow: hidden;
   }
   .cardTitle{
     font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
   .cardPrice{
     width: 90px;
@@ -173,9 +175,14 @@
     text-align: right;
     left: 180px;
     bottom: 0px;
-    position: absolute;
     float: right;
     color: #213ee3;
+  }
+  /* 호버 시 이미지 확대 */
+  .card:hover img {
+    transform: scale(1.1); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
+    cursor: pointer;
+    transition: all 0.3s linear;
   }
   .searchBg {
     width: 100%;
@@ -187,16 +194,16 @@
     margin-bottom: 100px;
     text-align: center;
   }
-  
-  .card:hover .imgtext{
-    color: #D1D5D6;
-    background-color: rgba( 0, 0, 0, 0.7 );
-  }
   @media (max-width: 1199px) {
+    .packageSection {
+      margin: 60px 0 auto !important;
+      width: 100%;
+    }
+
     .card{
-      width: 35vw;
+      width: 44%;
       height: 13.5em;
-      margin: 0.5em;
+      margin: 1.5% 3%;
     }
     
     .cardimg{
@@ -213,32 +220,49 @@
       overflow: hidden;
       border-radius: 15px;
     }
-    .cardText{
-      width: 74px;
+    .cardTitle {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
     }
+  }
+  @media (max-width: 391px) { 
+    .searchBg {
+      margin-bottom: 50px;
     }
-    @media (max-width: 391px) { 
-      .card{
-          width: 8em;
-          height: 27vw;
-          left: -10%;
-      }
-      .cardimgDiv{
-          height: 4em;
-      }
-      .cardTitle{
-          position: relative;
-          bottom: 13px;
-          right: 10px;
-          font-size: 10px;
-          margin-bottom: auto;
-      }
-      .cardText{
-          font-size: 8px;
-          width: 40px; 
-          left: 63%;
-      }
+    .centerSection {
+      margin-top: 50px;
     }
+
+    .packageSection {
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    .card{
+      width: 44%; 
+      margin: 1.5% 3%;
+      height: 10.5em;
+    }
+    .cardimgDiv{
+      height: 6em;
+    }
+    .cardTitle{
+      position: relative;
+      bottom: 13px;
+      right: 10px;
+      font-size: 15px;
+      margin-bottom: auto;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .cardPrice{
+      font-size: 14px;
+    }
+  }
 
 
 

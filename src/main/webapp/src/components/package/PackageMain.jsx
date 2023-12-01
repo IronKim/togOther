@@ -132,10 +132,6 @@ const PackageMain = () => {
     const goList = (cName) => {
         navigate(`list/${cName}`)
       }
-    const goTop = () => {
-        window.scrollTo(0, 0);
-        foc.current.focus();
-    }
     const goCommunity = () => {
         window.scrollTo(0, 0);
         navigate(`/community`)
@@ -202,7 +198,6 @@ const PackageMain = () => {
                             //
                         )
                     }
-                <h2 onClick={() => goTop()}>패키지 찾아보기&nbsp;&nbsp;<img src={searchs}/></h2>
             </section>
         </div>
         </>
