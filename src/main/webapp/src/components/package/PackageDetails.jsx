@@ -125,7 +125,8 @@ const PackageDetails = () => {
                             value={selectedDate}
                             minDetail="month"
                             maxDetail="month" 
-                            minDate={new Date(startformattedDate)}
+                            // minDate={new Date(startformattedDate)}
+                            minDate={moment().toDate()}
                             maxDate={new Date(endformattedDate)}
                             navigationLabel={null}
                             showNeighboringMonth={false}
