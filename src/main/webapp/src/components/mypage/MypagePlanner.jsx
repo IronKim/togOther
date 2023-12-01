@@ -61,7 +61,7 @@ const MypagePlanner = () => {
                 })
             } 
         });
-    } 
+    }
 
     const onPublic = (e,seq,publicPlan) => {
         e.stopPropagation();
@@ -77,6 +77,7 @@ const MypagePlanner = () => {
             })
         })
     }
+    
     //////////////스크롤 매커니즘////////////////
     const handleScroll = () => {
 

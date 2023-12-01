@@ -3,6 +3,8 @@ import styles from '../../../css//planner.module.css'
 import backBut from '../../../assets/image/backBut.png'
 import { getCityList } from '../../../api/CityApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
+import sweet from 'sweetalert2';    
+
 
 const containerStyle = {
     position: 'absolute',
@@ -61,16 +63,32 @@ const AddPlaceForm = (props) => {
     const onSave = (subDTO) => {
         if (save) {
             if(subDTO.place || subDTO.customDTO) onSub(subDTO)
-            else alert('장소를 선택해 주세요')
+            else 	
+            sweet.fire({
+                title: "장소를 선택해 주세요.",
+                icon: "warning"
+            })
         }
-        else alert('시간을 지정해주세요')
+        else 
+        sweet.fire({
+            title: "시간을 선택해 주세요.",
+            icon: "warning"
+        })
     }
     const onUpdate = (upDTO,subDTO) => {
         if (save) {
             if(subDTO.place || subDTO.customDTO) updateItem(upDTO.endTime,subDTO)
-            else alert('장소를 선택해 주세요')
+            else 
+            sweet.fire({
+                title: "장소를 선택해 주세요.",
+                icon: "warning"
+            })
         }
-        else alert('시간을 지정해주세요')
+        else 
+        sweet.fire({
+            title: "시간을 선택해 주세요.",
+            icon: "warning"
+        })
     }
 ////////누나가 준거!!!/////////
 

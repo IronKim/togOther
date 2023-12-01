@@ -13,8 +13,7 @@ import { getCityList } from '../../../api/CityApiService';
 import { GoogleMap,Marker } from '@react-google-maps/api';
 import { getUserByEmail } from '../../../api/UserApiService';
 import { useUserStore } from '../../../stores/mainStore';
-
-import sweet from 'sweetalert2';
+import sweet from 'sweetalert2'; 
 
 const containerStyle = {
     width: '100%',
@@ -164,10 +163,12 @@ const TogetherView = ({seqAd}) => {
             if (result.isConfirmed) {
                 deleteTogether(togetherSeq)
                 .then(res => {
+                    window.scrollTo(0,0)
                     sweet.fire({
                         title: "삭제되었습니다",
                         icon: "success"
                     })
+                    .then(navigate('/community/'))
                 })
             } 
         });
