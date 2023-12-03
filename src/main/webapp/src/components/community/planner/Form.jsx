@@ -64,6 +64,14 @@ useEffect(()=>{
                 let imgDTO = [];
                 let sDTO = [];
         
+                if(res.data.planner.userSeq !== user.userSeq) {
+                    navigate('/community');
+                    sweet.fire({
+                        title: "잘못된 접근입니다.",
+                        icon: "warning"
+                    })
+                }
+
             await Promise.all(
                 res.data.plannerText.map(async (plTxt) => {
                     txtDTO.push({"id":plTxt.id,"nDay":plTxt.nday,"order":plTxt.orders,

@@ -176,12 +176,27 @@
     z-index: 2;
 }
 /*------------예약내역-------------*/
+
+/* ----------- 스크롤 ------------ */
+.my_reservation_main::-webkit-scrollbar {
+    width:7px;
+}
+.my_reservation_main::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.my_reservation_main::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 7px;
+}
+/* ------------------------------ */
 .my_reservation_main {
-    width : 920px;
-    height : 500px;
+    width : 900px;
+    height : 700px;
+    overflow: auto;
+    overflow-x: hidden;
 }
 .hr_1 {
-    width: 91.3%;
+    width: 93.3%;
     margin-bottom: 30px;
     margin-top: 30px;
     color: 'lightgray';
@@ -197,14 +212,19 @@
     width: 95%;
     margin: 1% 2.5%;
     border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
 }
-.reservation_img_div {
+.reservation_1:hover{
+    border: 1.5px solid gray;
+}
+.reservation_img {
     margin: 4px;
-    border: 1px solid red;
     float: left;
     width: 120px;
-    height: 70px;
+    height : 70px;
     border-radius: 10px;
+    object-fit: cover;
     vertical-align: top;
 }
 .div_h1 {
@@ -332,10 +352,7 @@
     .reservation_1 {
         height : 120px;
     }
-    .reservation_img_div {
-        margin: 5px;
-        border: 1px solid red;
-        width: 120px;
+    .reservation_img {
         height: 110px;
     }
     .div_h1 {

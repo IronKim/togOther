@@ -28,6 +28,11 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 /* ////////////////////////////// */
+.backBut {
+  cursor: pointer;
+  margin: 20px 2.5% 10px 2.5%;
+  width: 25px;
+}
 .arraymain{
   flex-direction: column;
   margin: 0 auto;
@@ -84,9 +89,9 @@
 
 /* 호버 시 이미지 확대 */
 .card:hover img {
-  transform: scale(1.1); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
+  transform: scale(1.15); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: 0.4s;
 }
 
 .searchBg {

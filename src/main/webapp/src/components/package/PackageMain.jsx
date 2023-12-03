@@ -144,6 +144,7 @@ const PackageMain = () => {
     }
 
     const onPackage = (tpSeq) => {
+        window.scrollTo(0, 0);
         navigate(`details/${tpSeq}`)
     }
     

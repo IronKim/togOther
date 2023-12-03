@@ -20,7 +20,10 @@ const Sidebar = ({tags, currentTag, setCurrentTag, styles}) => {
           <button className={`${styles.tagBtn} ${currentTag === item ? styles.active : ''}`} key={item} value={item || ''} onClick={changeTag}>{item}</button>
         ))
        }
-       <button onClick={() => getToken()}>토큰 갱신용</button>
+       <button onClick={() => getToken()} 
+          style={{borderRadius:'20px',backgroundColor:'#2E8DFF',border:0,color:'white',padding:'15px',fontSize:'13px',margin:'10px'}}>
+          주문 토큰 갱신
+        </button>
     </div>
   );
 };

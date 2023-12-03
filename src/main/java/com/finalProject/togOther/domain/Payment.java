@@ -35,8 +35,10 @@ public class Payment {
     private LocalDate useDate;
     private String price;
     private int count ;
+    private String method;
     @Column(nullable = false)
-    @CreationTimestamp
+	@CreationTimestamp
+	private Timestamp logTime;
     private String bookerName;
     private String bookerGender;
 	private LocalDate bookerBirthday;
@@ -56,6 +58,8 @@ public class Payment {
 				.useDate(paymentDTO.getUseDate())
 				.price(paymentDTO.getPrice())
 				.count(paymentDTO.getCount())
+				.method(paymentDTO.getMethod())
+				.logTime(paymentDTO.getLogTime())
 				.bookerName(paymentDTO.getBookerName())
 				.bookerGender(paymentDTO.getBookerGender())
 				.bookerBirthday(paymentDTO.getBookerBirthday())

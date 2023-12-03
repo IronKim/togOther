@@ -1,5 +1,6 @@
 package com.finalProject.togOther.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import com.finalProject.togOther.domain.Payment;
@@ -26,6 +27,8 @@ public class PaymentDTO {
     private LocalDate useDate;
     private String price;
     private int count ;
+    private String method;
+    private Timestamp logTime;
     private String bookerName;
     private String bookerGender;
 	private LocalDate bookerBirthday;
@@ -42,6 +45,8 @@ public class PaymentDTO {
 						.useDate(payment.getUseDate())
 						.price(payment.getPrice())
 						.count(payment.getCount())
+						.method(payment.getMethod())
+						.logTime(payment.getLogTime())
 						.bookerName(payment.getBookerName())
 						.bookerGender(payment.getBookerGender())
 						.bookerBirthday(payment.getBookerBirthday())

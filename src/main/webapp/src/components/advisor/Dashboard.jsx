@@ -6,6 +6,7 @@ import AdvisorDashboardUser from './AdvisorDashboardUser';
 import AdvisorDashboardCommunity from './AdvisorDashboardCommunity';
 import AdvisorDashboardPackage from './AdvisorDashboardPackage';
 import { getPlace } from '../../api/AdvisorApiService';
+import AdvisorDashboardPayment from './AdvisorDashboardPayment';
 
 const Dashboard = ({styles, currentTag}) => {
 
@@ -31,10 +32,13 @@ const Dashboard = ({styles, currentTag}) => {
         currentTag === ADVISORTAG.LOCATION && <AdvisorDashboardCity /> 
       }
       {
+        currentTag === ADVISORTAG.COMMUNITY && <AdvisorDashboardCommunity /> 
+      }
+      {
         currentTag === ADVISORTAG.PACKAGE && <AdvisorDashboardPackage />
       }
       {
-        currentTag === ADVISORTAG.COMMUNITY && <AdvisorDashboardCommunity /> 
+        currentTag === ADVISORTAG.PAYMENT && <AdvisorDashboardPayment/> 
       }
     </div>
   );
