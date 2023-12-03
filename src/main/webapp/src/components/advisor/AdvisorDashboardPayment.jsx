@@ -57,7 +57,7 @@ const AdvisorDashboardPayment = () => {
                     <span className={styles.userInfo}>{pay.bookerName}({pay.userSeq})</span>
                     <span className={styles.price}>{parseFloat(pay.price).toLocaleString()}원 * {pay.count}개 =
                         총 {parseFloat(pay.price * pay.count).toLocaleString()}원</span>
-                    <button onClick={()=>onModal(2,pay.paymentSeq)} className={styles.buts}>보기</button>
+                    <button onClick={()=>onModal(2,pay.paymentSeq)} className={styles.buts}>자세히 보기</button>
                 </div>)
             }
             </div>

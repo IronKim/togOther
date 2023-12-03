@@ -75,7 +75,7 @@ const PackageResDetails = (props) => {
                     <h3>{payment.bookerName}</h3>
                     <h2>전화번호</h2>
                     <h3>{payment.bookerTel}</h3>
-                    <h3>이메일</h3>
+                    <h2>이메일</h2>
                     <h3>{payment.bookerEmail}</h3>
                     <h2>생년월일</h2>
                     <h3>{payment.bookerBirthday}</h3>
