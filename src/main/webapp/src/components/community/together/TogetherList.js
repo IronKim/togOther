@@ -158,7 +158,7 @@ useEffect(() => {
               //togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
-              
+              console.log(item.userProfileImage)
               return (
                 <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}
                   onMouseUpCapture={() => setHover(true)} onMouseOutCapture={() => setHover(false)}>
