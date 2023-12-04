@@ -22,7 +22,7 @@
 .cityName{
     user-select: none;
     position: absolute;
-    top: 19%;
+    top: 160px;
     height: 1.3em;
     line-height: 1.4em;
     text-align: center;
