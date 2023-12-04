@@ -92,6 +92,7 @@ const CityPage = () => {
         } else {
             updateRecommend(selectedRecommend)
         }
+        selectItemClick('random');
         
     };
 
@@ -372,7 +373,7 @@ const CityPage = () => {
                         
                         <div className={ styles.drop_content } style={{display: drop ? 'block' : 'none'}}>
                             {user.mbti !== '' && user.mbti !== null && <div to='#' onClick={ () => selectItemClick('mbti')}>MBTI 순</div>}
-                            {user.likingPlace !== '' && user.likingPlace !== null && <div to='#' onClick={ () => selectItemClick('travel')} 
+                            {user.likingTrip !== '' && user.likingTrip !== null && <div to='#' onClick={ () => selectItemClick('travel')} 
                                                                         style={{display:activeButton === 'TouristSpot' ? 'block' : 'none'}}>여행취향 순</div>}
                             {user.likingFood !== '' && user.likingFood !== null && <div to='#' onClick={ () => selectItemClick('food')}  
                                                                                     style={{display:activeButton === 'TouristSpot' ? 'none' : 'block'}}>음식취향 순</div>}
