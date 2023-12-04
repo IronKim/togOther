@@ -73,6 +73,13 @@
   }
 }
 
+@media (min-width: 1200px) {
+  .header {
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
+
 .slash {
   margin-left: 10px;
   margin-right: 10px;
