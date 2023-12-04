@@ -24,7 +24,7 @@ const myStyles = [
 ];
 
 const TogetherList = (props) => {
-    const {search} = props;
+    const {search,onModal} = props;
 
     const[loading,setLoading] = useState(false)
     const[total,setTotal] = useState(0)
@@ -53,7 +53,7 @@ const TogetherList = (props) => {
       if (scrollY + windowHeight + 300 >= scrollHeight) {
           if(!scrollLoading) {
           if(!last) {
-                  if(count * 10 > total) setLast(true);
+                  if(count * 9 > total) setLast(true);
                   else {
                       setScrollLoading(true)
                       setCount(count + 1);
@@ -65,8 +65,8 @@ const TogetherList = (props) => {
 
   useEffect(()=>{
     let n = 0;
-    if(count * 10 > total) n = total;
-    else n = count * 10;
+    if(count * 9 > total) n = total;
+    else n = count * 9;
     if(n > 0) {
       getTogetherList({ n: ''+n, search : search ? search.trim() : '' })
       .then(res => {
@@ -150,7 +150,7 @@ useEffect(() => {
     }
 
     //hover
-    const [hover,setHover] = useState(false)
+    const [hover,setHover] = useState(-1)
     return (
         <div className={Style.listForm}>
           <div className={Style.listForminner}>
@@ -158,10 +158,9 @@ useEffect(() => {
               //togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
-              
               return (
                 <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}
-                  onMouseUpCapture={() => setHover(true)} onMouseOutCapture={() => setHover(false)}>
+                  onMouseOverCapture={() => setHover(item.togetherSeq)} onMouseOutCapture={() => setHover(-1)}>
                   {searchSub === undefined && searchSub_Cus !== undefined &&
                   (<div className={Style.togetherFoot}>
                     <div className={Style.imgDiv}>
@@ -174,7 +173,7 @@ useEffect(() => {
                             lat: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).latitude),
                             lng: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).longitude)
                           }}
-                          zoom={15}
+                          zoom={item.togetherSeq === hover ? 15 : 14}
                           options={{ disableDefaultUI: true, styles: myStyles }}
                         >
                         <Marker
@@ -190,9 +189,9 @@ useEffect(() => {
                     </div>
                     <div className={Style.title}><p>{item.title}</p></div>
                     <div className={Style.context}><p>{item.context}</p></div>
-                    <div className={Style.placeInfo}>
+                    {/* <div className={Style.placeInfo}>
                     {loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
-                    </div>
+                    </div> */}
                   </div>)}
                 {searchSub !== undefined && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq) &&
 
@@ -203,15 +202,16 @@ useEffect(() => {
                       </div>
                       <div className={Style.title}><p>{item.title}</p></div>
                       <div className={Style.context}><p>{item.context}</p></div>
-                      <div className={Style.placeInfo}> 
+                      {/* <div className={Style.placeInfo}> 
                       {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.name}
-                      </div>
+                      </div> */}
                   </div>)}
+                  <div style={{clear:'both'}}></div>
                   <div className={Style.dateTop}>
                     <div className={Style.date}>
                       {item.startDate} - {item.endDate}
                     </div>
-                    <div className={Style.userSeq}>
+                    <div className={Style.userSeq} onClick={(e) => onModal(e,item.userSeq)}> 
                       {item.userProfileImage !== ''  ?
                           <div className={Style.userImg}>
                             <img src={item.userProfileImage} className={Style.userImg} alt="User Profile" />

@@ -13,7 +13,6 @@ import Write from '../pages/Write';
 import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
-import TogetherList from './community/together/TogetherList';
 import Community from '../pages/Community';
 import useUserStore from '../stores/userStore';
 import BottomNav from './BottomNav';

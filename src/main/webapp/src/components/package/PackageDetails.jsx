@@ -11,6 +11,7 @@ import plus from '../../assets/image/plus.png';
 import { getTourPackageByTpSeq } from '../../api/PackageApiService';
 import { useNavigate, useParams } from 'react-router-dom';
 import backBut from '../../assets/image/backBut.png'
+import { useUserStore } from '../../stores/mainStore';
 
 const initialState = 1
 
@@ -28,6 +29,8 @@ const reducer = (state, action) => {
 }
 
 const PackageDetails = () => {
+
+    const {user} = useUserStore();
 
     const [ count, dispatch ] = useReducer(reducer, initialState)
 
@@ -111,6 +114,10 @@ const PackageDetails = () => {
         navigate(`/package/reservation/${tpSeq}/${formattedDate}&${count}`)
     }
 
+    const onLogin = () => {
+        navigate(`/user/login`)
+    }
+
     const back = () => {
         navigate(-1)
     }
@@ -179,8 +186,8 @@ const PackageDetails = () => {
                                     </div>
                                 </div>
 
-                                <div className={ styles.reservation } onClick={() => onReservation()}>
-                                    <button>예약하기</button>
+                                <div className={ styles.reservation } onClick={() => user.name !== '' ? onReservation() : onLogin()}>
+                                    <button>{user.name !== '' ? '예약하기' : '로그인'}</button>
                                 </div>
                             </div>
                         </div>

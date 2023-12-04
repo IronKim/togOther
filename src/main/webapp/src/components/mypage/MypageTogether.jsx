@@ -161,13 +161,14 @@ const MypageTogether = () => {
       navigate(`../../community/together/view/${togetherSeq}`)
   }
     //수정/삭제
-    const myPageTogetherUp = (togetherSeq) => {
-        
+    const myPageTogetherUp = (e,togetherSeq) => {
+      e.stopPropagation();
       navigate(`../../community/together/view/${togetherSeq}`)
   
     }
 
-    const myPageTogetherReset = async  (togetherSeq) => {
+    const myPageTogetherReset = async  (e,togetherSeq) => {
+      e.stopPropagation();
       sweet.fire({
         title: "삭제하시겠습니까?",
         icon: "warning",
@@ -183,81 +184,39 @@ const MypageTogether = () => {
                 sweet.fire({
                     title: "삭제되었습니다",
                     icon: "success"
-                })
+                }).then(
+                  setTogetherDTO(togetherDTO.filter(item => item.togetherSeq !== togetherSeq))
+              )
             })
         } 
     });
   }
-
+//hover
+const [hover,setHover] = useState(-1)
     return (
         <div className={styles.main}>
             <p className={styles.tagName}>내 동행</p>
             <hr className={styles.hr} />
             {togetherDTO.map(item => {
-              // togetherDTO에 해당하는 subDTO
+              //togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
-              
               return (
-                <div className={styles.together} key={item.togetherSeq}>
-                  <div className={styles.dateTop}>
-                    <div className={styles.date}>
-                      {item.startDate}~{item.endDate}
-                    </div>
-                    <div className={styles.userSeq}>
-                      {item.userProfileImage !== ''  ?
-                          <div className={styles.userImg}>
-                            <img src={item.userProfileImage} className={styles.userImg} alt="User Profile" />
-                          </div>
-                          :
-                          <div className={styles.userImg}>
-                            <img src={userDefaultProfile} className={styles.userImg} alt="Default Profile"/>
-                          </div>
-                      }
-                      <div className={styles.userinfo}>
-                        <p className={styles.userid}>{item.userid}</p>
-                        <p className={styles.userGender}>{item.userGender === 'M' ? '남성' : '여성'}</p>
-                      </div>
-                      <div className={styles.tnuminfo}>
-                        <p>모집인원</p> 
-                        <p className={styles.tnum}>{item.tnum}명</p>
-                      </div>
-                    </div>
-                  </div>
-                {searchSub !== undefined &&
-
-                  (<div className={styles.togetherFoot}>
-                      <div className={styles.imgDiv} onClick={() => onTogetherView(item.togetherSeq)}>
-                          <img src={ loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).image} 
-                          className={styles.placeImg} alt="Place Image" />
-                      </div>
-                      <div className={styles.title}><p>{item.title}</p></div>
-                      <div className={styles.context}><p>{item.context}</p>
-                        <div className={styles.myPageTogetherBtnDiv}>
-                        <div className={styles.myPageTogetherBtnDiv}>
-                          <button className={styles.myPageTogetherUp} onClick={()=>myPageTogetherUp(item.togetherSeq)}>수정</button>&nbsp;
-                          <button className={styles.myPageTogetherReset}onClick={()=>myPageTogetherReset(item.togetherSeq)}>삭제</button>
-                      </div></div>
-                      </div>
-                      <div className={styles.placeInfo}> 
-                          {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq).name}
-                      </div>
-                  </div>)}
-
+                <div className={styles.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}
+                  onMouseOverCapture={() => setHover(item.togetherSeq)} onMouseOutCapture={() => setHover(-1)}>
                   {searchSub === undefined && searchSub_Cus !== undefined &&
-
                   (<div className={styles.togetherFoot}>
-                    <div className={styles.imgDiv} onClick={() => onTogetherView(item.togetherSeq)}>
+                    <div className={styles.imgDiv}>
                         <div className={styles.placeImg}>
                         {/* 여기에 지도 넣을거야 */}
-                        {scriptLoaded &&
+                        {loading &&
                         <GoogleMap
                           mapContainerStyle={containerStyle}
                           center={{
                             lat: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).latitude),
                             lng: parseFloat(customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).longitude)
                           }}
-                          zoom={15}
+                          zoom={item.togetherSeq === hover ? 15 : 14}
                           options={{ disableDefaultUI: true, styles: myStyles }}
                         >
                         <Marker
@@ -272,16 +231,42 @@ const MypageTogether = () => {
                         </div>
                     </div>
                     <div className={styles.title}><p>{item.title}</p></div>
-                    <div className={styles.context}><p>{item.context}</p>
-                      <div className={styles.myPageTogetherBtnDiv}>
-                          <button className={styles.myPageTogetherUp} onClick={()=>myPageTogetherUp(item.togetherSeq)}>수정</button>&nbsp;
-                          <button className={styles.myPageTogetherReset}onClick={()=>myPageTogetherReset(item.togetherSeq)}>삭제</button>
+                    <div className={styles.context}><p>{item.context}</p></div>
+                    {/* <div className={styles.placeInfo}>
+                    {loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
+                    </div> */}
+                  </div>)}
+                {searchSub !== undefined && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq) &&
+
+                  (<div className={styles.togetherFoot}>
+                      <div className={styles.imgDiv}>
+                      <img src={loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.image} 
+                          className={styles.placeImg} alt="Place Image" />
+                      </div>
+                      <div className={styles.title}><p>{item.title}</p></div>
+                      <div className={styles.context}><p>{item.context}</p></div>
+                      {/* <div className={styles.placeInfo}> 
+                      {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.name}
+                      </div> */}
+                  </div>)}
+                  <div style={{clear:'both'}}></div>
+                  <div className={styles.dateTop}>
+                    <div className={styles.date}>
+                      {item.startDate} - {item.endDate}
+                    </div>
+                    <div className={styles.userSeq}>
+                      <div className={styles.userinfo}>
+                        <div className={styles.myPageTogetherBtnDiv}>
+                            <button className={styles.myPageTogetherUp} onClick={(e)=>myPageTogetherUp(e,item.togetherSeq)}>수정</button>&nbsp;
+                            <button className={styles.myPageTogetherReset}onClick={(e)=>myPageTogetherReset(e,item.togetherSeq)}>삭제</button>
+                        </div>
+                      </div>
+                      <div className={styles.tnuminfo}>
+                        <p>모집인원</p> 
+                        <p className={styles.tnum}>{item.tnum}명</p>
                       </div>
                     </div>
-                    <div className={styles.placeInfo}>
-                    {loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
-                    </div>
-                  </div>)}
+                  </div>
                   
               </div>
                 );
@@ -294,8 +279,13 @@ const MypageTogether = () => {
                 {total}건 조회 되었습니다
             </div>
         </div>
+        
     );
 
 }
 
 export default MypageTogether;
+                      // <div className={styles.myPageTogetherBtnDiv}>
+                      //     <button className={styles.myPageTogetherUp} onClick={()=>myPageTogetherUp(item.togetherSeq)}>수정</button>&nbsp;
+                      //     <button className={styles.myPageTogetherReset}onClick={()=>myPageTogetherReset(item.togetherSeq)}>삭제</button>
+                      // </div>

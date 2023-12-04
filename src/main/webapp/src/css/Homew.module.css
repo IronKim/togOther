@@ -189,18 +189,21 @@
 .list1:hover img {
   transform: scale(1.1); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: 0.4s;
 }
+/* .selectedMainImage {
+  transition: 0.4s;
+  transform-origin: center;
+} */
 
 .selectedMainImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 20px;
-  transition: all 0.3s linear;
+  transition: all 0.3s ease-out;
 }
 .selectedMainImage:hover {
-  transform: scale(1.1); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
-  cursor: pointer;
-  transition: all 0.3s linear;
+  transform: scale(1.07); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
+  cursor: pointer; 
 }

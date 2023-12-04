@@ -7,9 +7,10 @@ import noImage from '../../../assets/image/travel_thumb.png'
 import loadingImg from '../../../assets/image/loading.png'
 import profileImg from '../../../assets/image/profile_thumb.png'
 import { useNavigate } from 'react-router-dom';
+import ProfileView from '../../ProfileView/ProfileView';
 
 const PlannerList = (props) => {
-    const {search} = props;
+    const {search,onModal} = props;
 
     const[total,setTotal] = useState(0)
     const[count,setCount] = useState(1)
@@ -122,7 +123,7 @@ const PlannerList = (props) => {
                         images.find(item2 => item2.plMainSeq === item.plannerSeq).image.split(',')[0] :
                         item.citySeq !== -1 && loading ? city.find(item2 => item2.citySeq === item.citySeq).cityImage : noImage}/>
                     <div className={styles.plannerInfo}>
-                        <div className={styles.profile}>
+                        <div className={styles.profile} onClick={(e) => onModal(e,item.userSeq)}>
                             <img src={item.userProfileImage && item.userProfileImage !== '' ? item.userProfileImage : profileImg}/>
                             <p>{item.userName}</p>
                         </div>

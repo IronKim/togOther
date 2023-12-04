@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import thumb from 'D:/SpringBoot/workspace/togOther/src/main/webapp/src/assets/image/profile_thumb.png';
+import thumb from '../../assets/image/profile_thumb.png';
 import { getUserByUserSeq } from '../../api/ProfileApiService';
 
 function ProfileView({ show, onHide, userSeq }) {
@@ -61,7 +61,7 @@ function ProfileView({ show, onHide, userSeq }) {
             <img
                 src={user.data.profileImage || thumb}
                 roundedCircle
-                style={{ width: '150px', height: '150px', marginRight: '20px' }}
+                style={{ width: '150px', height: '150px', marginRight: '20px' ,objectFit:'cover'}}
                 onError={onErrorImg}
             />
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>

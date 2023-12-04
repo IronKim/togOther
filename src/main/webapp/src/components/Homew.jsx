@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../stores/mainStore';
 import { getPlaceList } from '../api/PlaceApiService';
 
-const Homew = () => {
+const Homew = ({searchTerm}) => {
 
     const {user} = useUserStore();
 
@@ -137,6 +137,44 @@ const Homew = () => {
     .filter(city => userCityNames.includes(city.cityName.toLowerCase()))
     .sort((a, b) => userCityNames.indexOf(a.cityName.toLowerCase()) - userCityNames.indexOf(b.cityName.toLowerCase()));
 
+    useEffect(()=>{
+        if(searchTerm !== '') {
+            const selCity = cityList.find(ci => ci.cityName.includes(searchTerm) || 
+                ci.countryName.includes(searchTerm) || ci.continentName.includes(searchTerm));
+            if(selCity) {
+                setSelectedCity(selCity);                           
+                setSelectedStyle({
+                    continent: selCity.continentName,
+                    country: selCity.countryName,
+                    city: selCity.cityName
+                });
+                setSelectedCountry({
+                    continentName: selCity.continentName,
+                    countryName: ''
+                });
+                
+            }
+        } else {
+            setSelectedCountry({
+                continentName: '',
+                countryName: ''
+            });
+            
+            setSelectedCity({
+                citySeq: '',
+                cityImage: '',
+                cityName: '',
+                continentName: '',
+                countryName: ''
+            });
+            
+            setSelectedStyle({
+                continent: '',
+                country: '',
+                city: ''
+            });
+        }
+    },[searchTerm])
 
     return (
         <div className={home.white_box}>
@@ -245,7 +283,7 @@ const Homew = () => {
             <div>
                 {selectedCity.cityImage && (
                     <div style={{width: '1200px', height: '420px', display: 'flex', marginTop: '50px', marginBottom: '50px'}}>
-                        <div style={{ width: '65%', borderRadius: '20px', boxShadow: '0px 2px 4px rgba(0,0,0,0.5)', overflow: 'hidden'}}>
+                        <div style={{ width: '65%', borderRadius: '20px', boxShadow: '0px 2px 4px rgba(0,0,0,0.5)', overflow: 'hidden'}} >
                             <Link to={`/info/city/${selectedCity.citySeq}`}>
                                 <img className={home.selectedMainImage} src={selectedCity.cityImage} alt={selectedCity.cityName} />
                             </Link>
