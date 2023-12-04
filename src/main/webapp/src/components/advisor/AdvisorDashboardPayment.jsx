@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {getPaymentAll} from '../../api/PackageApiService'
+import {getPaymentAll} from '../../api/PackageApiService';
 import styles from '../../css/advisorPayment.module.css'
 import AdvisorDashboardModal from './AdvisorDashboardModal';
 

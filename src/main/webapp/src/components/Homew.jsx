@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getCityList } from '../api/CityApiService';
-import AdvisorCityList from './advisor/AdvisorCityList';
 
 import home from '../css/Homew.module.css';
 import { CONTINENT } from '../constants/CONTINENT';
@@ -248,7 +247,7 @@ const Homew = () => {
                     <div style={{width: '1200px', height: '420px', display: 'flex', marginTop: '50px', marginBottom: '50px'}}>
                         <div style={{ width: '65%', borderRadius: '20px', boxShadow: '0px 2px 4px rgba(0,0,0,0.5)', overflow: 'hidden'}}>
                             <Link to={`/info/city/${selectedCity.citySeq}`}>
-                                <img className={home.selectedMainImage} style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '20px'}} src={selectedCity.cityImage} alt={selectedCity.cityName} />
+                                <img className={home.selectedMainImage} src={selectedCity.cityImage} alt={selectedCity.cityName} />
                             </Link>
                         </div>
 
@@ -294,18 +293,24 @@ const Homew = () => {
                         {matchingCities.map(city => (
                             <div key={city.citySeq} style={{ textAlign: 'center' }}>
                             <Link to={`/info/city/${city.citySeq}`}>
-                                <img
-                                    style={{ marginBottom: '30px' }}
-                                    className={home.img}
-                                    src={city.cityImage}
-                                    alt={city.cityName}
-                                />
+                                <div style={{width: '300px', height: '300px',marginTop:'70px', marginBottom: '30px', overflow: 'hidden', borderRadius:'20px'}}>
+                                    <img
+                                        style={{ marginBottom: '30px' }}
+                                        className={home.img}
+                                        src={city.cityImage}
+                                        alt={city.cityName}
+                                    />
+                                </div>
                             </Link>
                             <p style={{ fontSize: '32px' }}>{city.cityName}</p>
                             </div>
                         ))}
                     </div>
                 </div>
+            }
+
+            {
+                
             }
             
 

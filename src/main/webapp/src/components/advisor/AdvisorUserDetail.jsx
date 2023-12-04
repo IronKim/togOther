@@ -44,7 +44,7 @@ const AdvisorUserDetail = ({selectedUser, placeList}) => {
     return (
         <div className={styles.userDetail} style={{display: 'flex', justifyContent: 'center'}}>
             <div style={{marginRight: '50px'}}>
-                <img src={profileImage} alt="프로필 이미지" onError={onErrorImg} style={{width: '100px', height: '100px'}}/>
+                <img src={profileImage || defaultImg} alt="프로필 이미지" onError={onErrorImg} style={{width: '100px', height: '100px'}}/>
                 <p style={{textAlign: 'center'}}>{profileText || '소개글이 없습니다.'}</p>
             </div>
             <table className='table table-striped table-bordered' style={{width: '80%'}}>
