@@ -19,9 +19,7 @@ function PlaceReviewPhoto({ show, onHide, image }) {
       <Modal.Body>
         <img src={image} alt="Selected" style={{ width: "100%" }} />
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={onHide}>Close</Button>
-      </Modal.Footer>
+      
     </Modal>
   );
 }

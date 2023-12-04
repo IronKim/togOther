@@ -28,6 +28,7 @@ import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
 import PackageLists from './package/PackageLists';
 import PackageMain from './package/PackageMain';
+import NaverCallback from '../pages/NaverCallback';
 import AdvisorKakaoToken from './advisor/AdvisorKakaoToken';
 import PackageResDetails from './package/PackageResDetails';
 
@@ -67,6 +68,7 @@ const Main = ({ showNavbar }) => {
                                 <Mypage />
                             </UserRoute>
                         }/>
+                        <Route path='naver/callback' element = { <NaverCallback /> } />
                     </Route>
                     <Route path='info'>
                         <Route path='place/:placeSeq' element={ <PlacePage />} />

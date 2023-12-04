@@ -31,7 +31,7 @@ const PackageDetails = () => {
 
     const [ count, dispatch ] = useReducer(reducer, initialState)
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState();
 
     const [mark, setMark] = useState([]);
 
@@ -51,6 +51,11 @@ const PackageDetails = () => {
             // 여기서 tpImages를 배열로 가져와서 setImages를 통해 상태 업데이트
             setImages(imagesArray);
             setPack(res.data)
+            if(moment().format('YYYY-MM-DD') > res.data.tpsaleStart) {
+                setSelectedDate(new Date(moment().format('YYYY-MM-DD')))
+            } else {
+                setSelectedDate(new Date(res.data.tpsaleStart))
+            }
         })
         .catch(e => console.log(e));
     },[tpSeq])
@@ -130,7 +135,7 @@ const PackageDetails = () => {
                             minDetail="month"
                             maxDetail="month" 
                             // minDate={new Date(startformattedDate)}
-                            minDate={moment().toDate()}
+                            minDate={ moment().format('YYYY-MM-DD') > pack.tpsaleStart ? moment().toDate() : new Date(startformattedDate)}
                             maxDate={new Date(endformattedDate)}
                             navigationLabel={null}
                             showNeighboringMonth={false}
