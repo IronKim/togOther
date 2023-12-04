@@ -85,7 +85,6 @@ const TogetherView = ({seqAd}) => {
                             
                             if (foundCity) {
                                 setCityFind(foundCity.cityName)
-                                console.log(cityFind)
                                 setLoading(false)
                             }
                         }
@@ -315,7 +314,7 @@ const TogetherView = ({seqAd}) => {
 
                             <div className={Style.togetherChatInner}>
                                 <div className={Style.chatProfile}>
-                                    {userList.profileImage !== ''  ?
+                                    {userList.profileImage !== null ?
                                         <div className={Style.chatProfileImg}>
                                             <img src={userList.profileImage} className={Style.userImg} />
                                         </div>
@@ -347,7 +346,7 @@ const TogetherView = ({seqAd}) => {
                             <p>함께하는 동행</p>
                             <div className={Style.toGother}>
                                 <div className={Style.toGotherMaster}>
-                                    {togetherDTO.userProfileImage !== ''  ?
+                                    {togetherDTO.userProfileImage ?
                                         <div className={Style.toGotherImg}>
                                             <img src={userList.profileImage} className={Style.userImg} />
                                         </div>

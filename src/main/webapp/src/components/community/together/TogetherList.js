@@ -156,21 +156,22 @@ useEffect(() => {
               // togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
-              
+              console.log(item.userProfileImage)
               return (
                 <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
                   <div className={Style.dateTop}>
                     <div className={Style.date}>
                       {item.startDate}~{item.endDate}
+                      
                     </div>
                     <div className={Style.userSeq}>
-                      {item.userProfileImage !== ''  ?
+                      {item.userProfileImage !== null ?
                           <div className={Style.userImg}>
-                            <img src={item.userProfileImage} className={Style.userImg} alt="User Profile" />
+                            <img src={item.userProfileImage} className={Style.userImg}/>
                           </div>
                           :
                           <div className={Style.userImg}>
-                            <img src={userDefaultProfile} className={Style.userImg} alt="Default Profile"/>
+                            <img src={userDefaultProfile} className={Style.userImg}/>
                           </div>
                       }
                       <div className={Style.userinfo}>
@@ -183,6 +184,7 @@ useEffect(() => {
                       </div>
                     </div>
                   </div>
+                  
                 {searchSub !== undefined && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq) &&
 
                   (<div className={Style.togetherFoot}>
