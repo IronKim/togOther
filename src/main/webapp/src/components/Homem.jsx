@@ -5,7 +5,7 @@ import BottomNav from './BottomNav';
 import { getCityList } from '../api/CityApiService';
 import { Link } from 'react-router-dom';
 
-const Homem = () => {
+const Homem = ({searchTerm}) => {
   // 대륙 리스트
   const [continentList, setContinentList] = useState([]);
 
@@ -92,6 +92,45 @@ const Homem = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [prevScrollY]);
+
+  useEffect(()=>{
+    if(searchTerm !== '') {
+        const selCity = cityList.find(ci => ci.cityName.includes(searchTerm) || 
+            ci.countryName.includes(searchTerm) || ci.continentName.includes(searchTerm));
+        if(selCity) {
+            setSelectedCity(selCity);                           
+            setSelectedStyle({
+                continent: selCity.continentName,
+                country: selCity.countryName,
+                city: selCity.cityName
+            });
+            setSelectedCountry({
+                continentName: selCity.continentName,
+                countryName: ''
+            });
+            setActiveAccordion("2");
+        }
+      } else {
+          setSelectedCountry({
+              continentName: '',
+              countryName: ''
+          });
+          
+          setSelectedCity({
+              citySeq: '',
+              cityImage: '',
+              cityName: '',
+              continentName: '',
+              countryName: ''
+          });
+          
+          setSelectedStyle({
+              continent: '',
+              country: '',
+              city: ''
+          });
+      }
+  },[searchTerm])
 
   return (
     <div className={sty.accordion_container}>
