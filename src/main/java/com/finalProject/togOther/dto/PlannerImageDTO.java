@@ -3,6 +3,7 @@ package com.finalProject.togOther.dto;
 
 import com.finalProject.togOther.domain.PlannerImage;
 
+import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,9 @@ public class PlannerImageDTO {
 	private int plImageSeq;
 	private int plMainSeq;
 	private int nday;
+	@Column(length = 500)
 	private String image;
+	
 	
 	public static PlannerImageDTO toDTO(PlannerImage plannerImage) {
 		

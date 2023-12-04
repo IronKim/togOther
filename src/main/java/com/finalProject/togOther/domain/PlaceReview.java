@@ -35,7 +35,7 @@ public class PlaceReview {
 	private int reviewSeq;  //--리뷰 번호
 	private int placeSeq;   //- 장소번호
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne //(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_seq")
 	private User user; //-- 유저 번호 (사진 이름)
 	
@@ -43,6 +43,7 @@ public class PlaceReview {
 	@CreationTimestamp
 	private Timestamp date;  //--날짜
 	private String context;  //-- 글 내용
+	@Column(length = 500)
 	private String image;    //-- 이미지 --->  몇개까지?   // 텍스트로 해서 배열로
 	
 	public static PlaceReview toEntity(PlaceReviewDTO placeReviewDTO) {

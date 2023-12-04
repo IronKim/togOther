@@ -1,14 +1,13 @@
-import { useState, useRef} from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { useUserStore } from '../../stores/mainStore';
-import { addPlaceReview } from '../../api/PlaceReviewApiService';
+import { getPlaceReviewListByReviewSeq, updateReview } from '../../api/PlaceReviewApiService';
 import { uploadPlannerImage } from '../../api/PlannerApiService';
 import sweet from 'sweetalert2';    
 
-
-function PlaceReviewWrite({ placeSeq }) {
+function PlaceReviewUpdate({ reviewSeq, placeSeq, loadInitialReviews }) {
   const [show, setShow] = useState(false);
   const { user } = useUserStore();
   const [reviewContext, setReviewContext] = useState('');
@@ -26,45 +25,62 @@ function PlaceReviewWrite({ placeSeq }) {
     fileInputRef.current.click();
   };
 
+  useEffect(() => {
+    // 리뷰 데이터를 불러와 초기화
+    const fetchReviewData = async () => {
+      try {
+
+        const response = await getPlaceReviewListByReviewSeq(parseInt(reviewSeq));
+        const existingReview = response.data;
+        setReviewContext(existingReview.context);
+        if(existingReview.image !== null && existingReview.image !== undefined && existingReview.image !== '' && existingReview.image !== 'false'){
+          setSelectedImages(existingReview.image || ''); // 이미지가 없을 경우 빈 문자열로 초기화
+        } 
+      } catch (error) {
+        console.error('리뷰 데이터 불러오기 오류:', error);
+      }
+    };
+
+    if (show) {
+      fetchReviewData();
+    }
+  }, [reviewSeq, show]);
+
   const handleClose = () => {
     setShow(false);
-    // 모달이 닫힐 때 폼 필드를 초기화합니다.
     setReviewContext('');
     setSelectedImages('');
   };
+
   const handleShow = () => {
     if (user.userSeq === "") {
-      sweet.fire({
-        title: "로그인 후 이용해 주세요.",
-        icon: "warning"
-    })
+      alert('로그인 후 이용해주세요!');
     } else {
       setShow(true);
     }
   };
+
   const handleFileUpload = (e) => {
-    // 파일 업로드를 처리합니다.
     const files = e.target.files;
-    let image = ''
-    if(files.length > 3) 
-    sweet.fire({
-      title: "3개 이하로 선택해 주세요.",
-      icon: "warning"
-  })
-    else {
-      if(files.length === 0) {
+    let image = '';
+
+    if (files.length > 3) {
+      sweet.fire({
+        title: "3개 이하로 선택해 주세요.",
+        icon: "warning"
+    })
+    } else if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
-          image += URL.createObjectURL(files[i]);
-          if(i !== files.length-1) image += ',';
+        image += URL.createObjectURL(files[i]);
+        if (i !== files.length - 1) image += ',';
       }
       setSelectedImages(image);
     } else {
       setSelectedImages('')
     }
-  }
   };
-  const handleWriteReview = async () => {
-    // 리뷰 내용이 비어있는지 확인합니다.
+
+  const handleUpdateReview = async () => {
     if (reviewContext.trim() === "") {
       sweet.fire({
         title: "리뷰 내용을 입력해 주세요.",
@@ -72,47 +88,48 @@ function PlaceReviewWrite({ placeSeq }) {
     })
       return;
     }
+  
     try {
-        const formData = new FormData();
-        const images = selectedImages.split(',')
-        Promise.all(images.map((item2, index2) => {
-            return fetch(item2)
-            .then(response => response.blob())
-            .then(blob => {
-                const file = new File([blob], `image_${index2}.png`, { type: 'image/png' });
-                formData.append(`files`, file);
-            });
-        }))
-        .then(() => {
-            uploadPlannerImage(formData)
-            .then(res2 => {
-              const reviewData = {
-                placeSeq: placeSeq,
-                user: user,
-                context: reviewContext,
-                image: selectedImages !== '' && res2.data
-              };
-
-              console.log(reviewData);
-              addPlaceReview(reviewData);
-              window.location.reload();
-             //loadInitialReviews();
-            })
-            .catch(e => console.log(e))
-        })
-
-      // 리뷰 작성 성공 후 모달을 닫습니다.
+      const formData = new FormData();
+      const images = selectedImages.split(',');
+      let res2 = {}; // res2를 빈 객체로 초기화
+  
+      if (images.filter(item => !item.includes('bitcamp-edu-bucket-97')).length > 0) {
+        await Promise.all(images.map(async (item2, index2) => {
+          const response = await fetch(item2);
+          const blob = await response.blob();
+          const file = new File([blob], `image_${index2}.png`, { type: 'image/png' });
+          formData.append('files', file);
+        }));
+  
+        res2 = await uploadPlannerImage(formData);
+      } else {
+        res2.data = ''; // 이미지가 없는 경우 빈 문자열로 설정
+      }
+  
+      const placeReviewDTO = {
+        placeSeq: placeSeq,
+        user: user,
+        context: reviewContext,
+        image: selectedImages !== '' && res2.data + images.filter(item => item.includes('bitcamp-edu-bucket-97')).join(','),
+      };
+  
+      // 여기서 updateReview 호출
+      // updateReview 호출 이후에 loadInitialReviews와 handleClose를 실행하도록 수정
+      await updateReview(reviewSeq, placeReviewDTO);
       handleClose();
+      window.location.reload();
+      //loadInitialReviews();
     } catch (error) {
       console.error('리뷰 작성 중 오류 발생:', error);
-      // 오류 처리 (예: 사용자에게 알림을 표시)
     }
   };
+
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        리뷰 작성
-      </Button>
+      <span style={{ color: 'red', cursor: 'pointer', textAlign: 'right' }} variant="primary" onClick={handleShow}>
+        수정
+      </span>
       <Modal
         show={show}
         onHide={handleClose}
@@ -120,7 +137,7 @@ function PlaceReviewWrite({ placeSeq }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>리뷰 작성</Modal.Title>
+          <Modal.Title>리뷰 수정</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -153,14 +170,13 @@ function PlaceReviewWrite({ placeSeq }) {
                   name='image'
                 />
               </Form.Group>
-        
-            <Form.Group className="mb-3">
+        <Form.Group className="mb-3">
             <Form.Label>선택된 사진</Form.Label>
             {selectedImages && selectedImages.length > 0 && (
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {selectedImages.split(',').map((imageUrl, index) => (
                   <div key={index} style={{ marginBottom: '10px', marginRight: '10px', display: 'flex', flexDirection: 'column' }}>
-                    <img src={imageUrl} alt={`image_${index}`} style={{ width: '100px', height:'100px' }} />
+                    <img src={imageUrl} alt={`image_${index}`} style={{ width: '100px', height:'100px'}} />
                     <Button variant="danger" size="sm" onClick={() => handleImageCancel(index)}>
                       선택 취소
                     </Button>
@@ -175,12 +191,13 @@ function PlaceReviewWrite({ placeSeq }) {
           <Button variant="secondary" onClick={handleClose}>
             닫기
           </Button>
-          <Button variant="primary" onClick={handleWriteReview}>
-            작성하기
+          <Button variant="primary" onClick={handleUpdateReview}>
+            수정하기
           </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 }
-export default PlaceReviewWrite;
+
+export default PlaceReviewUpdate;
