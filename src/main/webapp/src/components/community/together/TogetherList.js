@@ -147,58 +147,22 @@ useEffect(() => {
     const onTogetherView = (togetherSeq) => {
       window.scrollTo(0, 0);
       navigate(`together/view/${togetherSeq}`)
-  }
+    }
 
+    //hover
+    const [hover,setHover] = useState(false)
     return (
         <div className={Style.listForm}>
           <div className={Style.listForminner}>
             {togetherDTO.map(item => {
-              // togetherDTO에 해당하는 subDTO
+              //togetherDTO에 해당하는 subDTO
               const searchSub = subItemDTO.filter(subItem => subItem.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 0)
               const searchSub_Cus = subItemDTO.filter(subItem_cus => subItem_cus.toMainSeq === item.togetherSeq).find(item2 => item2.placeSw === 1)
               
               return (
-                <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}>
-                  <div className={Style.dateTop}>
-                    <div className={Style.date}>
-                      {item.startDate}~{item.endDate}
-                    </div>
-                    <div className={Style.userSeq}>
-                      {item.userProfileImage !== ''  ?
-                          <div className={Style.userImg}>
-                            <img src={item.userProfileImage} className={Style.userImg} alt="User Profile" />
-                          </div>
-                          :
-                          <div className={Style.userImg}>
-                            <img src={userDefaultProfile} className={Style.userImg} alt="Default Profile"/>
-                          </div>
-                      }
-                      <div className={Style.userinfo}>
-                        <p className={Style.userid}>{item.userid}</p>
-                        <p className={Style.userGender}>{item.userGender === 'M' ? '남성' : '여성'}</p>
-                      </div>
-                      <div className={Style.tnuminfo}>
-                        <p>모집인원</p> 
-                        <p className={Style.tnum}>{item.tnum}명</p>
-                      </div>
-                    </div>
-                  </div>
-                {searchSub !== undefined && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq) &&
-
-                  (<div className={Style.togetherFoot}>
-                      <div className={Style.imgDiv}>
-                      <img src={loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.image} 
-                          className={Style.placeImg} alt="Place Image" />
-                      </div>
-                      <div className={Style.title}><p>{item.title}</p></div>
-                      <div className={Style.context}><p>{item.context}</p></div>
-                      <div className={Style.placeInfo}> 
-                      {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.name}
-                      </div>
-                  </div>)}
-
+                <div className={Style.together} key={item.togetherSeq} onClick={() => onTogetherView(item.togetherSeq)}
+                  onMouseUpCapture={() => setHover(true)} onMouseOutCapture={() => setHover(false)}>
                   {searchSub === undefined && searchSub_Cus !== undefined &&
-
                   (<div className={Style.togetherFoot}>
                     <div className={Style.imgDiv}>
                         <div className={Style.placeImg}>
@@ -230,6 +194,43 @@ useEffect(() => {
                     {loading && customDTO.find(cusItem => cusItem.plCustomSeq === searchSub_Cus.plCustomSeq).placeName}
                     </div>
                   </div>)}
+                {searchSub !== undefined && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq) &&
+
+                  (<div className={Style.togetherFoot}>
+                      <div className={Style.imgDiv}>
+                      <img src={loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.image} 
+                          className={Style.placeImg} alt="Place Image" />
+                      </div>
+                      <div className={Style.title}><p>{item.title}</p></div>
+                      <div className={Style.context}><p>{item.context}</p></div>
+                      <div className={Style.placeInfo}> 
+                      {loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.name}
+                      </div>
+                  </div>)}
+                  <div className={Style.dateTop}>
+                    <div className={Style.date}>
+                      {item.startDate} - {item.endDate}
+                    </div>
+                    <div className={Style.userSeq}>
+                      {item.userProfileImage !== ''  ?
+                          <div className={Style.userImg}>
+                            <img src={item.userProfileImage} className={Style.userImg} alt="User Profile" />
+                          </div>
+                          :
+                          <div className={Style.userImg}>
+                            <img src={userDefaultProfile} className={Style.userImg} alt="Default Profile"/>
+                          </div>
+                      }
+                      <div className={Style.userinfo}>
+                        <p className={Style.userid}>{item.userid}</p>
+                        <p className={Style.userGender}>{item.userGender === 'M' ? '남성' : '여성'}</p>
+                      </div>
+                      <div className={Style.tnuminfo}>
+                        <p>모집인원</p> 
+                        <p className={Style.tnum}>{item.tnum}명</p>
+                      </div>
+                    </div>
+                  </div>
                   
               </div>
                 );
