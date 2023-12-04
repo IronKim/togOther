@@ -6,6 +6,7 @@ import defaultImg from '../assets/image/profile_thumb.png';
 import MypageWrite from '../components/mypage/MypageWrite';
 import MypagePlanner from '../components/mypage/MypagePlanner';
 import MypageTogether from '../components/mypage/MypageTogether';
+import MypageReview from '../components/mypage/MypageReview';
 
 const Mypage = () => {
 
@@ -30,6 +31,9 @@ const Mypage = () => {
             }
             {
                 state === 3 && <MypageTogether onErrorImg={onErrorImg} />
+            }
+            {
+                state === 5 && <MypageReview onErrorImg={onErrorImg} />
             }
             <div style={{clear:'both'}}></div>
         </div>

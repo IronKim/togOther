@@ -1,0 +1,32 @@
+
+.MypageReview1{
+    width:70%;
+    margin: 5px;
+    margin-top: 30px;
+}
+.div1{
+    width: 100%;
+}
+
+
+
+
+/* 1200px 이하의 화면 너비에 대한 스타일 */
+@media screen and (max-width: 1199px) {
+
+        .MypageReview1{
+        width: 95%;
+        min-width: 60%;
+        /* margin: 0 auto; */
+        width: 100%;
+        margin-top: 30px;
+        justify-content: center;
+    }
+    .delete{
+        font-size: 15px;
+    }
+    .div1{
+        width: 100%;
+    }
+  }
+  

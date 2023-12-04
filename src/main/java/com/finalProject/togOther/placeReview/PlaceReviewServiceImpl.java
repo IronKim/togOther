@@ -133,5 +133,25 @@ public class PlaceReviewServiceImpl implements PlaceReviewService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<?> getPlaceReviewByUserSeq(int userSeq) {
+	    try {
+	        List<PlaceReview> placeReviewList = placeReviewRepository.findByUser_UserSeq(userSeq);
+
+	        List<PlaceReviewDTO> placeReviewDTOList = new ArrayList<>();
+
+	        for (PlaceReview placeReview : placeReviewList) {
+	            PlaceReviewDTO placeReviewDTO = PlaceReviewDTO.toDTO(placeReview);
+	            placeReviewDTOList.add(placeReviewDTO);
+	        }
+
+	        return ResponseEntity.ok(placeReviewDTOList);
+
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	    }
+	}
+
+
 
 }
