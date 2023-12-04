@@ -35,6 +35,17 @@
     text-align: center;
 
 }
+.PImage{
+    width: 95px;
+    height: 95px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.PImage:hover{
+    opacity: 0.5;
+    cursor: pointer;
+}
+
 .mbti {
     height : 28px;
     text-align: center;
@@ -326,7 +337,7 @@
 
     }
 }
-@media (max-width: 754px) { 
+/* @media (max-width: 754px) { 
     .onModal {
         width: 100%;
     }
@@ -371,7 +382,7 @@
         color: gray;
         text-align: right;
     }
-}
+} */
 @media (max-width: 1199px) {
     .tagP {
         font-size: 21px; /* 텍스트 크기 조정 */

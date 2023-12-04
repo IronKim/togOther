@@ -951,6 +951,29 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	@Override
+    public ResponseEntity<String> updateProfileImage(int userSeq, String updateProfileImage) {
+        try {
+            Optional<User> optionalUser = userRepository.findById(userSeq);
+
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            User user = optionalUser.get();
+            UserDTO userDTO = UserDTO.toDTO(user);
+            userDTO.setProfileImage(updateProfileImage);
+
+            userRepository.save(User.toEntity(userDTO));
+
+            String responseMessage = "프로필 이미지가 성공적으로 업데이트되었습니다.";
+            return ResponseEntity.ok(responseMessage);
+        } catch (Exception e) {
+            String errorMessage = "프로필 이미지를 업데이트하는 중에 오류가 발생했습니다.";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
+    }
+	
 	
 	@Override
 	public ResponseEntity<String> withdrawalUser(int userSeq) {

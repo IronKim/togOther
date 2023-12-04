@@ -293,7 +293,7 @@ const Homew = () => {
                         {matchingCities.map(city => (
                             <div key={city.citySeq} style={{ textAlign: 'center' }}>
                             <Link to={`/info/city/${city.citySeq}`}>
-                                <div style={{width: '300px', height: '300px',marginTop:'70px', marginBottom: '30px', overflow: 'hidden', borderRadius:'20px'}}>
+                                <div style={{width: '300px', height: '300px',marginTop:'70px', marginBottom: '30px', overflow: 'hidden', borderRadius:'50%'}}>
                                     <img
                                         style={{ marginBottom: '30px' }}
                                         className={home.img}

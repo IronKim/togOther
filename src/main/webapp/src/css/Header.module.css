@@ -67,14 +67,9 @@
     display: none;
   }
   .logo{
+    margin-left: 10px;
+    margin-top: 10px;
     width: 1%;
-  }
-}
-
-@media (min-width: 1200px) {
-  .header {
-    width: 1200px;
-    margin: 0 auto;
   }
 }
 

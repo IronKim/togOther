@@ -185,6 +185,13 @@ public class UserController {
 		return userService.updatecityList(userSeq, cityName);
 	}
 	
+	// 프로필 사진 수정
+	@PutMapping(path = "updateProfileImage/{userSeq}")
+	public ResponseEntity<String> updateProfileImage(@PathVariable int userSeq, @RequestBody Map<String, String> profileImage) {
+		String updateProfileImage = (profileImage.get("profileImage"));
+		return userService.updateProfileImage(userSeq, updateProfileImage);
+	}
+	
 	// 회원 탈퇴
 	@DeleteMapping(path = "withdrawalUser/{userSeq}")
 	public ResponseEntity<String> withdrawalUser(@PathVariable int userSeq) {
