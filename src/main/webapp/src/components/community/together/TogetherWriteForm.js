@@ -150,7 +150,8 @@ const PlaceWriteForm = () => {
                  .then(res => {
                     // subDTO 저장
                     subDTO.map(item => {
-                        if(item.place !== null ){
+                        if(item.place !== null && item.place !== undefined ){
+                            console.log('엥')
                             const subItem = {toMainSeq:res.data,
                                              nday: item.nday, code : item.code,
                                              startTime : item.startTime, 
@@ -165,7 +166,7 @@ const PlaceWriteForm = () => {
                     })
                         //customDTO에 저장
                         subDTO.map(item => {
-                        if(item.customDTO !== null){
+                        if(item.customDTO !== null && item.customDTO !== undefined){
                             
                             addCustomPlace(item.customDTO)
                             .then(res2 => {
@@ -320,6 +321,7 @@ const PlaceWriteForm = () => {
         <>
         <div className={Style.writeForm}>
         <div className={Style.writeFormInner}>
+            <button onClick={() =>alert(JSON.stringify(subDTO))}>sub json 확인</button>
             <div>
                 <input type="text" 
                        className={`${Style.title} ${Style.input}`}

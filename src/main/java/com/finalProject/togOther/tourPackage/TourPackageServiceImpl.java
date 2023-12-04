@@ -81,7 +81,7 @@ public class TourPackageServiceImpl implements TourPackageService {
 
 
 	@Override
-	public ResponseEntity<String> addPayment(PaymentDTO paymentDTO) {
+	public ResponseEntity<Integer> addPayment(PaymentDTO paymentDTO) {
 		Payment payment = Payment.toEntity(paymentDTO);
 
 		try {
@@ -89,13 +89,72 @@ public class TourPackageServiceImpl implements TourPackageService {
 
 			String responseMessage = "추가되었습니다.";
 
-			return ResponseEntity.ok(responseMessage);
+			int paymentSeq = payment.getPaymentSeq();
+			
+			return ResponseEntity.ok(paymentSeq);
 
 		} catch (Exception e) {
 
-			// 도시 추가 중 에러가 발생했을 때
-			String errorMessage = "오류가 발생했습니다.";
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-1);
+		}
+	}
+
+
+	@Override
+	public ResponseEntity<PaymentDTO> getPaymentBySeq(int paymentSeq) {
+		try {
+			Optional<Payment> OptionalPay = paymentRepository.findById(paymentSeq);
+
+			Payment payment = OptionalPay.orElseThrow(); 
+			
+			return ResponseEntity.ok(PaymentDTO.toDTO(payment));
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<List<PaymentDTO>> getPaymentList(int userSeq) {
+		
+		try {
+			List<Payment> payList = paymentRepository.findAllByUserSeqOrderByPaymentSeqDesc(userSeq);
+
+			List<PaymentDTO> payDTOList = new ArrayList<PaymentDTO>();
+
+			for (Payment pay : payList) {
+
+				PaymentDTO paymentDTO = PaymentDTO.toDTO(pay);
+
+				payDTOList.add(paymentDTO);
+			}
+
+			return ResponseEntity.ok(payDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<List<PaymentDTO>> getPaymentAll() {
+		
+		try {
+			List<Payment> payList = paymentRepository.findAll();
+			
+			List<PaymentDTO> payDTOList = new ArrayList<PaymentDTO>();
+			
+			for (Payment pay : payList) {
+				
+				PaymentDTO paymentDTO = PaymentDTO.toDTO(pay);
+				
+				payDTOList.add(paymentDTO);
+			}
+			
+			return ResponseEntity.ok(payDTOList);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
 

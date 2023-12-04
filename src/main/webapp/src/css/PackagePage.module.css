@@ -4,7 +4,11 @@
     margin: 0 auto;
     user-select: none;
 }
-
+.backBut {
+    cursor: pointer;
+    margin: 20px 2.5% 10px 2.5%;
+    width: 25px;
+  }
 .Thumbnail {
     width: 100%;
     max-width: 1200px; 
@@ -118,14 +122,14 @@
 
   }
   .moreButton{
-    font-size: 25px;
-    color: #3498db;
+    font-size: 20px;
+    color: darkgray;
     width: 100%;
     border: none;
     padding: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease-out;
-    background: linear-gradient(top, #ffffff, rgb(214, 214, 214));
+    transition:  0.3s ease-out;
+    background: linear-gradient(to bottom, #ffffff, rgba(200, 200, 200, 0.5));
     opacity: 0.8;
 }
   /*---------------main_page------------*/

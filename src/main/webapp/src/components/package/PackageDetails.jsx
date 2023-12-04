@@ -10,7 +10,7 @@ import minus from '../../assets/image/minus.png';
 import plus from '../../assets/image/plus.png';
 import { getTourPackageByTpSeq } from '../../api/PackageApiService';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import backBut from '../../assets/image/backBut.png'
 
 const initialState = 1
 
@@ -106,9 +106,13 @@ const PackageDetails = () => {
         navigate(`/package/reservation/${tpSeq}/${formattedDate}&${count}`)
     }
 
+    const back = () => {
+        navigate(-1)
+    }
+
     return (
         <div className={ styles.package_main }>
-
+            <img className={styles.backBut} src={backBut} onClick={() => back()}/>
             <div>    
                 <img className={ styles.Thumbnail } src={pack.tpThumbnail} /> 
             </div>

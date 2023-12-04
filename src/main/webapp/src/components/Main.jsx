@@ -30,6 +30,7 @@ import PackageLists from './package/PackageLists';
 import PackageMain from './package/PackageMain';
 import NaverCallback from '../pages/NaverCallback';
 import AdvisorKakaoToken from './advisor/AdvisorKakaoToken';
+import PackageResDetails from './package/PackageResDetails';
 
 const libraries = ["places"];
 
@@ -92,6 +93,7 @@ const Main = ({ showNavbar }) => {
                         <Route path='List/:searchData' element={ <PackageLists />} />
                         <Route path='details/:tpSeq' element= { <PackageDetails/> } />
                         <Route path='reservation/:packageSeq/:info' element={  <UserRoute><PackgeReservation/></UserRoute>} />
+                        <Route path='payment/:paymentSeq' element={  <UserRoute><PackageResDetails/></UserRoute>} />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>

@@ -44,8 +44,25 @@ public class TourPackageController {
 	
 	// 예약 내역 넣기
 	@PostMapping(path = "addPayment")
-	public ResponseEntity<String> addPayment(@RequestBody PaymentDTO paymentDTO) {
+	public ResponseEntity<Integer> addPayment(@RequestBody PaymentDTO paymentDTO) {
 		return tourpackageService.addPayment(paymentDTO);
 	}
-
+	
+	// tqSeq값에 따른 자
+	@GetMapping(path = "getPaymentBySeq/{paymentSeq}")
+	public ResponseEntity<PaymentDTO> getPaymentBySeq(@PathVariable int paymentSeq) {
+		return tourpackageService.getPaymentBySeq(paymentSeq);
+	}
+	
+	// tqSeq값에 따른 자
+	@GetMapping(path = "getPaymentList/{userSeq}")
+	public ResponseEntity<List<PaymentDTO>> getPaymentList(@PathVariable int userSeq) {
+		return tourpackageService.getPaymentList(userSeq);
+	}
+	
+	// tqSeq값에 따른 자
+	@GetMapping(path = "getPaymentAll")
+	public ResponseEntity<List<PaymentDTO>> getPaymentAll() {
+		return tourpackageService.getPaymentAll();
+	}
 }
