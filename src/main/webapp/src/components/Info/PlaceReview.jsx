@@ -6,10 +6,13 @@ import PlaceReviewUpdate from './PlaceReviewUpdate';
 import PlaceReviewPhoto from './PlaceReviewPhoto';
 import { getPlaceReviewBySeq, deletePlaceReviewByReviewSeq} from '../../api/PlaceReviewApiService';
 import { useUserStore } from '../../stores/mainStore';
+import ProfileView from '../ProfileView/ProfileView';
+import thumb from 'D:/SpringBoot/workspace/togOther/src/main/webapp/src/assets/image/profile_thumb.png';
 
 const PlaceReview = ({ placeSeq }) => {
   const [selectedPlaceReview, setSelectedPlaceReview] = useState([]);
   const [modalShow, setModalShow] = useState(false);
+  const [modalShow1, setModalShow1] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -62,6 +65,12 @@ const formatDateTime = (dateString) => {
     loadInitialReviews();
   }, [placeSeq]);
 
+  const handleProfileClick = (user1) => {
+    setUserProfiles(user1);
+    setModalShow1(true);
+  };
+
+
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -112,18 +121,20 @@ const formatDateTime = (dateString) => {
         </p>
       </div>
       {selectedPlaceReview.map((review) => {
-        console.log(review.image)
         const imageArray = review.image.split(',');
         const user = userProfiles[review.userSeq] || {};
         return (
           <div key={review.reviewSeq} style={{ maxWidth: '728px', width: '100%', display: 'block', margin: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Col xs={6} md={4} style={{ display: 'flex', alignItems: 'center' }}>
+                
                 <Image
-                  src={review.user.profileImage || '프로필 이미지 기본 URL'}
+                  src={review.user.profileImage || thumb}
                   roundedCircle
                   style={{ width: '40px', height: '40px' }}
+                  onClick={() => handleProfileClick(review.user.userSeq)}
                 />
+                
                 <div style={{ flex: 1 }}>
                   <div
                     className="fw-bolder"
@@ -270,7 +281,6 @@ const formatDateTime = (dateString) => {
                         objectFit: 'cover',
                         marginTop: '5px',
                         marginRight: '5px',
-                        
                       }}
                       onClick={() => handleImageClick(imageArray[2])}
                     />
@@ -286,6 +296,7 @@ const formatDateTime = (dateString) => {
           </div>
         );
       })}
+      <ProfileView show={modalShow1} onHide={() => setModalShow1(false)} userSeq={userProfiles}/>
       <PlaceReviewPhoto show={modalShow} onHide={() => setModalShow(false)} image={selectedImage} />
     </div>
   );
