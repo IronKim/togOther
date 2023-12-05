@@ -196,6 +196,7 @@
     height: 80px;
     width: 80%;
     border-radius: 10px;
+    position: relative; 
 }
 .reservation_img_div {
     margin: 5px;
@@ -206,16 +207,15 @@
 }
 .p_div {
     display: flex;
-    margin-left: 150px;
-    align-items: flex-start; 
+    flex-wrap: wrap;
+    gap: 5px;
+    position: absolute;
+    left: 150px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 .p_div p {
-    display: flex;
-    margin-top: -50px;
     font-size: 20px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 /*--------------media-------------*/
@@ -276,21 +276,12 @@
         width : 100%;
     }
     .p_div {
-        flex-wrap: wrap;
-        max-height: 3.6em; /* 두 줄로 나누기 위해 높이 제한 설정 (글자 크기에 따라 조절 필요) */
+        max-height: 3.6em;
     }
-    .p_div p {
-        margin-top: 0; /* 줄임표 처리를 위해 마진 조정 */
-        white-space: normal; /* 여러 줄로 표시 */
-        text-overflow: ellipsis; /* 줄임표 처리 */
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2; /* 두 줄로 제한 */
-        font-size: 20px;
-        margin-top: -50px;
-        white-space: nowrap;
 
+    .p_div p {
+        
+        margin-top: 0;
     }
 }
 @media (max-width: 754px) { 
@@ -312,7 +303,7 @@
     }
     .my_reservation_main {
         border : 1px solid palegreen;
-        width : 920px;
+        /* width : 920px; */
         height : 500px;
     }
     .hr_1 {
@@ -331,12 +322,11 @@
         height: 110px;
     }
     .p_div {
-        margin-left: 150px;
-        height : 120px;
+        flex-wrap: nowrap;
     }
     .p_div p {
-        margin-top: -100px;
-        font-size: 20px;
+        font-size: 18px;
+        margin-top: -50px;
     }
 }
 @media (max-width: 1199px) {
