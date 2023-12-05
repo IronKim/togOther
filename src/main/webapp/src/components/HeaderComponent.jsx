@@ -134,7 +134,7 @@ const HeaderComponent = () => {
                     </li>
                   </ul>
                 </nav>
-                <div className={ styles['login_section'] }>
+                <div className={ styles.loginSection }>
                   {
                     user.name === '' ? (
                       <>

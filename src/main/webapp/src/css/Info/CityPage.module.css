@@ -251,7 +251,7 @@
     right: 12px;
     margin: 0;
 }
-@media (max-width: 1201px) { 
+@media (max-width: 1199px) { 
     .main {
         width: 100%;
     }
@@ -271,12 +271,12 @@
         margin: 50px 5%;
     }
     .cityName{
-        top: 8%;
+        top: 9%;
     }
 }
 @media (max-width: 754px) { 
     .cityName{
-        top: 10%;
+        top: 9%;
     }
     .api {
         margin: 20px auto;
@@ -306,9 +306,8 @@
             height: 14em;
         }
         .cityName{
-            margin-left: 10px;
-            top: 3%;
-            font-size: 35px;
+            top: 8%;
+            font-size: 40px;
         }
     }
 }
