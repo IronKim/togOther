@@ -6,7 +6,7 @@ import thumb from '../../assets/image/package_thumb.png'
 import sweet from 'sweetalert2';
 
 import { useUserStore } from '../../stores/mainStore';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const IMP = window.IMP || {};
 
@@ -14,40 +14,47 @@ IMP.init('imp37267524');
 
     const PackgeReservation = () => {
 
+    const navigate = useNavigate();
+
     ////////////결제 api /////////////
     function callback(response) {
-        const { success, error_msg } = response;
+        console.log(response)
+
+        const { success, error_msg , card_name, card_number } = response;
 
         if (success) {
             window.scrollTo(0, 0);
-            const packageDTO = {
-                tpSeq : parseInt(packageSeq),
-                userSeq : parseInt(user.userSeq),
-                title : packageData.tpTitle,
-                price : packageData.tpPrice,
-                count : parseInt(count),
-                useDate : new Date(resDate),
-                bookerBirthday : new Date(year, month - 1, date),
-                bookerName : name,
-                bookerGender : gender,
-                bookerTel : telCode+' '+tel,
-                bookerEmail : email,
-                bookerWish : wish
-            }
-            addPayment(packageDTO)
-            .then(res => console.log(res))
-            .then(
-                sweet.fire({
-                    title: "결제 성공",
-                    icon: "success"
-                }).then(() => {
-                    sendMessage({
-                        text : `상품 ${packageData.tpTitle}\n\n출발일자 ${new Date(resDate).getFullYear()}.${new Date(resDate).getMonth() + 1
-                        }.${new Date(resDate).getDate()}\n구매자 ${name}\n가격 ${packageData.tpPrice}원 ${count}개`,
-                        link : `http://localhost:3000/package/details/${packageSeq}`
-                    })
+            sweet.fire({
+                title: "결제 성공",
+                icon: "success"
+            })
+            .then(() => {
+                sendMessage({
+                    text : `상품\n${packageData.tpTitle}\n\n출발일자 ${new Date(resDate).getFullYear()}.${new Date(resDate).getMonth() + 1
+                    }.${new Date(resDate).getDate()}\n구매자 ${name}\n가격 ${packageData.tpPrice}원\n개수 ${count}개\n총 ${packageData.tpPrice*count}원\n결제수단\n${
+                    card_name + ' ' + card_number}`,
+                    link : `http://localhost:3000/package/details/${packageSeq}`
                 })
-            )
+            })
+            .then(() => {
+                const packageDTO = {
+                    tpSeq : parseInt(packageSeq),
+                    userSeq : parseInt(user.userSeq),
+                    title : packageData.tpTitle,
+                    price : packageData.tpPrice,
+                    count : parseInt(count),
+                    method :  card_name + ' ' + card_number,
+                    useDate : new Date(resDate),
+                    bookerBirthday : new Date(year, month - 1, date),
+                    bookerName : name,
+                    bookerGender : gender,
+                    bookerTel : telCode+' '+tel,
+                    bookerEmail : email,
+                    bookerWish : wish
+                }
+                addPayment(packageDTO)
+                .then(res => navigate(`/package/payment/${res.data}`))
+            })
         } else {
             sweet.fire({
                 title: "결제 실패",
@@ -109,7 +116,7 @@ IMP.init('imp37267524');
         setName(user.name)
         setGender(user.gender)
         setYear(day.getFullYear())
-        setMonth(day.getMonth() + 1)
+        setMonth((day.getMonth() + 1).toString().padStart(2, '0'))
         setDate(day.getDate())
         setTel(user.phone)
         setEmail(user.email)

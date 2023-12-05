@@ -11,7 +11,7 @@ const CityMoneyApi = ({ selectedCity }) => {
   const currencyNameMapping = {
 
     '서울' : 'KRW',
-    '시즈오카' : 'JPY',
+    '도쿄' : 'JPY',
     '홍콩' : 'HKD',
     '삿포로' : 'JPY',
     '오사카' : 'JPY',
@@ -42,6 +42,12 @@ const CityMoneyApi = ({ selectedCity }) => {
     '제주도' : 'KRW',
     '바르셀로나' : 'EUR',
     '칸쿤' : 'MXN',
+    '상파울루' : 'BRL',
+    '페루' : 'PEN',
+    '피렌체' : 'EUR',
+    '니스' : 'EUR',
+    '에든버러' : 'GBP',
+
   };
 
   useEffect(() => {

@@ -10,7 +10,8 @@ import minus from '../../assets/image/minus.png';
 import plus from '../../assets/image/plus.png';
 import { getTourPackageByTpSeq } from '../../api/PackageApiService';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import backBut from '../../assets/image/backBut.png'
+import { useUserStore } from '../../stores/mainStore';
 
 const initialState = 1
 
@@ -29,9 +30,11 @@ const reducer = (state, action) => {
 
 const PackageDetails = () => {
 
+    const {user} = useUserStore();
+
     const [ count, dispatch ] = useReducer(reducer, initialState)
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState();
 
     const [mark, setMark] = useState([]);
 
@@ -51,6 +54,11 @@ const PackageDetails = () => {
             // 여기서 tpImages를 배열로 가져와서 setImages를 통해 상태 업데이트
             setImages(imagesArray);
             setPack(res.data)
+            if(moment().format('YYYY-MM-DD') > res.data.tpsaleStart) {
+                setSelectedDate(new Date(moment().format('YYYY-MM-DD')))
+            } else {
+                setSelectedDate(new Date(res.data.tpsaleStart))
+            }
         })
         .catch(e => console.log(e));
     },[tpSeq])
@@ -106,9 +114,17 @@ const PackageDetails = () => {
         navigate(`/package/reservation/${tpSeq}/${formattedDate}&${count}`)
     }
 
+    const onLogin = () => {
+        navigate(`/user/login`)
+    }
+
+    const back = () => {
+        navigate(-1)
+    }
+
     return (
         <div className={ styles.package_main }>
-
+            <img className={styles.backBut} src={backBut} onClick={() => back()}/>
             <div>    
                 <img className={ styles.Thumbnail } src={pack.tpThumbnail} /> 
             </div>
@@ -125,7 +141,8 @@ const PackageDetails = () => {
                             value={selectedDate}
                             minDetail="month"
                             maxDetail="month" 
-                            minDate={new Date(startformattedDate)}
+                            // minDate={new Date(startformattedDate)}
+                            minDate={ moment().format('YYYY-MM-DD') > pack.tpsaleStart ? moment().toDate() : new Date(startformattedDate)}
                             maxDate={new Date(endformattedDate)}
                             navigationLabel={null}
                             showNeighboringMonth={false}
@@ -169,8 +186,8 @@ const PackageDetails = () => {
                                     </div>
                                 </div>
 
-                                <div className={ styles.reservation } onClick={() => onReservation()}>
-                                    <button>예약하기</button>
+                                <div className={ styles.reservation } onClick={() => user.name !== '' ? onReservation() : onLogin()}>
+                                    <button>{user.name !== '' ? '예약하기' : '로그인'}</button>
                                 </div>
                             </div>
                         </div>

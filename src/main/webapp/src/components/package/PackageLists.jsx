@@ -6,8 +6,9 @@ import Card from 'react-bootstrap/Card';
 
 import PackageStyle from '../../css/PackageList.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
-import packBg from '../../assets/image/packageBackground.png'
+import packBg from '../../assets/image/flight.png'
 import searchs from '../../assets/image/search.png'
+import backBut from '../../assets/image/backBut.png'
 
 const PackageLists = () => {
 
@@ -60,6 +61,7 @@ const PackageLists = () => {
     const navigate = useNavigate()
 
     const onToPackagePage = (tpSeq) => {
+        window.scrollTo(0, 0);
         navigate(`/package/details/${tpSeq}`)
     }
 
@@ -67,6 +69,10 @@ const PackageLists = () => {
     if (e.key === 'Enter') {
         navigate(`/package/list/${search}`)
         }
+    }
+
+    const back = () => {
+        navigate(-1)
     }
     
     return (
@@ -77,6 +83,8 @@ const PackageLists = () => {
             onChange={(e)=>setSearch(e.target.value)} placeholder='어디로 떠나시나요?' onKeyDown={(e)=>onSearch(e)}/>
         </div>
             <div className={PackageStyle.arraymain}> 
+                <img className={PackageStyle.backBut} src={backBut} onClick={() => back()}/>
+                <div style={{clear:'both'}}></div>
                 {
                 packageList.filter(pack => {
                     const citys = cityList.filter(ci => ci.countryName === searchData || ci.cityName === searchData).map(ci2 => ci2.citySeq);
@@ -88,6 +96,7 @@ const PackageLists = () => {
                         </div>
                         <Card.Body className={PackageStyle.cardbody}>
                             <Card.Title className={PackageStyle.cardTitle}>{item.tpTitle}</Card.Title>
+                            <div style={{clear:'both'}}></div>
                             <Card.Text className={PackageStyle.cardPrice}>
                                {parseFloat(item.tpPrice).toLocaleString()}원
                             </Card.Text>

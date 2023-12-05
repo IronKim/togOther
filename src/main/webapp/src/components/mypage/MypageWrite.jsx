@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from '../../css/MyPage.module.css';
 import { useUserStore } from '../../stores/mainStore';
 import { smsCertificationRequest, updateLikingFood, updateLikingTrip, 
-    updatePassword, updatePhone, updateProfileText, withdrawalUser, updateMbtiApi } from '../../api/UserApiService';
+    updatePassword, updatePhone, updateProfileText, withdrawalUser, updateMbtiApi, updateProfileImage } from '../../api/UserApiService';
 
 import { RiSave3Fill } from "react-icons/ri";
 import { GiCancel } from "react-icons/gi";
@@ -14,9 +14,11 @@ import Swal from 'sweetalert2'; // SweetAlert2 추가
 import { useNavigate } from 'react-router-dom';
 import MyMbti from './MyMbti';
 
+import { uploadPlannerImage } from '../../api/PlannerApiService';
+
 const MypageWrite = ({onErrorImg}) => {
 
-    const { user,updateMbti } = useUserStore();
+    const { user,updateMbti, updatePImage } = useUserStore();
 
     const navigate = useNavigate();
 
@@ -485,6 +487,90 @@ const MypageWrite = ({onErrorImg}) => {
         }
     };
 
+    const uploadAndSetProfileImage = (file) => {
+        const formData = new FormData();
+        formData.append('files', file);
+    
+        // 오브젝트 스토리지에 이미지 업로드
+        uploadPlannerImage(formData)
+            .then((response) => {
+                // 이미지 업로드 성공 시 업로드된 이미지 정보를 받아옴 (response에는 이미지 링크 또는 정보가 있어야 함)
+                const uploadedImageUrl = response.data; // 이미지 링크가 있다고 가정함
+    
+                // 서버에 프로필 이미지 업데이트 요청
+                updateProfileImage(user.userSeq, uploadedImageUrl)
+                    .then((response) => {
+                        Swal.fire({
+                            title: '프로필 이미지 변경 성공',
+                            icon: 'success',
+                            showConfirmButton: false,
+                        });
+                        // 사용자의 프로필 이미지 업데이트
+                        updatePImage(uploadedImageUrl);
+                    })
+                    .catch((error) => {
+                        Swal.fire({
+                            title: '프로필 이미지 변경 실패',
+                            text: error.response.data,
+                            icon: 'error',
+                        });
+                    });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: '이미지 업로드 실패',
+                    text: error.response.data,
+                    icon: 'error',
+                });
+            });
+    };
+    
+    // 이미지 업로드 핸들러
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        uploadAndSetProfileImage(file);
+    };
+    
+    // 파일 선택을 위한 input 엘리먼트 생성 및 핸들러 연결
+    const openFileSelector = () => {
+
+        Swal.fire({
+            title: '프로필 이미지 수정',
+            text: '이미지를 업로드하거나 기본 이미지로 변경할 수 있습니다.',
+            showCancelButton: true,
+            cancelButtonText: '기본 이미지로 변경',
+            confirmButtonText: '이미지 업로드',
+            reverseButtons: false,
+    
+        }).then((result) => {
+            if(result.isConfirmed) {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.onchange = handleImageUpload;
+                input.click();
+            }
+            if (result.dismiss === Swal.DismissReason.cancel) {
+                // 기본 이미지로 변경
+                if(user.profileImage !== null && user.profileImage !== '') {
+
+                updateProfileImage(user.userSeq, '')
+                .then((response) => {
+                    Swal.fire({
+                        title: '프로필 이미지 변경 성공',
+                        icon: 'success',
+                        showConfirmButton: false,
+                    });
+                    // 사용자의 프로필 이미지 업데이트
+                    updatePImage('');
+
+                })
+            }
+
+            }
+        });
+
+    };
+
     return (
         <div>
             {
@@ -496,8 +582,8 @@ const MypageWrite = ({onErrorImg}) => {
                     <div style={{display: 'flex', flexDirection: 'column', height: '13em'}}>
                         <div className={ styles.photo_mbti }>
                             <div className={ styles.photo }>
-                                <img src={ user.profileImage === null ? '' : user.profileImage.toString()} 
-                                    style={{ width: '95px', height : '95px',objectFit:'cover',borderRadius:'50%' }} onError={onErrorImg} />
+                                <img onClick={openFileSelector} src={ user.profileImage === null ? '' : user.profileImage.toString() } 
+                                    className={styles.PImage} onError={onErrorImg} />
                             </div>
                             <p className={ styles.nameInput } style={{fontSize: '30px', width : '100%', height : '45px', textAlign: 'center' }} >{user.name}</p>
                             {user &&

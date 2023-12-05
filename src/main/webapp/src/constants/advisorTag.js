@@ -3,4 +3,5 @@ export const ADVISORTAG = {
     LOCATION: '장소 관리',
     COMMUNITY : '커뮤니티 관리',
     PACKAGE: '패키지 관리',
+    PAYMENT: '예약 관리',
 }

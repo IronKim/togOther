@@ -16,6 +16,7 @@ import backBut from '../../../assets/image/backBut.png'
 import WhatDay from './WhatDay';
 import Modal from './Modal';
 import ImgModal from './ImgModal';
+import ProfileView from '../../ProfileView/ProfileView';
 
 const containerStyle = {
     width: '100%',
@@ -35,6 +36,7 @@ const containerStyle = {
 const View = ({seqAd}) => {
     const {user} = useUserStore();
 
+    const [modalShow1, setModalShow1] = useState(false);
     const [modal,setModal] = useState({sw: -1 ,seq: -1})
     const [add, setAdd] = useState(false)
     const [img, setImg] = useState(false)
@@ -305,7 +307,7 @@ const handleScroll = () => {
             <div style={{clear:'both'}}/>
             <div className={styles.title}>{planner && planner.title}</div>
             {planner && 
-            <div className={styles.userProfile}>
+            <div className={styles.userProfile} onClick={() => setModalShow1(true)}>
                 <img src={planner.userProfileImage && planner.userProfileImage !== '' ? planner.userProfileImage : profileImg}></img>
                 <div className={styles.profiles}>
                     <div className={styles.proTop}>
@@ -381,6 +383,7 @@ const handleScroll = () => {
                         )
                     }
             </section>
+            {planner && <ProfileView show={modalShow1} onHide={() => setModalShow1(false)} userSeq={planner.userSeq}/> }
         </div>
     );
 };

@@ -1,35 +1,22 @@
 import React, { useState } from 'react';
 import sea from '../css/Search.module.css';
+import flight from '../assets/image/flight.png'
+import searchs from '../assets/image/search.png'
 
-const Search = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+const Search = (props) => {
 
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSearch = () => {
-    console.log('검색어:', searchTerm);
-    setSearchTerm('');
-  };
+  const {searchTerm,onSearch} = props;
 
   return (
-    <div className={sea.search_container}>
-      <div className={sea.search_input_wrapper}>
-        <div className={sea.search_icon_wrapper}>
-          <span role="img" aria-label="search-icon" className={sea.search_icon}>
-            🔍
-          </span>
-        </div>
+    <div className={sea.search_container} style={{backgroundImage:`url(${flight})`}}>
+          <img src={searchs} className={sea.search}/>
         <input
           className={sea.search_input}
-          type="text"
-          placeholder="검색어를 입력하세요..."
+          type="search"
+          placeholder="어디로 떠나시나요?"
           value={searchTerm}
-          onChange={handleInputChange}
+          onChange={(e) => onSearch(e)}
         />
-      </div>
-      <button onClick={handleSearch}>검색</button>
     </div>
   );
 };

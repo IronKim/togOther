@@ -13,7 +13,6 @@ import Write from '../pages/Write';
 import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
-import TogetherList from './community/together/TogetherList';
 import Community from '../pages/Community';
 import useUserStore from '../stores/userStore';
 import BottomNav from './BottomNav';
@@ -31,6 +30,7 @@ import PackageLists from './package/PackageLists';
 import PackageMain from './package/PackageMain';
 import NaverCallback from '../pages/NaverCallback';
 import AdvisorKakaoToken from './advisor/AdvisorKakaoToken';
+import PackageResDetails from './package/PackageResDetails';
 
 const libraries = ["places"];
 
@@ -94,6 +94,7 @@ const Main = ({ showNavbar }) => {
                         <Route path='List/:searchData' element={ <PackageLists />} />
                         <Route path='details/:tpSeq' element= { <PackageDetails/> } />
                         <Route path='reservation/:packageSeq/:info' element={  <UserRoute><PackgeReservation/></UserRoute>} />
+                        <Route path='payment/:paymentSeq' element={  <UserRoute><PackageResDetails/></UserRoute>} />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>

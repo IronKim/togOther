@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 
 import leftButImg from '../../assets/image/left.png'
 import rightButImg from '../../assets/image/right.png'
-import packBg from '../../assets/image/packageBackground.png'
+import packBg from '../../assets/image/flight.png'
 import plannerImg from '../../assets/image/planner.png'
 import cityImg from '../../assets/image/city.png'
 import searchs from '../../assets/image/search.png'
@@ -134,10 +134,6 @@ const PackageMain = () => {
     const goList = (cName) => {
         navigate(`list/${cName}`)
       }
-    const goTop = () => {
-        window.scrollTo(0, 0);
-        foc.current.focus();
-    }
     const goCommunity = () => {
         window.scrollTo(0, 0);
         navigate(`/community`)
@@ -148,6 +144,7 @@ const PackageMain = () => {
     }
 
     const onPackage = (tpSeq) => {
+        window.scrollTo(0, 0);
         navigate(`details/${tpSeq}`)
     }
     
@@ -204,7 +201,6 @@ const PackageMain = () => {
                             //
                         )
                     }
-                <h2 onClick={() => goTop()}>패키지 찾아보기&nbsp;&nbsp;<img src={searchs}/></h2>
             </section>
         </div>
         </>

@@ -53,6 +53,8 @@ public interface UserService {
 	
 	public ResponseEntity<?> updateLikingPlace(int userSeq, int placeSeq);
 	
+	public ResponseEntity<String> updateProfileImage(int userSeq, String updateProfileImage);
+	
 	public ResponseEntity<String> withdrawalUser(int userSeq);
 
 	public ResponseEntity<String> updateMbti(int userSeq, String mbti);

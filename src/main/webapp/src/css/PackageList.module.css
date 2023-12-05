@@ -28,6 +28,11 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 /* ////////////////////////////// */
+.backBut {
+  cursor: pointer;
+  margin: 20px 2.5% 10px 2.5%;
+  width: 25px;
+}
 .arraymain{
   flex-direction: column;
   margin: 0 auto;
@@ -43,20 +48,21 @@
   cursor: pointer;
   display: inline-block;
   border-radius: 20px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
 }
 .cardbody{
-  display: flex;
   width: 100%;
   height: 40%; 
 }
 .cardimgDiv{
   max-width: 100%;
-  border-radius: 15px;
+  overflow: hidden;
+  max-height: 11.5em;
 }
 
 .cardimg{
   width: 284px;
-  height: 11em;
+  height: 11.5em;
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
   overflow: hidden;
@@ -64,6 +70,11 @@
 
 .cardTitle{
   font-size: 17px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .cardPrice{
@@ -72,10 +83,17 @@
   text-align: right;
   left: 180px;
   bottom: 0px;
-  position: absolute;
   float: right;
   color: #213ee3;
 }
+
+/* 호버 시 이미지 확대 */
+.card:hover img {
+  transform: scale(1.15); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
+  cursor: pointer;
+  transition: 0.4s;
+}
+
 .searchBg {
   width: 100%;
   height: 350px;
@@ -91,81 +109,64 @@
 /* 미디어 쿼리 추가 */
 @media (max-width: 1199px) {
 
-.arraymain{
-  width: 890px;
-}
-.searchBg {
-  height: 225px;
-}
-.searchBox{
-  width: 97%;
-}
-.card{
-  width: 35vw;
-  height: 13.5em;
-  margin: 0.5em;
-}
+  .searchBg {
+    height: 225px;
+  }
+  .searchBox{
+    width: 97%;
+  }
+  .arraymain{
+    margin: 0 auto !important;
+    width: 100%;
+  }
+  .card{
+    width: 44%;
+    height: 13.5em;
+    margin: 1.5% 3%;
+  }
 
-.cardimg{
-  width: 100%;
-  height: 100%;
-  border-radius : 15px;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
-  object-fit: cover;
-  transition: transform 0.3s ease-in-out;
-}
-.cardimgDiv{
-  max-width: 100%;
-  height: 9em;
-  overflow: hidden;
-  border-radius: 15px;
-}
-.cardText{
-  width: 74px;
+  .cardimg{
+    width: 100%;
+    height: 100%;
+    border-radius : 15px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+  .cardimgDiv{
+    max-width: 100%;
+    height: 9em;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+  .cardTitle {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 }
 @media (max-width: 391px) { 
-  .arraymain{
-      display: inline-block;
-      margin-left: 100px;
-      width: 390px;
-  }
   .card{
-      width: 8em;
-      height: 27vw;
-      left: -10%;
+      width: 44%; 
+      margin: 1.5% 3%;
+      height: 10.5em;
   }
   .cardimgDiv{
-      height: 4em;
+      height: 6em;
   }
   .cardTitle{
       position: relative;
       bottom: 13px;
       right: 10px;
-      font-size: 10px;
+      font-size: 15px;
       margin-bottom: auto;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
   }
-  .cardText{
-      font-size: 8px;
-      width: 40px; 
-      left: 63%;
-  }
-
-  /* -----------------------햄버거----------------------- */
-  .hamburger{
-    display: block;
-    border: none;
-    background-color: #dedede;
-  }
-  .hamburgerIcon1 {
-    user-select: none;
-    display: block;
-    position: absolute;
-    text-align: center;
-    font-size: 26px;
-    width: 40px;
-    height: 105px;
-    cursor: pointer;
-    transition: 0.3s;
+  .cardPrice{
+    font-size: 14px;
   }
 }

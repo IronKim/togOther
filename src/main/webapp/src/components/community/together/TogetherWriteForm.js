@@ -150,7 +150,8 @@ const PlaceWriteForm = () => {
                  .then(res => {
                     // subDTO 저장
                     subDTO.map(item => {
-                        if(item.place !== null ){
+                        if(item.place !== null && item.place !== undefined ){
+                            console.log('엥')
                             const subItem = {toMainSeq:res.data,
                                              nday: item.nday, code : item.code,
                                              startTime : item.startTime, 
@@ -165,7 +166,7 @@ const PlaceWriteForm = () => {
                     })
                         //customDTO에 저장
                         subDTO.map(item => {
-                        if(item.customDTO !== null){
+                        if(item.customDTO !== null && item.customDTO !== undefined){
                             
                             addCustomPlace(item.customDTO)
                             .then(res2 => {
@@ -201,7 +202,21 @@ const PlaceWriteForm = () => {
     const onSubDTO = (item) => {
         setSubDTO((prevSubDTO) => {
             const updatedSubDTO = prevSubDTO.filter((prevItem) => prevItem !== selectedItem);
-            return [...updatedSubDTO, item];
+            const newSubDTO = [...updatedSubDTO, item];
+
+            // 정렬 함수 추가
+            newSubDTO.sort((a, b) => {
+                if (a.nday !== b.nday) {
+                    return a.nday - b.nday;
+                } else if (a.startTime !== b.startTime) {
+                    return a.startTime - b.startTime
+                } else {
+                    // 한글 정렬
+                    return a.context.localeCompare(b.context, 'ko', { sensitivity: 'base' })
+                }
+            })
+
+            return newSubDTO
         })
         
     }
@@ -297,8 +312,14 @@ const PlaceWriteForm = () => {
         }
     
         if (sub && place && custom) {
+            const sortedSubDTO = sub.sort((a, b) => {
+                if (a.nday !== b.nday) {
+                    return a.nday - b.nday;
+                }
+                return a.startTime - b.startTime;
+            })
             setSubDTO((prevSubDTO) => {
-                const newSubDTO = sub.map((subItem, index) => ({
+                const newSubDTO = sortedSubDTO.map((subItem, index) => ({
                     subSeq: subItem.subSeq,
                     plMainSeq: subItem.plMainSeq,
                     toMainSeq: subItem.toMainSeq,
@@ -320,6 +341,7 @@ const PlaceWriteForm = () => {
         <>
         <div className={Style.writeForm}>
         <div className={Style.writeFormInner}>
+            <button onClick={() =>alert(JSON.stringify(subDTO))}>sub json 확인</button>
             <div>
                 <input type="text" 
                        className={`${Style.title} ${Style.input}`}
@@ -347,11 +369,13 @@ const PlaceWriteForm = () => {
             <div className={Style.writedateForm}>
                 <div className={Style.writedateCardForm} name="writedateCardForm">
                     {subDTO.map((item, index) => (
+                        
                         <div className={Style.writedateCard} key={index}>
                             <div className={Style.writedateCard_top}>
                             <button className={Style.resetSubDTO} onClick={() => resetSubDTO(index)}>삭제</button>
                             <button className={Style.updateSubDTO} onClick={() => updateSubDTO(index)}>수정</button>
-                            <p>{item.nday}DAY</p></div>
+                            <p>{item.nday} DAY&nbsp;/&nbsp;{item.startTime}시~{item.endTime}시</p>
+                            </div>
 
                             <div className={Style.writedateCard_foot}>
                             {
@@ -363,6 +387,7 @@ const PlaceWriteForm = () => {
                             <br/><p>{item.context}</p>
                             </div>
                         </div>
+
                     ))}
                     <div className={Style.writedateCard_de} onClick={onAdd}>
                             <div className={Style.writedateCard_de_text}>일정 추가</div>

@@ -10,6 +10,8 @@ import weatherData from '../../constants/WeatherData';
 import Like from './Like';
 import { useUserStore } from '../../stores/mainStore';
 import { updatecityList } from '../../api/UserApiService';
+import { getPlaceReviewBySeq } from '../../api/PlaceReviewApiService';
+import backBut from '../../assets/image/backBut.png'
 
 const CityPage = () => { 
     const { citySeq } = useParams();
@@ -39,10 +41,12 @@ const CityPage = () => {
 
     const [userPlaceLike, setUserPlaceLike] = useState(user.likingPlace);
 
-
     useEffect(() => {
         setUserPlaceLike(user.likingPlace);
     },[user])
+
+    const [placeReview, setPlaceReview] = useState()
+    
     
     useEffect(() => {
 
@@ -92,6 +96,7 @@ const CityPage = () => {
         } else {
             updateRecommend(selectedRecommend)
         }
+        selectItemClick('random');
         
     };
 
@@ -311,11 +316,17 @@ const CityPage = () => {
             setFilteredPlaceData(filteredData)
         }
         if(item === 'comment') {
-
+            let filteredData = filteredPlaceData.slice().sort((a, b) => 
+            b.likeCnt - a.likeCnt || a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }))
+            
+            console.log(filteredData)
+            setFilteredPlaceData(filteredData)
         }
     }  
 
-    
+    const back = () => {
+        navigate(-1)
+    }
     return (
 
         <div style={{userSelect:'none'}}>
@@ -330,7 +341,7 @@ const CityPage = () => {
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" className={ styles.img }></img>
             </div> */}
 
-
+            <img className={styles.backBut} src={backBut} onClick={() => back()}/>
             <div className={styles.api}>
             {/*  날씨 정보 표시 */}
             <div className={styles.weather}>
@@ -372,7 +383,7 @@ const CityPage = () => {
                         
                         <div className={ styles.drop_content } style={{display: drop ? 'block' : 'none'}}>
                             {user.mbti !== '' && user.mbti !== null && <div to='#' onClick={ () => selectItemClick('mbti')}>MBTI 순</div>}
-                            {user.likingPlace !== '' && user.likingPlace !== null && <div to='#' onClick={ () => selectItemClick('travel')} 
+                            {user.likingTrip !== '' && user.likingTrip !== null && <div to='#' onClick={ () => selectItemClick('travel')} 
                                                                         style={{display:activeButton === 'TouristSpot' ? 'block' : 'none'}}>여행취향 순</div>}
                             {user.likingFood !== '' && user.likingFood !== null && <div to='#' onClick={ () => selectItemClick('food')}  
                                                                                     style={{display:activeButton === 'TouristSpot' ? 'none' : 'block'}}>음식취향 순</div>}

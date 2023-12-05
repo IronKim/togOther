@@ -1,7 +1,7 @@
 export default {
 
     '서울' : 'seoul',
-    '시즈오카' : 'shizuoka',
+    '도쿄' : 'tokyo',
     '홍콩' : 'hongkong',
     '삿포로' : 'sapporo',
     '오사카' : 'osaka',
@@ -32,6 +32,11 @@ export default {
     '제주도' : 'jeju',
     '바르셀로나' : 'Barcelona',
     '칸쿤' : 'cancun',
+    '상파울루' : 'Saint Paul',
+    '페루' : 'Peru',
+    '피렌체' : 'Florence',
+    '니스' : 'Nice',
+    '에든버러' : 'Edinburgh',
 
   };
   

@@ -36,6 +36,10 @@ const PlaceSelect = (props) => {
         place : null,
         customDTO: null
     })
+
+    const [startTime, setStartTime] = useState(0)
+    const [endTime, setEndTime] = useState(0)
+
     //지도에서 선택시
     const [map, setMap] = useState(null);
     const [customDTO, setCustomDTO] = useState({
@@ -58,17 +62,24 @@ const PlaceSelect = (props) => {
 
     const onStart = (item,none) => {
         setSel(false);
-        if (none !== 0) setSubDTO({...subDTO,startTime : item})
+        if (none !== 0) { 
+        setSubDTO({...subDTO,startTime : item})
+        }
         console.log("Start Time:", item);
     }
     const onEnd = (item,none) => {
         setSave(true)
-        if (none !== 0) setSubDTO({...subDTO,endTime : item})
+        if (none !== 0) {
+            setEndTime(item)
+            setSubDTO({...subDTO,endTime : item})
+        }
     }
     const onRe = () => {
-        setSel(true)
-        setSave(false)
-        setSubDTO({...subDTO,startTime : 0 ,endTime : 0} )
+        setSel(true);
+        setSave(false);
+        setStartTime(0);
+        setEndTime(0);
+        setSubDTO({ ...subDTO, startTime: 0, endTime: 0 })
     } 
 
     //city목록 가져오기
@@ -234,9 +245,9 @@ const PlaceSelect = (props) => {
     
     useEffect(() => {
         if (selectedItem) {
-            setSubDTO(selectedItem);
+            setSubDTO(selectedItem)
         }
-    }, [selectedItem]);
+    }, [selectedItem])
 
     //현재위치
     const [myPoint, setMyPoint] = useState(null);
@@ -415,9 +426,6 @@ const PlaceSelect = (props) => {
                         </div>
                         <img className={Style.xBut} style={{float:'left' , marginBottom:'20px'}} 
                                 onClick={onSearch}  src={backBut}/> 
-                        {/* <div className={Style.backDiv}>
-                                    <button className={Style.back} onClick={onSearch}>뒤로</button>
-                        </div> */}
                     </>
                 )}
             </div> 
