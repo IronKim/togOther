@@ -40,7 +40,7 @@ export default [
             type: [1,1,0,0]
         },]
     },
-    {
+    /*{
         id:2,
         question:'해외 여행 계획중, 당신은 항공편과 숙소를 예약하는 역할을 맡았다',
         answer: [
@@ -103,7 +103,7 @@ export default [
             type: [1,2,2,1]
         },]
     },
-    /*{
+    {
         id:6,
         question:'바쁜 일상을 보내던 중 여행 출발이 코앞으로 다가왔다',
         answer: [

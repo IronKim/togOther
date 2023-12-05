@@ -13,7 +13,7 @@ const Chat = () => {
     return (
         <div>
             <RoomList roomIndex={currentRoomIdx} setRoomIndex={setCurrentRoomIdx} />
-            <MessageList roomIndex={currentRoomIdx} currentRoomIdxRef={currentRoomIdxRef}/>
+            <MessageList roomIndex={currentRoomIdx} currentRoomIdxRef={currentRoomIdxRef} />
             <Room />
         </div>
     );

@@ -1,0 +1,171 @@
+/* ////////////////////////////// */
+.search {
+  margin-top: 162px;
+  margin-left: 15px;
+  position: absolute;
+  width:24px;
+  height:24px;
+}
+.searchBg {
+  width: 100%;
+  height: 350px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  margin-bottom: 100px;
+  text-align: center;
+}
+.searchBox{
+  border: 0;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px 14px 20px 52px;
+  font-size: 24px;
+  width:600px;
+  height: 70px;
+  margin: 140px auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+/* ////////////////////////////// */
+.arraymain{
+  flex-direction: column;
+  margin: 0 auto;
+  user-select: none;
+  width: 1200px;
+}
+.card{
+  overflow: hidden;
+  max-width:100%;
+  width: 284px;/* 284px, 14.7vw */
+  height: 17em;
+  margin: 0.5em;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 20px;
+}
+.cardbody{
+  display: flex;
+  width: 100%;
+  height: 40%; 
+}
+.cardimgDiv{
+  max-width: 100%;
+  border-radius: 15px;
+}
+
+.cardimg{
+  width: 284px;
+  height: 11em;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.cardTitle{
+  font-size: 17px;
+}
+
+.cardPrice{
+  width: 90px;
+  font-size: 16px;
+  text-align: right;
+  left: 180px;
+  bottom: 0px;
+  position: absolute;
+  float: right;
+  color: #213ee3;
+}
+.searchBg {
+  width: 100%;
+  height: 350px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  margin-bottom: 100px;
+  text-align: center;
+}
+
+
+/* 미디어 쿼리 추가 */
+@media (max-width: 1199px) {
+
+.arraymain{
+  width: 890px;
+}
+.searchBg {
+  height: 225px;
+}
+.searchBox{
+  width: 97%;
+}
+.card{
+  width: 35vw;
+  height: 13.5em;
+  margin: 0.5em;
+}
+
+.cardimg{
+  width: 100%;
+  height: 100%;
+  border-radius : 15px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+.cardimgDiv{
+  max-width: 100%;
+  height: 9em;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.cardText{
+  width: 74px;
+}
+}
+@media (max-width: 391px) { 
+  .arraymain{
+      display: inline-block;
+      margin-left: 100px;
+      width: 390px;
+  }
+  .card{
+      width: 8em;
+      height: 27vw;
+      left: -10%;
+  }
+  .cardimgDiv{
+      height: 4em;
+  }
+  .cardTitle{
+      position: relative;
+      bottom: 13px;
+      right: 10px;
+      font-size: 10px;
+      margin-bottom: auto;
+  }
+  .cardText{
+      font-size: 8px;
+      width: 40px; 
+      left: 63%;
+  }
+
+  /* -----------------------햄버거----------------------- */
+  .hamburger{
+    display: block;
+    border: none;
+    background-color: #dedede;
+  }
+  .hamburgerIcon1 {
+    user-select: none;
+    display: block;
+    position: absolute;
+    text-align: center;
+    font-size: 26px;
+    width: 40px;
+    height: 105px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+}

@@ -45,7 +45,7 @@ public class User {
 	//핸드폰 번호
 	private String phone;
 	//성별
-	@ColumnDefault("M")
+//	@ColumnDefault("M")
 	private String gender;
 	//국적
 	private String national;
@@ -62,12 +62,12 @@ public class User {
 	//코인
 	private int coin;
 	//중복로그인여부
-	@ColumnDefault("0")
+//	@ColumnDefault("0")
 	private byte dupLogin;
 	//최근 도시
 	private String cityList;
 	//고정도시
-	private String cityFix;
+	private String likingPlace;
 	
 	private byte certification;
 	
@@ -93,7 +93,7 @@ public class User {
 				   .coin(userDTO.getCoin())
 				   .dupLogin(userDTO.getDupLogin())
 				   .cityList(userDTO.getCityList())
-				   .cityFix(userDTO.getCityFix())
+				   .likingPlace(userDTO.getLikingPlace())
 				   .certification(userDTO.getCertification())
 				   .authority(userDTO.getAuthority())
 				   .build();

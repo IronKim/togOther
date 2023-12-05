@@ -36,11 +36,10 @@ const CityWeatherApi = ({ selectedCity, onWeatherData }) => {
       fetchCityWeather();
     }
     
-  }, [selectedCity, onWeatherData]);
+  }, [selectedCity]);
 
   const getEnglishCityName = (englishCityName) => {
     return cityMapping[englishCityName] || englishCityName;
-
   };
 
   return (

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
+import styles from '../../css/MessageList.module.css';
 
 const MessageList = ({roomIndex, currentRoomIdxRef}) => {
   const [messages, setMessages] = useState([]);
@@ -20,7 +21,7 @@ const MessageList = ({roomIndex, currentRoomIdxRef}) => {
     if (roomIndex) {
         
       // WebSocket connection
-      const socket = new SockJS('http://localhost:8080/chat');
+      const socket = new SockJS('http://127.0.0.1:8080/chat');
       console.log('RoomIndex:', roomIndex);
       socket.onopen = () => {
         const message = {
@@ -39,7 +40,7 @@ const MessageList = ({roomIndex, currentRoomIdxRef}) => {
 
         // When a new message arrives, retrieve the new message through an API call
         try {
-          const response = await axios.get('http://localhost:8080/chat/messages');
+          const response = await axios.get('http://127.0.0.1:8080/chat/messages');
           const newMessages = response.data;
           setMessages((prevMessages) => [...prevMessages, ...newMessages]);
         } catch (error) {
@@ -53,13 +54,14 @@ const MessageList = ({roomIndex, currentRoomIdxRef}) => {
       };
     }
   }, [roomIndex]);
+  
 
   //Call API using Axios
   useEffect(() => {
     console.log('Fetching messages for RoomIndex:', roomIndex);
     
     //axios.get(`http://localhost:8080/chat/messages/${currentRoomIdx}`)
-    axios.get(`http://localhost:8080/chat/messages/${roomIndex}`)
+    axios.get(`http://127.0.0.1:8080/chat/messages/${roomIndex}`)
       .then(response => {
         const fetchedMessages = response.data;
         setMessages(fetchedMessages);
@@ -73,15 +75,22 @@ const MessageList = ({roomIndex, currentRoomIdxRef}) => {
   return (
     <div>
       {/* {roomIndex ? <>{roomIndex}</> : <>없다</>} */}
-      <ul>
-      {messages.filter((item)=>item.roomId === currentRoomIdxRef.current).map(message => (
-          <li key={message.id}>
-            {message.userId}: {message.message}- {formatTimestamp(message.timestamp)}
+      <ul className={styles.messageList}>
+      {messages
+        .filter((item) => item.roomId === currentRoomIdxRef.current)
+        .map((message) => (
+          <li key={message.id} className={styles.messageItem}>
+            <div className={styles.messageInfo}>
+              <p className={styles.messageUser}>{message.userId}</p>
+            </div>
+            <div className={styles.messageBubble}>
+              <p className={styles.messageContent}>{message.message}</p>
+              <p className={styles.messageTimestamp}>{formatTimestamp(message.timestamp)}</p>
+            </div>
           </li>
         ))}
       </ul>
     </div>
   );
 };
-
 export default MessageList;

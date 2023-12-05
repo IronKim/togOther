@@ -5,7 +5,7 @@ import { messageStore } from '../stores/MessageStore';
 
 export default function useMessageStore() {
   const forceUpdate = useForceUpdate();
-
+    
   useEffect(() => {
     messageStore.subscribe(forceUpdate);
 

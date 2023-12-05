@@ -3,6 +3,8 @@ import styles from '../../../css//planner.module.css'
 import backBut from '../../../assets/image/backBut.png'
 import { getCityList } from '../../../api/CityApiService';
 import { getPlaceList } from '../../../api/PlaceApiService';
+import sweet from 'sweetalert2';    
+
 
 const containerStyle = {
     position: 'absolute',
@@ -17,7 +19,7 @@ const center = {
 };
 
 const AddPlaceForm = (props) => {
-    const {onClose,firstTime,lastTime,nDay,onSub,upDTO,updateItem,GoogleMap,Autocomplete} = props
+    const {onClose,firstTime,lastTime,nDay,onSub,upDTO,updateItem,GoogleMap,Autocomplete,plannerTitle} = props
     const [opTime,setOpTime] = useState([]);
     const [sel,setSel] = useState(true)
     const [save,setSave] = useState(false)
@@ -61,16 +63,32 @@ const AddPlaceForm = (props) => {
     const onSave = (subDTO) => {
         if (save) {
             if(subDTO.place || subDTO.customDTO) onSub(subDTO)
-            else alert('장소를 선택해 주세요')
+            else 	
+            sweet.fire({
+                title: "장소를 선택해 주세요.",
+                icon: "warning"
+            })
         }
-        else alert('시간을 지정해주세요')
+        else 
+        sweet.fire({
+            title: "시간을 선택해 주세요.",
+            icon: "warning"
+        })
     }
     const onUpdate = (upDTO,subDTO) => {
         if (save) {
             if(subDTO.place || subDTO.customDTO) updateItem(upDTO.endTime,subDTO)
-            else alert('장소를 선택해 주세요')
+            else 
+            sweet.fire({
+                title: "장소를 선택해 주세요.",
+                icon: "warning"
+            })
         }
-        else alert('시간을 지정해주세요')
+        else 
+        sweet.fire({
+            title: "시간을 선택해 주세요.",
+            icon: "warning"
+        })
     }
 ////////누나가 준거!!!/////////
 
@@ -96,12 +114,15 @@ const onSearch = () => {
 const onSearchSelect = () => {//장소추가 버튼
     setSearchCount(false)
 }
-//city목록 가져오기
+//city목록 가져오기 및 검색에 city 값 넣기
 const [city, setCity] = useState([])
 useEffect(()=> {
     getCityList()
     .then(res => {
         setCity(res.data)
+        if(plannerTitle !== undefined && plannerTitle.length > 0) {
+            setSearchCity(res.data.find(item=> item.citySeq === plannerTitle[plannerTitle.length-1]).cityName)
+        }
     })
     .catch(e => console.log(e))
 },[])
@@ -309,9 +330,7 @@ const PlaceClick = (pl,cu) =>{
                                 <img className={styles.xBut} style={{float:'left' , marginBottom:'20px'}} 
                                 onClick={onSearch}  src={backBut}/> 
                                 {/* 커스텀으로 간다 */}
-                                {searchCity === '' && (
-                                    <button style={{float:'right'}} className={styles.buttons} onClick={onCustom}>지도로 찾기</button>
-                                    )}
+                                <button style={{float:'right'}} className={styles.buttons} onClick={onCustom}>지도로 찾기</button>
                                 <div style={{clear:'left'}}></div>
                                 {/* 검색 */}
                                 <input size={36} type='text' style={{float:'left'}}

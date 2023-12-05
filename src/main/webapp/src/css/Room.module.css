@@ -1,0 +1,14 @@
+.button1 {
+    border-radius: 15px;
+  }
+
+.button2 {
+    border-radius: 15px;
+    color: white;
+    border: none;
+    background-color: #2E8DFF;
+}
+
+.button2:hover {
+    background-color: #194E8C;
+}

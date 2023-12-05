@@ -15,5 +15,9 @@ public interface TogetherRepository extends JpaRepository<Together, Integer> {
 	
 	long countByTitleContainingOrContextContaining(@Param("title") String search,@Param("context") String search2);
 
+	List<Together> findAllByUserSeqOrderByTogetherSeqDesc(Pageable pageable,@Param("userSeq") int userSeq);
+	
+	long countByUserSeq(@Param("userSeq") int userSeq);
+	
 	Together findOneByTogetherSeq(int togetherSeq);
 }

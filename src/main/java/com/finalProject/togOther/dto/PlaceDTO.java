@@ -1,6 +1,9 @@
 package com.finalProject.togOther.dto;
 
+import java.util.List;
+
 import com.finalProject.togOther.domain.Place;
+import com.finalProject.togOther.domain.PlaceReview;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

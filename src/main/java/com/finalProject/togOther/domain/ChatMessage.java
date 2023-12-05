@@ -20,7 +20,7 @@ public class ChatMessage {
 	private Long id;
 	
 	private Long roomId;
-	private Long userId;
+	private String userId;
 	private String message;
 	private LocalDateTime timestamp;
 	

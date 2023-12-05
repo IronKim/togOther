@@ -14,7 +14,7 @@ public class EnterRoomService {
 
 	    public void enterRoom(String type,
 	                          Long roomId,
-	                          Long userId) {
+	                          String userId) {
 	        template.convertAndSend(
 	            "/subscription/chat/room/" + roomId,
 	            new MessageResponseDto(
@@ -25,4 +25,5 @@ public class EnterRoomService {
 	            )
 	        );
 	    }
+
 }

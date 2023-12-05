@@ -47,7 +47,7 @@ const PlaceMap = ({ longitude, latitude, address }) => {
             <MarkerF position={center} icon={{ markerImage, scaledSize: markerStyle }}></MarkerF>
           </GoogleMap>
         {/* </LoadScript> */}
-        <p style={{ width: '100%', textAlign: 'center', margin: '30px auto' }}>
+        <p style={{ width: '100%', textAlign: 'center', margin: '30px auto'}}>
           주소: {address}
           <button onClick={openGoogleMaps} type="button" className="btn btn-link">
             지도로 이동

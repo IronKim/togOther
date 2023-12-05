@@ -21,10 +21,16 @@ import Mypage from '../pages/Mypage';
 import View from './community/planner/View';
 
 import { LoadScript } from '@react-google-maps/api';
+import PackageDetails from './package/PackageDetails';
+import PackgeReservation from './package/PackgeReservation';
 import AdvisorRoute from './AdvisorRoute';
 import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
 import Chat from '../pages/Chat';
+import PackageLists from './package/PackageLists';
+import PackageMain from './package/PackageMain';
+import NaverCallback from '../pages/NaverCallback';
+import AdvisorKakaoToken from './advisor/AdvisorKakaoToken';
 
 const libraries = ["places"];
 
@@ -49,10 +55,11 @@ const Main = ({ showNavbar }) => {
     return (
         <div>
             <BrowserRouter>
-                {/* <HeaderComponent /> */}
+                <HeaderComponent />
                 <Routes>
-
+        
                     <Route path='/' element= { <Home />} />
+                    <Route path='token' element={<AdvisorKakaoToken/>}/>
                     <Route path='user'>
                         <Route path='login' element ={ user.name === '' ? <Login /> : <Navigate to={'/'}></Navigate>} />
                         <Route path='write' element ={ <Write />}/>
@@ -61,6 +68,7 @@ const Main = ({ showNavbar }) => {
                                 <Mypage />
                             </UserRoute>
                         }/>
+                        <Route path='naver/callback' element = { <NaverCallback /> } />
                     </Route>
                     <Route path='info'>
                         <Route path='place/:placeSeq' element={ <PlacePage />} />
@@ -70,19 +78,27 @@ const Main = ({ showNavbar }) => {
                     <Route path='community'>
                         <Route path='' element={ <Community/>}/>
                         <Route path='planner'>
-                            <Route path='write' element= { <Planner />} />
+                            <Route path='write' element= { <UserRoute><Planner /></UserRoute>} />
+                            <Route path='update/:plannerSeq' element= { <Planner up={true}/>} />
                             <Route path='view/:plannerSeq' element={ <View/>} />
                         </Route>
                         <Route path='together'>
-                            <Route path='write' element= { <Together/>} />
+                           
+                            <Route path='write' element= {  <UserRoute><Together/></UserRoute>} />
                             <Route path='view/:togetherSeq' element= { <TogetherView/>} />
                         </Route>
                         
                     </Route>
+                    <Route path='package'>
+                        <Route path='' element={ <PackageMain />} />
+                        <Route path='List/:searchData' element={ <PackageLists />} />
+                        <Route path='details/:tpSeq' element= { <PackageDetails/> } />
+                        <Route path='reservation/:packageSeq/:info' element={  <UserRoute><PackgeReservation/></UserRoute>} />
+                    </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
 
-                {/* <FooterComponent /> */}
+                <FooterComponent />
 
                     <Routes>
                         <Route path='/advisor' element= { 

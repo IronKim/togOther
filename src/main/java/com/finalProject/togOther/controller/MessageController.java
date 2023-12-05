@@ -10,14 +10,21 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.finalProject.togOther.domain.ChatMessage;
+import com.finalProject.togOther.domain.CreateRoom;
 import com.finalProject.togOther.dto.MessageRequestDto;
+import com.finalProject.togOther.models.Room;
 import com.finalProject.togOther.repository.ChatMessageRepository;
+import com.finalProject.togOther.repository.RoomRepository;
 import com.finalProject.togOther.services.ConvertAndSendMessageService;
+import com.finalProject.togOther.services.CreateRoomService;
 import com.finalProject.togOther.services.EnterRoomService;
 import com.finalProject.togOther.services.QuitRoomService;
 
@@ -27,6 +34,9 @@ public class MessageController {
     private final QuitRoomService quitRoomService;
     private final ConvertAndSendMessageService convertAndSendMessageService;
     private final ChatMessageRepository chatMessageRepository;
+    private final CreateRoomService createRoomService;
+    private final Room room;
+    private final RoomRepository roomRepository;
     
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
@@ -35,11 +45,17 @@ public class MessageController {
     public MessageController(EnterRoomService enterRoomService,
                              QuitRoomService quitRoomService,
                              ConvertAndSendMessageService convertAndSendMessageService,
-                             ChatMessageRepository chatMessageRepository) {
+                             ChatMessageRepository chatMessageRepository,
+                             CreateRoomService createRoomService,
+                             Room room,
+                             RoomRepository roomRepository) {
         this.enterRoomService = enterRoomService;
         this.quitRoomService = quitRoomService;
         this.convertAndSendMessageService = convertAndSendMessageService;
         this.chatMessageRepository = chatMessageRepository;
+        this.createRoomService = createRoomService;
+        this.room = room;
+        this.roomRepository = roomRepository;
     }
 
     @MessageMapping("/chat/enter")
@@ -79,15 +95,41 @@ public class MessageController {
         chatMessageRepository.save(chatMessage);
         
      // 브로드캐스팅
-        messagingTemplate.convertAndSend("/subscription/chat/room/${roomId}" + chatMessage.getRoomId(), chatMessage);
+        messagingTemplate.convertAndSend("/subscription/chat/room/" + chatMessage.getRoomId(), chatMessage);
     }
     
     @GetMapping("/chat/messages/{roomIndex}")
-    public List<ChatMessage> getAllMessages() {
+    public List<ChatMessage> getAllMessages(@PathVariable Long roomIndex) {
         System.out.println("Received request for all messages");
-        return convertAndSendMessageService.getAllMessages();
+        return convertAndSendMessageService.getAllMessages(roomIndex);
     }
     
+    @PostMapping("/chat/createRoom")
+    public void createRoom(@RequestBody String newRoomName) {
+    	createRoomService.Room(
+                room.getId(),
+                newRoomName,
+                room.getRoomMaster(),
+                room.getUserCount(),
+                room.getType()
+        );
+    	
+    	CreateRoom createRoom = new CreateRoom();
+    	createRoom.setId(room.getId());
+    	createRoom.setName(newRoomName);
+    	createRoom.setRoomMaster(room.getRoomMaster());
+    	createRoom.setUserCount(room.getUserCount());
+    	
+    	roomRepository.save(createRoom);
+    	
+    	messagingTemplate.convertAndSend("/subscription/chat/room/" + newRoomName, room);
+    }
+    
+    @GetMapping("/chat/messages/{newRoomName}")
+    public List<ChatMessage> getAllMessage(@PathVariable Long newRoomName) {
+        System.out.println("Received request for all messages");
+        return convertAndSendMessageService.getAllMessages(newRoomName);
+    }
     
     @MessageExceptionHandler
     public String exception(Exception ex) {

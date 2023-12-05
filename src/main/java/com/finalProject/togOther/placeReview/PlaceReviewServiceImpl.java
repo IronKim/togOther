@@ -8,20 +8,49 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.finalProject.togOther.domain.PlaceReview;
+import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.PlaceReviewDTO;
 import com.finalProject.togOther.repository.PlaceReviewRepository;
+import com.finalProject.togOther.repository.UserRepository;
 
 @Service
 public class PlaceReviewServiceImpl implements PlaceReviewService {
 
 	private PlaceReviewRepository placeReviewRepository;
 
-	public PlaceReviewServiceImpl(PlaceReviewRepository placeReviewRepository) {
+	private UserRepository userRepository;
+	
+	public PlaceReviewServiceImpl(PlaceReviewRepository placeReviewRepository, UserRepository userRepository) {
 		this.placeReviewRepository = placeReviewRepository;
+		this.userRepository = userRepository;
 	}
+	
+	@Override
+	public ResponseEntity<?> addPlaceReview(PlaceReviewDTO placeReviewDTO) {
+		
+		try {
+			User user = userRepository.findById(placeReviewDTO.getUser().getUserSeq()).get();
+			
+			placeReviewDTO.setUser(user);	
+			
+			PlaceReview placeReview = PlaceReview.toEntity(placeReviewDTO);
+			
+			placeReviewRepository.save(placeReview);
+			
+			String responseMessage = "리뷰가 추가되었습니다.";
+
+			return ResponseEntity.ok(responseMessage);
+		}catch (Exception e) {
+			e.printStackTrace();
+			String errorMessage = "리뷰 등록중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+		
+	}
+	
 
 	@Override
-	public ResponseEntity<List<PlaceReviewDTO>> getPlaceReviewByPlaceSeq(int placeSeq) {
+	public ResponseEntity<?> getPlaceReviewByPlaceSeq(int placeSeq) {
 
 		try {
 			List<PlaceReview> placeReviewList = placeReviewRepository.findByPlaceSeq(placeSeq);
@@ -39,23 +68,6 @@ public class PlaceReviewServiceImpl implements PlaceReviewService {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-	}
-
-	@Override
-	public ResponseEntity<String> addPlaceReview(PlaceReviewDTO placeReviewDTO) {
-		PlaceReview placeReview = PlaceReview.toEntity(placeReviewDTO);
-		
-		try {
-			placeReviewRepository.save(placeReview);
-			
-			String responseMessage = "리뷰가 추가되었습니다.";
-
-			return ResponseEntity.ok(responseMessage);
-		}catch (Exception e) {
-			String errorMessage = "리뷰 등록중 오류가 발생했습니다.";
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
-		}
-		
 	}
 
 }

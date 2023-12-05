@@ -5,10 +5,21 @@
     max-width: 1200px;
     margin: 0 auto;
 }
-
 /*----------- MyPageWirte ----------*/
-.writeForm {
-    border : 1px solid blue;    
+
+.tagName{
+    padding-top: 20px;
+    font-size: 30px;
+}
+
+.hr {
+     width: 70%;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    color: 'lightgray';
+}
+
+.writeForm { 
     float: left;
     width : 70%;
     min-height : 700px;
@@ -17,7 +28,7 @@
 }
 .photo_mbti {
     margin : 0 auto;
-    width : 110px;
+    width : 100%;
     height : 130px;
 }
 .photo {
@@ -27,17 +38,16 @@
 .mbti {
     height : 28px;
     text-align: center;
-    width: 110px;
+    width: 100%;
 }
-.nameInput {
-    margin : 28px -58% ;
-    border-radius: 20px;
-    border: none;
-    background-color: white;
-    box-shadow: 0 1px 2px rgba(0, 0, 0);
- }
+.dataDiv {
+    width: 80%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: space-around;
+}
 .textdiv {
-    border: 1px solid red;
+    border-top: 1px solid lightgray;
     width : 100%;
     margin : 0 auto;
     height : auto;
@@ -45,32 +55,36 @@
 }
 .text1 {
     border : 1px solid black;
+    font-size: 20px;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
     margin : 10px 0 0 0;
     width : 80%;
-    height : 50px;
-
+    height : 80px;
+    resize: none;
 }
 .inputdiv {
-    border : 1px solid black;
     margin : 0 auto;
     width : 80%;
     height : 60px;
-    background-color: aliceblue;
+    margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: nowrap;
     
 }
-.inputdiv input {
+.inputdiv .input {
     margin-top: 7px;
-    width : 120px;
+    font-size: 20px;
     height : 32px;
     display : block;
 }
 .change {
-    border: 1px solid violet;
+    border-top: 1px solid lightgray;
     width : 100%;
     margin : 15px auto;
+    padding-top: 20px;
 }
 .change button{
     width: 45%;
@@ -88,10 +102,9 @@
 /*----------- MyPageSidebar ----------*/
 .sidebar {
     float: right;
-    border-radius : 5px;
-    border: 1px solid red;
+    border-radius : 10px;
     background-color: white;
-    width: 300px;
+    width: 280px;
     height: 700px;
     padding : 20px 0;
     box-shadow: rgba(0, 0, 0, 0.16) 0 0 4px;
@@ -100,27 +113,28 @@
 .sidebar button {
     display: inline-block;
     border : 0;
-    height : 70px;
-    border-radius : 5px;
-    background-color: whitesmoke;
-    width: 95%;
-    margin: 10px 2.5%;
+    height : 90px;
+    border-top: 1.5px solid whitesmoke;
+    background-color: white;
+    width: 90%;
+    margin: 3px 5%;
 }
 .profile {
-    border : 1px solid black;
     width : 100%;
     height : 70px;
 }
 .profileImg {
-    width: 35%;
+    margin-left: 20px;
+    width: 70px;
     height: 70px;
+    border-radius: 50%;
     object-fit: cover;
-    border : 1px solid blue;
-    float:red;
 }
 .myProfile {
+    padding-top: 24px;
+    padding-left: 20px;
+    font-size: 20px;
     float: right;
-    border : 1px solid red;
     width : 65%;
     height : 70px;
 }
@@ -129,25 +143,110 @@
     width: 100%;
     text-align: center;
 }
+.buttons img{
+    width: 25px;
+    vertical-align: middle;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+/* ---------mbti-------------- */
+.bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.6;
+    z-index: 1;
+}
+.onModal{
+    padding: 15px;
+    border-radius: 5%;
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    left: 50%;
+    top: 40%; 
+    padding: 20px 10px;
+    box-sizing: border-box;
+    transform: translate(-50%, 0%); 
+    z-index: 2;
+}
+/*------------예약내역-------------*/
+.my_reservation_main {
+    width : 920px;
+    height : 500px;
+}
+.hr_1 {
+    width: 91.3%;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    color: 'lightgray';
+}
+.reservation_title {
+    padding-top: 20px;
+    font-size: 30px;
+}
+.reservation_1 {
+    border: 1px solid black;
+    flex-direction: column;
+    height: 80px;
+    width: 80%;
+    border-radius: 10px;
+}
+.reservation_img_div {
+    margin: 5px;
+    border: 1px solid red;
+    width: 120px;
+    height: 70px;
+    border-radius: 10px;
+}
+.p_div {
+    display: flex;
+    margin-left: 150px;
+    align-items: flex-start; 
+}
+.p_div p {
+    display: flex;
+    margin-top: -50px;
+    font-size: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
 /*--------------media-------------*/
 @media (max-width: 1199px) {
     .main {
         width: 100%;
     }
+    .hr {
+       width: 100%;
+   }
     .writeForm {
         width: 100%;
     }
+    .dataDiv {
+        width: 80%;
+        margin: 30px auto;
+        display: flex;
+        flex-direction: column;
+    }
     .change button {
-        width : 100%;
+        width : 90%;
     }
     .textdiv {
         width : 100%;
     }
     .sidebar {
         float: none;
-        width: 100%;
-        height: 24%;
+        width: 98%;
+        margin: 1%;
+        height: 23%;
+        padding: 10px 0;
     }
     .sidebar button {
         width: 30%;
@@ -161,12 +260,43 @@
         height : 100px;
     }
     .myProfile {
-        width: calc(100% - 100px);
+        width: calc(100% - 130px);
         height: 100px;
+        padding-top: 34px;
+        padding-left: 30px;
+        font-size: 25px;
+    }
+    .my_reservation_main {
+        width : 100%;
+    }
+    .hr_1 {
+        width : 100%;
+    }
+    .reservation_1 {
+        width : 100%;
+    }
+    .p_div {
+        flex-wrap: wrap;
+        max-height: 3.6em; /* 두 줄로 나누기 위해 높이 제한 설정 (글자 크기에 따라 조절 필요) */
+    }
+    .p_div p {
+        margin-top: 0; /* 줄임표 처리를 위해 마진 조정 */
+        white-space: normal; /* 여러 줄로 표시 */
+        text-overflow: ellipsis; /* 줄임표 처리 */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; /* 두 줄로 제한 */
+        font-size: 20px;
+        margin-top: -50px;
+        white-space: nowrap;
+
     }
 }
-
 @media (max-width: 754px) { 
+    .onModal {
+        width: 100%;
+    }
     .main {
         width : 100%;
     }
@@ -180,5 +310,42 @@
     .inputdiv input {
         width : 100%;
     }
-
+    .my_reservation_main {
+        border : 1px solid palegreen;
+        width : 920px;
+        height : 500px;
+    }
+    .hr_1 {
+        width: 91.3%;
+        margin-bottom: 30px;
+        margin-top: 30px;
+        color: 'lightgray';
+    }
+    .reservation_1 {
+        height : 120px;
+    }
+    .reservation_img_div {
+        margin: 5px;
+        border: 1px solid red;
+        width: 120px;
+        height: 110px;
+    }
+    .p_div {
+        margin-left: 150px;
+        height : 120px;
+    }
+    .p_div p {
+        margin-top: -100px;
+        font-size: 20px;
+    }
+}
+@media (max-width: 1199px) {
+    .tagP {
+        font-size: 21px; /* 텍스트 크기 조정 */
+        margin-top: 2px;
+    }
+    .input[type='checkbox'] {
+        transform: scale(1.5); /* 체크박스 크기 조정 */
+        margin-left: 5px; /* 체크박스와 텍스트 간격 조정 */
+    }
 }

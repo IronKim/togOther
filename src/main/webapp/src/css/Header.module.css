@@ -61,10 +61,13 @@
   
 @media (max-width: 1199px) {
   .header {
+    padding: 0;
+    width: 96%;
+  }.navli{
     display: none;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+  }
+  .logo{
+    width: 1%;
   }
 }
 
@@ -83,4 +86,10 @@
 .activeLinkU:hover {
   cursor: pointer;
   color: #1E3ED1;
+}
+
+@media (max-width: 375px){
+  .logo{
+    display: none;
+  }
 }

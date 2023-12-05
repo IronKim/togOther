@@ -5,9 +5,13 @@ public class MessageRequestDto {
 
     private Long roomId;
 
-    private Long userId;
+    private String userId;
 
     private String message;
+    
+    //private Long userCount;
+    
+    //private String userMaster;
     
     public MessageRequestDto() {
 
@@ -15,12 +19,16 @@ public class MessageRequestDto {
 
     public MessageRequestDto(String type,
                              Long roomId,
-                             Long userId,
-                             String message) {
+                             String userId,
+                             String message
+                            /* Long userCount,
+                             String userMaster*/) {
         this.type = type;
         this.roomId = roomId; //채팅방 id
         this.userId = userId; //보내는 사람
+        //this.userMaster = userMaster; //채팅방 생성한 사람
         this.message = message; //내용
+       // this.userCount = userCount; //사람수
     }
 
     public String getType() {
@@ -31,11 +39,19 @@ public class MessageRequestDto {
         return roomId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
     public String getMessage() {
         return message;
     }
+    /*
+    public Long getUserCount() {
+    	return userCount;
+    }
+    public String getUserMaster() {
+    	return userMaster;
+    }
+    */
 }

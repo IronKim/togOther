@@ -20,7 +20,7 @@ const BottomNav = ({ showNavbar }) => {
       <nav className={style.wrapper}>
         <Link to="/community" className={style.nav_link} onClick={() => navigate('/community')}>
           <div>
-            <FontAwesomeIcon icon="users" className={isActive('/community') ? style.active : style.nav_item} />
+            <FontAwesomeIcon icon="users" className={location.pathname.includes('/community') ? style.active : style.nav_item} />
           </div>
         </Link>
         <Link to="/" className={style.nav_link} onClick={() => navigate('/')}>
@@ -29,10 +29,15 @@ const BottomNav = ({ showNavbar }) => {
           </div>
         </Link>
         <Link to="/info/cityList" className={style.nav_link} onClick={() => navigate('/info/cityList')}>
-                <div>
-                    <FontAwesomeIcon icon="info" className={location.pathname.includes('/info') ? style.active : style.nav_item} />
-                </div>
-            </Link>
+          <div>
+            <FontAwesomeIcon icon="info" className={location.pathname.includes('/info') ? style.active : style.nav_item} />
+          </div>
+        </Link>
+        <Link to="/shop" className={style.nav_link} onClick={() => navigate('/shop')}>
+          <div>
+            <FontAwesomeIcon icon="cart-plus" className={isActive('/shop') ? style.active : style.nav_item} />
+          </div>
+        </Link>
       </nav>
   );
 };

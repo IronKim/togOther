@@ -11,4 +11,7 @@ public interface SubItemRepository extends JpaRepository<SubItem, Integer> {
 	List<SubItem> findByPlMainSeq(int plMainSeq);
 
 	List<SubItem> findByToMainSeq(int toMainSeq);
+
+	public void deleteByToMainSeq(int togetherSeq);
+
 }

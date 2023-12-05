@@ -24,7 +24,7 @@ public class ConvertAndSendMessageService {
 	 	
 	    public void convertAndSendMessage(String type,
 	                                      Long roomId,
-	                                      Long userId,
+	                                      String userId,
 	                                      String message) {
 	        template.convertAndSend(
 	            "/subscription/chat/room/" + roomId,
@@ -36,7 +36,7 @@ public class ConvertAndSendMessageService {
 	        );
 	    }
 	    
-	    public List<ChatMessage> getAllMessages() {
+	    public List<ChatMessage> getAllMessages(Long roomIndex) {
 	        return chatMessageRepository.findAll();
 	    }
 }

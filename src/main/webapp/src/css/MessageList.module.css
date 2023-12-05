@@ -1,0 +1,56 @@
+.messageList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .messageItem {
+    list-style: none;
+    margin-bottom: 10px;
+  }
+  
+  .messageBubble {
+    background-color: #2E8DFF;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+  }
+  
+  .messageInfo {
+    display: flex;
+    flex-direction: row; /* Change to row to align items horizontally */
+    justify-content: space-between; /* Add to create space between user ID and timestamp */
+    align-items: flex-start;
+    margin-bottom: 5px; /* Adjust the margin as needed */
+  }
+  
+  .messageUser {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .messageContent {
+    margin-bottom: 5px;
+  }
+  
+  .messageTimestamp {
+    font-size: 0.8em;
+    color: #666;
+    margin-left: 320px;
+  }
+  
+
+  .userName {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  .sentMessage {
+    background-color: #7fc3b1; /* 보낸 메시지의 배경색 */
+    color: #fff; /* 보낸 메시지의 텍스트 색상 */
+  }
+  
+  .receivedMessage {
+    background-color: #d9d9d9; /* 받은 메시지의 배경색 */
+    color: #000; /* 받은 메시지의 텍스트 색상 */
+  }

@@ -21,6 +21,12 @@ import lombok.Setter;
 public class PlannerDTO {
 	private int plannerSeq;
 	private int citySeq;
+	private int userSeq;
+    private String useremail;
+    private String userid;
+    private String userName;
+    private String userGender;
+    private String userProfileImage;
 	private String title;
 	private String startDate;
 	private String endDate;
@@ -35,6 +41,12 @@ public class PlannerDTO {
 		return PlannerDTO.builder()
 						 .plannerSeq(planner.getPlannerSeq())
 						 .citySeq(planner.getCitySeq())
+						 .userSeq(planner.getUserSeq())
+		                 .useremail(planner.getUseremail())
+		                 .userid(planner.getUserid())
+		                 .userName(planner.getUserName())
+		                 .userGender(planner.getUserGender())
+		                 .userProfileImage(planner.getUserProfileImage())
 						 .title(planner.getTitle())
 						 .startDate(planner.getStartDate())
 						 .endDate(planner.getEndDate())

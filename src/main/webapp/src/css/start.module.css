@@ -60,9 +60,9 @@
 .title {
     width: 225px;
     margin: 70px auto;
-    padding: 40px;
+    padding: 40px 20px 40px 10px;
     color:black;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: bold;
     animation: rollT 6s linear infinite;
     background-repeat: no-repeat;

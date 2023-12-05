@@ -92,13 +92,13 @@
 .loginBtn {
   margin-top: 1.8em;
   box-shadow: 0 8px 10px 1px rgb(0 0 0 / 33%);
-  border: none;
-  color: #fff;
+  border: 3px solid #2E8DFF;
+  color: #2E8DFF;
   font-size: 2em;
   padding: 20px 100px;
   border-radius: 48px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: #2E8DFF;
+  background-color: white;
 
 }
 
@@ -106,6 +106,30 @@
   box-shadow: none;
 
   transform: scale(0.95);
+}
+
+.naverLoginBtn {
+  box-shadow: 0 8px 10px 1px rgb(0 0 0 / 33%);
+  /* 네이버 색깔 */
+  border: 3px solid #1EC800;
+  border-radius: 48px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.naverLoginBtn:hover {
+  cursor: pointer;
+  box-shadow: none;
+  transform: scale(0.95);
+}
+
+.LoginBoxText {
+  font-size: 1.3em;
+}
+
+.LoginBoxText:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 

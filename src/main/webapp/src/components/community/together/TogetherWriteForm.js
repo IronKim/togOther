@@ -1,16 +1,20 @@
 import React, { useEffect,useState } from 'react';
 import Style from '../../../css/together.module.css'
 
-import { addTogether } from '../../../api/TogetherApiService';
+import { addTogether, deleteTogether, deleteTogetherCustom } from '../../../api/TogetherApiService';
 import { addSubItem} from '../../../api/PlannerApiService';
-import { addCustomPlace } from '../../../api/PlaceApiService';
+import { addCustomPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import PlaceSelect from './TogetherPlaceSelect';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../../stores/mainStore';
+import sweet from 'sweetalert2'; 
 
 
 const PlaceWriteForm = () => {
+
+    const {user} = useUserStore();
     
     //오늘 날짜 구하는
     const today = new Date();
@@ -21,7 +25,12 @@ const PlaceWriteForm = () => {
     //저장한다이
     const [togetherDTO, setTogetherDTO] = useState({
         togetherSeq:'',
-        userSeq:'',
+        userSeq: user.userSeq,
+        useremail: user.email,
+        userid: user.id,
+        userName: user.name,
+        userGender: user.gender,
+        userProfileImage: user.profileImage,
         code:1,
         title: '',      //제목
         startDate: nowDay,  //시작날짜
@@ -29,72 +38,172 @@ const PlaceWriteForm = () => {
         context: '',    //내용
         tnum: 2,       //모집인원   
     });
-    const [subDTO,setSubDTO] = useState([])
+    const [subDTO, setSubDTO] = useState([])
     
-    const{togetherSeq,userSeq,title,startDate,endDate,context,tnum} = togetherDTO
+    const{togetherSeq,
+          userSeq,useremail,userid,userName,userGender,userProfileImage,
+          title,startDate,endDate,context,tnum} 
+        = togetherDTO 
 
+    const [contextDiv, setContextDiv] = useState('')
+    const [writedateCardFormDiv, setWritedateCardFormDiv] = useState('')
+    const [titleDiv, setTitleDiv] = useState('')
     const navigate = useNavigate()
     const togetherSave = (e) => {
         e.preventDefault()
 
         var sw = 1
         if(!title){
-            alert('제목 입력')
+            setTitleDiv('제목을 입력하세요')
             sw=0
+        }else{
+            setTitleDiv('')
         }
         if(!context){
-            alert('내용 입력')
+            setContextDiv('내용을 입력하세요')
             sw=0
+        }else{
+            setContextDiv('')
+        }
+        if(subDTO === null || subDTO.length === 0){
+            setWritedateCardFormDiv('일정을 추가하세요')
+            sw=0
+        }else{
+            setWritedateCardFormDiv('')
         }
         if(sw === 1){
             addTogether(togetherDTO)
                  .then(res => {
                     // subDTO 저장
                     subDTO.map(item => {
-                        if(item.place !== null){
+                        if(item.place !== null ){
                             const subItem = {toMainSeq:res.data,
-                                             nday: item.nDay, code : item.code,
+                                             nday: item.nday, code : item.code,
                                              startTime : item.startTime, 
                                              endTime : item.endTime, 
                                              context : item.context,
                                              placeSw: 0, 
-                                             placeSeq: item.place.placeSeq}
+                                             placeSeq: item.place ? item.place.placeSeq : null}
                                 addSubItem(subItem)
                                 .then(res2 => console.log(res2))
                                 .catch(e => console.log(e))
                         }
+                    })
                         //customDTO에 저장
+                        subDTO.map(item => {
                         if(item.customDTO !== null){
                             addCustomPlace(item.customDTO)
                             .then(res2 => {
                                 const subItem = {toMainSeq: res.data, 
-                                                 nday: item.nDay, code : item.code,
+                                                 nday: item.nday, code : item.code,
                                                  startTime : item.startTime, 
                                                  endTime : item.endTime, 
                                                  context : item.context,
                                                  placeSw: 1, plCustomSeq : res2.data}
                                 addSubItem(subItem)
                                 .then(res3 => console.log(res3))
-                                .catch(e => console.log(e));
+                                .catch(e => console.log(e))
+
                             })
                         .catch(e => console.log(e))
                         }
                     })
-                    alert('등록이 완료되었습니다.')
+                    sweet.fire({
+                        title: "등록이 완료되었습니다.",
+                        icon: "success"
+                    })
                     navigate('/community/')
                  })
                  .catch(error => console.error(error))
+        }
+    }
+
+    //수정
+    const togetherUpdate = (e) =>{
+        e.preventDefault()
+
+        var sw = 1
+
+        if(!title){
+            setTitleDiv('제목을 입력하세요')
+            sw=0
+        }else{
+            setTitleDiv('')
+        }
+        if(!context){
+            setContextDiv('내용을 입력하세요')
+            sw=0
+        }else{
+            setContextDiv('')
+        }
+        if(subDTO === null || subDTO.length === 0){
+            setWritedateCardFormDiv('일정을 추가하세요')
+            sw=0
+        }else{
+            setWritedateCardFormDiv('')
+        }
+        if(sw === 1){
+            const togetherSeq = togetherDTO.togetherSeq
+            deleteTogether(togetherSeq)
+            .then(() => {
+            addTogether(togetherDTO)
+                 .then(res => {
+                    // subDTO 저장
+                    subDTO.map(item => {
+                        if(item.place !== null ){
+                            const subItem = {toMainSeq:res.data,
+                                             nday: item.nday, code : item.code,
+                                             startTime : item.startTime, 
+                                             endTime : item.endTime, 
+                                             context : item.context,
+                                             placeSw: 0, 
+                                             placeSeq: item.place ? item.place.placeSeq : null}
+                                addSubItem(subItem)
+                                .then(res2 => console.log(res2))
+                                .catch(e => console.log(e))
+                        }
+                    })
+                        //customDTO에 저장
+                        subDTO.map(item => {
+                        if(item.customDTO !== null){
+                            
+                            addCustomPlace(item.customDTO)
+                            .then(res2 => {
+                                const subItem = {toMainSeq: res.data, 
+                                                 nday: item.nday, code : item.code,
+                                                 startTime : item.startTime, 
+                                                 endTime : item.endTime, 
+                                                 context : item.context,
+                                                 placeSw: 1, plCustomSeq : res2.data}
+                                addSubItem(subItem)
+                                .then(res3 => console.log(res3))
+                                .catch(e => console.log(e))
+                            })
+                        .catch(e => console.log(e))
+                        }
+                    })
+                    sweet.fire({
+                        title: "수정이 완료되었습니다.",
+                        icon: "success"
+                    })
+                    setSelectedItem(null)
+                    window.scrollTo(0, 0);
+                    navigate('/community/')
+                 })
+                 .catch(error => console.error(error))
+                })
+                .catch(error => console.error(error))
         }
     }
     //날짜 변경에 따른 subDTO 유동적 명령
 
     //subDTO
     const onSubDTO = (item) => {
-        // setSubDTO([...subDTO,item])
         setSubDTO((prevSubDTO) => {
             const updatedSubDTO = prevSubDTO.filter((prevItem) => prevItem !== selectedItem);
             return [...updatedSubDTO, item];
-        });
+        })
+        
     }
 
     useEffect(()=> {
@@ -160,22 +269,55 @@ const PlaceWriteForm = () => {
         setSubDTO([])
     }
 
-    const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(null)
 
     const updateSubDTO = (index) => {
         
-        const selectedItem = subDTO[index];
-        setSelectedItem(selectedItem);
+        const selectedItem = subDTO[index]
+        setSelectedItem(selectedItem)
 
-        onAdd();
+        onAdd()
     }
     const resetSubDTO = (index) => {
-        setSubDTO(subDTO.filter((item, i) => i !== index));
+        setSubDTO(subDTO.filter((item, i) => i !== index))
     }
+    
+    //뷰에서 수정하러 가져옴
+    const location = useLocation()
+    const [update,setUpdate] = useState(false)
 
+    useEffect(() => {
+        const together = location.state?.togetherDTO;
+        const sub = location.state?.subDTO;
+        const place = location.state?.place;
+        const custom = location.state?.custom;
+    
+        if (together) {
+            setTogetherDTO(together)
+        }
+    
+        if (sub && place && custom) {
+            setSubDTO((prevSubDTO) => {
+                const newSubDTO = sub.map((subItem, index) => ({
+                    subSeq: subItem.subSeq,
+                    plMainSeq: subItem.plMainSeq,
+                    toMainSeq: subItem.toMainSeq,
+                    nday: subItem.nday,
+                    code: subItem.code,
+                    startTime: subItem.startTime,
+                    endTime: subItem.endTime,
+                    context: subItem.context,
+                    ...(place.find(placeItem => placeItem.placeSeq === subItem.placeSeq) ? { place: place.find(placeItem => placeItem.placeSeq === subItem.placeSeq) } : {}),
+                    ...(custom.find(customItem => customItem.plCustomSeq === subItem.plCustomSeq) ? { customDTO: custom.find(customItem => customItem.plCustomSeq === subItem.plCustomSeq) } : {})
+                }))
+                return newSubDTO
+            })
+            setUpdate(true)
+        }
+    }, [location.state])
+    
     return (
         <>
-        {/* <button onClick={()=>{console.log(JSON.stringify(subDTO))}}></button> */}
         <div className={Style.writeForm}>
         <div className={Style.writeFormInner}>
             <div>
@@ -185,7 +327,7 @@ const PlaceWriteForm = () => {
                        value={title} 
                        onChange={onInput}
                        size="50" placeholder="ex) 12월 3박4일 제주 바다 보러갈 동행 3명 구해요"/>
-            </div>        
+            </div><div className={Style.titleDiv}>{titleDiv}</div>        
             <div>
                 시작 날짜<input type='date' name='startDate' 
                                 min={nowDay} value={startDate} 
@@ -203,21 +345,20 @@ const PlaceWriteForm = () => {
 
             {/* 선택? 검색한? 하루하루치의 정보 */}
             <div className={Style.writedateForm}>
-                <div className={Style.writedateCardForm}>
+                <div className={Style.writedateCardForm} name="writedateCardForm">
                     {subDTO.map((item, index) => (
                         <div className={Style.writedateCard} key={index}>
                             <div className={Style.writedateCard_top}>
                             <button className={Style.resetSubDTO} onClick={() => resetSubDTO(index)}>삭제</button>
                             <button className={Style.updateSubDTO} onClick={() => updateSubDTO(index)}>수정</button>
                             <p>{item.nday}DAY</p></div>
+
                             <div className={Style.writedateCard_foot}>
                             {
-                            item.place !== null &&
-                                <p>{item.place.name}</p>
+                            item.place !== null && item.place !== undefined && <p>{item.place.name}</p>
                             }
                             {
-                            item.customDTO !== null &&
-                                <p>{item.customDTO.placeName}</p>
+                            item.customDTO !== null && item.customDTO !== undefined && <p>{item.customDTO.placeName}</p>
                             }
                             <br/><p>{item.context}</p>
                             </div>
@@ -228,6 +369,7 @@ const PlaceWriteForm = () => {
                     </div>
                 </div>
             </div>
+            <div className={Style.writedateCardFormDiv}>{writedateCardFormDiv}</div>
             <div>
                 <textarea className={`${Style.context} ${Style.textarea}`} name="context"  value={context} onChange={onInput} rows="10" cols="50"
                     placeholder="1. 현재 동행이 있나요? 
@@ -240,8 +382,9 @@ const PlaceWriteForm = () => {
                     
                     (1000자 이내) "/>
             </div>
+            <div className={Style.contextDiv}>{contextDiv}</div>
             <div className={Style.savebutton}>
-                <div className={Style.save} onClick={togetherSave}>저장</div>
+                <div className={Style.save} onClick={!update ? togetherSave : togetherUpdate}>{!update ? '저장' : '수정'}</div>
                 &nbsp;
                 <div className={Style.reset} onClick={onReset}>다시쓰기</div>
             </div>

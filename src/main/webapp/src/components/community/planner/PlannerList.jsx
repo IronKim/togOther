@@ -34,7 +34,7 @@ const PlannerList = (props) => {
         const scrollHeight = document.documentElement.scrollHeight;
     
         const windowHeight = window.innerHeight;
-        if (scrollY + windowHeight + 100 >= scrollHeight) {
+        if (scrollY + windowHeight + 300 >= scrollHeight) {
             if(!scrollLoading) {
             if(!last) {
                     if(count * 20 > total) setLast(true);
@@ -76,10 +76,11 @@ const PlannerList = (props) => {
             getPlanner({ n: ''+n, search : search ? search.trim() : '' })
             .then(res => {
                     setPlanner(res.data)
-
                     setScrollLoading(false)
-                    getImages({n : res.data[0].plannerSeq})
-                    .then(res2 => setImages(res2.data))
+                    if(res.data.length > 0) {
+                        getImages({n : res.data[0].plannerSeq})
+                        .then(res2 => setImages(res2.data))
+                    }
                 }
             )
             .catch(e => console.log(e))
@@ -118,12 +119,12 @@ const PlannerList = (props) => {
             {
                 planner.map(item => <div className={styles.plannerItem} onClick={() => onPlanner(item.plannerSeq)}>
                     <img className={styles.plannerImage} src={images.find(item2 => item2.plMainSeq === item.plannerSeq) !== undefined ?
-                        images.find(item2 => item2.plMainSeq === item.plannerSeq).image :
+                        images.find(item2 => item2.plMainSeq === item.plannerSeq).image.split(',')[0] :
                         item.citySeq !== -1 && loading ? city.find(item2 => item2.citySeq === item.citySeq).cityImage : noImage}/>
                     <div className={styles.plannerInfo}>
                         <div className={styles.profile}>
-                            <img src={profileImg}/>
-                            <p>유저이름</p>
+                            <img src={item.userProfileImage && item.userProfileImage !== '' ? item.userProfileImage : profileImg}/>
+                            <p>{item.userName}</p>
                         </div>
                         <div className={styles.calender}>기간<br/>
                         {item.startDate.split("-")[1]}/{item.startDate.split("-")[2]}

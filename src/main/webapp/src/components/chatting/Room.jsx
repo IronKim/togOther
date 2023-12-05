@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useMessageStore from '../../hooks/useMessageStore';
-
+import styles from '../../css/Room.module.css';
 
 export default function Room() {
   const messageStore = useMessageStore();
@@ -88,9 +88,11 @@ export default function Room() {
           type="text"
           value={messageEntered}
           onChange={handleChangeInput}
+          className={styles.button1}
         />
         <button
           type="submit"
+          className={styles.button2}
         >
           전송
         </button>

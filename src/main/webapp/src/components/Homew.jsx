@@ -5,8 +5,12 @@ import AdvisorCityList from './advisor/AdvisorCityList';
 import home from '../css/Homew.module.css';
 import { CONTINENT } from '../constants/CONTINENT';
 import { Link } from 'react-router-dom';
+import { useUserStore } from '../stores/mainStore';
 
 const Homew = () => {
+
+    const {user} = useUserStore();
+
     // 지역
     const [continentList, setContinentList] = useState(Object.values(CONTINENT));
     
@@ -69,6 +73,7 @@ const Homew = () => {
     // 컴포넌트가 처음으로 렌더링될 때 도시 정보를 가져옴
     useEffect(() => {
         getCity();
+
     }, []);
 
     // 도시 리스트를 불러오면 나라 리스트도 다시 불러오는 함수
@@ -88,6 +93,14 @@ const Homew = () => {
       country: '',
       city: ''
     });
+
+    const userCityNames = user.cityList && user.cityList.split(',').map(city => city.trim());
+
+    // user의 cityList와 cityList 배열을 비교하여 일치하는 도시만 추출합니다.
+    const matchingCities = user.cityList && cityList
+    .filter(city => userCityNames.includes(city.cityName.toLowerCase()))
+    .sort((a, b) => userCityNames.indexOf(a.cityName.toLowerCase()) - userCityNames.indexOf(b.cityName.toLowerCase()));
+
 
     return (
         <div className={home.white_box}>
@@ -202,6 +215,29 @@ const Homew = () => {
                                         </div>
                                     )}
             </div>
+            
+            {
+                user && user.cityList &&
+                <div style={{width: '100%'}}>
+                    <p style={{fontSize: '48px'}}>최근 방문한 도시</p>
+                    <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+                        {matchingCities.map(city => (
+                            <div key={city.citySeq} style={{ textAlign: 'center' }}>
+                            <Link to={`/info/city/${city.citySeq}`}>
+                                <img
+                                    style={{ marginBottom: '30px' }}
+                                    className={home.img}
+                                    src={city.cityImage}
+                                    alt={city.cityName}
+                                />
+                            </Link>
+                            <p style={{ fontSize: '32px' }}>{city.cityName}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            }
+            
 
         </div>
         )
