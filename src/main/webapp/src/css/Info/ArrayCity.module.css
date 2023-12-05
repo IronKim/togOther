@@ -9,7 +9,7 @@
 .card{
   overflow: hidden;
   max-width:100%;
-  width: 14vw;
+  width: 14.3vw;
   height: 11vw;
   margin: 0.5vw;
   cursor: pointer;
@@ -222,7 +222,7 @@
   }
   
   .imgtext{
-    font-size: 2.8vw;
+    font-size: 2.5vw;
     width:4.9em;
     height:1.2em;
     line-height: 1.4em;
@@ -270,16 +270,15 @@
     display: none;
   }
   .card{
-    width: 42vw;
-    height: 30vw;
-    margin: 2vw 1.2vw;
+    width: 38.5vw;
+    height: 34vw;
+    margin: 3vw 2vw;
   }
   .imgtext{
-    font-size: 3.8vw;
+    font-size: 4.5vw;
   }
 }
 @media (max-width: 391px) { 
-
   .arraymain{
     margin-top: 40px;
   }
@@ -307,10 +306,10 @@
     font-size: 5vw;
   }
   .card{
-    width: 8.3em;
-    height: 8em;
-    margin: 0.5em;
-    left: -2.5em;
+    width: 87vw;
+    height: 50vw;
+    margin: 3vw;
+    left: -30px;
   }
   
   .imgtext{
@@ -345,6 +344,11 @@
 
   .open{
     left: -16px !important;
+  }
+  .hamburger img{
+    position: fixed;
+    display: block;
+    top: 105px;
   }
 }
 @media (max-width: 375px) { 
