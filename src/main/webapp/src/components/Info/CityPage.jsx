@@ -11,6 +11,7 @@ import Like from './Like';
 import { useUserStore } from '../../stores/mainStore';
 import { updatecityList } from '../../api/UserApiService';
 import { getPlaceReviewBySeq } from '../../api/PlaceReviewApiService';
+import backBut from '../../assets/image/backBut.png'
 
 const CityPage = () => { 
     const { citySeq } = useParams();
@@ -323,7 +324,9 @@ const CityPage = () => {
         }
     }  
 
-    
+    const back = () => {
+        navigate(-1)
+    }
     return (
 
         <div style={{userSelect:'none'}}>
@@ -338,7 +341,7 @@ const CityPage = () => {
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" className={ styles.img }></img>
             </div> */}
 
-
+            <img className={styles.backBut} src={backBut} onClick={() => back()}/>
             <div className={styles.api}>
             {/*  날씨 정보 표시 */}
             <div className={styles.weather}>

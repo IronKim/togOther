@@ -222,7 +222,6 @@ const ArrayCity = () => {
                     <div
                         className={`fade fade-${state} ${ArrayStyle.fades}`}
                         style={{
-                        display: 'inline-block',
                         flexDirection: 'row',
                         opacity: state === 'entered' ? 1 : 0,
                         transform: state === 'entered' ? 'translateY(0)' : 'translateY(-20px)',
