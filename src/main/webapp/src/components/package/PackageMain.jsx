@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 
 import leftButImg from '../../assets/image/left.png'
 import rightButImg from '../../assets/image/right.png'
-import packBg from '../../assets/image/packageBackground.png'
+import packBg from '../../assets/image/flight.png'
 import plannerImg from '../../assets/image/planner.png'
 import cityImg from '../../assets/image/city.png'
 import searchs from '../../assets/image/search.png'

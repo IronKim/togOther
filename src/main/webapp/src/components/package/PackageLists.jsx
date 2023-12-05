@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 
 import PackageStyle from '../../css/PackageList.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
-import packBg from '../../assets/image/packageBackground.png'
+import packBg from '../../assets/image/flight.png'
 import searchs from '../../assets/image/search.png'
 import backBut from '../../assets/image/backBut.png'
 
