@@ -320,21 +320,12 @@
         width : 100%;
     }
     .p_div {
-        flex-wrap: wrap;
-        max-height: 3.6em; /* 두 줄로 나누기 위해 높이 제한 설정 (글자 크기에 따라 조절 필요) */
+        max-height: 3.6em;
     }
-    .p_div p {
-        margin-top: 0; /* 줄임표 처리를 위해 마진 조정 */
-        white-space: normal; /* 여러 줄로 표시 */
-        text-overflow: ellipsis; /* 줄임표 처리 */
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2; /* 두 줄로 제한 */
-        font-size: 20px;
-        margin-top: -50px;
-        white-space: nowrap;
 
+    .p_div p {
+        
+        margin-top: 0;
     }
 }
 /* @media (max-width: 754px) { 
