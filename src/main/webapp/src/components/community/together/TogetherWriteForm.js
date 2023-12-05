@@ -341,7 +341,6 @@ const PlaceWriteForm = () => {
         <>
         <div className={Style.writeForm}>
         <div className={Style.writeFormInner}>
-            <button onClick={() =>alert(JSON.stringify(subDTO))}>sub json 확인</button>
             <div>
                 <input type="text" 
                        className={`${Style.title} ${Style.input}`}
