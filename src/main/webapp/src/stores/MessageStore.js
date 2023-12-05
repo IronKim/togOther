@@ -65,7 +65,7 @@ export default class MessageStore {
           (messageReceived) => this.receiveMessage(messageReceived),
           {},
         );
-
+        console.log(`Subscribed to room: ${roomIndex}`);
         // 입장 메시지 전송
         this.sendMessage({ type: 'enter' });
       },
@@ -144,7 +144,6 @@ export default class MessageStore {
             type: 'createRoom',
             newRoomName,
         });
-
         // Get the message with the retrieved Index
         this.fetchMessages(createdRoomIndex);
     } catch (error) {
@@ -169,11 +168,13 @@ export default class MessageStore {
         messageService.sendMessage({
           client: this.client,
           messageToSend: {
-            type: 'text',
+            type: 'createRoom',
             placeholder: '채팅방 이름',
             value: newRoomName,
           },
+          
         });
+        this.createRoom({ type: 'createRoom' });
       }
     } else {
       console.error('활성 STOMP 연결이 없습니다. 채팅방을 생성할 수 없습니다.');
@@ -182,6 +183,9 @@ export default class MessageStore {
       const response = await axios.post('http://127.0.0.1:8080/chat/createRoom', {
         newRoomName,
     });
+
+    console.log('Server response after creating room:', response.data);
+
 
     // 생성된 Room의 Index 반환
     return response.data.roomIndex;
@@ -192,10 +196,10 @@ export default class MessageStore {
 }
 
 // Room에 해당하는 메시지 가져오기
-fetchMessages = async (newRoomName) => {
+fetchMessages = async (roomIndex) => {
   try {
-    const response = await axios.get(`http://127.0.0.1:8080/chat/messages/${newRoomName}`);
-    console.log(`Fetching messages for RoomIndex: ${newRoomName}`, response.data);
+    const response = await axios.get(`http://127.0.0.1:8080/chat/room/${roomIndex}`);
+    console.log(`Fetching messages for RoomIndex: ${roomIndex}`, response.data);
   } catch (error) {
     console.error('메시지 가져오기 API 호출 중 오류 발생:', error);
 
@@ -211,51 +215,51 @@ fetchMessages = async (newRoomName) => {
     this.messageEntered = value;
   }
 
-  sendMessage({ type }) {
-    // 메시지 입력 전송
-    const message = type === 'message'
-      ? this.messageEntered
-      : '';
+  // sendMessage({ type }) {
+  //   // 메시지 입력 전송
+  //   const message = type === 'message'
+  //     ? this.messageEntered
+  //     : '';
 
-    // 입장 메시지 전송
-    if (type === 'enter') {
-      messageService.sendMessage({
-        client: this.client,
-        messageToSend: {
-          type: 'enter',
-          roomId: this.currentRoomIndex,
-          userId: this.userId,
-          message: `User ${this.userId} entered the room.`,
-        },
-      });
-      return;
-    }
+  //   // 입장 메시지 전송
+  //   if (type === 'enter') {
+  //     messageService.sendMessage({
+  //       client: this.client,
+  //       messageToSend: {
+  //         type: 'enter',
+  //         roomId: this.currentRoomIndex,
+  //         userId: this.userId,
+  //         message: `User ${this.userId} entered the room.`,
+  //       },
+  //     });
+  //     return;
+  //   }
   
-    // 입력값이 비어있는 경우 전송을 중지
-    if (type === 'message' && !this.messageEntered.trim()) {
-      console.log('메시지를 입력하세요.');
-      alert('메시지를 입력하세요.');
-      return;
-    }
+  //   // 입력값이 비어있는 경우 전송을 중지
+  //   if (type === 'message' && !this.messageEntered.trim()) {
+  //     console.log('메시지를 입력하세요.');
+  //     alert('메시지를 입력하세요.');
+  //     return;
+  //   }
 
-    // 일반 메시지를 전송
-    messageService.sendMessage({
-      client: this.client,
-      messageToSend: {
-        type,
-        roomId: this.currentRoomIndex,
-        userId: this.userId,
-        message: this.messageEntered,
-      },
-    });
+  //   // 일반 메시지를 전송
+  //   messageService.sendMessage({
+  //     client: this.client,
+  //     messageToSend: {
+  //       type,
+  //       roomId: this.currentRoomIndex,
+  //       userId: this.userId,
+  //       message: this.messageEntered,
+  //     },
+  //   });
   
-    // 입력 창을 초기화
-    this.messageEntered = '';
-    console.log('입력 창이 초기화되었습니다.');
+  //   // 입력 창을 초기화
+  //   this.messageEntered = '';
+  //   console.log('입력 창이 초기화되었습니다.');
   
-    // 상태 업데이트
-    this.publish();
-  }
+  //   // 상태 업데이트
+  //   this.publish();
+  // }
 
   receiveMessage(messageReceived) {
     try {
@@ -263,7 +267,7 @@ fetchMessages = async (newRoomName) => {
       const message = JSON.parse(messageReceived.body);
       console.log('Received message:', message);
       this.messageLogs = [...this.messageLogs, this.formatMessage(message)];
-      this.publish();
+
       this.publish();
     } catch (error) {
       console.error('Received message is not valid JSON:', messageReceived.body);

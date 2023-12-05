@@ -95,7 +95,7 @@ public class MessageController {
         chatMessageRepository.save(chatMessage);
         
      // 브로드캐스팅
-        messagingTemplate.convertAndSend("/subscription/chat/room/" + chatMessage.getRoomId(), chatMessage);
+        messagingTemplate.convertAndSend("/subscription/chat/room/${roomId}" + chatMessage.getRoomId(), chatMessage);
     }
     
     @GetMapping("/chat/messages/{roomIndex}")
@@ -104,32 +104,26 @@ public class MessageController {
         return convertAndSendMessageService.getAllMessages(roomIndex);
     }
     
-    @PostMapping("/chat/createRoom")
-    public void createRoom(@RequestBody String newRoomName) {
-    	createRoomService.Room(
-                room.getId(),
-                newRoomName,
-                room.getRoomMaster(),
-                room.getUserCount(),
-                room.getType()
-        );
-    	
-    	CreateRoom createRoom = new CreateRoom();
-    	createRoom.setId(room.getId());
-    	createRoom.setName(newRoomName);
-    	createRoom.setRoomMaster(room.getRoomMaster());
-    	createRoom.setUserCount(room.getUserCount());
-    	
-    	roomRepository.save(createRoom);
-    	
-    	messagingTemplate.convertAndSend("/subscription/chat/room/" + newRoomName, room);
-    }
-    
-    @GetMapping("/chat/messages/{newRoomName}")
-    public List<ChatMessage> getAllMessage(@PathVariable Long newRoomName) {
-        System.out.println("Received request for all messages");
-        return convertAndSendMessageService.getAllMessages(newRoomName);
-    }
+//    @PostMapping("/chat/createRoom")
+//    public void createRoom(@RequestBody String newRoomName) {
+//    	createRoomService.Room(
+//                room.getId(),
+//                newRoomName,
+//                room.getRoomMaster(),
+//                room.getUserCount(),
+//                room.getType()
+//        );
+//    	
+//    	CreateRoom createRoom = new CreateRoom();
+//    	createRoom.setId(room.getId());
+//    	createRoom.setName(newRoomName);
+//    	createRoom.setRoomMaster(room.getRoomMaster());
+//    	createRoom.setUserCount(room.getUserCount());
+//    	
+//    	roomRepository.save(createRoom);
+//    	
+//    	messagingTemplate.convertAndSend("/subscription/chat/room/" + newRoomName, room);
+//    }
     
     @MessageExceptionHandler
     public String exception(Exception ex) {

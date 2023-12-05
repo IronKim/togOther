@@ -15,6 +15,17 @@ export default function RoomList({roomIndex, setRoomIndex}) {
     roomIndices,
   } = messageStore;
 
+  // useEffect(() => {
+  //   // Assuming communitySeq is the community sequence number
+  //   const togetherSeq = 1; // You should get this value dynamically
+
+  //   // Dynamically generate room indices based on communitySeq
+  //   const roomIndices = [togetherSeq, togetherSeq + 1, togetherSeq + 2];
+
+  //   // Update the room indices in messageStore
+  //   messageStore.setRoomIndices(roomIndices);
+  // }, [messageStore]);
+
   //새로운 채팅방에 연결 시도
   const handleClickEnterRoom = async ({ newRoomIndex }) => {
     if (connected) {
@@ -36,9 +47,12 @@ export default function RoomList({roomIndex, setRoomIndex}) {
     setRoomIndex()
   };
 
+  // 고유한 채팅방 인덱스를 생성하는 함수
   function generateUniqueRoomIndex() {
-    // Add your logic to generate a unique room index, e.g., using a timestamp or UUID
-    return Math.floor(Math.random() * 1000); // Replace this with your actual logic
+    //난수와 현재 날짜를 결합하여 고유한 인덱스를 생성
+    const randomPart = Math.floor(Math.random() * 1000);
+    const datePart = Date.now();
+    return `${datePart}-${randomPart}`;
   }
 
   //새로운 채팅방 만들기
@@ -62,12 +76,18 @@ export default function RoomList({roomIndex, setRoomIndex}) {
        // 서버에게 채팅방 생성 요청을 보내는 로직을 추가하기
        try {
         // Add logic to send a chat room creation request to the server
-        const createdRoomIndex = await messageStore.createRoom({
+        const createdRoom = await messageStore.createRoom({
           type: 'createRoom',
           newRoomName,
           roomIndex: newRoomIndex 
         });
-        messageStore.fetchMessages(createdRoomIndex);
+
+        const { id, roomId, userId } = createdRoom;
+
+        // Save the chat room details in the database
+        await saveChatRoomToDatabase(id, roomId, userId);
+
+        messageStore.fetchMessages(newRoomIndex);
       } catch (error) {
         console.error('An error occurred while creating the chat room:', error);
       }
@@ -75,10 +95,27 @@ export default function RoomList({roomIndex, setRoomIndex}) {
       setNewRoomName('');
     }
   }
+
+  const saveChatRoomToDatabase = async (roomId, roomName, roomIndex) => {
+    try {
+      // Make an API request or use your preferred method to save chat room details in the database
+      const response = await axios.post('http://127.0.0.1:8080/chat/creatRoom', {
+        roomId,
+        roomName,
+        roomIndex,
+      });
+  
+      console.log('채팅방 정보가 데이터베이스에 저장되었습니다:', response.data);
+    } catch (error) {
+      console.error('데이터베이스에 채팅방 정보를 저장하는 동안 오류가 발생했습니다:', error);
+      throw error; // Propagate the error to handle it at a higher level if needed
+    }
+  };
+  
   useEffect(() => {
     console.log('Fetching messages for RoomIndex:', newRoomName);
     
-    axios.get(`http://127.0.0.1:8080/chat/messages/1`)
+    axios.get(`http://127.0.0.1:8080/chat/messages/${newRoomName}`)
     .then((response) => {
         console.log('Received messages:', response.data);
     })
@@ -115,17 +152,11 @@ export default function RoomList({roomIndex, setRoomIndex}) {
         </button>
       )}
       <div>
-        <input
-          type="text"
-          placeholder="채팅방 이름"
-          value={newRoomName}
-          onChange={(e) => setNewRoomName(e.target.value)}
-        />
         <button
           type="button"
           onClick={handleCreateRoom}
         >
-          채팅방 만들기
+          채팅하기
         </button>
       </div>
     </div>
