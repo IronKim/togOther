@@ -10,6 +10,7 @@ import weatherData from '../../constants/WeatherData';
 import Like from './Like';
 import { useUserStore } from '../../stores/mainStore';
 import { updatecityList } from '../../api/UserApiService';
+import { getPlaceReviewBySeq } from '../../api/PlaceReviewApiService';
 
 const CityPage = () => { 
     const { citySeq } = useParams();
@@ -39,10 +40,12 @@ const CityPage = () => {
 
     const [userPlaceLike, setUserPlaceLike] = useState(user.likingPlace);
 
-
     useEffect(() => {
         setUserPlaceLike(user.likingPlace);
     },[user])
+
+    const [placeReview, setPlaceReview] = useState()
+    
     
     useEffect(() => {
 
@@ -312,7 +315,11 @@ const CityPage = () => {
             setFilteredPlaceData(filteredData)
         }
         if(item === 'comment') {
-
+            let filteredData = filteredPlaceData.slice().sort((a, b) => 
+            b.likeCnt - a.likeCnt || a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }))
+            
+            console.log(filteredData)
+            setFilteredPlaceData(filteredData)
         }
     }  
 

@@ -212,12 +212,14 @@ useEffect(() => {
                       {item.startDate} - {item.endDate}
                     </div>
                     <div className={Style.userSeq} onClick={(e) => onModal(e,item.userSeq)}> 
-                      {item.userProfileImage !== ''  ?
+                      {item.userProfileImage !== null  ?
                           <div className={Style.userImg}>
+                            
                             <img src={item.userProfileImage} className={Style.userImg} alt="User Profile" />
                           </div>
                           :
                           <div className={Style.userImg}>
+    
                             <img src={userDefaultProfile} className={Style.userImg} alt="Default Profile"/>
                           </div>
                       }
