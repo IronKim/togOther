@@ -84,6 +84,7 @@ const formatDateTime = (dateString) => {
 
   const handleScroll = () => {
     if (hasMore && window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+     //   if (hasMore && window.innerWidth >= 1200 && window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
       loadReviews(page);
     }
   };
