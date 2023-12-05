@@ -43,25 +43,23 @@ function PlaceReviewWrite({ placeSeq }) {
     }
   };
   const handleFileUpload = (e) => {
-    // 파일 업로드를 처리합니다.
     const files = e.target.files;
-    let image = ''
-    if(files.length > 3) 
-    sweet.fire({
-      title: "3개 이하로 선택해 주세요.",
-      icon: "warning"
-  })
-    else {
-      if(files.length === 0) {
+    let image = '';
+
+    if (files.length > 3) {
+      sweet.fire({
+        title: "3개 이하로 선택해 주세요.",
+        icon: "warning"
+    })
+    } else if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
-          image += URL.createObjectURL(files[i]);
-          if(i !== files.length-1) image += ',';
+        image += URL.createObjectURL(files[i]);
+        if (i !== files.length - 1) image += ',';
       }
       setSelectedImages(image);
     } else {
       setSelectedImages('')
     }
-  }
   };
   const handleWriteReview = async () => {
     // 리뷰 내용이 비어있는지 확인합니다.

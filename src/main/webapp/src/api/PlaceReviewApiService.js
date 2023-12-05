@@ -10,3 +10,4 @@ export const deletePlaceReviewByReviewSeq = (reviewSeq) => apiClient.delete(`api
 
 export const updateReview = (reviewSeq,placeReview) => apiClient.put(`api/placeReview/updateReview/${reviewSeq}`,placeReview);
 
+export const getPlaceReviewByUserSeq = (userSeq) => apiClient.get(`api/placeReview/getPlaceReviewByUserSeq/${userSeq}`)

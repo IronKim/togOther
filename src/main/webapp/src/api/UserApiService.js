@@ -48,4 +48,6 @@ export const updatecityList = (userSeq, cityName) => apiClient.put(`api/user/upd
 
 export const naverLoginUser = (code, state) => apiClient.get(`api/user/naverLoginUser/${code}/${state}`);
 
+export const getUserLikingPlace = (userSeq) => apiClient.get(`api/user/getUserLikingPlace/${userSeq}`);
+
 

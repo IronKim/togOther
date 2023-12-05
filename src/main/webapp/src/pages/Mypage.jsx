@@ -7,6 +7,8 @@ import MypageWrite from '../components/mypage/MypageWrite';
 import MypagePlanner from '../components/mypage/MypagePlanner';
 import MypageTogether from '../components/mypage/MypageTogether';
 import MypageReservation from '../components/mypage/MypageReservation';
+import MypageReview from '../components/mypage/MypageReview';
+import MypageLikingPlace from '../components/mypage/MypageLikingPlace';
 
 const Mypage = () => {
 
@@ -27,6 +29,9 @@ const Mypage = () => {
                 state === 0 && <MypageWrite onErrorImg={onErrorImg} />
             }
             {
+                state === 1 && <MypageLikingPlace onErrorImg={onErrorImg} />
+            }
+            {
                 state === 2 && <MypagePlanner onErrorImg={onErrorImg} />
             }
             {
@@ -35,6 +40,10 @@ const Mypage = () => {
             {
                 state === 4 && <MypageReservation onErrorImg={onErrorImg} />
             }
+            {
+                state === 5 && <MypageReview onErrorImg={onErrorImg} />
+            }
+            
             <div style={{clear:'both'}}></div>
         </div>
     );

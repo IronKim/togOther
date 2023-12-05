@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
-import PlaceReviewWrite from './PlaceReviewWrite';
-import PlaceReviewUpdate from './PlaceReviewUpdate';
-import PlaceReviewPhoto from './PlaceReviewPhoto';
-import { getPlaceReviewBySeq, deletePlaceReviewByReviewSeq} from '../../api/PlaceReviewApiService';
+import PlaceReviewWrite from '../Info/PlaceReviewWrite';
+import PlaceReviewUpdate from '../Info/PlaceReviewUpdate';
+import PlaceReviewPhoto from '../Info/PlaceReviewPhoto';
+import { getPlaceReviewByUserSeq, deletePlaceReviewByReviewSeq} from '../../api/PlaceReviewApiService';
 import { useUserStore } from '../../stores/mainStore';
 import ProfileView from '../ProfileView/ProfileView';
-import thumb from '../../assets/image/profile_thumb.png';
+import thumb from 'D:/SpringBoot/workspace/togOther/src/main/webapp/src/assets/image/profile_thumb.png';
+import styles from '../../css/MypageReview.module.css';
 
-const PlaceReview = ({ placeSeq }) => {
+import efault from '../../css/MyPage.module.css';
+
+const MypageReview = ({}) => {
   const [selectedPlaceReview, setSelectedPlaceReview] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [modalShow1, setModalShow1] = useState(false);
@@ -37,11 +41,10 @@ const PlaceReview = ({ placeSeq }) => {
          });
      }
   };
-
-  const onErrorImg = (e) => {
-    e.target.src = thumb;
+  const navigate = useNavigate();
+  const onToPlacePage = (placeSeq) => {
+    navigate(`/info/place/${placeSeq}`);
 }
-
  
 const formatDateTime = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
@@ -50,7 +53,7 @@ const formatDateTime = (dateString) => {
 };
 
   const loadInitialReviews = () => {
-    getPlaceReviewBySeq(placeSeq, 1)
+    getPlaceReviewByUserSeq(user.userSeq, 1)
       .then(response => {
         const sortedReviews = response.data.sort((a, b) => a.reviewSeq - b.reviewSeq);
         const initialReviews = sortedReviews.slice(0, 5);
@@ -67,7 +70,7 @@ const formatDateTime = (dateString) => {
 
   useEffect(() => {
     loadInitialReviews();
-  }, [placeSeq]);
+  }, [user.userSeq]);
 
   const handleProfileClick = (user1) => {
     setUserProfiles(user1);
@@ -83,6 +86,7 @@ const formatDateTime = (dateString) => {
 
   const handleScroll = () => {
     if (hasMore && window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+     //   if (hasMore && window.innerWidth >= 1200 && window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
       loadReviews(page);
     }
   };
@@ -90,7 +94,7 @@ const formatDateTime = (dateString) => {
   const loadReviews = (currentPage) => {
     const reviewsPerPage = 5;
 
-    getPlaceReviewBySeq(placeSeq, currentPage)
+    getPlaceReviewByUserSeq(user.userSeq, currentPage)
       .then(response => {
         const sortedReviews = response.data.sort((a, b) => a.reviewSeq - b.reviewSeq);
         const startIndex = currentPage === 1 ? 0 : (currentPage - 1) * reviewsPerPage;
@@ -116,20 +120,16 @@ const formatDateTime = (dateString) => {
     };
   }, [page, hasMore]);
   return (
-    <div style={{ maxWidth: '728px', minWidth: '60%', margin: '0 auto', width: '100%' }}>
-      <div style={{ maxWidth: '728px', width: '100%', display: 'flex', justifyContent: 'space-between', margin: '10px auto' }}>
-        <p className="fs-3">리뷰</p> 
-        {/* {selectedPlaceReview.length} */}
-        <p style={{ margin: '0', alignSelf: 'flex-end' }}>
-          <PlaceReviewWrite placeSeq={placeSeq} loadInitialReviews={loadInitialReviews}/>
-        </p>
-      </div>
+    <div className={styles.MypageReview1}>
+          <p className={efault.tagName}>여행 후기</p>
+          <hr  />
       {selectedPlaceReview.map((review) => {
         const imageArray = review.image.split(',');
         const user = userProfiles[review.userSeq] || {};
         return (
-          <div key={review.reviewSeq} style={{ maxWidth: '728px', width: '100%', display: 'block', margin: 'auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div key={review.reviewSeq}  style={{width: '95%', display: 'block', margin: 'auto' }}>
+            <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div onClick={() => onToPlacePage(review.placeSeq)} className={styles.div1}>
               <Col xs={6} md={4} style={{ display: 'flex', alignItems: 'center' }}>
                 
                 <Image
@@ -137,7 +137,6 @@ const formatDateTime = (dateString) => {
                   roundedCircle
                   style={{ width: '40px', height: '40px' }}
                   onClick={() => handleProfileClick(review.user.userSeq)}
-                  onError={onErrorImg}
                 />
                 
                 <div style={{ flex: 1 }}>
@@ -151,20 +150,22 @@ const formatDateTime = (dateString) => {
                   >
                     <span>{review.user.id || '알 수 없는 사용자'}</span>
                   </div>
-                  <div style={{ margin: '10px auto auto 10px', fontSize: '13px', color: 'gray' }}>
+                  <div style={{ margin: '10px auto auto 10px', fontSize: '13px', color: 'gray',width:'120px' }}>
                     {formatDateTime(review.date)}
                   </div>
                 </div>
               </Col>
+              </div>
               {/* 리뷰 작성자와 현재 로그인한 사용자가 같으면 수정/삭제 버튼 렌더링 */}
               {userSeq1 === review.user.userSeq && (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center',width: '100px' }}>
                   <PlaceReviewUpdate
                     reviewSeq={review.reviewSeq}
-                    placeSeq={placeSeq}
+                    placeSeq={review.placeSeq}
                     loadInitialReviews={loadInitialReviews}
                   />
                   <span
+                  className={styles.delete}
                     style={{
                       color: 'red',
                       cursor: 'pointer',
@@ -195,7 +196,7 @@ const formatDateTime = (dateString) => {
                       height: 'auto',
                       maxHeight: '290px',
                       width: '100%',
-                      maxWidth: '720px',
+                      maxWidth: '800px',
                       display: 'block',
                       margin: 'auto 5px',
                       transition: 'width 0.5s',
@@ -242,62 +243,34 @@ const formatDateTime = (dateString) => {
 
 
 
-              {imageArray.length === 3 && (
-                <div style={{ width: '100%', display: 'flex', margin: 'auto', alignItems: 'center'}}>
-                  <div style={{width:'68%',marginRight: '5px'}}>
-                    <img
-                      src={imageArray[0]}
-                      className="rounded mx-auto d-block"
-                      alt="..."
-                      style={{
-                        width: '100%',
-                        maxWidth: '486px', // 기존 0번 이미지의 max width
-                        height: '290px',
-                        maxHeight: '290px',
-                        objectFit: 'cover',
-                        marginRight: '5px',
-                      }}
-                      onClick={() => handleImageClick(imageArray[0])}
-                    />
-                  </div>
-                  <div style={{  display: 'flex', flexDirection: 'column', alignItems: 'center',width:'30%' }}>
-                    <img
-                      src={imageArray[1]}
-                      className="rounded mx-auto d-block"
-                      alt="..."
-                      style={{
-                        width: '100%',
-                        maxWidth: '232px',
-                        height: '143px',
-                        objectFit: 'cover',
-                      
-                      }}
-                      onClick={() => handleImageClick(imageArray[1])}
-                    />
-                    <img
-                      src={imageArray[2]}
-                      className="rounded mx-auto d-block"
-                      alt="..."
-                      style={{
-                        width: '100%',
-                        maxWidth: '232px',
-                        height: '143px',
-                        maxHeight: '254px',
-                        objectFit: 'cover',
-                        marginTop: '5px',
-                        marginRight: '5px',
-                      }}
-                      onClick={() => handleImageClick(imageArray[2])}
-                    />
-                  </div>
-                </div>
-              )}
+            {imageArray.length === 3 && (
+    <div style={{ width: '100%', display: 'flex', margin: '0 auto', alignItems: 'center' }}>
+        {imageArray.map((image, index) => (
+            <img
+                key={index}
+                src={image}
+                className="rounded mx-auto d-block"
+                alt="..."
+                style={{
+                    width: '32.7%', // Divide the width equally for three images
+                    height: '290px',
+                    objectFit: 'cover',
+                    marginRight: index < imageArray.length - 1 ? '3px' : '0', // Add margin only between images
+                    
+                }}
+                onClick={() => handleImageClick(image)}
+            />
+        ))}
+    </div>
+)}
+
+
 
 
 
 
             </div>
-            <hr style={{ width: '100%', maxWidth: '700px', display: 'block', margin: '30px auto', borderWidth: '2px' }} />
+            <hr style={{ width: '95%',  display: 'block', margin: '30px auto', borderWidth: '2px' }} />
           </div>
         );
       })}
@@ -306,4 +279,4 @@ const formatDateTime = (dateString) => {
     </div>
   );
 };
-export default PlaceReview;
+export default MypageReview;

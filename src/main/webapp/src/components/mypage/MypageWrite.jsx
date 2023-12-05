@@ -576,7 +576,7 @@ const MypageWrite = ({onErrorImg}) => {
             {
                 onMbti && <MyMbti inputUserData={user} mbtiClose={mbtiClose} updateMbti={updateMbtiApi} theEndMbti={theEndMbti}/>
             }
-                <p className={styles.tagName}>계정설정</p>
+                <p className={styles.tagName}>계정 설정</p>
                 <hr className={styles.hr} />
                 <div className={ styles.writeForm }>
                     <div style={{display: 'flex', flexDirection: 'column', height: '13em'}}>
