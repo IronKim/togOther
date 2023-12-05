@@ -573,7 +573,7 @@ useEffect(()=>{
             <div style={{clear:'both'}}></div>
             {/* 공개 비공개 토글 */}
             <div style={{float:'left'}}>공개 여부&nbsp;&nbsp;</div><div className={styles.publicBut} onClick={()=>setPublicPlan(!publicPaln)} 
-            style={{paddingLeft: publicPaln ? '20px' : '2px' ,backgroundColor: publicPaln ? 'darkgray' : 'whitesmoke'}}>
+            style={{paddingLeft: publicPaln ? '20px' : '2px' ,backgroundColor: publicPaln ? '#2E8DFF' : 'lightgray'}}>
             <div></div></div>
             <div style={{clear:'both'}}></div>
             </section>

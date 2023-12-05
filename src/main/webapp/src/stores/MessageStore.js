@@ -19,7 +19,7 @@ export default class MessageStore {
 
     // 현재 채팅방 인덱스 및 가능한 채팅방 인덱스들 초기화
     this.currentRoomIndex = 0;
-    this.roomIndices = [1, 2, 3];
+    this.roomIndices = [];
 
     // 메시지 입력과 메시지 로그 초기화
     this.messageEntered = '';

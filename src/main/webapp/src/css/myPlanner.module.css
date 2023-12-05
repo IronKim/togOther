@@ -161,7 +161,7 @@
     width:13px;
     height: 13px;
     border-radius: 50%;
-    background-color: lightgray;
+    background-color: whitesmoke;
 }
 @media (max-width: 1199px) {
     .plannerItem {

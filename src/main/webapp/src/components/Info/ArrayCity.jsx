@@ -183,11 +183,11 @@ const ArrayCity = () => {
         </div>
         <div style={{display:'flex'}}>
         {/* --------------사이드바-------------- */}
-        <div className={ArrayStyle.Sidebartotal} style={{left : isSidebarExpanded ? '0' : '-50%'}}>
+        <div className={ArrayStyle.Sidebartotal} style={{left : isSidebarExpanded ? '0' : '-40%'}}>
             <button 
                    className={ArrayStyle.hamburger} 
                    onClick={toggleSidebar}>
-                    <img src={tab} style={{left : isSidebarExpanded ? '49.7%' : '0'}}></img>
+                    <img src={tab} style={{left : isSidebarExpanded ? '39%' : '-1%'}}></img>
             </button>
             <Accordion  defaultActiveKey={['0']}>
                 {continentList.map((continent, index) => {

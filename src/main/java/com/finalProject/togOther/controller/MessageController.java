@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,6 +23,7 @@ import com.finalProject.togOther.domain.CreateRoom;
 import com.finalProject.togOther.dto.MessageRequestDto;
 import com.finalProject.togOther.models.Room;
 import com.finalProject.togOther.repository.ChatMessageRepository;
+import com.finalProject.togOther.repository.CreateRoomRepository;
 import com.finalProject.togOther.repository.RoomRepository;
 import com.finalProject.togOther.services.ConvertAndSendMessageService;
 import com.finalProject.togOther.services.CreateRoomService;
@@ -34,6 +36,7 @@ public class MessageController {
     private final QuitRoomService quitRoomService;
     private final ConvertAndSendMessageService convertAndSendMessageService;
     private final ChatMessageRepository chatMessageRepository;
+    private final CreateRoomRepository createRoomRepository;
     private final CreateRoomService createRoomService;
     private final Room room;
     private final RoomRepository roomRepository;
@@ -46,6 +49,7 @@ public class MessageController {
                              QuitRoomService quitRoomService,
                              ConvertAndSendMessageService convertAndSendMessageService,
                              ChatMessageRepository chatMessageRepository,
+                             CreateRoomRepository createRoomRepository,
                              CreateRoomService createRoomService,
                              Room room,
                              RoomRepository roomRepository) {
@@ -53,6 +57,7 @@ public class MessageController {
         this.quitRoomService = quitRoomService;
         this.convertAndSendMessageService = convertAndSendMessageService;
         this.chatMessageRepository = chatMessageRepository;
+        this.createRoomRepository  = createRoomRepository;
         this.createRoomService = createRoomService;
         this.room = room;
         this.roomRepository = roomRepository;
@@ -104,31 +109,38 @@ public class MessageController {
         return convertAndSendMessageService.getAllMessages(roomIndex);
     }
     
+//    @PostMapping("/chat/createRoom")
+//    public void createRoom(@RequestBody String newRoomName) {
+//    	createRoomService.Room(
+//                room.getId(),
+//                newRoomName,
+//                room.getRoomMaster(),
+//                room.getUserCount(),
+//                room.getType()
+//        );
+//    	
+//    	CreateRoom createRoom = new CreateRoom();
+//    	createRoom.setId(room.getId());
+//    	createRoom.setName(newRoomName);
+//    	createRoom.setRoomMaster(room.getRoomMaster());
+//    	createRoom.setUserCount(room.getUserCount());
+//    	
+//    	roomRepository.save(createRoom);
+//    	
+//    	messagingTemplate.convertAndSend("/subscription/chat/room/" + newRoomName, room);
+//    }
     @PostMapping("/chat/createRoom")
-    public void createRoom(@RequestBody String newRoomName) {
-    	createRoomService.Room(
-                room.getId(),
-                newRoomName,
-                room.getRoomMaster(),
-                room.getUserCount(),
-                room.getType()
-        );
+    public ResponseEntity<Long> createRoom() {
     	
     	CreateRoom createRoom = new CreateRoom();
-    	createRoom.setId(room.getId());
-    	createRoom.setName(newRoomName);
-    	createRoom.setRoomMaster(room.getRoomMaster());
-    	createRoom.setUserCount(room.getUserCount());
+    	createRoom.setName("아");
+    	createRoom.setRoomMaster("아");
+    	createRoom.setUserCount((long) 3);
+    	createRoom.setUserId("dkdkd");
     	
-    	roomRepository.save(createRoom);
+    	createRoomRepository.save(createRoom);
     	
-    	messagingTemplate.convertAndSend("/subscription/chat/room/" + newRoomName, room);
-    }
-    
-    @GetMapping("/chat/messages/{newRoomName}")
-    public List<ChatMessage> getAllMessage(@PathVariable Long newRoomName) {
-        System.out.println("Received request for all messages");
-        return convertAndSendMessageService.getAllMessages(newRoomName);
+    	return ResponseEntity.ok(createRoom.getId());
     }
     
     @MessageExceptionHandler
