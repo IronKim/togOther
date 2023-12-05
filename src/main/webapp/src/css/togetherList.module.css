@@ -42,8 +42,7 @@
     border-radius: 10px;
     width: 30%;
     height: 400px;
-    margin-left: 2.5%;
-    margin-bottom: 2.5%;
+    margin: 2% 1.5%;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     overflow: hidden;
@@ -52,12 +51,12 @@
 .dateTop{
     height: 25%;
     padding-left: 3%;
-    /* border: 1px solid red; */
-    background-color: rgb(247, 247, 247);
+    margin-top: 130px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 .date{
     /* border: 1px solid red; */
-    color: orange;
+    color: gray;
     width: 100%;
     height: 40%;
     text-align: center;
@@ -66,13 +65,14 @@
 .userImg{
     width: 50px;
     height: 50px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     border-radius: 50px;
     float: left;
 }
 .userImg img{
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 .userinfo{
     /* border: 1px solid red; */
@@ -86,7 +86,7 @@
     /* border: 1px solid red; */
     width: 100%;
     height: 50%;
-    font-size: 30px;
+    font-size: 26px;
     text-align: center;
 }
 .userGender{
@@ -97,19 +97,18 @@
 }
 .tnuminfo{
     /* border: 1px solid red; */
-    color: orange;
     width: 40%;
     height: 100%;
     float: right;
     margin-right: 3%;
     line-height:30px;
-    font-size: 20px;
+    font-size: 22px;
 }
 .tnum{
+    font-size: 16px;
     color: #54a1ff;
 }
 .userSeq{
-    color: orange;
     width: 100%;
     height: 60%;
     /* border: 1px solid blue; */
@@ -120,34 +119,28 @@
     text-align: center;
 }
 .togetherFoot{
-    height: 75%;
+    height: 170px;
     font-size: 20px;
     /* border: 1px solid blue; */
 }
 .imgDiv{
-    width: 50%;
-    height: 70%;
-    float: right;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 5px;
-    margin-top: 5px;
+    width: 100%;
+    height: 170px;
+    transition: 0.4s;
 }
 .together:hover .imgDiv{
-    padding: 0;
-    transition: 1s;
+    width: 120%;
+    margin-left: -10%;
 }
 .placeImg{
     width: 100%;
     height: 100%;
     object-fit: cover;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 }
 .title{
-    /* border: 1px solid blue; */
     width: 100%;
     height: 15%;
     line-height:30px;
@@ -162,16 +155,18 @@
 .context{
     /* border: 1px solid blue; */
     width: 100%;
-    height: 57%;
+    height: 50%;
     padding-left: 3%;
     line-height:30px;
 
 }
 .context p{
-    padding-top: 5%;
-    white-space: nowrap;
-    overflow: hidden;
+    padding-top: 20px;
     text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 .placeInfo{
     line-height:80px;
@@ -181,7 +176,6 @@
     text-align: center;
     font-size: 30px;
 }
-
 .lastSection {
     padding: 150px 0;
     height: 350px;
@@ -196,66 +190,165 @@
     }
     .together{
         width: 100%;
-        height: 200px;
+        height: 310px;
     }
     .placeInfo{
         font-size: 20px;
         line-height: 15px;
     }
-    .date{
-        width: 50%;
-        float: right;
-        height: 100%;
-        line-height: 55px;
-    }
     .userSeq{
-        width: 50%;
-        height: 100%;
-    }
-    .userid{
-        font-size: 25px;
+        width: 100%;
+        height: 70%;
     }
     .imgDiv{
-        height: 95%;
+        height: 200px
+    }
+    .dateTop{
+        float: right;
+        width: 50%;
+        height: 110px;
+        margin-top: 30px;
+        padding-left: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+    .title{
+        width: 50%;
+        padding: 15px 0 5px 3%;
+    }
+    .context{
+        margin-top: 15px;
+        width: 50%;
+        padding-left: 3%;
+        line-height:22px;
+        font-size: 18px;
+    }
+    .context p{
+        padding-top: 10px;
+    }
+    .userinfo{
+        /* border: 1px solid red; */
+        width: 40%;
+        height: 60%;
+        float: left;
+        text-align: center;
+        
+    }
+    .userid{
+        /* border: 1px solid red; */
+        width: 100%;
+        height: 40%;
+        font-size: 24px;
+        text-align: center;
+    }
+    .userGender{
+        /* border: 1px solid red; */
+        height: 50%;
+        color: #54a1ff;
+    }
+    .tnuminfo{
+        /* border: 1px solid red; */
+        width: 40%;
+        height: 60%;
+        float: right;
+        font-size: 20px;
+    }
+    .tnum{
+        color: #54a1ff;
+        font-size: 17px;
     }
 }
 @media (max-width: 780px){
+    .dateTop{
+        float: left;
+        width: 100%;
+        height: 110px;
+        margin-top: 120px;
+        padding-left: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+    .title{
+        width: 100%;
+        padding: 15px 0 5px 3%;
+    }
+    .context{
+        margin-top: 10px;
+        width: 100%;
+        padding-left: 3%;
+        font-size: 18px;
+    }
+    .context p{
+        -webkit-line-clamp: 1;
+    }
     .listForminner{
         width: 100%;
         margin: auto;
     }
     .together{
         width: 95%;
-        height: 200px;
+        height: 350px;
     }
     .date{
-        width: 50%;
+        width: 40%;
         float: right;
         height: 100%;
         line-height: 55px;
+        font-size: 15px;
     }
     .userSeq{
-        width: 50%;
+        width: 60%;
         height: 100%;
-    }
-    .tnuminfo{
-        width: 30%;
-        height: 100%;
-        float: right;
-        margin-right: 3%;
-        line-height:30px;
-        font-size: 15px;
     }
     .userid{
-        font-size: 15px;
+        font-size: 20px;
     }
     .userGender{
         font-size: 15px;
     }
-    .togetherFoot{
+    .tnuminfo{
+        float: right;
+        font-size: 18px;
+    }
+    .tnum{
+        color: #54a1ff;
         font-size: 15px;
     }
-    .placeInfo{
-        line-height: 35px;
+    .userImg{
+        margin-top: 2.5px;
+    }
+}
+@media (max-width: 550px){
+    .date{
+        width: 100%;
+        float: right;
+        height: 20%;
+        line-height: 20px;
+        font-size: 15px;
+    }
+    .userSeq{
+        width: 100%;
+        height: 100%;
+    }
+    .together{
+        height: 380px;
+        margin: 5% 1.5%;
+    }
+    .userid{
+        font-size: 24px;
+    }
+    .userGender{
+        font-size: 18px;
+    }
+    .tnuminfo{
+        font-size: 20px;
+    }
+    .tnum{
+        font-size: 18px;
+    }
+    .userinfo{
+        width: 35%;
+        
+    }
+    .tnuminfo{
+        width: 35%;
     }
 }

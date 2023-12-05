@@ -134,10 +134,6 @@ const PackageMain = () => {
     const goList = (cName) => {
         navigate(`list/${cName}`)
       }
-    const goTop = () => {
-        window.scrollTo(0, 0);
-        foc.current.focus();
-    }
     const goCommunity = () => {
         window.scrollTo(0, 0);
         navigate(`/community`)
@@ -147,6 +143,11 @@ const PackageMain = () => {
         navigate(`/info/cityList`)
     }
 
+    const onPackage = (tpSeq) => {
+        window.scrollTo(0, 0);
+        navigate(`details/${tpSeq}`)
+    }
+    
     return (
         <>
         <div style={{backgroundImage:`url(${packBg})`}} className={styles.searchBg}>
@@ -186,21 +187,20 @@ const PackageMain = () => {
                     {
                         packages.filter((item,index) => index < 4).map(pack => 
                             // 이빈이형 카드 리스트 파츠 쓴곳임
-                                <Card className={styles.card} key={pack.cityName}>
+                                <Card className={styles.card} key={pack.cityName} onClick={ () => onPackage(pack.tpSeq) }>
                                 <div className={styles.cardimgDiv}>
                                     <Card.Img className={styles.cardimg} src={pack.tpThumbnail} />
                                 </div>
                                 <Card.Body className={styles.cardbody}>
                                     <Card.Title className={styles.cardTitle}>{pack.tpTitle}</Card.Title>
                                     <Card.Text className={styles.cardPrice}>
-                                            {pack.tpPrice}원
+                                    {parseFloat(pack.tpPrice).toLocaleString()}원
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
                             //
                         )
                     }
-                <h2 onClick={() => goTop()}>패키지 찾아보기&nbsp;&nbsp;<img src={searchs}/></h2>
             </section>
         </div>
         </>

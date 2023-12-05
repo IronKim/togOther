@@ -13,7 +13,6 @@ import Write from '../pages/Write';
 import Planner from '../pages/Planner';
 
 import Together from '../pages/Together';
-import TogetherList from './community/together/TogetherList';
 import Community from '../pages/Community';
 import useUserStore from '../stores/userStore';
 import BottomNav from './BottomNav';
@@ -28,6 +27,9 @@ import UserRoute from './UserRoute';
 import TogetherView from './community/together/TogetherView';
 import PackageLists from './package/PackageLists';
 import PackageMain from './package/PackageMain';
+import NaverCallback from '../pages/NaverCallback';
+import AdvisorKakaoToken from './advisor/AdvisorKakaoToken';
+import PackageResDetails from './package/PackageResDetails';
 
 const libraries = ["places"];
 
@@ -56,6 +58,7 @@ const Main = ({ showNavbar }) => {
                 <Routes>
         
                     <Route path='/' element= { <Home />} />
+                    <Route path='token' element={<AdvisorKakaoToken/>}/>
                     <Route path='user'>
                         <Route path='login' element ={ user.name === '' ? <Login /> : <Navigate to={'/'}></Navigate>} />
                         <Route path='write' element ={ <Write />}/>
@@ -64,6 +67,7 @@ const Main = ({ showNavbar }) => {
                                 <Mypage />
                             </UserRoute>
                         }/>
+                        <Route path='naver/callback' element = { <NaverCallback /> } />
                     </Route>
                     <Route path='info'>
                         <Route path='place/:placeSeq' element={ <PlacePage />} />
@@ -87,7 +91,8 @@ const Main = ({ showNavbar }) => {
                         <Route path='' element={ <PackageMain />} />
                         <Route path='List/:searchData' element={ <PackageLists />} />
                         <Route path='details/:tpSeq' element= { <PackageDetails/> } />
-                        <Route path='reservation' element={ <PackgeReservation /> } />
+                        <Route path='reservation/:packageSeq/:info' element={  <UserRoute><PackgeReservation/></UserRoute>} />
+                        <Route path='payment/:paymentSeq' element={  <UserRoute><PackageResDetails/></UserRoute>} />
                     </Route>
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>

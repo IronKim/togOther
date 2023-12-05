@@ -8,6 +8,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Accordion from 'react-bootstrap/Accordion';
 
 import ArrayStyle from '../../css/Info/ArrayCity.module.css'
+import tab from '../../assets/image/tab.png'
 import { useNavigate } from 'react-router-dom';
 
 const ArrayCity = () => {
@@ -158,13 +159,11 @@ const ArrayCity = () => {
         <div>
         <div style={{display:'flex'}}>
         {/* --------------사이드바-------------- */}
-        <div className={`${ArrayStyle.Sidebartotal} ${isSidebarExpanded ? ArrayStyle.open : ''}`}>
+        <div className={ArrayStyle.Sidebartotal} style={{left : isSidebarExpanded ? '0' : '-50%'}}>
             <button 
                    className={ArrayStyle.hamburger} 
                    onClick={toggleSidebar}>
-            <label className={ArrayStyle.Sidebarlabel}>
-                <span className={ArrayStyle.hamburgerIcon1}>나라 선택</span>
-            </label>
+                    <img src={tab} style={{left : isSidebarExpanded ? '49.8%' : '0'}}></img>
             </button>
             <Accordion  defaultActiveKey={['0']}>
                 {continentList.map((continent, index) => {
@@ -198,11 +197,11 @@ const ArrayCity = () => {
                 <Transition key={index} timeout={50}>
                     {(state) => (
                     <div
-                        className={`fade fade-${state}`}
+                        className={`fade fade-${state} ${ArrayStyle.fades}`}
                         style={{
                         display: 'inline-block',
                         flexDirection: 'row',
-                        marginLeft: 70,
+                        marginLeft: '30px',
                         opacity: state === 'entered' ? 1 : 0,
                         transform: state === 'entered' ? 'translateY(0)' : 'translateY(-20px)',
                         transition: 'opacity 0.1s, transform 0.1s',

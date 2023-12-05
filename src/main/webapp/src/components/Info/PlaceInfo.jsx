@@ -83,6 +83,7 @@ const PlaceInfo = ({ placeSeq }) => {
                   display: 'block',
                   margin: 'auto',
                   transition: 'width 0.5s',
+                  marginTop: '30px'
                 }}
               />
             </div>
@@ -108,6 +109,7 @@ const PlaceInfo = ({ placeSeq }) => {
                   display: 'block',
                   margin: 'auto',
                   transition: 'width 0.5s',
+                  marginTop: '30px'
                 }}
               />
             </div>

@@ -64,6 +64,14 @@ useEffect(()=>{
                 let imgDTO = [];
                 let sDTO = [];
         
+                if(res.data.planner.userSeq !== user.userSeq) {
+                    navigate('/community');
+                    sweet.fire({
+                        title: "잘못된 접근입니다.",
+                        icon: "warning"
+                    })
+                }
+
             await Promise.all(
                 res.data.plannerText.map(async (plTxt) => {
                     txtDTO.push({"id":plTxt.id,"nDay":plTxt.nday,"order":plTxt.orders,
@@ -310,8 +318,7 @@ useEffect(()=>{
                 title: up ? "수정이 완료되었습니다." : "등록이 완료되었습니다.",
                 icon: "success"
             }).then(() => {
-                if(up) navigate(-1);
-                else navigate(`/community`);
+                navigate(`/community`);
             });
         })
         .catch(e => console.log(e))

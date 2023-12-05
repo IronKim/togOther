@@ -26,6 +26,8 @@ public interface UserService {
 	public ResponseEntity<Boolean> isUserExistsByPhone(String phone);
 
 	public ResponseEntity<LoginInResponseDTO> LoginUser(LoginDTO loginDTO);
+	
+	public ResponseEntity<?> naverLoginUser(String code, String state);
 
 	public ResponseEntity<LoginInResponseDTO> getUserByAccessToken(String authorizationHeader);
 
@@ -51,10 +53,16 @@ public interface UserService {
 	
 	public ResponseEntity<?> updateLikingPlace(int userSeq, int placeSeq);
 	
+	public ResponseEntity<String> updateProfileImage(int userSeq, String updateProfileImage);
+	
 	public ResponseEntity<String> withdrawalUser(int userSeq);
 
 	public ResponseEntity<String> updateMbti(int userSeq, String mbti);
 
 	public ResponseEntity<?> updatecityList(int userSeq, String cityName);
+	
+	public String kakaoRefreshTokenGet();
+	
+	public ResponseEntity<?> kakaoRefreshTokenUpdate(String token);
 
 }

@@ -14,6 +14,7 @@ import { GoogleMap,Marker } from '@react-google-maps/api';
 import { getUserByEmail } from '../../../api/UserApiService';
 import { useUserStore } from '../../../stores/mainStore';
 import sweet from 'sweetalert2'; 
+import ProfileView from '../../ProfileView/ProfileView';
 
 const containerStyle = {
     width: '100%',
@@ -84,7 +85,6 @@ const TogetherView = ({seqAd}) => {
                             
                             if (foundCity) {
                                 setCityFind(foundCity.cityName)
-                                console.log(cityFind)
                                 setLoading(false)
                             }
                         }
@@ -145,29 +145,35 @@ const TogetherView = ({seqAd}) => {
     const navigate = useNavigate()
 
     const onChange = (togetherDTO,subDTO,custom,place) => {
-        
+            window.scrollTo(0, 0);
             navigate('/community/together/write', { state: { togetherDTO,subDTO,custom,place} })
         
     }
     
     const goDelete = async  () => {
-        const gogo = window.confirm("동행을 삭제하시겠습니까?")
-        
-        if (gogo) {
-            try {
-                await deleteTogether(togetherSeq)
-                sweet.fire({
-                    title: "삭제가 완료되었습니다.",
-                    icon: "success"
+        sweet.fire({
+            title: "삭제하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "예",
+            cancelButtonText: "아니요"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteTogether(togetherSeq)
+                .then(res => {
+                    window.scrollTo(0,0)
+                    sweet.fire({
+                        title: "삭제되었습니다",
+                        icon: "success"
+                    })
+                    .then(navigate('/community/'))
                 })
-
-                navigate('/community/')
-            } catch (error) {
-                console.error("동행 삭제 중 오류:", error)
-            }
-        }
+            } 
+        });
     }
-
+    const [modalShow1, setModalShow1] = useState(false);
     return (
         <div className={Style.viewForm}>
             <div className={Style.viewInner}>
@@ -310,12 +316,12 @@ const TogetherView = ({seqAd}) => {
 
                             <div className={Style.togetherChatInner}>
                                 <div className={Style.chatProfile}>
-                                    {userList.profileImage !== ''  ?
-                                        <div className={Style.chatProfileImg}>
+                                    {userList.profileImage !== null ?
+                                        <div className={Style.chatProfileImg} onClick={() => setModalShow1(true)}>
                                             <img src={userList.profileImage} className={Style.userImg} />
                                         </div>
                                         :
-                                        <div className={Style.chatProfileImg}>
+                                        <div className={Style.chatProfileImg} onClick={() => setModalShow1(true)}>
                                             <img src={userDefaultProfile} className={Style.userImg} />
                                         </div>
                                     }
@@ -342,12 +348,12 @@ const TogetherView = ({seqAd}) => {
                             <p>함께하는 동행</p>
                             <div className={Style.toGother}>
                                 <div className={Style.toGotherMaster}>
-                                    {togetherDTO.userProfileImage !== ''  ?
-                                        <div className={Style.toGotherImg}>
+                                    {togetherDTO.userProfileImage ?
+                                        <div className={Style.toGotherImg} onClick={() => setModalShow1(true)}>
                                             <img src={userList.profileImage} className={Style.userImg} />
                                         </div>
                                         :
-                                        <div className={Style.toGotherImg}>
+                                        <div className={Style.toGotherImg} onClick={() => setModalShow1(true)}>
                                             <img src={userDefaultProfile} className={Style.userImg}/>
                                         </div>
                                     }
@@ -365,6 +371,7 @@ const TogetherView = ({seqAd}) => {
                 
             </div>
             <div style={{clear:'both'}}/>
+            {togetherDTO && <ProfileView show={modalShow1} onHide={() => setModalShow1(false)} userSeq={togetherDTO.userSeq}/> }
         </div>
     );
 };

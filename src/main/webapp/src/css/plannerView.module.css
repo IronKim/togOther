@@ -167,6 +167,7 @@
     width: 280px;
     height: 90px;
     padding: 5px;
+    cursor: pointer;
 }
 .userProfile img {
     display: inline-block;

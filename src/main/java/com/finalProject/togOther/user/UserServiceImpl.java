@@ -1,5 +1,7 @@
 package com.finalProject.togOther.user;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -18,22 +20,31 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.finalProject.togOther.domain.NaverToken;
 import com.finalProject.togOther.domain.Place;
+import com.finalProject.togOther.domain.Planner;
 import com.finalProject.togOther.domain.RefreshToken;
 import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.LoginDTO;
 import com.finalProject.togOther.dto.LoginInResponseDTO;
 import com.finalProject.togOther.dto.PlaceDTO;
+import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.RegisterDTO;
 import com.finalProject.togOther.dto.SSODTO;
 import com.finalProject.togOther.dto.UserDTO;
+import com.finalProject.togOther.repository.NaverTokenRepository;
 import com.finalProject.togOther.repository.PlaceRepository;
 import com.finalProject.togOther.repository.RefreshTokenRepository;
 import com.finalProject.togOther.repository.UserRepository;
@@ -71,6 +82,8 @@ public class UserServiceImpl implements UserService {
 	private PlaceRepository placeRepository;
 	
 	private RefreshTokenRepository refreshTokenRepository;
+	
+	private NaverTokenRepository naverTokenRepository;
 
 	private PasswordEncoder passwordEncoder;
 	
@@ -83,13 +96,14 @@ public class UserServiceImpl implements UserService {
 
 	public UserServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository,
 			PasswordEncoder passwordEncoder, TokenProvider tokenProvider, JavaMailSender javaMailSender,
-			PlaceRepository placeRepository) {
+			PlaceRepository placeRepository, NaverTokenRepository naverTokenRepository) {
 		this.userRepository = userRepository;
 		this.refreshTokenRepository = refreshTokenRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.tokenProvider = tokenProvider;
 		this.javaMailSender = javaMailSender;
 		this.placeRepository = placeRepository;
+		this.naverTokenRepository = naverTokenRepository;
 	}
 
 	// 사용자 추가 서비스
@@ -98,7 +112,7 @@ public class UserServiceImpl implements UserService {
 
 		try {
 			
-			if(!(registerDTO.getGender().equals("M")  || registerDTO.getGender().equals("F"))){
+			if(!(registerDTO.getGender().equals("M")  || registerDTO.getGender().equals("F") || registerDTO.getGender().equals("U"))){
 				throw new Exception();
 			}
 
@@ -355,6 +369,133 @@ public class UserServiceImpl implements UserService {
 
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
+	}
+	
+	@Override
+	public ResponseEntity<?> naverLoginUser(String code, String state) {
+	    try {
+	        String clientId = "mY_CbvEkdc92AKz3xY24";
+	        String clientSecret = "fhm959Nj9r";
+
+	        // 네이버 토큰 발급 요청 URL
+	        String tokenUrl = "https://nid.naver.com/oauth2.0/token";
+
+	        // 헤더 설정
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+	        // 바디 설정
+	        MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
+	        map.add("grant_type", "authorization_code");
+	        map.add("client_id", clientId);
+	        map.add("client_secret", clientSecret);
+	        map.add("code", code);
+	        map.add("state", state);
+
+	        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+
+	        // RestTemplate을 사용하여 토큰 발급 요청
+	        RestTemplate restTemplate = new RestTemplate();
+	        ResponseEntity<String> response = restTemplate.exchange(
+	                tokenUrl,
+	                HttpMethod.POST,
+	                request,
+	                String.class
+	        );
+
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        JsonNode jsonNode = objectMapper.readTree(response.getBody());
+	        String accessToken = jsonNode.get("access_token").asText();
+	                
+	        
+	        // 네이버 프로필 정보 조회 요청 URL
+	        String profileUrl = "https://openapi.naver.com/v1/nid/me";
+	        HttpHeaders userProfileHeaders = new HttpHeaders();
+	        userProfileHeaders.set("Authorization", "Bearer " + accessToken);
+	        
+	        // RestTemplate을 사용하여 사용자 API 호출
+	        HttpEntity<String> userProfileRequest = new HttpEntity<>(userProfileHeaders);
+	        ResponseEntity<String> userProfileResponse = restTemplate.exchange(
+	        		profileUrl,
+	                HttpMethod.GET,
+	                userProfileRequest,
+	                String.class
+	        );
+	        
+	        // 사용자 API 응답 출력
+	        JsonNode rootNode = objectMapper.readTree(userProfileResponse.getBody());
+	        JsonNode responseNode = rootNode.get("response");
+	        
+	        String profile_image = responseNode.get("profile_image").asText();
+	        String gender = responseNode.get("gender").asText();
+	        String email = responseNode.get("email").asText();
+	        String mobile = responseNode.get("mobile").asText();
+	        String name = responseNode.get("name").asText();
+	        String birthyear = responseNode.get("birthyear").asText();
+	        String birthday = responseNode.get("birthday").asText();
+	        String numericMobile = mobile.replaceAll("[^0-9]", "");
+	        int atIndex = email.indexOf('@');
+	        String id = atIndex != -1 ? email.substring(0, atIndex) : email;
+	        String combinedDate = birthyear + "-" + birthday;
+	        
+	        Optional<User> optionalUser = userRepository.findByEmail(email);
+	        
+	        User user = null;
+	        
+	        if(optionalUser.isPresent()) {
+	        	user = optionalUser.orElseThrow();
+	        }else {
+	        	RegisterDTO registerDTO = RegisterDTO.builder()
+	        									     .email(email)
+	        									     .id(id)
+	        									     .pwd(id)
+	        									     .name(name)
+	        									     .birthday(LocalDate.parse(combinedDate))
+	        									     .phone(numericMobile)
+	        									     .gender(gender)
+	        									     .certification((byte) 1)
+	        									     .build();
+	        	addUser(registerDTO);
+	        	
+	        	var naverToken = naverTokenRepository.findByUserEmail(email);
+	        	
+	        	if(!naverToken.isPresent()) {
+	        		naverTokenRepository.save(NaverToken.builder().userEmail(email).token(accessToken).build());	        			        		
+	        	}
+	        	
+	        	user = userRepository.findByEmail(email).get();
+	        }
+	       
+	        
+			     // accessToken토큰과 refreshToken토큰 생성
+				String access = tokenProvider.createAccessToken(user.getEmail());
+				String refreshToken = tokenProvider.createRefreshToken();
+				
+				// 해당 이메일에 refreshToken토큰이 있는지 확인후 없으면 만들어주고 있으면 토큰값만 수정하고 db에 저장
+				Optional<RefreshToken> rOptional = refreshTokenRepository.findByUserEmail(user.getEmail());
+							
+				RefreshToken rToken = rOptional.orElse(RefreshToken.builder()
+																   .userEmail(user.getEmail())
+																   .token(refreshToken)
+																   .build());
+				rToken.setToken(refreshToken);
+				
+				refreshTokenRepository.save(rToken);
+				
+				// accessToken토큰과 refreshToken토큰과 유저 정보를 클라이언트에게 전달
+				LoginInResponseDTO loginInResponseDTO = LoginInResponseDTO.builder()
+																		  .accessToken(access)
+																		  .RefreshToken(refreshToken)
+																		  .user(user)
+																		  .build();
+		
+				return ResponseEntity.ok(loginInResponseDTO);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        // 예외 처리
+	        return ResponseEntity.status(500).body("Internal Server Error");
+	    }
 	}
 	
 	@Override
@@ -810,6 +951,29 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	@Override
+    public ResponseEntity<String> updateProfileImage(int userSeq, String updateProfileImage) {
+        try {
+            Optional<User> optionalUser = userRepository.findById(userSeq);
+
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            User user = optionalUser.get();
+            UserDTO userDTO = UserDTO.toDTO(user);
+            userDTO.setProfileImage(updateProfileImage);
+
+            userRepository.save(User.toEntity(userDTO));
+
+            String responseMessage = "프로필 이미지가 성공적으로 업데이트되었습니다.";
+            return ResponseEntity.ok(responseMessage);
+        } catch (Exception e) {
+            String errorMessage = "프로필 이미지를 업데이트하는 중에 오류가 발생했습니다.";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
+    }
+	
 	
 	@Override
 	public ResponseEntity<String> withdrawalUser(int userSeq) {
@@ -818,9 +982,23 @@ public class UserServiceImpl implements UserService {
 			
 			Optional<User> optionalUser = userRepository.findById(userSeq);
 			
-			optionalUser.orElseThrow();
+			User user = optionalUser.orElseThrow();
 			
 			userRepository.deleteById(userSeq);
+			
+			Optional<NaverToken> optionalNaverToken = naverTokenRepository.findByUserEmail(user.getEmail());
+			
+			if(optionalNaverToken.isPresent()) {
+				System.out.println(optionalNaverToken.get().getToken());
+				String naverToken = optionalNaverToken.get().getToken();
+				String revokeUrl = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=mY_CbvEkdc92AKz3xY24&client_secret=fhm959Nj9r&access_token="+naverToken+"&service_provider=NAVER";
+		        URL url = new URL(revokeUrl);
+		        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		        connection.setRequestMethod("GET");
+		        int code = connection.getResponseCode();
+		        System.out.println(code);
+		        naverTokenRepository.deleteById(optionalNaverToken.get().getTokenSeq());;
+			}
 			
 			String responseMessage = "성공적으로 삭제하였습니다.";
 			return ResponseEntity.ok(responseMessage);
@@ -875,4 +1053,45 @@ public class UserServiceImpl implements UserService {
 
         return String.join(",", cityList);
     }
+
+	@Override
+	public String kakaoRefreshTokenGet() {
+		try {
+			
+			Optional<RefreshToken> rOptional = refreshTokenRepository.findByUserEmail("kakao");
+	
+			RefreshToken refreshToken = rOptional.orElseThrow();
+			
+			String token= refreshToken.getToken();
+			return token;
+			
+			
+		} catch (Exception e) {
+			return "error";
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> kakaoRefreshTokenUpdate(String token) {
+		try {
+			
+			Optional<RefreshToken> rOptional = refreshTokenRepository.findByUserEmail("kakao");
+			
+			if (rOptional.isPresent()) {
+			    RefreshToken refreshToken = rOptional.orElseThrow();
+			    refreshToken.setToken(token);
+			    refreshTokenRepository.save(refreshToken);
+			} else {
+				RefreshToken refreshToken = new RefreshToken(0, "kakao", token);
+				refreshTokenRepository.save(refreshToken);
+			}
+			
+			return ResponseEntity.ok("success");
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "failure";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
 }

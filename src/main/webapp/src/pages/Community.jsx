@@ -8,6 +8,7 @@ import { useUserStore } from '../stores/mainStore';
 import planner from '../assets/image/planner.png'
 import people from '../assets/image/people.png'
 import { useParams,useNavigate } from 'react-router-dom';
+import ProfileView from '../components/ProfileView/ProfileView';
 
 const Community = () => {
     const {user} = useUserStore();
@@ -22,6 +23,15 @@ const Community = () => {
     const onSearch = (e) => {
         setSearch(e.target.value)
     }
+
+    const [modalShow1, setModalShow1] = useState(false);
+    const [modalSeq,setModalSeq] = useState(-1);
+    
+    const onModal = (e,seq) => {
+        setModalSeq(seq)
+        setModalShow1(true);
+        e.stopPropagation();
+    } 
     return (
         <div>
             <CommunitySearch search={search} onSearch={onSearch}/>
@@ -34,7 +44,7 @@ const Community = () => {
             <div className={styles.toggleBox}></div>
             </div>
             {
-                toggle ? <PlannerList search={search}/> : <TogetherList search={search}/>
+                toggle ? <PlannerList search={search} onModal={onModal}/> : <TogetherList search={search} onModal={onModal}/>
             }
             <div className={styles.goWrite} style={{right: open ? '6%' : '-160px'}}>
                 <button className={styles.goPl} onClick={() => navigate(`planner/write`)}><img src={planner}/>&nbsp;플래너 작성</button>
@@ -44,6 +54,7 @@ const Community = () => {
                 <div className={styles.openWrite} onClick={() => setOpen(!open)}
                 style={{transform: open && 'rotate(-45deg)', color: open && '#2E8DFF',backgroundColor: open && 'white'}}>+</div>
             }
+            {modalSeq !== -1 && <ProfileView show={modalShow1} onHide={() => setModalShow1(false)} userSeq={modalSeq}/>}
         </div>
     );
 };

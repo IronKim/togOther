@@ -2,15 +2,16 @@
   display: inline-block;
   flex-direction: column;
   user-select: none;
-  width:100%;
+  width: 1200px;
+  max-width:100%;
 }
 
 .card{
   overflow: hidden;
   max-width:100%;
-  width: 14.5vw;
+  width: 14.3vw;
   height: 11vw;
-  margin: 0.5em;
+  margin: 0.5vw;
   cursor: pointer;
   display: inline-block;
   border-radius: 20px;
@@ -33,7 +34,6 @@
 .cardimg{
   width: 100%;
   height: 100%;
-  border-radius : 15px;
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
 }
@@ -146,11 +146,20 @@
   margin-left: 2vw;
   font-size: 2vw;
 }
+.fades {
+  margin-left: 70;
+}
 /* -----------------------햄버거----------------------- */
 .hamburger{
+  width: 100%;
   user-select: none;
   border: none;
   background-color: white;
+}
+.hamburger img{
+  transition: 0.5s;
+  display: none;
+  width: 52px;
 }
 /* 미디어 쿼리 추가 */
 @media (max-width: 1199px) {
@@ -189,13 +198,14 @@
   }
 
   .arraymain{
-    margin-left: 4%;
+    padding-top: 70px;
+    width: 100%;
   }
   
   .card{
-    width: 35vw;
-    height: 13.5em;
-    margin: 0.5em;
+    width: 20vw;
+    height: 18vw;
+    margin: 1.2vw;
   }
   
   .cardimg{
@@ -212,7 +222,7 @@
   }
   
   .imgtext{
-    font-size: 3vw;
+    font-size: 2.5vw;
     width:4.9em;
     height:1.2em;
     line-height: 1.4em;
@@ -221,7 +231,11 @@
   .hamburger{
     display: block;
     border: none;
-    background-color: #dedede;
+  }
+  .hamburger img{
+    position: fixed;
+    display: block;
+    top: 75px;
   }
   .hamburgerIcon1 {
     user-select: none;
@@ -239,85 +253,108 @@
   .Sidebartotal {
     position: fixed;
     display: block;
-    left: -94%;
-    width: 90%;
+    left: -50%;
+    width: 50%;
     z-index: 10;
-    background-color: #dedede; /* 사이드바 배경색 설정 */
     opacity: 0.95;
-    transition: all 300ms;
-    padding: 20px 20px 20px 20px;
+    transition: 0.5s;
     box-sizing: border-box;
-    border-radius : 15px;
+    margin-top: 0;
+    margin-left: 0;
   }
+
+  
+}
+@media (max-width: 754px) {
+  .carouselContainer {
+    display: none;
+  }
+  .card{
+    width: 38.5vw;
+    height: 34vw;
+    margin: 3vw 2vw;
+  }
+  .imgtext{
+    font-size: 4.5vw;
+  }
+}
+@media (max-width: 391px) { 
+  .arraymain{
+    margin-top: 40px;
+  }
+  .carouselContainer{
+    display: none;
+  }
+  .CarouselimageDiv {
+    padding: 4px;
+  }
+  .customcircle{
+    width: 16vw;
+    height: 16vw;
+    padding: auto;
+  }
+  .carouselContainer {
+    width: 90%; /* 적절한 너비로 조절하세요 */
+    max-height: 300px;
+    height: 40vh;
+    margin-top: -160px;
+  }
+  .recoCity{
+    position:relative;
+    top:60%;
+    margin-left: 15vw;
+    font-size: 5vw;
+  }
+  .card{
+    width: 87vw;
+    height: 50vw;
+    margin: 3vw;
+    left: -30px;
+  }
+  
+  .imgtext{
+    position: relative;
+    font-size: 6vw;
+    width:4.9em;
+    height:1.2em;
+    line-height: 1.4em;
+    left: -2px;
+  }
+
+  /* -----------------------햄버거----------------------- */
+  .hamburger{
+    margin-top: 30px;
+    display: block;
+    border: none;
+    background-color: #dedede;
+  }
+  .hamburgerIcon1 {
+    user-select: none;
+    display: block;
+    position: absolute;
+    text-align: center;
+    font-size: 26px;
+    width: 40px;
+    height: 105px;
+    cursor: pointer;
+    border-radius : 0 10px 10px 0;
+    box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
+    left: 100%;
+  }
+
   .open{
-    left: 0 !important;
+    left: -16px !important;
   }
-
-  @media (max-width: 391px) { 
-
-    .CarouselimageDiv {
-      padding: 4px;
-    }
-    .customcircle{
-      width: 16vw;
-      height: 16vw;
-      padding: auto;
-    }
-    .carouselContainer {
-      width: 90%; /* 적절한 너비로 조절하세요 */
-      max-height: 300px;
-      height: 40vh;
-      margin-top: -160px;
-    }
-    .recoCity{
-      position:relative;
-      top:60%;
-      margin-left: 15vw;
-      font-size: 5vw;
-    }
-
-    .arraymain{
-      display: inline-block;
-    }
-    .card{
-      width: 8em;
-      height: 25vw;
-      margin: 0.5em;
-      left: -10%;
-    }
-    
-    .imgtext{
-      position: relative;
-      font-size: 6vw;
-      width:4.9em;
-      height:1.2em;
-      line-height: 1.4em;
-      left: -2px;
-    }
-
-    /* -----------------------햄버거----------------------- */
-    .hamburger{
-      display: block;
-      border: none;
-      background-color: #dedede;
-    }
-    .hamburgerIcon1 {
-      user-select: none;
-      display: block;
-      position: absolute;
-      text-align: center;
-      font-size: 26px;
-      width: 40px;
-      height: 105px;
-      cursor: pointer;
-      border-radius : 0 10px 10px 0;
-      box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
-      left: 100%;
-    }
-
-    .open{
-      left: -16px !important;
-    }
+  .hamburger img{
+    position: fixed;
+    display: block;
+    top: 105px;
   }
-
+}
+@media (max-width: 375px) { 
+  .hamburger img{
+    position: fixed;
+    display: block;
+    top: 52px;
+  }
 }

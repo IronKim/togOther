@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalProject.togOther.dto.LoginDTO;
@@ -81,6 +82,12 @@ public class UserController {
 	@PostMapping(path = "loginUser")
 	public ResponseEntity<LoginInResponseDTO> loginUser(@RequestBody LoginDTO loginDTO) {
 		return userService.LoginUser(loginDTO);
+	}
+	
+	// 네이버 로그인
+	@GetMapping(path = "naverLoginUser/{code}/{state}")
+	public ResponseEntity<?> naverLoginUser(@PathVariable String code, @PathVariable String state) {
+		return userService.naverLoginUser(code, state);
 	}
 	
 	// 로그아웃
@@ -176,6 +183,13 @@ public class UserController {
 	public ResponseEntity<?> updatecityList(@PathVariable int userSeq, @RequestBody Map<String, String> requestBody){
 		String cityName = requestBody.get("cityName");
 		return userService.updatecityList(userSeq, cityName);
+	}
+	
+	// 프로필 사진 수정
+	@PutMapping(path = "updateProfileImage/{userSeq}")
+	public ResponseEntity<String> updateProfileImage(@PathVariable int userSeq, @RequestBody Map<String, String> profileImage) {
+		String updateProfileImage = (profileImage.get("profileImage"));
+		return userService.updateProfileImage(userSeq, updateProfileImage);
 	}
 	
 	// 회원 탈퇴
