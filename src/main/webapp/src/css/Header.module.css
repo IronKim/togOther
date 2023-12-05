@@ -1,9 +1,9 @@
 .container {
-    display: flex;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 5em;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 5em;
 }
   
 .header {
@@ -40,10 +40,9 @@
   margin-left: 5000;
 }
 
-.login_section {
+.loginSection {
   display: flex;
   align-items: left;
-  margin-left: auto;
 }
 
 .activeL {
@@ -55,7 +54,7 @@
   color: #1E3ED1;
 }
 
-.login_section a:hover{
+.loginSection a:hover{
   color: #1E3ED1;
 }
   
@@ -83,8 +82,18 @@
   color: #1E3ED1;
 }
 
-@media (max-width: 375px){
+@media (max-width: 390px){
   .logo{
-    display: none;
+    width: 100px;
+  }
+  .logo img {
+    width: 150px;
+    height: auto;
+  }
+  .activeL{
+    font-size: 17px;
+  }
+  .slash{
+    font-size: 17px;
   }
 }
