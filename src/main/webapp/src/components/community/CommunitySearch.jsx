@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../css/community.module.css'
 
-import searchBg from '../../assets/image/searchBackground.png'
+import searchBg from '../../assets/image/flight.png'
 import searchs from '../../assets/image/search.png'
 
 const CommunitySearch = (props) => {

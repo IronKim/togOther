@@ -1,3 +1,33 @@
+/* 검색 */
+.search {
+  margin-top: 162px;
+  margin-left: 15px;
+  position: absolute;
+  width:24px;
+  height:24px;
+}
+.searchBg {
+  width: 100%;
+  height: 350px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.searchBox{
+  border: 0;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px 14px 20px 52px;
+  font-size: 24px;
+  width:600px;
+  height: 70px;
+  margin: 140px auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+/* ///////////////////// */
 .arraymain{
   display: inline-block;
   flex-direction: column;
@@ -9,9 +39,9 @@
 .card{
   overflow: hidden;
   max-width:100%;
-  width: 14.3vw;
-  height: 11vw;
-  margin: 0.5vw;
+  width: 15vw;
+  height: 12.5vw;
+  margin: 0.5vw 0.8vw;
   cursor: pointer;
   display: inline-block;
   border-radius: 20px;
@@ -42,7 +72,7 @@
   font-size: 1.5vw;
   position: relative;
   text-align: center;
-  bottom: 11vw;
+  bottom: 12.5vw;
   width: 8vw;
   height:1.8vw;
   z-index: 1;
@@ -198,12 +228,12 @@
   }
 
   .arraymain{
-    padding-top: 70px;
+    padding-top: 20px;
     width: 100%;
   }
   
   .card{
-    width: 20vw;
+    width: 22vw;
     height: 18vw;
     margin: 1.2vw;
   }
@@ -226,6 +256,7 @@
     width:4.9em;
     height:1.2em;
     line-height: 1.4em;
+    bottom: 11vw;
   }
   /* -----------------------햄버거----------------------- */
   .hamburger{
@@ -259,28 +290,34 @@
     opacity: 0.95;
     transition: 0.5s;
     box-sizing: border-box;
-    margin-top: 0;
+    margin-top: -255px;
     margin-left: 0;
   }
 
-  
+  /* 검색 */
+  .searchBg {
+    height: 225px;
+  }
+  .searchBox{
+      width: 97%;
+  }
 }
 @media (max-width: 754px) {
   .carouselContainer {
     display: none;
   }
   .card{
-    width: 38.5vw;
+    width: 44vw;
     height: 34vw;
-    margin: 3vw 2vw;
+    margin: 2vw 1.8vw;
   }
   .imgtext{
-    font-size: 4.5vw;
+    font-size: 5vw;
   }
 }
 @media (max-width: 391px) { 
   .arraymain{
-    margin-top: 40px;
+    margin-top: 0px;
   }
   .carouselContainer{
     display: none;
@@ -306,15 +343,13 @@
     font-size: 5vw;
   }
   .card{
-    width: 87vw;
+    width: 85vw;
     height: 50vw;
-    margin: 3vw;
-    left: -30px;
+    margin: 3vw 6vw;
   }
-  
   .imgtext{
     position: relative;
-    font-size: 6vw;
+    font-size: 7vw;
     width:4.9em;
     height:1.2em;
     line-height: 1.4em;

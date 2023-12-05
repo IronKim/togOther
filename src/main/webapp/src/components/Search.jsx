@@ -13,7 +13,7 @@ const Search = (props) => {
         <input
           className={sea.search_input}
           type="search"
-          placeholder="검색어를 입력하세요..."
+          placeholder="어디로 떠나시나요?"
           value={searchTerm}
           onChange={(e) => onSearch(e)}
         />

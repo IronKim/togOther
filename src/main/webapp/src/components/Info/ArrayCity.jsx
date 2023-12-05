@@ -9,6 +9,8 @@ import Accordion from 'react-bootstrap/Accordion';
 
 import ArrayStyle from '../../css/Info/ArrayCity.module.css'
 import tab from '../../assets/image/tab.png'
+import flight from '../../assets/image/flight.png'
+import searchs from '../../assets/image/search.png'
 import { useNavigate } from 'react-router-dom';
 
 const ArrayCity = () => {
@@ -59,6 +61,7 @@ const ArrayCity = () => {
     const [selectedContinent, setSelectedContinent] = useState('All');
     const [selectedCountry, setSelectedCountry] = useState('Alla');
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+    const[search,setSearch] = useState('')
 
     const onContinent = (clickedContinent) => {
         if (selectedContinent === clickedContinent) {
@@ -107,11 +110,13 @@ const ArrayCity = () => {
     };
   
     const onContinentClick = (clickedContinent) => {
+        setSearch('')
         onContinent(clickedContinent);
         setActiveKey(activeKey === clickedContinent ? null : clickedContinent);
     };
   
     const onCountryClick = (clickedCountry) => {
+        setSearch('')
         onCountry(clickedCountry);
         setActiveKey(activeKey === clickedCountry ? null : clickedCountry);
         setIsSidebarExpanded(false);
@@ -119,23 +124,30 @@ const ArrayCity = () => {
 
     useEffect(()=>{
         const slides = [];
-        if (selectedCountry !== 'Alla')  {
-            console.log(selectedCountry.countryName)
-            for (let i = 0; i < cityList.filter((count) => count.countryName === selectedCountry.countryName).length; i += 4) {
-                slides.push(cityList.filter((count) => count.countryName === selectedCountry.countryName).slice(i, i + 4));
-            }
-        } else if (selectedContinent !== 'All'){
-            for (let i = 0; i < cityList.filter((conti) => conti.continentName === selectedContinent).length; i += 4) {
-                slides.push(cityList.filter((conti) => conti.continentName === selectedContinent).slice(i, i + 4));
+        if (search !== '') {
+            for (let i = 0; i < cityList.filter((count) => count.countryName.includes(search)
+            || count.continentName.includes(search) || count.cityName.includes(search)).length; i += 4) {
+                slides.push(cityList.filter((count) => count.countryName.includes(search)
+                || count.continentName.includes(search) || count.cityName.includes(search)).slice(i, i + 4));
             }
         } else {
-            for (let i = 0; i < cityList.length; i += 4) {
-                slides.push(cityList.slice(i, i + 4));
+            if (selectedCountry !== 'Alla')  {
+                console.log(selectedCountry.countryName)
+                for (let i = 0; i < cityList.filter((count) => count.countryName === selectedCountry.countryName).length; i += 4) {
+                    slides.push(cityList.filter((count) => count.countryName === selectedCountry.countryName).slice(i, i + 4));
+                }
+            } else if (selectedContinent !== 'All'){
+                for (let i = 0; i < cityList.filter((conti) => conti.continentName === selectedContinent).length; i += 4) {
+                    slides.push(cityList.filter((conti) => conti.continentName === selectedContinent).slice(i, i + 4));
+                }
+            } else {
+                for (let i = 0; i < cityList.length; i += 4) {
+                    slides.push(cityList.slice(i, i + 4));
+                }
             }
-            
         }
         setSlidesC(slides)
-    },[selectedContinent,cityList,selectedCountry]);
+    },[selectedContinent,cityList,selectedCountry,search]);
 
 
     const[slidesCo,setSlidesCo] = useState([])
@@ -155,8 +167,20 @@ const ArrayCity = () => {
         setIsSidebarExpanded(false);
     };
 
+    //검색
+
+    const onSearch = (e) => {
+        setSearch(e.target.value)
+    }
+    
     return (
         <div>
+        {/* 검색창 */}
+        <div style={{backgroundImage:`url(${flight})`}} className={ArrayStyle.searchBg}>
+            <img src={searchs} className={ArrayStyle.search}/>
+            <input type='search'className={ArrayStyle.searchBox} value={search} 
+            onChange={onSearch} placeholder='어디로 떠나시나요?'/>
+        </div>
         <div style={{display:'flex'}}>
         {/* --------------사이드바-------------- */}
         <div className={ArrayStyle.Sidebartotal} style={{left : isSidebarExpanded ? '0' : '-50%'}}>
@@ -189,7 +213,6 @@ const ArrayCity = () => {
                 })}
             </Accordion>
         </div>
-
         {/* --------------시티 배열-------------- */}
         <div className={ArrayStyle.arraymain}>
             <TransitionGroup>
@@ -201,7 +224,6 @@ const ArrayCity = () => {
                         style={{
                         display: 'inline-block',
                         flexDirection: 'row',
-                        marginLeft: '30px',
                         opacity: state === 'entered' ? 1 : 0,
                         transform: state === 'entered' ? 'translateY(0)' : 'translateY(-20px)',
                         transition: 'opacity 0.1s, transform 0.1s',
