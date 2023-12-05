@@ -219,6 +219,7 @@
     margin: 30px 0;
 }
 .plannerText{
+    font-family: 'NanumSquareNeo-Variable';
     padding:0 15px;
 }
 .placeContext {
@@ -272,9 +273,10 @@
     float: left;
     margin: 5px 10px;
     margin-left: 15px;
-    font-size: 17px;
+    font-size: 15px;
     line-height: 21px;
     padding: 5px 0px 5px 2px;
+    font-family: 'NanumSquareNeo-Variable';
     border-top: 1px solid darkgray;
     border-bottom: 1px solid darkgray;
 }
@@ -394,7 +396,7 @@
     }
     .rigthPlace .plBot {
         width: calc(100% - 180px);
-        font-size: 17px;
+        font-size: 15px;
     }
     .title {   
         max-width: 100%;

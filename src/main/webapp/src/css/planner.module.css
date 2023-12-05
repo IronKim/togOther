@@ -275,6 +275,7 @@
 }
 .nDayText {
     width: 100%;
+    font-family: 'NanumSquareNeo-Variable';
     line-height: 18.33px;
     background-size: 220px;
     resize: none;

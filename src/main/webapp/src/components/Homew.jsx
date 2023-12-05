@@ -173,7 +173,25 @@ const Homew = ({searchTerm}) => {
                 country: '',
                 city: ''
             });
+            requestAnimationFrame(() => {window.scrollTo(0,0)})
         }
+        const handleKeyPress = (event) => {
+            if (event.keyCode === 13) {
+                if(searchTerm !== '' && cityList.find(ci => ci.cityName.includes(searchTerm) || 
+                ci.countryName.includes(searchTerm) || ci.continentName.includes(searchTerm))) {
+                    const items = document.getElementById('cityItems')
+                    items.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'start'
+                    });
+                }
+            }
+          };
+          window.addEventListener('keydown', handleKeyPress);
+          return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+          };
     },[searchTerm])
 
     return (
@@ -280,7 +298,7 @@ const Homew = ({searchTerm}) => {
             )}
             </div>  
             {/* 이미지를 하단에 표시 */}
-            <div>
+            <div id='cityItems'>
                 {selectedCity.cityImage && (
                     <div style={{width: '1200px', height: '420px', display: 'flex', marginTop: '50px', marginBottom: '50px'}}>
                         <div style={{ width: '65%', borderRadius: '20px', boxShadow: '0px 2px 4px rgba(0,0,0,0.5)', overflow: 'hidden'}} >
@@ -289,7 +307,7 @@ const Homew = ({searchTerm}) => {
                             </Link>
                         </div>
 
-                        <div style={{ width: '40%', marginLeft: '3%', height: '420px'}}>
+                        <div style={{ width: '40%', marginLeft: '1.5%', marginRight: '1.5%', height: '420px'}}>
                             <div style={{ height: '200px',marginBottom: '20px', borderRadius: '20px'}}>
                                 {
                                     randomPlace &&

@@ -1,3 +1,15 @@
+.textDiv1::-webkit-scrollbar {
+  width:7px;
+}
+.textDiv1::-webkit-scrollbar-track {
+  background-color: transparate;
+  margin-top: 3px;
+  margin-bottom: 3px; 
+}
+.textDiv1::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+  border-radius: 7px;
+}
 .white_box {
   display: none;
   flex-direction: column;
@@ -12,7 +24,7 @@
 
 .selection_box {
   min-width: 380px;
-  height: 580px;
+  height: 480px;
   margin-bottom: 30px;
   margin-right: 20px;
   font-size: 30px;
@@ -33,7 +45,7 @@
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   min-width: 380px;
-  height: 580px;
+  height: 480px;
   margin-bottom: 30px;
   margin-right: 20px;
   font-size: 30px;
@@ -100,13 +112,13 @@
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
-  transition: all 0.3s linear;
+  transition: 0.4s;
 }
 
 .img:hover {
   transform: scale(1.1); /* 이미지 확대 (1.1배) - 원래 크기의 10% 확대 */
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: 0.4s;
 }
 
 .selection_box.expanded {
@@ -131,7 +143,7 @@
   display: flex;
   border:1px solid #ebeaec;
   border-radius:16px;
-  box-shadow:0px 2px 4px rgba(0,0,0,0.3);
+  box-shadow:0px 0px 2px rgba(0,0,0,0.3);
   width : 100%;
   height : 200px;
   cursor: pointer;
@@ -158,6 +170,8 @@
 .textDiv {
   padding: 10px;
   display: inline-block;
+  height: 100%;
+  vertical-align: top;
   width : 49%;
   user-select: none;
 }
@@ -165,25 +179,41 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 20px;
+  padding-top: 40%;
   padding-bottom: 5px;
+  text-align: center;
+  font-size: 25px;
+  transition: 0.5s;
+}
+.list1:hover .textName {
+  padding-top: 1%;
+  font-size: 22px;
 }
 .textDiv1{
-  width: 100%;
-  word-break:break-all;
-  position:relative;
-  font-size:15;
+  font-family: 'NanumSquareNeo-Variable';
+  padding: 3px;
+  border-top: 1.5px solid darkgray;
+  border-bottom: 1.5px solid darkgray;
+  height: 51px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: normal;
-  line-height: 1.2;
-  text-align: left;
-  word-wrap: break-word;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  height: 150px;
-  -webkit-line-clamp: 8 ;
+  -webkit-line-clamp: 2;
+  font-size: 16px;
+  transition: 0.5s;
+  line-height: 23.5px;
 }
+.list1:hover .textDiv1 {
+  overflow: auto;
+  overflow-x: hidden;
+  padding: 5px;
+  height: calc(100% - 25px);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 99;
+}
+
 
 /* 호버 시 이미지 확대 */
 .list1:hover img {

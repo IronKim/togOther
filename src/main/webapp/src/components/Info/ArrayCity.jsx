@@ -187,7 +187,7 @@ const ArrayCity = () => {
             <button 
                    className={ArrayStyle.hamburger} 
                    onClick={toggleSidebar}>
-                    <img src={tab} style={{left : isSidebarExpanded ? '49.8%' : '0'}}></img>
+                    <img src={tab} style={{left : isSidebarExpanded ? '49.7%' : '0'}}></img>
             </button>
             <Accordion  defaultActiveKey={['0']}>
                 {continentList.map((continent, index) => {

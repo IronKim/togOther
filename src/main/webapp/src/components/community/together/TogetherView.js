@@ -305,6 +305,7 @@ const TogetherView = ({seqAd}) => {
                                 {clickAdress !== null && array !== null &&
                                 <div className={Style.scheduleContext}>
                                     <p>{sortedSubDTO[array].startTime}시~{sortedSubDTO[array].endTime}시</p>
+                                    <br/>
                                     <p>{clickAdress}</p>
                                     <br/>
                                     <p>{sortedSubDTO[array].context}</p>

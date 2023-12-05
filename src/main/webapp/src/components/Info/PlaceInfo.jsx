@@ -3,8 +3,10 @@ import { getPlaceBySeq } from '../../api/PlaceApiService';
 import PlaceMap from './PlaceMap';
 import LikePlaceInfo from './LikePlaceInfo';
 import { useUserStore } from '../../stores/mainStore';
+import { useNavigate } from 'react-router-dom';
+import backBut from '../../assets/image/backBut.png'
 
-const PlaceInfo = ({ placeSeq }) => {
+const PlaceInfo = ({ placeSeq,sw }) => {
   
   const [selectedPlace, setSelectedPlace] = useState(null);
   const selectedPlaceSeq = placeSeq; // 원하는 placeSeq 값으로 설정
@@ -33,10 +35,19 @@ const PlaceInfo = ({ placeSeq }) => {
   const onCntChange = (cnt) => {
     setLickCnt(likeCnt + cnt);
   }
+  const navigate = useNavigate();
 
+  const back = () => {
+    navigate(-1)
+  }
   // minWidth: '640px',
   return (
     <div style={{ maxWidth: '728px',   margin: '0 auto' }}> 
+    {sw === undefined && <img style={{
+      cursor: 'pointer',
+      marginTop: '20px',
+      width: '25px'
+    }} src={backBut} onClick={() => back()}/>}
       {selectedPlace && (
         <div style={{margin: '0 auto'}}>
           <p className="fs-1" style={{ width: '100%', textAlign: 'center', margin: '30px auto' , fontSize: '3em'  }}>
@@ -64,7 +75,7 @@ const PlaceInfo = ({ placeSeq }) => {
           />
 
           {selectedPlace.context1 && (
-            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5' ,fontSize: '1.5vw'  }}>
+            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5' ,fontSize: '1.5vw',fontFamily: 'NanumSquareNeo-Variable' }}>
               {selectedPlace.context1}
             </p>
           )}
@@ -90,7 +101,7 @@ const PlaceInfo = ({ placeSeq }) => {
           )}
 
           {selectedPlace.context2 && (
-            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5'  ,fontSize: '1.5vw' }}>
+            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5'  ,fontSize: '1.5vw',fontFamily: 'NanumSquareNeo-Variable'  }}>
               {selectedPlace.context2}
             </p>
           )}
@@ -116,7 +127,7 @@ const PlaceInfo = ({ placeSeq }) => {
           )}
 
           {selectedPlace.context3 && (
-            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5'  ,fontSize: '1.5vw' }}>
+            <p className="fs-5" style={{ width: '100%', textAlign: 'center', margin: '30px auto', lineHeight: '1.5'  ,fontSize: '1.5vw',fontFamily: 'NanumSquareNeo-Variable'  }}>
               {selectedPlace.context3}
             </p>
           )}

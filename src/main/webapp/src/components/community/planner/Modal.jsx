@@ -20,8 +20,7 @@ const Modal = (props) => {
                 <div className={styles.onModal}>
                     {
                         modal.sw === 0 && <div className={styles.inPlace}>    
-                        <PlaceInfo  placeSeq={modal.seq}/>
-                        <PlaceReview placeSeq={modal.seq}/>
+                            <PlaceInfo  placeSeq={modal.seq} sw={1}/>
                         </div>
                     }
                     {
