@@ -1,7 +1,7 @@
 export default {
 
     '서울' : 'seoul',
-    '시즈오카' : 'shizuoka',
+    '도쿄' : 'tokyo',
     '홍콩' : 'hongkong',
     '삿포로' : 'sapporo',
     '오사카' : 'osaka',

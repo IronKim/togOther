@@ -11,7 +11,7 @@ const CityMoneyApi = ({ selectedCity }) => {
   const currencyNameMapping = {
 
     '서울' : 'KRW',
-    '시즈오카' : 'JPY',
+    '도쿄' : 'JPY',
     '홍콩' : 'HKD',
     '삿포로' : 'JPY',
     '오사카' : 'JPY',
