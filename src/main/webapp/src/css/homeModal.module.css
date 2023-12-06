@@ -9,9 +9,9 @@
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    color: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    transition: 0.7s;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    transition: 0.3s;
     cursor: pointer;
     z-index: 500;
 }

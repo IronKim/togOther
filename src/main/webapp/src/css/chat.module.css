@@ -1,3 +1,33 @@
+@keyframes chatUp{
+    from {
+        border-radius: 50%;
+        scale:0;
+        opacity: 0.3;
+    }
+    to {
+        border-radius: 22.5px;
+        scale:1;
+        opacity: 0.95;
+    }
+}
+@keyframes chatDown{
+    from {
+        border-radius: 22.5px;
+        scale:1;
+       opacity: 0.95;
+   }
+   to {
+       border-radius: 50%;
+       scale:0;
+       opacity: 0.3;
+   }
+}
+.closeChat {
+    animation: chatDown 1s;
+}
+.openChat {
+    animation: chatUp 1s;
+}
 .bg {
     width: 100%;
     height: 100%;
@@ -7,40 +37,48 @@
     background: none;
 }
 .chatForm {
-    border-radius: 2%;
-    width: 35%;
+    border-radius: 22.5px;
+    width: 400px;
     height: 75%;
-    background-color: rgb(204, 213, 246);
-    position: absolute;
-    left: 75%;
-    top: 45%; 
+    position: fixed;
+    bottom: 70px;
+    right: 7%;
     padding: 30px;
     box-sizing: border-box;
-    transform: translate(-50%, -50%); 
     z-index: 500;
     position: fixed;
     padding: 4px;
-}
-.chatList{
-    width: 30%;
-    height: 100%;
-    float: left;
     background-color: white;
-    border: 1px solid whitesmoke;
-    border-radius: 10px 10px 10px 10px;
+    transform-origin: 95% 95%;
+    opacity: 0.95;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
-.chatListOne{
-    width: 100%;
-    height: 10%;
-    border: 1px solid whitesmoke;
-    border-radius: 10px;
-    text-align: center;
-}
-.chatContext{
-    width: 70%;
-    height: 100%;
+.xBut{
     float: right;
-    background-color: white;
-    border: 1px solid whitesmoke;
-    border-radius: 10px 10px 10px 10px;
+    margin: 7px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    opacity: 0.3;
+}
+.topSection {
+    height: 7%;
+    border-bottom: 1.5px solid rgb(230, 230, 230);
+}
+.middleSection {
+    height: calc(83% - 3px);
+}
+.bottomSection {
+    height: 10%;
+    padding: 2.5% 10%;
+    border-top: 1.5px solid rgb(230, 230, 230);
+    display: flex;
+    justify-content: space-between;
+}
+@media (max-width: 500px) {
+    .chatForm {
+        width: 84%;
+        right: 8%;
+    }
 }

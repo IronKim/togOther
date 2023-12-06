@@ -18,6 +18,7 @@ import useUserStore from '../stores/userStore';
 import BottomNav from './BottomNav';
 import Mypage from '../pages/Mypage';
 import View from './community/planner/View';
+import ChatBtn from './chat/ChatBtn';
 
 import { LoadScript } from '@react-google-maps/api';
 import PackageDetails from './package/PackageDetails';
@@ -99,6 +100,7 @@ const Main = ({ showNavbar }) => {
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
 
+                <ChatBtn/>
                 <FooterComponent />
 
                     <Routes>
@@ -110,11 +112,11 @@ const Main = ({ showNavbar }) => {
                             } />
                         
                     </Routes>
-
+                {/* 임시 채팅 */}
                     <Routes>
                         <Route path='/chat' element= { <Chat /> } />
                     </Routes>
-
+                {/*  */}
             </BrowserRouter>
             <LoadScript
                 googleMapsApiKey="AIzaSyBI72p-8y2lH1GriF1k73301yRI4tvOkEo"
