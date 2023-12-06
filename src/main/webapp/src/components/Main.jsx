@@ -114,7 +114,7 @@ const Main = ({ showNavbar }) => {
                     </Routes>
                 {/* 임시 채팅 */}
                     <Routes>
-                        <Route path='/chat' element= { <Chat /> } />
+                        <Route path='/chatting' element= { <Chat /> } />
                     </Routes>
                 {/*  */}
             </BrowserRouter>
