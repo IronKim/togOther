@@ -2,7 +2,7 @@ import CityWeatherApi from './CityWeatherApi';
 import React, { useEffect, useState } from 'react';
 import styles from '../../css/Info/CityPage.module.css';
 import CityMoneyApi from './CityMoneyApi';  
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getCityBySeq } from '../../api/CityApiService';
 import { getPlaceListByCitySeq } from '../../api/PlaceApiService';
 import WeatherIcon from '../../constants/WeatherIcon';
@@ -10,7 +10,6 @@ import weatherData from '../../constants/WeatherData';
 import Like from './Like';
 import { useUserStore } from '../../stores/mainStore';
 import { updatecityList } from '../../api/UserApiService';
-import { getPlaceReviewBySeq } from '../../api/PlaceReviewApiService';
 import backBut from '../../assets/image/backBut.png'
 
 const CityPage = () => { 

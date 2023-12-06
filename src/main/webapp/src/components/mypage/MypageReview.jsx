@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
-import PlaceReviewWrite from '../Info/PlaceReviewWrite';
 import PlaceReviewUpdate from '../Info/PlaceReviewUpdate';
 import PlaceReviewPhoto from '../Info/PlaceReviewPhoto';
 import { getPlaceReviewByUserSeq, deletePlaceReviewByReviewSeq} from '../../api/PlaceReviewApiService';
 import { useUserStore } from '../../stores/mainStore';
 import ProfileView from '../ProfileView/ProfileView';
-import thumb from 'D:/SpringBoot/workspace/togOther/src/main/webapp/src/assets/image/profile_thumb.png';
 import styles from '../../css/MypageReview.module.css';
 
 import efault from '../../css/MyPage.module.css';
 
-const MypageReview = ({}) => {
+const MypageReview = ({onErrorImg}) => {
   const [selectedPlaceReview, setSelectedPlaceReview] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [modalShow1, setModalShow1] = useState(false);
@@ -133,10 +131,11 @@ const formatDateTime = (dateString) => {
               <Col xs={6} md={4} style={{ display: 'flex', alignItems: 'center' }}>
                 
                 <Image
-                  src={review.user.profileImage || thumb}
+                  src={review.user.profileImage}
                   roundedCircle
                   style={{ width: '40px', height: '40px' }}
                   onClick={() => handleProfileClick(review.user.userSeq)}
+                  onError={onErrorImg}
                 />
                 
                 <div style={{ flex: 1 }}>
