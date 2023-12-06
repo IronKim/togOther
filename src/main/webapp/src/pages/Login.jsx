@@ -449,7 +449,7 @@ const Login = () => {
   const naverLogin = () => {
 
     const NAVER_CLIENT_ID = "mY_CbvEkdc92AKz3xY24";
-    const REDIRECT_URL = 'http://127.0.0.1:3000/user/naver/callback'
+    const REDIRECT_URL = 'http://www.togother.kro.kr/user/naver/callback'
     const STATE = 'false'
     const NAVER_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${REDIRECT_URL}&state=${STATE}`
     
