@@ -4,6 +4,7 @@ import Style from '../../../css/together.module.css'
 import { addTogether, deleteTogether, deleteTogetherCustom } from '../../../api/TogetherApiService';
 import { addSubItem} from '../../../api/PlannerApiService';
 import { addCustomPlace,getCustomPlace } from '../../../api/PlaceApiService';
+import { createRoom,updateRoom } from '../../../api/ChatApiService';
 import PlaceSelect from './TogetherPlaceSelect';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 
@@ -49,6 +50,7 @@ const PlaceWriteForm = () => {
     const [writedateCardFormDiv, setWritedateCardFormDiv] = useState('')
     const [titleDiv, setTitleDiv] = useState('')
     const navigate = useNavigate()
+
     const togetherSave = (e) => {
         e.preventDefault()
 
@@ -74,6 +76,8 @@ const PlaceWriteForm = () => {
         if(sw === 1){
             addTogether(togetherDTO)
                  .then(res => {
+                    //채팅방 추가
+                    createRoom({title : togetherDTO.title,toMainSeq : res.data+'', master: user.userSeq+''})
                     // subDTO 저장
                     subDTO.map(item => {
                         if(item.place !== null ){
@@ -148,6 +152,8 @@ const PlaceWriteForm = () => {
             .then(() => {
             addTogether(togetherDTO)
                  .then(res => {
+                    //채팅방 수정
+                    updateRoom({beforeSeq : togetherDTO.togetherSeq, afterSeq : res.data})
                     // subDTO 저장
                     subDTO.map(item => {
                         if(item.place !== null && item.place !== undefined ){
@@ -341,7 +347,7 @@ const PlaceWriteForm = () => {
         <>
         <div className={Style.writeForm}>
         <div className={Style.writeFormInner}>
-            <button onClick={() =>alert(JSON.stringify(subDTO))}>sub json 확인</button>
+            {/* <button onClick={() =>alert(JSON.stringify(subDTO))}>sub json 확인</button> */}
             <div>
                 <input type="text" 
                        className={`${Style.title} ${Style.input}`}

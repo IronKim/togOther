@@ -1,7 +1,5 @@
 package com.finalProject.togOther.domain;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,9 +14,9 @@ public class CreateRoom {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String name;
-	private String roomMaster;
-	private String userId;
-	private Long userCount;
+	private String title;
+	private int toMainSeq;
+	private int masterSeq;
+	private String entrySeq;//배열
+	private byte status;//활성화 여부
 }

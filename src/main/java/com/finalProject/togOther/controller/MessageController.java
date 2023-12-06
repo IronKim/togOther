@@ -2,6 +2,7 @@ package com.finalProject.togOther.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,13 @@ import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -29,6 +33,8 @@ import com.finalProject.togOther.services.ConvertAndSendMessageService;
 import com.finalProject.togOther.services.CreateRoomService;
 import com.finalProject.togOther.services.EnterRoomService;
 import com.finalProject.togOther.services.QuitRoomService;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 public class MessageController {
@@ -130,17 +136,41 @@ public class MessageController {
 //    	messagingTemplate.convertAndSend("/subscription/chat/room/" + newRoomName, room);
 //    }
     @PostMapping("/chat/createRoom")
-    public ResponseEntity<Long> createRoom() {
+    public ResponseEntity<Long> createRoom(@RequestBody Map<String, String> requestBody) {
     	
     	CreateRoom createRoom = new CreateRoom();
-    	createRoom.setName("아");
-    	createRoom.setRoomMaster("아");
-    	createRoom.setUserCount((long) 3);
-    	createRoom.setUserId("dkdkd");
+    	createRoom.setTitle(requestBody.get("title"));
+    	createRoom.setToMainSeq(Integer.parseInt(requestBody.get("toMainSeq")));
+    	createRoom.setStatus((byte) 0);
+    	createRoom.setMasterSeq(Integer.parseInt(requestBody.get("master")));
+    	createRoom.setEntrySeq("");
     	
     	createRoomRepository.save(createRoom);
     	
     	return ResponseEntity.ok(createRoom.getId());
+    }
+    
+    @Transactional
+    @PutMapping("/chat/updateRoom")
+    public ResponseEntity<String> updateRoom(@RequestBody Map<String, Integer> requestBody) {
+    	
+    	int beforeSeq = requestBody.get("beforeSeq");
+    	
+    	int afterSeq = requestBody.get("afterSeq");
+    	
+    	createRoomRepository.updateBytoMainSeq(beforeSeq,afterSeq);
+    	
+    	return ResponseEntity.ok("성공");
+    }
+    
+    @DeleteMapping("/chat/deleteRoom")
+    public ResponseEntity<String> deleteRoom(@RequestBody Map<String, Integer> requestBody) {
+    	
+    	int toMainSeq = requestBody.get("toMainSeq");
+    	
+    	createRoomRepository.deleteBytoMainSeq(toMainSeq);
+    	
+    	return ResponseEntity.ok("성공");
     }
     
     @MessageExceptionHandler
