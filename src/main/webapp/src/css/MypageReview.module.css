@@ -1,0 +1,39 @@
+
+.MypageReview1{
+    width:70%;
+}
+.div1{
+    width: 100%;
+    cursor: pointer;
+}
+
+.div1:hover{
+    background-color: rgb(240, 238, 238,0.5);
+    border-radius: 20px;
+    width: 100%;
+    cursor: pointer;
+}
+
+
+
+
+
+/* 1200px 이하의 화면 너비에 대한 스타일 */
+@media screen and (max-width: 1199px) {
+
+        .MypageReview1{
+        width: 95%;
+        min-width: 60%;
+        /* margin: 0 auto; */
+        width: 100%;
+        justify-content: center;
+    }
+    .delete{
+        font-size: 15px;
+    }
+    .div1{
+        width: 100%;
+        cursor: pointer;
+    }
+  }
+  

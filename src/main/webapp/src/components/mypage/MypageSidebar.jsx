@@ -9,6 +9,7 @@ import people from '../../assets/image/people.png'
 import reservation from '../../assets/image/reservation.png'
 import after from '../../assets/image/after.png'
 import chat from '../../assets/image/chat.png'
+import heart from '../../assets/image/heart.png'
 
 const MypageSidebar = ({onErrorImg,onState,state}) => {
 
@@ -26,10 +27,13 @@ const MypageSidebar = ({onErrorImg,onState,state}) => {
                 <div className={ styles.buttons }>
                     <button onClick={() => onState(0)} style={{backgroundColor: state === 0 ? 'whitesmoke' : 'white',
                         borderRadius:  state === 0 ? '10px' : 0}}
-                        ><img src={setting}/>&nbsp;&nbsp;계정설정</button>{/* 계정관리 */}
+                        ><img src={setting}/>&nbsp;&nbsp;계정 설정</button>{/* 계정관리 */}
                     <button onClick={() => onState(1)}style={{backgroundColor: state === 1 ? 'whitesmoke' : 'white',
+                    borderRadius:  state === 1 ? '10px' : 0}}
+                    ><img src={heart}/>&nbsp;&nbsp;관심 장소</button>{/* 좋아요관리 */}
+                    {/* <button onClick={() => onState(1)}style={{backgroundColor: state === 1 ? 'whitesmoke' : 'white',
                         borderRadius:  state === 1 ? '10px' : 0}}
-                        ><img src={chat}/>&nbsp;&nbsp;채팅관리</button>{/* 채팅 */}
+                        ><img src={chat}/>&nbsp;&nbsp;채팅관리</button>채팅 */}
                     <button onClick={() => onState(2)}style={{backgroundColor: state === 2 ? 'whitesmoke' : 'white',
                         borderRadius:  state === 2 ? '10px' : 0}}
                         ><img src={planner}/>&nbsp;&nbsp;내 일정</button>{/* 일정관리 */}
@@ -42,6 +46,7 @@ const MypageSidebar = ({onErrorImg,onState,state}) => {
                     <button onClick={() => onState(5)}style={{backgroundColor: state === 5 ? 'whitesmoke' : 'white',
                         borderRadius:  state === 5 ? '10px' : 0}}
                         ><img src={after}/>&nbsp;&nbsp;여행 후기</button>{/* 후기글 */}
+                    
                 </div>
             </div> {/* sidebar */}
         </div>

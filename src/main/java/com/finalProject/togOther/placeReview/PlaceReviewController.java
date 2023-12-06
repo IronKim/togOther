@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.finalProject.togOther.dto.CityDTO;
+import com.finalProject.togOther.domain.User;
 import com.finalProject.togOther.dto.PlaceReviewDTO;
 
 @RestController
@@ -45,6 +45,12 @@ public class PlaceReviewController {
 		public ResponseEntity<?> getPlaceReviewListByReviewSeq(@PathVariable int reviewSeq) {
 		return placeReviewService.getPlaceReviewListByReviewSeq(reviewSeq);
 	}	
+	
+	//리뷰 불러오기 userSeq
+		@GetMapping(path = "getPlaceReviewByUserSeq/{userSeq}")
+		public ResponseEntity<?> getPlaceReviewByUserSeq(@PathVariable int userSeq) {
+			return placeReviewService.getPlaceReviewByUserSeq(userSeq);
+		}	
 
 	// 리뷰 삭제
 	@DeleteMapping(path = "deletePlaceReviewByReviewSeq/{reviewSeq}")

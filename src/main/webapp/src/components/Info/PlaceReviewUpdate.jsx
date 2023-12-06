@@ -6,6 +6,7 @@ import { useUserStore } from '../../stores/mainStore';
 import { getPlaceReviewListByReviewSeq, updateReview } from '../../api/PlaceReviewApiService';
 import { uploadPlannerImage } from '../../api/PlannerApiService';
 import sweet from 'sweetalert2';    
+import styles from '../../css/MypageReview.module.css';
 
 function PlaceReviewUpdate({ reviewSeq, placeSeq, loadInitialReviews }) {
   const [show, setShow] = useState(false);
@@ -127,7 +128,7 @@ function PlaceReviewUpdate({ reviewSeq, placeSeq, loadInitialReviews }) {
 
   return (
     <>
-      <span style={{ color: 'red', cursor: 'pointer', textAlign: 'right' }} variant="primary" onClick={handleShow}>
+      <span className={styles.delete} style={{ color: 'red', cursor: 'pointer', textAlign: 'right' }} variant="primary" onClick={handleShow}>
         수정
       </span>
       <Modal

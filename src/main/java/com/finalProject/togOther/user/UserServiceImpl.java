@@ -927,6 +927,24 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public ResponseEntity<String> getUserLikingPlace(int userSeq) {
+		
+		try {
+			Optional<User> optionalUser = userRepository.findById(userSeq);
+			
+			User user = optionalUser.orElseThrow();
+			
+			return ResponseEntity.ok(UserDTO.toDTO(user).getLikingPlace());
+			
+			
+		} catch (Exception e) {
+			
+			String errorMessage = "사용자 정보를 가져오는 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+	
+	@Override
 	public ResponseEntity<?> updatecityList(int userSeq, String cityName) {
 		
 		try {

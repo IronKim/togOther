@@ -1,5 +1,6 @@
 package com.finalProject.togOther.user;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -177,6 +178,12 @@ public class UserController {
 	@PutMapping(path = "updateLikingPlace/{userSeq}/{placeSeq}")
 	public ResponseEntity<?> updateLikingPlace(@PathVariable int userSeq, @PathVariable int placeSeq) {
 		return userService.updateLikingPlace(userSeq, placeSeq);
+	}
+	
+	// 좋아요 가져오기
+	@GetMapping(path = "getUserLikingPlace/{userSeq}")
+	public ResponseEntity<String> getUserLikingPlace(@PathVariable int userSeq) {
+		return userService.getUserLikingPlace(userSeq);
 	}
 	
 	@PutMapping(path = "updatecityList/{userSeq}")
