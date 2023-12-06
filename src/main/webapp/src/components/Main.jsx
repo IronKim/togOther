@@ -62,7 +62,7 @@ const Main = ({ showNavbar }) => {
                     <Route path='user'>
                         <Route path='login' element ={ user.name === '' ? <Login /> : <Navigate to={'/'}></Navigate>} />
                         <Route path='write' element ={ <Write />}/>
-                        <Route path='mypage' element ={ 
+                        <Route path='mypage' element ={
                             <UserRoute>
                                 <Mypage />
                             </UserRoute>
