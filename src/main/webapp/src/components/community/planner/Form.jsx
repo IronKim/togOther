@@ -14,6 +14,7 @@ import { GoogleMap, Autocomplete} from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
 import sweet from 'sweetalert2';
 import { useUserStore } from '../../../stores/mainStore';
+import { createRoom } from '../../../api/ChatApiService';
 
 const Form = (props) => {
     const {user} = useUserStore();
@@ -249,7 +250,8 @@ useEffect(()=>{
                     startDate: toStartDate,
                     endDate: toEndDate}
                 addTogether(togoItem)
-                .then(tores => 
+                .then(tores => {
+                    createRoom({title : togo.title,toMainSeq : tores.data+'', master: user.userSeq+''})
                     subDTO.filter(item2 => item2.toNum === togo.seq).map(item => {
                         if(item.place !== null) {
                             const subItem = {plMainSeq: res.data, nday: item.nDay, code : 2,
@@ -271,7 +273,7 @@ useEffect(()=>{
                                 .catch(e => console.log(e))
                             }
                     })
-                )
+                })
                 .catch(e => console.error(e) )
             })
             textDTO.map(item => {
