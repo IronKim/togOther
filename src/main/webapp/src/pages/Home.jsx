@@ -3,6 +3,7 @@ import Homew from '../components/Homew';
 import Homem from '../components/Homem';
 import Search from '../components/Search';
 
+
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -15,7 +16,9 @@ const Home = () => {
       <Search searchTerm={searchTerm} onSearch={onSearch}/>
       <Homew searchTerm={searchTerm}/>
       <Homem searchTerm={searchTerm}/>
+      
     </div>
+    
   );
 };
 
