@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-
-import EmptyHeart from '../../assets/image/emptyHeart.png';
-import Heart from '../../assets/image/heart.png';
-
-import { updateLikingPlace } from '../../api/UserApiService';
+import React from 'react';
 import { useUserStore } from '../../stores/mainStore';
+import { updateLikingPlace } from '../../api/UserApiService';
+import heart from '../../assets/image/heart.png';
+import EmptyHeart from '../../assets/image/emptyHeart.png';
 
-const Like = ({ placeSeq, isTrue, userPlaceLike, setUserPlaceLike }) => {
+const LikingPlaceLike = ({ placeSeq, isTrue, userPlaceLike, setUserPlaceLike }) => {
     
     const { user } = useUserStore();
     const toggleLike = (e) => {
@@ -41,8 +39,8 @@ const Like = ({ placeSeq, isTrue, userPlaceLike, setUserPlaceLike }) => {
     return (
         <>
             <img
-            src={isTrue ? Heart : EmptyHeart}
-            style={{ width: '30px', height: '30px', zIndex: '20', position:'relative', bottom:'245px', left:'15px'}}
+            src={isTrue ? heart : EmptyHeart}
+            style={{ width: '30px', height: '30px', zIndex: '20', position:'relative', left:'20px' , bottom:'280px'}}
             onClick={ (e) => toggleLike(e)}
             alt="Like Button"
             />
@@ -50,4 +48,4 @@ const Like = ({ placeSeq, isTrue, userPlaceLike, setUserPlaceLike }) => {
     );
 };
 
-export default Like;
+export default LikingPlaceLike;
