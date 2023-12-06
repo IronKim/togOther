@@ -150,6 +150,11 @@ public class MessageController {
     	return ResponseEntity.ok(createRoom.getId());
     }
     
+    @GetMapping("/chat/roomList")
+    public ResponseEntity<List<CreateRoom>> roomList() {
+    	return ResponseEntity.ok(createRoomRepository.findAll());
+    }
+    
     @Transactional
     @PutMapping("/chat/updateRoom")
     public ResponseEntity<String> updateRoom(@RequestBody Map<String, Integer> requestBody) {

@@ -3,7 +3,7 @@ import { Stomp } from '@stomp/stompjs';
 import axios from 'axios';
 import SockJS from 'sockjs-client';
 
-const baseUrl = 'http://127.0.0.1:8080';
+const baseUrl = 'http://www.togother.kro.kr';
 
 export default class MessageStore {
 
@@ -179,7 +179,7 @@ export default class MessageStore {
       console.error('활성 STOMP 연결이 없습니다. 채팅방을 생성할 수 없습니다.');
     }
     try {
-      const response = await axios.post('http://127.0.0.1:8080/chat/createRoom', {
+      const response = await axios.post('http://www.togother.kro.kr/chat/createRoom', {
         newRoomName,
     });
 
@@ -194,7 +194,7 @@ export default class MessageStore {
 // Room에 해당하는 메시지 가져오기
 fetchMessages = async (newRoomName) => {
   try {
-    const response = await axios.get(`http://127.0.0.1:8080/chat/messages/${newRoomName}`);
+    const response = await axios.get(`http://www.togother.kro.kr/chat/messages/${newRoomName}`);
     console.log(`Fetching messages for RoomIndex: ${newRoomName}`, response.data);
   } catch (error) {
     console.error('메시지 가져오기 API 호출 중 오류 발생:', error);

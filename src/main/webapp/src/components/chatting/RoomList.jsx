@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useMessageStore from '../../hooks/useMessageStore';
 import { useUserStore } from '../../stores/mainStore';
+import {} from '../../api/ChatApiService';
 import axios from 'axios';
 
 export default function RoomList({roomIndex, setRoomIndex}) {
@@ -49,7 +50,7 @@ export default function RoomList({roomIndex, setRoomIndex}) {
     }
   
     try {
-      const response = await axios.post('http://127.0.0.1:8080/chat/createRoom');
+      const response = await axios.post('http://www.togother.kro.kr/chat/createRoom');
       const newRoomIndex = response.data;
   
       await messageStore.connect(newRoomIndex, user.id);

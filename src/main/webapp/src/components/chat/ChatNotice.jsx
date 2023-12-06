@@ -8,4 +8,4 @@ const ChatNotice = () => {
     );
 };
 
-export default ChatNotice;
+export default ChatNotice;  

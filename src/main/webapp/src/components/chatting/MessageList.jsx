@@ -17,11 +17,9 @@ const MessageList = ({roomIndex, currentRoomIdxRef}) => {
 
   useEffect(() => {
     
-    // Run only if currentRoomIdx is valid
     if (roomIndex) {
         
-      // WebSocket connection
-      const socket = new SockJS('http://127.0.0.1:8080/chat');
+      const socket = new SockJS('http://www.togother.kro.kr/chat');
       console.log('RoomIndex:', roomIndex);
       socket.onopen = () => {
         const message = {
@@ -33,14 +31,12 @@ const MessageList = ({roomIndex, currentRoomIdxRef}) => {
         socket.send(JSON.stringify(message));
       };
 
-      // Code executed when a WebSocket message is received
       socket.onmessage = async (event) => {
         const receivedMessage = JSON.parse(event.data);
         setMessages((prevMessages) => [...prevMessages, receivedMessage]);
 
-        // When a new message arrives, retrieve the new message through an API call
         try {
-          const response = await axios.get('http://127.0.0.1:8080/chat/messages');
+          const response = await axios.get('http://www.togother.kro.kr/chat/messages');
           const newMessages = response.data;
           setMessages((prevMessages) => [...prevMessages, ...newMessages]);
         } catch (error) {
@@ -49,19 +45,16 @@ const MessageList = ({roomIndex, currentRoomIdxRef}) => {
       };
 
       return () => {
-        // Disconnect WebSocket when component is unmounted
         socket.close();
       };
     }
   }, [roomIndex]);
   
 
-  //Call API using Axios
   useEffect(() => {
     console.log('Fetching messages for RoomIndex:', roomIndex);
     
-    //axios.get(`http://localhost:8080/chat/messages/${currentRoomIdx}`)
-    axios.get(`http://127.0.0.1:8080/chat/messages/${roomIndex}`)
+    axios.get(`http://www.togother.kro.kr/chat/messages/${roomIndex}`)
       .then(response => {
         const fetchedMessages = response.data;
         setMessages(fetchedMessages);
@@ -70,11 +63,10 @@ const MessageList = ({roomIndex, currentRoomIdxRef}) => {
       .catch(error => {
         console.error('An error occurred while calling the API:', error);
       });
-  }, [roomIndex]); // Pass useEffect as an empty array to run it only once when the component is mounted
+  }, [roomIndex]);
 
   return (
     <div>
-      {/* {roomIndex ? <>{roomIndex}</> : <>없다</>} */}
       <ul className={styles.messageList}>
       {messages
         .filter((item) => item.roomId === currentRoomIdxRef.current)

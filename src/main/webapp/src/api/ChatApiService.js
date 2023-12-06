@@ -5,3 +5,6 @@ export const createRoom = (createRoom) => apiClient.post('/chat/createRoom',crea
 export const updateRoom = (updateRoom) => apiClient.put('/chat/updateRoom',updateRoom);
 
 export const deleteRoom = (deleteRoom) => apiClient.delete('/chat/deleteRoom',deleteRoom);
+
+export const roomList = () => apiClient.get('/chat/roomList');
+

@@ -19,6 +19,7 @@ const PlaceReview = ({ placeSeq }) => {
   const [userProfiles, setUserProfiles] = useState({});
   const { user } = useUserStore();
   const userSeq1 = user.userSeq;
+  const [reviewLength, setReviewLength]  = useState(0);
   const handleDelete = (reviewSeq) => {
      // 사용자에게 삭제 여부를 확인하는 메시지를 띄웁니다.
      const shouldDelete = window.confirm("리뷰를 삭제하시겠습니까?");
@@ -28,6 +29,7 @@ const PlaceReview = ({ placeSeq }) => {
        deletePlaceReviewByReviewSeq(reviewSeq)
          .then(() => {
            // Update the state to remove the deleted review
+           setReviewLength(reviewLength-1);
            setSelectedPlaceReview((prevReviews) =>
              prevReviews.filter((review) => review.reviewSeq !== reviewSeq)
            );
@@ -52,6 +54,7 @@ const formatDateTime = (dateString) => {
   const loadInitialReviews = () => {
     getPlaceReviewBySeq(placeSeq, 1)
       .then(response => {
+        setReviewLength(response.data.length);
         const sortedReviews = response.data.sort((a, b) => a.reviewSeq - b.reviewSeq);
         const initialReviews = sortedReviews.slice(0, 5);
         setSelectedPlaceReview(initialReviews);
@@ -118,7 +121,7 @@ const formatDateTime = (dateString) => {
   return (
     <div style={{ maxWidth: '728px', minWidth: '60%', margin: '0 auto', width: '100%' }}>
       <div style={{ maxWidth: '728px', width: '100%', display: 'flex', justifyContent: 'space-between', margin: '10px auto' }}>
-        <p className="fs-3">리뷰</p> 
+        <p className="fs-3">리뷰 {reviewLength}</p> 
         {/* {selectedPlaceReview.length} */}
         <p style={{ margin: '0', alignSelf: 'flex-end' }}>
           <PlaceReviewWrite placeSeq={placeSeq} loadInitialReviews={loadInitialReviews}/>
