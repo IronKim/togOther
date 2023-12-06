@@ -19,7 +19,7 @@ export default class MessageStore {
 
     // 현재 채팅방 인덱스 및 가능한 채팅방 인덱스들 초기화
     this.currentRoomIndex = 0;
-    this.roomIndices = [1, 2, 3];
+    this.roomIndices = [];
 
     // 메시지 입력과 메시지 로그 초기화
     this.messageEntered = '';
@@ -215,51 +215,51 @@ fetchMessages = async (roomIndex) => {
     this.messageEntered = value;
   }
 
-  // sendMessage({ type }) {
-  //   // 메시지 입력 전송
-  //   const message = type === 'message'
-  //     ? this.messageEntered
-  //     : '';
+  sendMessage({ type }) {
+    // 메시지 입력 전송
+    const message = type === 'message'
+      ? this.messageEntered
+      : '';
 
-  //   // 입장 메시지 전송
-  //   if (type === 'enter') {
-  //     messageService.sendMessage({
-  //       client: this.client,
-  //       messageToSend: {
-  //         type: 'enter',
-  //         roomId: this.currentRoomIndex,
-  //         userId: this.userId,
-  //         message: `User ${this.userId} entered the room.`,
-  //       },
-  //     });
-  //     return;
-  //   }
+    // 입장 메시지 전송
+    if (type === 'enter') {
+      messageService.sendMessage({
+        client: this.client,
+        messageToSend: {
+          type: 'enter',
+          roomId: this.currentRoomIndex,
+          userId: this.userId,
+          message: `User ${this.userId} entered the room.`,
+        },
+      });
+      return;
+    }
   
-  //   // 입력값이 비어있는 경우 전송을 중지
-  //   if (type === 'message' && !this.messageEntered.trim()) {
-  //     console.log('메시지를 입력하세요.');
-  //     alert('메시지를 입력하세요.');
-  //     return;
-  //   }
+    // 입력값이 비어있는 경우 전송을 중지
+    if (type === 'message' && !this.messageEntered.trim()) {
+      console.log('메시지를 입력하세요.');
+      alert('메시지를 입력하세요.');
+      return;
+    }
 
-  //   // 일반 메시지를 전송
-  //   messageService.sendMessage({
-  //     client: this.client,
-  //     messageToSend: {
-  //       type,
-  //       roomId: this.currentRoomIndex,
-  //       userId: this.userId,
-  //       message: this.messageEntered,
-  //     },
-  //   });
+    // 일반 메시지를 전송
+    messageService.sendMessage({
+      client: this.client,
+      messageToSend: {
+        type,
+        roomId: this.currentRoomIndex,
+        userId: this.userId,
+        message: this.messageEntered,
+      },
+    });
   
-  //   // 입력 창을 초기화
-  //   this.messageEntered = '';
-  //   console.log('입력 창이 초기화되었습니다.');
+    // 입력 창을 초기화
+    this.messageEntered = '';
+    console.log('입력 창이 초기화되었습니다.');
   
-  //   // 상태 업데이트
-  //   this.publish();
-  // }
+    // 상태 업데이트
+    this.publish();
+  }
 
   receiveMessage(messageReceived) {
     try {

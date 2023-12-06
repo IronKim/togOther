@@ -183,15 +183,13 @@
 }
 /* -----------------------햄버거----------------------- */
 .hamburger{
-  width: 100%;
   user-select: none;
   border: none;
-  background-color: white;
 }
 .hamburger img{
   transition: 0.5s;
   display: none;
-  width: 52px;
+  width: 50px;
 }
 /* 미디어 쿼리 추가 */
 @media (min-width: 1670px) {
@@ -278,7 +276,7 @@
   .hamburger img{
     position: fixed;
     display: block;
-    top: 75px;
+    top: 77px;
   }
   .hamburgerIcon1 {
     user-select: none;
@@ -294,10 +292,15 @@
     left: 100%;
   }
   .Sidebartotal {
+    border: 2px solid lightgray;
+    background-color: lightgray;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top: 0;
     position: fixed;
     display: block;
     left: -50%;
-    width: 50%;
+    width: 40%;
     z-index: 10;
     opacity: 0.95;
     transition: 0.5s;
@@ -370,38 +373,12 @@
 
   /* -----------------------햄버거----------------------- */
   .hamburger{
-    margin-top: 30px;
     display: block;
     border: none;
-    background-color: #dedede;
-  }
-  .hamburgerIcon1 {
-    user-select: none;
-    display: block;
-    position: absolute;
-    text-align: center;
-    font-size: 26px;
-    width: 40px;
-    height: 105px;
-    cursor: pointer;
-    border-radius : 0 10px 10px 0;
-    box-shadow: 0px 2px 4px rgba(222,222,222,0.9);
-    left: 100%;
-  }
-
-  .open{
-    left: -16px !important;
   }
   .hamburger img{
     position: fixed;
     display: block;
-    top: 105px;
-  }
-}
-@media (max-width: 375px) { 
-  .hamburger img{
-    position: fixed;
-    display: block;
-    top: 52px;
+    top: 64px;
   }
 }

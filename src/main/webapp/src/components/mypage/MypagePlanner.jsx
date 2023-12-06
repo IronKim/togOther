@@ -171,7 +171,7 @@ const MypagePlanner = () => {
                     <p className={styles.title}>{item.title}</p>
                     <div className={styles.publicBut} onClick={(e)=>onPublic(e,item.plannerSeq,item.publicPlan)}
                     style={{paddingLeft: item.publicPlan === 0 ? '20px' : '2px' ,
-                    backgroundColor: item.publicPlan === 0 ? 'darkgray' : 'whitesmoke'}}>
+                    backgroundColor: item.publicPlan === 0 ? '#2E8DFF' : 'lightgray'}}>
                     <div></div></div>
                     <div className={styles.gong}>공개&nbsp;</div>
                 </div>)
