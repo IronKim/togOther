@@ -56,6 +56,8 @@ public class Place {
 	private int likeCnt;
 	//태그 
 	private String tag;
+	//댓글개수
+	private int reviewCnt;
 		
 	public static Place toEntity(PlaceDTO placeDTO) {
 		return Place.builder()
@@ -74,6 +76,7 @@ public class Place {
 					.context3(placeDTO.getContext3())
 					.likeCnt(placeDTO.getLikeCnt())
 					.tag(placeDTO.getTag())
+					.reviewCnt(placeDTO.getReviewCnt())
 					.build();
 	}
 	

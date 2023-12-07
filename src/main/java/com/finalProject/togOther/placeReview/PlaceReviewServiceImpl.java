@@ -8,11 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.finalProject.togOther.domain.City;
+import com.finalProject.togOther.domain.Place;
 import com.finalProject.togOther.domain.PlaceReview;
 import com.finalProject.togOther.domain.User;
-import com.finalProject.togOther.dto.CityDTO;
+import com.finalProject.togOther.dto.PlaceDTO;
 import com.finalProject.togOther.dto.PlaceReviewDTO;
+import com.finalProject.togOther.repository.PlaceRepository;
 import com.finalProject.togOther.repository.PlaceReviewRepository;
 import com.finalProject.togOther.repository.UserRepository;
 
@@ -20,16 +21,19 @@ import com.finalProject.togOther.repository.UserRepository;
 public class PlaceReviewServiceImpl implements PlaceReviewService {
 
 	private PlaceReviewRepository placeReviewRepository;
+	
+	private PlaceRepository placeRepository;
 
 	private UserRepository userRepository;
 	
-	public PlaceReviewServiceImpl(PlaceReviewRepository placeReviewRepository, UserRepository userRepository) {
+	public PlaceReviewServiceImpl(PlaceReviewRepository placeReviewRepository, UserRepository userRepository, PlaceRepository placeRepository) {
 		this.placeReviewRepository = placeReviewRepository;
 		this.userRepository = userRepository;
+		this.placeRepository = placeRepository;
 	}
 	
 	@Override
-	public ResponseEntity<?> addPlaceReview(PlaceReviewDTO placeReviewDTO) {
+	public ResponseEntity<?> addPlaceReview(int placeSeq, PlaceReviewDTO placeReviewDTO) {
 		
 		try {
 			User user = userRepository.findById(placeReviewDTO.getUser().getUserSeq()).get();
@@ -39,6 +43,16 @@ public class PlaceReviewServiceImpl implements PlaceReviewService {
 			PlaceReview placeReview = PlaceReview.toEntity(placeReviewDTO);
 			
 			placeReviewRepository.save(placeReview);
+			
+			Optional<Place> optionalPlace = placeRepository.findById(placeSeq);
+			
+			Place place = optionalPlace.orElseThrow();
+			
+			PlaceDTO placeDTO = PlaceDTO.toDTO(place);
+			
+			placeDTO.setReviewCnt(placeDTO.getReviewCnt() + 1);
+			
+			placeRepository.save(Place.toEntity(placeDTO));
 			
 			String responseMessage = "리뷰가 추가되었습니다.";
 
@@ -81,7 +95,7 @@ public class PlaceReviewServiceImpl implements PlaceReviewService {
 
 			PlaceReview placeReview = placeReviewOptional.orElseThrow();
 			
-				PlaceReviewDTO placeReviewDTO = PlaceReviewDTO.toDTO(placeReview);
+			PlaceReviewDTO placeReviewDTO = PlaceReviewDTO.toDTO(placeReview);
 		
 			return ResponseEntity.ok(placeReviewDTO);
 
@@ -92,10 +106,20 @@ public class PlaceReviewServiceImpl implements PlaceReviewService {
 	}
 
 	@Override
-	public ResponseEntity<String> deletePlaceReviewByReviewSeq(int reviewSeq) {
+	public ResponseEntity<String> deletePlaceReviewByReviewSeq(int placeSeq, int reviewSeq) {
 		try {
 			// 리뷰 삭제 서비스 호출			
 			placeReviewRepository.deleteById(reviewSeq);
+			
+			Optional<Place> optionalPlace = placeRepository.findById(placeSeq);
+			
+			Place place = optionalPlace.orElseThrow();
+			
+			PlaceDTO placeDTO = PlaceDTO.toDTO(place);
+			
+			placeDTO.setReviewCnt(placeDTO.getReviewCnt() - 1);
+			
+			placeRepository.save(Place.toEntity(placeDTO));
 
 			// 사용자가 성공적으로 삭제되었을 때
 			String responseMessage = "리뷰가 삭제되었습니다.";

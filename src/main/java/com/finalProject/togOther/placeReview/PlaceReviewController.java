@@ -24,14 +24,14 @@ public class PlaceReviewController {
 	}
 	
 	//리뷰 작성
-	@PostMapping(path = "addPlaceReview")
-	public ResponseEntity<?> addPlaceReview(@RequestBody PlaceReviewDTO placeReviewDTO) {
+	@PostMapping(path = "addPlaceReview/{placeSeq}")
+	public ResponseEntity<?> addPlaceReview(@PathVariable int placeSeq, @RequestBody PlaceReviewDTO placeReviewDTO) {
 		
 		System.out.println(placeReviewDTO);
 		
 		System.out.println(placeReviewDTO.getUser().getName());
 		
-		return placeReviewService.addPlaceReview(placeReviewDTO);
+		return placeReviewService.addPlaceReview(placeSeq, placeReviewDTO);
 	}
 		
 	//리뷰 불러오기
@@ -53,9 +53,9 @@ public class PlaceReviewController {
 		}	
 
 	// 리뷰 삭제
-	@DeleteMapping(path = "deletePlaceReviewByReviewSeq/{reviewSeq}")
-	public ResponseEntity<String> deletePlaceReviewByReviewSeq(@PathVariable int reviewSeq) {
-		return placeReviewService.deletePlaceReviewByReviewSeq(reviewSeq);
+	@DeleteMapping(path = "deletePlaceReviewByReviewSeq/{placeSeq}/{reviewSeq}")
+	public ResponseEntity<String> deletePlaceReviewByReviewSeq(@PathVariable int placeSeq, @PathVariable int reviewSeq) {
+		return placeReviewService.deletePlaceReviewByReviewSeq(placeSeq, reviewSeq);
 	}
 	// 리뷰 수정
 		@PutMapping(path = "updateReview/{reviewSeq}")

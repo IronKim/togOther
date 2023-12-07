@@ -8,6 +8,7 @@ import { getPlaceReviewBySeq, deletePlaceReviewByReviewSeq} from '../../api/Plac
 import { useUserStore } from '../../stores/mainStore';
 import ProfileView from '../ProfileView/ProfileView';
 import thumb from '../../assets/image/profile_thumb.png';
+import Swal from 'sweetalert2';
 
 const PlaceReview = ({ placeSeq }) => {
   const [selectedPlaceReview, setSelectedPlaceReview] = useState([]);
@@ -20,24 +21,41 @@ const PlaceReview = ({ placeSeq }) => {
   const { user } = useUserStore();
   const userSeq1 = user.userSeq;
   const [reviewLength, setReviewLength]  = useState(0);
+
   const handleDelete = (reviewSeq) => {
      // 사용자에게 삭제 여부를 확인하는 메시지를 띄웁니다.
-     const shouldDelete = window.confirm("리뷰를 삭제하시겠습니까?");
 
-     if (shouldDelete) {
-       // 사용자가 확인하면 삭제 작업을 진행합니다.
-       deletePlaceReviewByReviewSeq(reviewSeq)
+     Swal.fire({
+      title: '리뷰를 삭제하시겠습니까?',
+      text: "삭제된 리뷰는 복구할 수 없습니다.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33', 
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deletePlaceReviewByReviewSeq(placeSeq, reviewSeq)
          .then(() => {
            // Update the state to remove the deleted review
            setReviewLength(reviewLength-1);
            setSelectedPlaceReview((prevReviews) =>
              prevReviews.filter((review) => review.reviewSeq !== reviewSeq)
            );
+           Swal.fire(
+            '삭제 완료!',
+            '리뷰가 삭제되었습니다.',
+            'success'
+          );
          })
          .catch((error) => {
            console.error('리뷰 삭제 오류: ', error);
          });
-     }
+        
+      }
+    });
+    
   };
 
   const onErrorImg = (e) => {

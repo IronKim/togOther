@@ -92,7 +92,7 @@ function PlaceReviewWrite({ placeSeq }) {
               };
 
               console.log(reviewData);
-              addPlaceReview(reviewData);
+              addPlaceReview(placeSeq, reviewData);
               window.location.reload();
              //loadInitialReviews();
             })
