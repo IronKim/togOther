@@ -36,7 +36,7 @@ public class GetToken {
 	        params.add("grant_type","authorization_code");
 	        params.add("client_id",id);
 	        params.add("client_secret",secret);
-	        params.add("redirect_uri","http://localhost:3000/token");
+	        params.add("redirect_uri","http://www.togother.kro.kr/token");
 	        params.add("code",code);
 
 	        //HttpHeader와 HttpBody를 하나의 오브젝트에 담기

@@ -328,7 +328,7 @@
         margin-top: 0;
     }
 }
-/* @media (max-width: 754px) { 
+@media (max-width: 754px) { 
     .onModal {
         width: 100%;
     }
@@ -373,7 +373,10 @@
         color: gray;
         text-align: right;
     }
-} */
+    .onModal{
+        top: 100%; 
+    }
+}
 @media (max-width: 1199px) {
     .tagP {
         font-size: 21px; /* 텍스트 크기 조정 */
@@ -382,5 +385,13 @@
     .input[type='checkbox'] {
         transform: scale(1.5); /* 체크박스 크기 조정 */
         margin-left: 5px; /* 체크박스와 텍스트 간격 조정 */
+    }
+}
+@media (max-width: 450px) {
+    .buttons {
+        font-size: 14px;
+    }
+    .buttons img{
+        width: 18px;
     }
 }
