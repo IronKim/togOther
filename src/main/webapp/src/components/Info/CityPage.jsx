@@ -316,7 +316,7 @@ const CityPage = () => {
         }
         if(item === 'comment') {
             let filteredData = filteredPlaceData.slice().sort((a, b) => 
-            b.likeCnt - a.likeCnt || a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }))
+            b.reviewCnt - a.reviewCnt || a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }))
             
             console.log(filteredData)
             setFilteredPlaceData(filteredData)

@@ -9,9 +9,9 @@ public interface PlaceReviewService {
 
 	public ResponseEntity<?> getPlaceReviewByPlaceSeq(int placeSeq);
 
-	public ResponseEntity<?> addPlaceReview(PlaceReviewDTO placeReviewDTO);
+	public ResponseEntity<?> addPlaceReview(int placeSeq, PlaceReviewDTO placeReviewDTO);
 
-	public ResponseEntity<String> deletePlaceReviewByReviewSeq(int reviewSeq);
+	public ResponseEntity<String> deletePlaceReviewByReviewSeq(int placeSeq, int reviewSeq);
 
 	public ResponseEntity<PlaceReviewDTO> updateReview(int reviewSeq, PlaceReviewDTO placeReviewDTO);
 

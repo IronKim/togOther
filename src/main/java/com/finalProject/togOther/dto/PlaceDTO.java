@@ -49,6 +49,8 @@ public class PlaceDTO {
 	private int likeCnt;
 	//태그 
 	private String tag;
+	//댓글개수
+	private int reviewCnt;
 	
 	public static PlaceDTO toDTO(Place place) {
 		return PlaceDTO.builder()
@@ -67,6 +69,7 @@ public class PlaceDTO {
 					   .context3(place.getContext3())
 					   .likeCnt(place.getLikeCnt())
 					   .tag(place.getTag())
+					   .reviewCnt(place.getReviewCnt())
 					   .build();
 	}
 }
