@@ -9,7 +9,7 @@ const Sidebar = ({tags, currentTag, setCurrentTag, styles}) => {
 
   
   const getToken = () => {
-    window.open('https://kauth.kakao.com/oauth/authorize?client_id=8cad95a2af1412995b72052da8e5094b&response_type=code&redirect_uri=http://localhost:3000/token', 
+    window.open('https://kauth.kakao.com/oauth/authorize?client_id=8cad95a2af1412995b72052da8e5094b&response_type=code&redirect_uri=http://www.togother.kro.kr/token', 
     'pop01', 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no');
   }
 

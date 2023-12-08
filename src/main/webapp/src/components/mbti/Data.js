@@ -40,7 +40,7 @@ export default [
             type: [1,1,0,0]
         },]
     },
-    /*{
+    {
         id:2,
         question:'해외 여행 계획중, 당신은 항공편과 숙소를 예약하는 역할을 맡았다',
         answer: [
@@ -258,5 +258,5 @@ export default [
             text: '쉴곳을 찾는다',
             type: [2,1,0,2]
         },]
-    },*/
+    },
 ]

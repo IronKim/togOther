@@ -33,9 +33,9 @@ const BottomNav = ({ showNavbar }) => {
             <FontAwesomeIcon icon="info" className={location.pathname.includes('/info') ? style.active : style.nav_item} />
           </div>
         </Link>
-        <Link to="/shop" className={style.nav_link} onClick={() => navigate('/shop')}>
+        <Link to="/package" className={style.nav_link} onClick={() => navigate('/package')}>
           <div>
-            <FontAwesomeIcon icon="cart-plus" className={isActive('/shop') ? style.active : style.nav_item} />
+            <FontAwesomeIcon icon="cart-plus" className={isActive('/package') ? style.active : style.nav_item} />
           </div>
         </Link>
       </nav>
