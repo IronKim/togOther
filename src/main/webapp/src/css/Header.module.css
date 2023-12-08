@@ -97,10 +97,7 @@
     width: 150px;
     height: auto;
   }
-  .activeL{
-    font-size: 17px;
-  }
-  .slash{
+  .loginSection{
     font-size: 17px;
   }
 }

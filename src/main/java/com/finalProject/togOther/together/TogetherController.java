@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.finalProject.togOther.domain.CreateRoom;
+import com.finalProject.togOther.domain.Subscript;
 import com.finalProject.togOther.dto.CustomPlaceDTO;
 import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.SubItemDTO;
+import com.finalProject.togOther.dto.SubscriptDTO;
 import com.finalProject.togOther.dto.TogetherDTO;
 
 @RestController
@@ -92,5 +95,26 @@ public class TogetherController {
 		return togetherService.getAllTogether();
 	}
 		
+	//신청 추가
+	@PostMapping(path = "addSubscript")
+	public ResponseEntity<Integer> addSubscript(@RequestBody SubscriptDTO subscriptDTO) {
+		return togetherService.addSubscript(subscriptDTO);
+	}
+	//신청 시퀀스 가져오기
+	@GetMapping(path = "getChatSeq/{togetherSeq}")
+	public ResponseEntity<CreateRoom> getChatSeq(@PathVariable int togetherSeq) {
+		return togetherService.getChatSeq(togetherSeq);
+	}
 	
+	//신청 시퀀스 가져오기
+	@GetMapping(path = "getAllSubscript")
+	public ResponseEntity<List<SubscriptDTO>> getAllSubscript() {
+		return togetherService.getAllSubscript();
+	}
+	
+	//신청 시퀀스 가져오기
+	@DeleteMapping(path = "deleteSubscript/{subscriptSeq}")
+	public ResponseEntity<String> deleteSubscript(@PathVariable int subscriptSeq) {
+		return togetherService.deleteSubscript(subscriptSeq);
+	}
 }

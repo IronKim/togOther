@@ -112,11 +112,11 @@ const PlaceWriteForm = () => {
                         .catch(e => console.log(e))
                         }
                     })
+                    window.scrollTo(0, 0);
                     sweet.fire({
                         title: "등록이 완료되었습니다.",
                         icon: "success"
-                    })
-                    navigate('/community/')
+                    }).then(navigate('/community/'))     
                  })
                  .catch(error => console.error(error))
         }
@@ -199,7 +199,7 @@ const PlaceWriteForm = () => {
                  })
                  .catch(error => console.error(error))
                 })
-                .catch(error => console.error(error))
+            .catch(error => console.error(error))
         }
     }
     //날짜 변경에 따른 subDTO 유동적 명령

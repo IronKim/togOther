@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
+import com.finalProject.togOther.domain.CreateRoom;
 import com.finalProject.togOther.dto.CustomPlaceDTO;
 import com.finalProject.togOther.dto.SubItemDTO;
+import com.finalProject.togOther.dto.SubscriptDTO;
 import com.finalProject.togOther.dto.TogetherDTO;
 
 public interface TogetherService {
@@ -33,7 +35,13 @@ public interface TogetherService {
 
 	public Long writeTogether(TogetherDTO togetherDto);
 
+	public ResponseEntity<Integer> addSubscript(SubscriptDTO subscriptDTO);
 
+	public ResponseEntity<CreateRoom> getChatSeq(int togetherSeq);
+
+	public ResponseEntity<List<SubscriptDTO>> getAllSubscript();
+
+	public ResponseEntity<String> deleteSubscript(int subscriptSeq);
 
 
 }

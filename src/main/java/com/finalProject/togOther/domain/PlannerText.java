@@ -2,6 +2,7 @@ package com.finalProject.togOther.domain;
 
 import com.finalProject.togOther.dto.PlannerTextDTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class PlannerText {
 	private String id;
 	private int nday;
 	private int orders;
+	@Column(columnDefinition = "TEXT")
 	private String context;
 	
 	public static PlannerText toEntity(PlannerTextDTO plannerTextDTO) {

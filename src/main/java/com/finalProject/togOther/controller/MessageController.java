@@ -168,12 +168,24 @@ public class MessageController {
     	return ResponseEntity.ok("성공");
     }
     
-    @DeleteMapping("/chat/deleteRoom")
-    public ResponseEntity<String> deleteRoom(@RequestBody Map<String, Integer> requestBody) {
+    @Transactional
+    @DeleteMapping("/chat/deleteRoom/{togetherSeq}")
+    public ResponseEntity<String> deleteRoom(@PathVariable int togetherSeq) {
     	
-    	int toMainSeq = requestBody.get("toMainSeq");
+    	createRoomRepository.deleteBytoMainSeq(togetherSeq);
     	
-    	createRoomRepository.deleteBytoMainSeq(toMainSeq);
+    	return ResponseEntity.ok("성공");
+    }
+    
+    @Transactional
+    @PutMapping("chat/entryRoom")
+    public ResponseEntity<String> entryRoom(@RequestBody Map<String, String> requestBody) {
+    	
+    	int chatSeq = Integer.parseInt(requestBody.get("chatSeq"));
+    	
+    	String entry = requestBody.get("entry");
+    	
+    	createRoomRepository.updateByEntry(chatSeq, entry);
     	
     	return ResponseEntity.ok("성공");
     }

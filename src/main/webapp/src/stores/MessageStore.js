@@ -207,7 +207,6 @@ fetchMessages = async (newRoomName) => {
 }
 
   changeInput(value) {
-    // 메시지 입력값 변경
     this.messageEntered = value;
   }
 
@@ -261,9 +260,8 @@ fetchMessages = async (newRoomName) => {
     try {
       // 받은 메시지를 파싱하고 로그에 추가
       const message = JSON.parse(messageReceived.body);
-      console.log('Received message:', message);
-      this.messageLogs = [...this.messageLogs, this.formatMessage(message)];
-      this.publish();
+      this.messageLogs = [...this.messageLogs, message];
+      console.log(this.messageLogs)
       this.publish();
     } catch (error) {
       console.error('Received message is not valid JSON:', messageReceived.body);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import HeaderComponent from './HeaderComponent';
 import FooterComponent from './FooterComponent';
@@ -52,6 +52,19 @@ const Main = ({ showNavbar }) => {
         
 
     }, []);
+
+    const[close,setClose] = useState(false)
+    const[open,setOpen] = useState(false)
+    const onClose = () => {
+      setClose(true)
+      setTimeout(() => {
+        setClose(false)
+        setOpen(false)
+          }, 500);
+    }
+    const onOpen = () => {
+      setOpen(true);
+    }
     
     return (
         <div>
@@ -83,10 +96,9 @@ const Main = ({ showNavbar }) => {
                             <Route path='update/:plannerSeq' element= { <Planner up={true}/>} />
                             <Route path='view/:plannerSeq' element={ <View/>} />
                         </Route>
-                        <Route path='together'>
-                           
+                        <Route path='together'>                          
                             <Route path='write' element= {  <UserRoute><Together/></UserRoute>} />
-                            <Route path='view/:togetherSeq' element= { <TogetherView/>} />
+                            <Route path='view/:togetherSeq' element= { <TogetherView open={open} onOpen={onOpen}/>} />
                         </Route>
                         
                     </Route>
@@ -100,7 +112,7 @@ const Main = ({ showNavbar }) => {
                     {showNavbar && <BottomNav showNavbar={showNavbar} />}
                 </Routes>
 
-                <ChatBtn/>
+                <ChatBtn close={close} open={open} onClose={onClose} onOpen={onOpen}/>
                 <FooterComponent />
 
                     <Routes>

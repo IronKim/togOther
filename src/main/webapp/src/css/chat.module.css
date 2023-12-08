@@ -23,10 +23,10 @@
    }
 }
 .closeChat {
-    animation: chatDown 1s;
+    animation: chatDown 0.7s;
 }
 .openChat {
-    animation: chatUp 1s;
+    animation: chatUp 0.7s;
 }
 .middleSection::-webkit-scrollbar {
     width:7px;
@@ -36,6 +36,28 @@
     background-color: transparate;
 }
 .middleSection::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 7px;
+}
+.messageSection::-webkit-scrollbar {
+    width:7px;
+    height: 7px;
+}
+.messageSection::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.messageSection::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 7px;
+}
+.button1::-webkit-scrollbar {
+    width:7px;
+    height: 7px;
+}
+.button1::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.button1::-webkit-scrollbar-thumb {
     background-color: lightgray;
     border-radius: 7px;
 }
@@ -51,7 +73,7 @@
 .chatForm {
     border-radius: 22.5px;
     width: 400px;
-    height: 75%;
+    height: 80%;
     position: fixed;
     bottom: 70px;
     right: 7%;
@@ -77,6 +99,15 @@
     height: 7%;
     border-bottom: 1.5px solid rgb(230, 230, 230);
 }
+.topSection div{
+    float: left;
+    padding-top: 13px;
+    padding-left: 15px;
+    width: calc(100% - 50px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .middleSection {
     overflow: auto;
     overflow-x: hidden;
@@ -96,10 +127,24 @@
     transition: 0.3s;
 }
 .bottomSection div img{
+    line-height: 100%;
     width: 30px;
 }
-
-
+.topButton button{
+    transition: 0.3s;
+    border: 0;
+    background-color: transparent;
+}
+.notNum {
+    position: absolute;
+    margin-top: -40px;
+    margin-left: 40px;
+    background-color: tomato;
+    padding: 2px 3px;
+    border-radius: 10px;
+    font-size: 11px;
+    color: white;
+}
 /* =========roomList============== */
 
 .roomItem {
@@ -144,16 +189,182 @@
 
 /* ////////////////////////////// */
 
+/* //////////chatRoom/////////// */
+.chatRoom {
+    height: 100%;
+}
+.messageSection {
+    height: calc(100% - 50px);
+    overflow: auto;
+    overflow-x: hidden;
+}
+.sendSection {
+    height: 50px;
+}
+.messageItem {
+    max-width: 70%;
+    margin-bottom: 10px;
+}
+.messageItem p{
+    font-family: 'NanumSquareNeo-Variable';
+}
+
+.messageBubble {
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+.messageInfo {
+    margin-bottom: 5px; /* Adjust the margin as needed */
+}
+
+.messageUser {
+    padding: 10px;
+    padding-bottom: 5px;
+}
+.messageUser div{
+    padding-top: 20px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+.messageUser img {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.messageContent {
+    font-size: 14px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    border-radius: 5px;
+    line-height: 18px;
+}
+
+.messageTimestamp {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #666;
+}
+
+
+.userName {
+    font-weight: bold;
+    margin-right: 5px;
+}
+.sentMessage {
+    background-color: #7fc3b1; /* 보낸 메시지의 배경색 */
+    color: #fff; /* 보낸 메시지의 텍스트 색상 */
+}
+
+.receivedMessage {
+    background-color: #d9d9d9; /* 받은 메시지의 배경색 */
+    color: #000; /* 받은 메시지의 텍스트 색상 */
+}
+
+.messageIn {
+    max-width: 300px;
+    font-size: 13px;
+    font-family: 'NanumSquareNeo-Variable';
+    margin: 10px auto;
+    text-align: center;
+    padding: 5px 10px;
+    background-color: lightgray;
+    border-radius: 20px;
+    opacity: 0.7;
+}
+
+.button1 {
+    font-family: 'NanumSquareNeo-Variable';
+    height: 45px;
+    border: 0;
+    width: 80%;
+    resize: none;
+    border-top: 1.5px solid darkgray;
+    border-bottom: 1.5px solid darkgray;
+}
+.button1:focus {
+    outline: none;
+}
+
+.button2 {
+    vertical-align: top;
+    width: 20%;
+    height: 45px;
+    color: white;
+    border: none;
+    background-color: #2E8DFF;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.button2:hover {
+    background-color: #78b5ff;
+}
+
+/* ///////////////////////////// */
+
+/* //////////notice///////////// */
+.noticeItem {
+    height: 70px;
+    border-bottom: 1px solid lightgray;
+    padding: 10px;
+}
+.noticeItem button{
+    margin-top: 2%;
+    float: right;
+    height: 70%;
+    width: 15%;
+    border: 0;
+    color: white;
+    background-color: #2E8DFF;
+    border-radius: 5px;
+}
+.noticeItem p{
+    width: calc(80% - 70px);
+    padding-left: 15px;
+    margin: 10px;
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: top;
+    font-family: 'NanumSquareNeo-Variable';
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.noticeProfile {
+    float: left;
+}
+.noticeProfile img{
+    float: left;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+.noticeProfile h2{
+    font-size: 14px;
+    float: left;
+}
+/* ///////////////////////////// */
+
 @media (max-width: 500px) {
     .chatForm {
+        height: 85%;
         width: 84%;
         right: 8%;
     }
     .bottomSection div{
         padding: 6% 10%;
     }
-    .bottomSection div img{
-        width: 23px;
+    .noticeItem button{
+        width: 20%;
+        height: 80%;
     }
-    
 }

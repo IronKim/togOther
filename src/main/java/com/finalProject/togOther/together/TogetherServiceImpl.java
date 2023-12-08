@@ -10,20 +10,26 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.broker.SubscriptionRegistry;
 import org.springframework.stereotype.Service;
 
+import com.finalProject.togOther.domain.CreateRoom;
 import com.finalProject.togOther.domain.CustomPlace;
 import com.finalProject.togOther.domain.Planner;
 import com.finalProject.togOther.domain.SubItem;
+import com.finalProject.togOther.domain.Subscript;
 import com.finalProject.togOther.domain.Together;
 import com.finalProject.togOther.dto.CustomPlaceDTO;
 import com.finalProject.togOther.dto.PlannerDTO;
 import com.finalProject.togOther.dto.SubItemDTO;
+import com.finalProject.togOther.dto.SubscriptDTO;
 import com.finalProject.togOther.dto.TogetherDTO;
 import com.finalProject.togOther.repository.CityRepository;
+import com.finalProject.togOther.repository.CreateRoomRepository;
 import com.finalProject.togOther.repository.CustomPlaceRepository;
 import com.finalProject.togOther.repository.PlaceRepository;
 import com.finalProject.togOther.repository.SubItemRepository;
+import com.finalProject.togOther.repository.SubscriptRepository;
 import com.finalProject.togOther.repository.TogetherRepository;
 import com.finalProject.togOther.repository.UserRepository;
 
@@ -39,16 +45,21 @@ public class TogetherServiceImpl implements TogetherService {
 	private TogetherRepository togetherRepository;
 	private SubItemRepository subItemRepository;
 	private CustomPlaceRepository customPlaceRepository;
+	private SubscriptRepository subscriptRepository;
+	private CreateRoomRepository createRoomRepository;
 
 	public TogetherServiceImpl(CityRepository cityRepository, PlaceRepository placeRepository,
 			UserRepository userRepository, TogetherRepository togetherRepository, SubItemRepository subItemRepository,
-			CustomPlaceRepository customPlaceRepository) {
+			CustomPlaceRepository customPlaceRepository, SubscriptRepository subscriptRepository,
+			CreateRoomRepository createRoomRepository) {
 		this.cityRepository = cityRepository;
 		this.placeRepository = placeRepository;
 		this.userRepository = userRepository;
 		this.togetherRepository = togetherRepository;
 		this.subItemRepository = subItemRepository;
 		this.customPlaceRepository = customPlaceRepository;
+		this.subscriptRepository = subscriptRepository;
+		this.createRoomRepository = createRoomRepository;
 	}
 
 	@Override
@@ -249,6 +260,70 @@ public class TogetherServiceImpl implements TogetherService {
 	public Long writeTogether(TogetherDTO togetherDto) {
 		
 		return writeTogether(togetherDto);
+	}
+
+	@Override
+	public ResponseEntity<Integer> addSubscript(SubscriptDTO subscriptDTO) {
+		Subscript subscript = Subscript.toEntity(subscriptDTO);
+		try {
+			subscriptRepository.save(subscript);
+			
+			int subscriptSeq = subscript.getSubscriptSeq();
+			
+			return ResponseEntity.ok(subscriptSeq);
+			
+		} catch (Exception e) {
+			
+			return ResponseEntity.ok(-1);
+			
+		}
+	}
+
+	@Override
+	public ResponseEntity<CreateRoom> getChatSeq(int togetherSeq) {
+		try {
+			CreateRoom createRoom = createRoomRepository.findBytoMainSeq(togetherSeq);
+			
+			
+			return ResponseEntity.ok(createRoom);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<List<SubscriptDTO>> getAllSubscript() {
+		try {		
+			List<Subscript> subscriptList = subscriptRepository.findAll();
+
+			List<SubscriptDTO> subscriptDTOList = new ArrayList<SubscriptDTO>();
+			
+			for (Subscript subscript : subscriptList) {
+				SubscriptDTO subscriptDTO = SubscriptDTO.toDTO(subscript);
+				
+				subscriptDTOList.add(subscriptDTO);
+			}
+			return ResponseEntity.ok(subscriptDTOList);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
+	@Override
+	public ResponseEntity<String> deleteSubscript(int subscriptSeq) {
+		try {
+			subscriptRepository.deleteById(subscriptSeq);
+
+			// 사용자가 성공적으로 삭제되었을 때
+			String responseMessage = "삭제되었습니다.";
+			return ResponseEntity.ok(responseMessage);
+		} catch (Exception e) {
+
+			// 사용자 삭제 중 에러가 발생했을 때
+			String errorMessage = "삭제 중 오류가 발생했습니다.";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
 	}
 
 }

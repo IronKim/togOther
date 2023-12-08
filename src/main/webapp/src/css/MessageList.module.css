@@ -54,3 +54,18 @@
     background-color: #d9d9d9; /* 받은 메시지의 배경색 */
     color: #000; /* 받은 메시지의 텍스트 색상 */
   }
+
+  .button1 {
+    border-radius: 15px;
+  }
+
+.button2 {
+    border-radius: 15px;
+    color: white;
+    border: none;
+    background-color: #2E8DFF;
+}
+
+.button2:hover {
+    background-color: #194E8C;
+}

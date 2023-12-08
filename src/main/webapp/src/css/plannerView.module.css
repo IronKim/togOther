@@ -220,6 +220,7 @@
 }
 .plannerText{
     font-family: 'NanumSquareNeo-Variable';
+    line-height: 23px;
     padding:0 15px;
 }
 .placeContext {

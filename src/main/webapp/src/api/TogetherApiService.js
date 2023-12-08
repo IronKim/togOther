@@ -14,4 +14,12 @@ export const deleteTogether = (togetherSeq) => apiClient.delete(`api/together/de
 //
 export const getMyTogether = (n) => apiClient.post('api/together/getMyTogetherList', n);
 export const totMyTogether = (n) => apiClient.post('api/together/totMyTogether', n);
+//
+export const addSubscript = (dto) => apiClient.post('api/together/addSubscript', dto);
+export const getChatSeq = (togetherSeq) => apiClient.get(`api/together/getChatSeq/${togetherSeq}`)
+export const getAllSubscript = () => apiClient.get(`api/together/getAllSubscript`)
+export const deleteSubscript = (subscriptSeq) => apiClient.delete(`api/together/deleteSubscript/${subscriptSeq}`)
+//
+export const entryRoom = (res) => apiClient.put(`chat/entryRoom`,res)
+export const deleteRoom = (togetherSeq) => apiClient.delete(`chat/deleteRoom/${togetherSeq}`)
 

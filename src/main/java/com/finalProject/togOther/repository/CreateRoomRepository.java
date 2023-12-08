@@ -13,6 +13,12 @@ public interface CreateRoomRepository extends JpaRepository<CreateRoom, Long> {
     @Query("UPDATE CreateRoom e SET e.toMainSeq = :afterSeq WHERE e.toMainSeq = :beforeSeq")
     void updateBytoMainSeq(@Param("beforeSeq") int beforeSeq,@Param("afterSeq") int afterSeq);
     
+    @Modifying
+    @Query("UPDATE CreateRoom e SET e.entrySeq = :entry WHERE e.id = :chatSeq")
+    void updateByEntry(@Param("chatSeq") int chatSeq,@Param("entry") String entry);
+    
     void deleteBytoMainSeq(int toMainSeq);
+    
+    CreateRoom findBytoMainSeq(int toMainSeq);
     
 }

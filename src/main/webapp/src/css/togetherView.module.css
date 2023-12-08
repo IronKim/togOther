@@ -1,3 +1,19 @@
+.toGother::-webkit-scrollbar {
+    width:10px;
+    cursor: pointer;
+}
+.toGother::-webkit-scrollbar-track {
+    background-color: transparate;
+}
+.toGother::-webkit-scrollbar-thumb {
+    background-color: transparate;
+}
+
+.backBut {
+    cursor: pointer;
+    margin: 20px 2.5% 10px 2.5%;
+    width: 25px;
+}
 .viewForm{
     width: 100%;
     /* overflow: auto;
@@ -277,11 +293,11 @@
     height: 83%;
     margin: auto;
     margin-top: 5px;
-    overflow: hidden;
+    overflow: auto;
+    overflow-x: hidden;
 }
 .toGotherMaster{
-    width: 100%;
-    height: 20%;
+    display: block;
 }
 .toGotherImg{
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -291,18 +307,19 @@
     float: left;
     margin-top: 3px;
     margin-left: 3px;
+    margin-right: 10px;
     border-radius: 70px;
     text-align: center;
     overflow: hidden;
 }
 .toGotherInfo{
-    width: 70%;
-    float: right;
-    font-size: 20px;
-    margin-top: 19px;
+    height: 70px;
 }
-.toGotherInfo span{
-    margin: 0 30px 0 30px;
+.toGotherInfo div{
+    float: left;
+    line-height: 60px;
+    font-size: 18px;
+    color: gray;
 }
 .togotherList{
     height: 80%;
@@ -339,7 +356,7 @@
         width: 250px;
     }
     .viewForm{
-        height: 1200px;
+        min-height: 1500px;
     }
     .inin{
         width: 45%;
@@ -359,6 +376,9 @@
     }
 }
 @media (max-width:900px){
+    .toGotherInfo div{
+        font-size: 15px;
+    }
     .togetherList{
         width: 80%;
     }
@@ -370,6 +390,9 @@
     }
 }
 @media (max-width:810px){
+    .toGotherInfo div{
+        font-size: 20px;
+    }
     .contextR{
         width: 100%;
     }
@@ -392,30 +415,24 @@
         border: none;
     }
     .chatGo{
+        bottom: 80px;
+        left: 8%;
         position: fixed;
-        bottom: 50px;
-        left: 0;
-        margin-left: 2.5%;
-        width: 95%;
+        text-align: center;
+        width: 60%;
         height: 70px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+        position: fixed;
     }
     .togetherTo{
-        height: 100%;
-    }
-    .togetherTo p{
-        float: left;
-        padding-top: 35px;
-        margin-left: 20px;
+        height: 400px;
     }
     .toGother{
         height: 80%;
         float: right;
         margin-right: 7px;
         margin-top: 7px;
-    }
-    .toGotherMaster{
-        height: 100%;
-        background-color: white;
     }
     .toGotherInfo{
         width:85%;
@@ -439,9 +456,6 @@
     }
 }
 @media (max-width:810px){
-    .toGother{
-        width:70%;
-    }
     .toGotherInfo{
         width:75%;
         margin-top: 20px;
@@ -462,11 +476,10 @@
     }
 }
 @media (max-width:530px){
-    .toGother{
-        width:65%;
-    }
     .toGotherInfo{
         width:75%;
+    }
+    .toGotherInfo div{
         font-size: 15px;
     }
 }

@@ -1,12 +1,25 @@
 import { useEffect, useState } from 'react';
 import useMessageStore from '../../hooks/useMessageStore';
-import styles from '../../css/Room.module.css';
+import styles from '../../css/MessageList.module.css';
 
-export default function Room() {
+export default function Room(props) {
+  const {roomNum} = props
+
   const messageStore = useMessageStore();
   const [messageToSend, setMessageToSend] = useState('');
   const [messageLogs, setMessageLogs] = useState([]);
   const { connected, messageEntered } = messageStore;
+
+  //////////////////////////////////시간 형식 잡기
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+    return `${formattedHours}:${minutes} ${ampm}`;
+  };
+//////////////////////////////////////////////////////
 
   useEffect(() => {
     console.log('Room 컴포넌트가 리렌더링되었습니다.');
@@ -47,11 +60,10 @@ export default function Room() {
   };
 
   const handleChangeInput = (event) => {
-  const { value } = event.target;
-  setMessageToSend(value);
-  messageStore.changeInput(value, { type: 'message' });  // Update messageStore state
-  console.log('Input changed:', value);
-};
+    const { value } = event.target;
+    setMessageToSend(value);
+    messageStore.changeInput(value, { type: 'message' });  // Update messageStore state
+  };
 
   const handleConnect = (newRoomIndex) => {
     // 이미 연결되어 있다면 더 이상의 작업을 수행하지 않음
@@ -72,13 +84,21 @@ export default function Room() {
 
   return (
     <div>
-     
       <ul>
-      {messageLogs.map((message, index) => (
-        <li key={`${message}-${index}`}>
-          {message.value}
+      {messageLogs.map((message, index) => 
+      {if(message.roomId === roomNum){
+         return <li key={`${message}-${index}`} className={styles.messageItem}>
+            <div className={styles.messageInfo}>
+              <p className={styles.messageUser}>{message.userId}</p>
+            </div>
+            <div className={styles.messageBubble}>
+              <p className={styles.messageContent}>{message.message}</p>
+              <p className={styles.messageTimestamp}>{formatTimestamp(message.timestamp)}</p>
+            </div>
           </li>
-        ))}
+      } else if(message.type === 'enter') {
+        return <li>{message.value}</li>
+      }})}
       </ul> 
       <form onSubmit={handleSubmit}>
         <label htmlFor="message-to-send">
@@ -97,6 +117,7 @@ export default function Room() {
           전송
         </button>
       </form>
+      <button onClick={()=>console.log(messageLogs)}>하하</button>
     </div>
   );
 }

@@ -151,6 +151,10 @@ useEffect(() => {
 
     //hover
     const [hover,setHover] = useState(-1)
+
+    const onErrorImg = (e) => {
+      e.target.src = userDefaultProfile;
+  }
     return (
         <div className={Style.listForm}>
           <div className={Style.listForminner}>
@@ -198,7 +202,7 @@ useEffect(() => {
                   (<div className={Style.togetherFoot}>
                       <div className={Style.imgDiv}>
                       <img src={loading && place.find(placeItem => placeItem.placeSeq === searchSub.placeSeq)?.image} 
-                          className={Style.placeImg} alt="Place Image" />
+                          className={Style.placeImg} onError={(e) => onErrorImg(e)} alt="Place Image" />
                       </div>
                       <div className={Style.title}><p>{item.title}</p></div>
                       <div className={Style.context}><p>{item.context}</p></div>
@@ -228,7 +232,7 @@ useEffect(() => {
                         <p className={Style.userGender}>{item.userGender === 'M' ? '남성' : '여성'}</p>
                       </div>
                       <div className={Style.tnuminfo}>
-                        <p>모집인원</p> 
+                        <p>정원</p> 
                         <p className={Style.tnum}>{item.tnum}명</p>
                       </div>
                     </div>

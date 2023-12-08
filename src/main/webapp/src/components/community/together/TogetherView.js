@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams,useNavigate } from 'react-router-dom';
 
 import Style from '../../../css/togetherView.module.css'
-import loadingImg from '../../../assets/image/loading.png'
 import userDefaultProfile from '../../../assets/image/userDefaultProfile.png'
-import TogetherWriteForm from './TogetherWriteForm';
+import backBut from '../../../assets/image/backBut.png'
 
-import { getTogetherSeq,deleteTogether } from '../../../api/TogetherApiService';
+import { getTogetherSeq,deleteTogether,addSubscript,getChatSeq,getAllSubscript,deleteRoom } from '../../../api/TogetherApiService';
 import { getPlace,getCustomPlace } from '../../../api/PlaceApiService';
 import { getCityList } from '../../../api/CityApiService';
+import { getUser } from '../../../api/AdvisorApiService';
 
 import { GoogleMap,Marker } from '@react-google-maps/api';
 import { getUserByEmail } from '../../../api/UserApiService';
@@ -31,23 +31,35 @@ const containerStyle = {
     },
   ];
 
-const TogetherView = ({seqAd}) => {
+const TogetherView = ({seqAd,open,onOpen}) => {
     const { user } = useUserStore();
     const { togetherSeq } = useParams()
     const [custom,setCustom] = useState([])
     const [place, setPlace] = useState([])
+    const [subscripts, setSubscripts] = useState([])
     const [loading, setLoading] = useState(true);
+    const [chat,setChat] = useState()
+    const [users,setUsers] = useState([])
+    const [modalSeq,setModalSeq] = useState(-1)
 
     
     //시티 소환
     const [city, setCity] = useState([])
     const [cityFind, setCityFind] = useState([])
     useEffect(()=> {
+        getAllSubscript()
+        .then(res => setSubscripts(res.data.filter(sub => sub.toMainSeq == togetherSeq)))
+
         getCityList()
         .then(res => {
             setCity(res.data)
         })
         .catch(e => console.log(e))
+        getChatSeq(togetherSeq)
+        .then(res => setChat(res.data))
+
+        getUser()
+        .then(res => setUsers(res.data))
     },[])
     
     //투게더랑 서브 소환
@@ -161,6 +173,7 @@ const TogetherView = ({seqAd}) => {
             cancelButtonText: "아니요"
         }).then((result) => {
             if (result.isConfirmed) {
+                deleteRoom(togetherSeq)
                 deleteTogether(togetherSeq)
                 .then(res => {
                     window.scrollTo(0,0)
@@ -174,9 +187,64 @@ const TogetherView = ({seqAd}) => {
         });
     }
     const [modalShow1, setModalShow1] = useState(false);
+
+    const subscript = async() =>{
+        const { value: text, isConfirmed } = await sweet.fire({
+            title: "소개글",
+            input: "textarea",
+            inputPlaceholder: "소개글을 작성해보세요",
+            showCancelButton: true,
+            confirmButtonText: "신청",
+            cancelButtonText: "취소"
+        })
+        if (isConfirmed) {
+            const subscriptDTO = {
+                chatSeq: chat.id,
+                context: text,
+                masterSeq: togetherDTO.userSeq,
+                userSeq: user.userSeq,
+                toMainSeq: togetherSeq,
+                sw :0 
+            }
+            addSubscript(subscriptDTO)
+            sweet.fire({
+                title: "신청이 완료되었습니다",
+                icon: "success"
+            }).then(
+                getAllSubscript()
+                .then(res => setSubscripts(res.data.filter(sub => sub.toMainSeq == togetherSeq)))
+            )
+        } 
+          
+    }
+    const getAge = (bDay) => {
+        const today = new Date();
+        const birthDate = new Date(bDay);
+      
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        
+      
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+
+
+        const decade = Math.floor(age / 10) * 10;
+        return `${decade}대`;
+    }
+    const back = () => {
+        window.scrollTo(0, 0);
+        navigate(-1);
+    }
+    const onModal = (n) => {
+        setModalSeq(n)
+        setModalShow1(true)
+    }
     return (
         <div className={Style.viewForm}>
             <div className={Style.viewInner}>
+            {seqAd === undefined && <img src={backBut} className={Style.backBut} onClick={() => back()}/>}
                 {/* 상단지도/사진 */}
                 <div className={Style.innerTop}>
                     
@@ -225,14 +293,14 @@ const TogetherView = ({seqAd}) => {
                 place !== null && place.length > 0 ?
                     <div className={Style.midSc}>
                         <div className={Style.midScTdiv}><span className={Style.midScText}>지역</span> &nbsp; {cityFind}</div>
-                        <div className={Style.midScTdiv}><span className={Style.midScText}>모집인원</span> &nbsp; {togetherDTO.tnum}</div>
+                        <div className={Style.midScTdiv}><span className={Style.midScText}>정원</span> &nbsp; {togetherDTO.tnum}</div>
                         <div className={Style.midScTdiv}><span className={Style.midScText}>날짜</span> &nbsp; {togetherDTO.startDate}~{togetherDTO.endDate}</div>
                     </div>
                     :
                     custom.length > 0 &&
                     <div className={Style.midSc}>
                         <div className={Style.midScTdiv}><span className={Style.midScText}>지역</span> &nbsp; {custom[0].placeName}</div>
-                        <div className={Style.midScTdiv}><span className={Style.midScText}>모집인원</span> &nbsp; {togetherDTO.tnum}</div>
+                        <div className={Style.midScTdiv}><span className={Style.midScText}>정원</span> &nbsp; {togetherDTO.tnum}</div>
                         <div className={Style.midScTdiv}><span className={Style.midScText}>날짜</span> &nbsp; {togetherDTO.startDate}~{togetherDTO.endDate}</div>
                     </div>
                 } 
@@ -340,32 +408,90 @@ const TogetherView = ({seqAd}) => {
                                 </div>
                                     <div className={Style.hrhr}></div>
                             </div>
-
                             <div className={Style.togetherChatInner2}>
-                                <div className={Style.chatGoDiv}>
-                                    <button className={Style.chatGo}>채팅하기</button>
-                                </div>
+                                {!open && user.name !== '' && togetherDTO.userSeq !== user.userSeq &&
+                                    subscripts.findIndex(subs => subs.userSeq === user.userSeq) === -1 &&
+                                    (chat && !chat.entrySeq.split(',').includes(user.userSeq.toString())) &&
+                                    (chat && (chat.entrySeq.split(',').length + (chat.entrySeq !== '' && 1)) < togetherDTO.tnum) && 
+                                    <div className={Style.chatGoDiv}>
+                                        <button className={Style.chatGo} onClick={()=>subscript()}>신청하기</button>
+                                    </div>
+                                }
+                                {
+                                togetherDTO.userSeq !== user.userSeq &&
+                                subscripts.findIndex(subs => subs.userSeq === user.userSeq) !== -1 &&    
+                                    <div className={Style.chatGoDiv}>
+                                            <button className={Style.chatGo}
+                                            style={{backgroundColor:'#6c90bc'}}
+                                            >수락대기중</button>
+                                    </div>
+                                }
+                                {
+                                    (chat && chat.entrySeq.split(',').includes(user.userSeq.toString())) &&
+                                    <div className={Style.chatGoDiv}>
+                                            <button className={Style.chatGo}
+                                            style={{backgroundColor:'#6c90bc'}}
+                                            >채팅참여중</button>
+                                    </div>
+                                }
+                                {
+                                    !open && chat && 
+                                    (chat.entrySeq.split(',').length + (chat.entrySeq !== '' && 1)) < togetherDTO.tnum &&
+                                    togetherDTO.userSeq === user.userSeq &&
+                                    <div className={Style.chatGoDiv}>
+                                            <button className={Style.chatGo} onClick={() => onOpen()}
+                                            >채팅보기</button>
+                                    </div>
+                                }
+                                {
+                                    chat && !chat.entrySeq.split(',').includes(user.userSeq.toString()) &&
+                                    chat.entrySeq !== '' && (chat.entrySeq.split(',').length + 1) >= togetherDTO.tnum &&
+                                    <div className={Style.chatGoDiv}>
+                                            <button className={Style.chatGo}
+                                            style={{backgroundColor:'#6c90bc'}}
+                                            >마감</button>
+                                    </div>
+                                }
                             </div>
                         <div className={Style.togetherTo}>
                             <p>함께하는 동행</p>
                             <div className={Style.toGother}>
                                 <div className={Style.toGotherMaster}>
                                     {togetherDTO.userProfileImage ?
-                                        <div className={Style.toGotherImg} onClick={() => setModalShow1(true)}>
+                                        <div className={Style.toGotherImg} onClick={() => onModal(togetherDTO.userSeq)}>
                                             <img src={userList.profileImage} className={Style.userImg} />
                                         </div>
                                         :
-                                        <div className={Style.toGotherImg} onClick={() => setModalShow1(true)}>
+                                        <div className={Style.toGotherImg} onClick={() => onModal(togetherDTO.userSeq)}>
                                             <img src={userDefaultProfile} className={Style.userImg}/>
                                         </div>
                                     }
                                     <div className={Style.toGotherInfo}>
-                                        <span>{userList.id}</span>|<span>{userList.gender === 'M' ? '남자' : '여자'}</span>
+                                        <div>&nbsp;{userList.name}&nbsp;|&nbsp;</div>
+                                        <div>{userList.gender === 'M' ? '남자' : '여자'}&nbsp;|&nbsp;</div>
+                                        <div>{getAge(userList.birthday)}</div>
                                     </div>
                                 </div>
-                                <div className={Style.togotherList}>
-                                    <div className={Style.togetherListOne}>동행을 신청해보세요.</div>
-                                </div>
+                                {
+                                    chat && users.filter(item => chat.entrySeq.split(',').includes(item.userSeq+'')).map(en => 
+                                        <div className={Style.toGotherMaster}>
+                                            {en.profileImage ?
+                                                <div className={Style.toGotherImg} onClick={() => onModal(en.userSeq)}>
+                                                    <img src={en.profileImage} className={Style.userImg} />
+                                                </div>
+                                                :
+                                                <div className={Style.toGotherImg} onClick={() => onModal(en.userSeq)}>
+                                                    <img src={userDefaultProfile} className={Style.userImg}/>
+                                                </div>
+                                            }
+                                            <div className={Style.toGotherInfo}>
+                                                <div>&nbsp;{en.name}&nbsp;|&nbsp;</div>
+                                                <div>{en.gender === 'M' ? '남자' : '여자'}&nbsp;|&nbsp;</div>
+                                                <div>{getAge(en.birthday)}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>
@@ -373,7 +499,7 @@ const TogetherView = ({seqAd}) => {
                 
             </div>
             <div style={{clear:'both'}}/>
-            {togetherDTO && <ProfileView show={modalShow1} onHide={() => setModalShow1(false)} userSeq={togetherDTO.userSeq}/> }
+            {togetherDTO && <ProfileView show={modalShow1} onHide={() => setModalShow1(false)} userSeq={modalSeq}/> }
         </div>
     );
 };

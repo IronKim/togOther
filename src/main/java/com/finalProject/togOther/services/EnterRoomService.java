@@ -20,8 +20,7 @@ public class EnterRoomService {
 	            new MessageResponseDto(
 	                MessageIdGenerator.generateId(),
 	                type,
-	                "사용자 " + userId + " 님이 "
-	                    + "채팅방 " + roomId + "에 입장하셨습니다."
+	                userId + " 님이 활동중입니다"
 	            )
 	        );
 	    }
