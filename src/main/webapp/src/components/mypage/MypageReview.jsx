@@ -8,6 +8,7 @@ import { getPlaceReviewByUserSeq, deletePlaceReviewByReviewSeq} from '../../api/
 import { useUserStore } from '../../stores/mainStore';
 import ProfileView from '../ProfileView/ProfileView';
 import styles from '../../css/MypageReview.module.css';
+import Swal from 'sweetalert2';
 
 import efault from '../../css/MyPage.module.css';
 
@@ -21,24 +22,41 @@ const MypageReview = ({onErrorImg}) => {
   const [userProfiles, setUserProfiles] = useState({});
   const { user } = useUserStore();
   const userSeq1 = user.userSeq;
-  const handleDelete = (reviewSeq) => {
-     // 사용자에게 삭제 여부를 확인하는 메시지를 띄웁니다.
-     const shouldDelete = window.confirm("리뷰를 삭제하시겠습니까?");
 
-     if (shouldDelete) {
-       // 사용자가 확인하면 삭제 작업을 진행합니다.
-       deletePlaceReviewByReviewSeq(reviewSeq)
-         .then(() => {
-           // Update the state to remove the deleted review
-           setSelectedPlaceReview((prevReviews) =>
-             prevReviews.filter((review) => review.reviewSeq !== reviewSeq)
-           );
-         })
-         .catch((error) => {
-           console.error('리뷰 삭제 오류: ', error);
-         });
+  const handleDelete = (reviewSeq, placeSeq) => {
+    // 사용자에게 삭제 여부를 확인하는 메시지를 띄웁니다.
+
+    Swal.fire({
+     title: '리뷰를 삭제하시겠습니까?',
+     text: "삭제된 리뷰는 복구할 수 없습니다.",
+     icon: 'warning',
+     showCancelButton: true,
+     confirmButtonColor: '#3085d6',
+     cancelButtonColor: '#d33', 
+     confirmButtonText: '삭제',
+     cancelButtonText: '취소'
+   }).then((result) => {
+     if (result.isConfirmed) {
+       deletePlaceReviewByReviewSeq(placeSeq, reviewSeq)
+        .then(() => {
+          // Update the state to remove the deleted review
+          setSelectedPlaceReview((prevReviews) =>
+            prevReviews.filter((review) => review.reviewSeq !== reviewSeq)
+          );
+          Swal.fire(
+           '삭제 완료!',
+           '리뷰가 삭제되었습니다.',
+           'success'
+         );
+        })
+        .catch((error) => {
+          console.error('리뷰 삭제 오류: ', error);
+        });
+       
      }
-  };
+   });
+   
+ };
   const navigate = useNavigate();
   const onToPlacePage = (placeSeq) => {
     navigate(`/info/place/${placeSeq}`);
@@ -170,7 +188,7 @@ const formatDateTime = (dateString) => {
                       cursor: 'pointer',
                       marginLeft: '10px',
                     }}
-                    onClick={() => handleDelete(review.reviewSeq)}
+                    onClick={() => handleDelete(review.reviewSeq, review.placeSeq)}
                   >
                     / 삭제
                   </span>

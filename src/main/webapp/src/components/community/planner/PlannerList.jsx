@@ -27,6 +27,10 @@ const PlannerList = (props) => {
         navigate(`planner/view/${plannerSeq}`)
     }
 
+    const onErrorImg = (e) => {
+        e.target.src = profileImg;
+    }
+
     //////////////스크롤 매커니즘////////////////
     const handleScroll = () => {
 
@@ -124,7 +128,7 @@ const PlannerList = (props) => {
                         item.citySeq !== -1 && loading ? city.find(item2 => item2.citySeq === item.citySeq).cityImage : noImage}/>
                     <div className={styles.plannerInfo}>
                         <div className={styles.profile} onClick={(e) => onModal(e,item.userSeq)}>
-                            <img src={item.userProfileImage && item.userProfileImage !== '' ? item.userProfileImage : profileImg}/>
+                            <img src={item.userProfileImage && item.userProfileImage !== '' ? item.userProfileImage : profileImg} onError={onErrorImg}/>
                             <p>{item.userName}</p>
                         </div>
                         <div className={styles.calender}>기간<br/>

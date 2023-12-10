@@ -25,6 +25,10 @@ const containerStyle = {
     zIndex: 0
 };
 
+const onErrorImg = (e) => {
+    e.target.src = profileImg;
+}
+
 // const myStyles = [
 //     {
 //       featureType: "poi",
@@ -308,7 +312,7 @@ const handleScroll = () => {
             <div className={styles.title}>{planner && planner.title}</div>
             {planner && 
             <div className={styles.userProfile} onClick={() => setModalShow1(true)}>
-                <img src={planner.userProfileImage && planner.userProfileImage !== '' ? planner.userProfileImage : profileImg}></img>
+                <img src={planner.userProfileImage && planner.userProfileImage !== '' ? planner.userProfileImage : profileImg} onError={onErrorImg}></img>
                 <div className={styles.profiles}>
                     <div className={styles.proTop}>
                         {userDTO.certification === 0 ? <FaUserTimes style={{color: 'red'}} />  : 

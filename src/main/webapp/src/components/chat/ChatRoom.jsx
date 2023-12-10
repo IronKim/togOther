@@ -21,6 +21,10 @@ const ChatRoom = (props) => {
 
     const { connected, messageEntered } = messageStore;
 
+    const onErrorImg = (e) => {
+        e.target.src = profileImg;
+    }
+
     //////////////////////////////////시간 형식 잡기
     const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
@@ -171,6 +175,7 @@ const ChatRoom = (props) => {
                                     !users.find(item => item.id === message.userId).profileImage.includes('null')) ?
                                     users.find(item => item.id === message.userId).profileImage : profileImg}
                                     onClick={() => onModal(users.find(item => item.id === message.userId).userSeq)}
+                                    onError={onErrorImg}
                                     style={{float: message.userId !== user.id ? 'right' : 'left'}}/>
                             </p>
                         <div style={{clear:'both'}}/>
@@ -198,6 +203,7 @@ const ChatRoom = (props) => {
                                             !users.find(item => item.id === message.userId).profileImage.includes('null')) ?
                                             users.find(item => item.id === message.userId).profileImage : profileImg}
                                             onClick={() => onModal(users.find(item => item.id === message.userId).userSeq)}
+                                            onError={onErrorImg}
                                             style={{float: message.userId !== user.id ? 'right' : 'left'}}/>
                                     </p>
                                 <div style={{clear:'both'}}/>
