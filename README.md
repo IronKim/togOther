@@ -208,7 +208,7 @@
 
 
 ## 주소 <a name = "Web address"></a> 
-http://www.togother.kro.kr/
+~http://www.togother.kro.kr/~ 서버 지원 종료
 
 ## 프로젝트 발표 영상
 https://youtu.be/gbHsgKdSslI?feature=shared
